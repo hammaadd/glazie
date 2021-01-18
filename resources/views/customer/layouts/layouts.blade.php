@@ -1,0 +1,6 @@
+@include('customer.includes.header')
+@include('customer.includes.nav')
+@include('customer.includes.sidebar')
+@yield('content')
+@include('customer.includes.footer')
+@yield('script')

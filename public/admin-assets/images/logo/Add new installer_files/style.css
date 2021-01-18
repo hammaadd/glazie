@@ -1,0 +1,11 @@
+.logo.logo-dark img {
+    margin-top: 8px;
+}
+
+#cart_item {
+    display: none;
+}
+
+#shopping_cart {
+    color: black;
+}
