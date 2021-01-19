@@ -27,11 +27,24 @@
 
                     </div>
                 </div>
-				@endif
+                @endif
+                
         <div class="row">
-            <div class="col-md-3">
-                <a  class="btn btn-success btn-xs" href="{{url('admin/brands/add')}}"><i class="fa fa-plus"></i>Add New Brand</a>
-            </div>
+            <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row m-b-30">
+                        <div class="col-lg-8">
+                            
+                        </div>
+                        <div class="col-lg-4 text-right">
+                            <a class="btn btn-primary" href="{{url('admin/brands/add')}}">
+                                <i class="anticon anticon-plus-circle m-r-5"></i>
+                                <span>Add New Brand</span>
+                            </a>
+                        </div>
+                    </div> 
+              
             <div class="col-md-12">
                 
                 <div class="table-responsive" ></div>
@@ -62,7 +75,7 @@
                             <?php }
                             ?></td>
                             <td>
-                            <a href="{{url('admin/brands/edit/'.$brand->id)}}" class="badge badge-warning"> <i class="fa fa-eye"></i> Details</a>
+                        {{-- <a href="{{url('admin/brands/edit/'.$brand->id)}}" class="badge badge-warning"> <i class="fa fa-eye"></i> Details</a> --}}
                                 <a href="{{url('admin/brands/edit/'.$brand->id)}}" class="badge badge-primary"> <i class="fa fa-edit"></i> Edit</a>
                                 <a href="{{url('admin/brands/delete/'.$brand->id)}}" class="badge badge-danger" onclick="return confirm('Are You Sure to delete?')"> <i class="fa fa-trash"></i> Delete</a> 
                             </td>
@@ -75,7 +88,8 @@
                 </table>
             </div>
             </div>
-            
+        </div>
+    </div>
         </div>
         
     </div>

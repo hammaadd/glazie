@@ -37,6 +37,14 @@
                             <input type="text" class="form-control" name="brand_name" placeholder="Brand Name" autofocus value="{{$brands->brand_name}}">
                             
                         </div>
+                        
+                            <div class="row ">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <img src="{{asset('admin-assets/brands/'.$brands->image)}}" alt="" width="100%">
+                                </div>
+                            </div>
+                        
                         <div class="row">
                             
                             <label for="">Brand Image </label>
@@ -46,14 +54,14 @@
                         <div class="row">
                             
                             <label for="">Descrition </label>
-                            <textarea name="description" class="form-control" cols="30" rows="10">{{$brands->brand_name}}</textarea>
+                            <textarea name="description" class="form-control" cols="30" rows="10">{{$brands->description}}</textarea>
                         </div>
                         
                         
                         
                         <div class="row">
                             <button type="submit" class="btn btn-success mt-3"><i class="fa fa-edit"></i> Update Brand</button>
-                            <a href="" class="btn btn-danger mt-3 ml-3"><i class="fa fa-times"></i> cancel</a>
+                            <a href="{{url('admin/brands')}}" class="btn btn-danger mt-3 ml-3"><i class="fa fa-times"></i> Cancel</a>
                        
                         </div>
                     </div>

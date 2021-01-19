@@ -33,7 +33,7 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <i class="anticon anticon-dashboard"></i>
+                                    <i class="anticon anticon-appstore"></i>
                                 </span>
                                 <span class="title">Orders</span>
                                 <span class="arrow">
@@ -43,6 +43,23 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="{{url('customer/orders')}}">Orders</a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-hdd"></i>
+                                </span>
+                                <span class="title">Request Hiring</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{url('customer/requests')}}">Hiring Request</a>
                                 </li>
                                 
                             </ul>

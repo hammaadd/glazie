@@ -41,6 +41,9 @@
                             <select name="parent_id"  class="form-control">
                                 <option value="">Select Parent Category</option>
                                 @foreach($select_cat as $catgry)
+                                @if ($categories->id!=$catgry->id)
+                                    
+                                
                                 <option value="<?php echo $catgry->id ?>" 
                                     <?php
                                         if($catgry->id==$categories->parent_id){
@@ -48,6 +51,7 @@
                                         }
                                     ?>
                                 ><?php echo $catgry->cat_name ?></option>
+                                @endif
                                 @endforeach
                             </select>
                             

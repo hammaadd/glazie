@@ -66,7 +66,7 @@
                                     <form action="{{url('admin/hirestatus')}}" method="post">
                                         @csrf
                                         <input type="hidden" name="id" value="{{$request->id}}">
-                                        <input type="text" name="customer_id" value="{{$request->customer_id}}">
+                                        <input type="hidden" name="customer_id" value="{{$request->customer_id}}">
                                         <input type="hidden" name="installer_id" value="{{$request->installer_id}}">
                                     <select name="status" id="" class="form-control" required>
                                        <option value="">Select Status </option>

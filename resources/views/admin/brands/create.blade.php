@@ -52,7 +52,7 @@
                         
                         <div class="row">
                             <button type="submit" class="btn btn-success mt-3"><i class="fa fa-plus"></i> Create brand</button>
-                       
+                            <a href="{{url('admin/brands')}}" class="btn btn-danger mt-3 ml-3"><i class="fa fa-times"></i> Cancel</a>
                         </div>
                     </div>
                     </form>

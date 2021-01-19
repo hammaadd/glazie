@@ -73,7 +73,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="">Weight</label>
-                                <input type="number" name="weight" class="form-control" value="{{$products->weight}}"> 
+                                <input type="text" name="weight" class="form-control" value="{{$products->weight}}"> 
                             </div>
                             <div class="col-md-6">
                                 <label for="">Quantity </label>

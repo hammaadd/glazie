@@ -28,7 +28,7 @@ use App\Notifications\SendPassword;
 class IndexController extends Controller
 {
     public function index(){
-        $products = Products::where('status','=','1')->get();
+        $products = Products::where('status','=','1')->where('quantity','>',0)->get();
        
      
         return view('public/index',['products'=>$products]);
@@ -177,7 +177,7 @@ class IndexController extends Controller
         $user->save();
         $user_id = $user->id;
         
-        //$user->notify(new SendPassword($password));
+       // $user->notify(new SendPassword($password));
 
 
     }

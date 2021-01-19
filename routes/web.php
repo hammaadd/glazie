@@ -198,5 +198,7 @@ Route::prefix('customer')->group(function () {
     Route::post('hirerequest','CustomerController@hireinstaller');
     Route::get('orders','CustomerController@orders');
     Route::get('orderdetails/{id}','CustomerController@orderdetails');
+    Route::get('requests','CustomerController@requests');
+    Route::get('requestdetails/{id}','CustomerController@requestsdetails');
 
 });

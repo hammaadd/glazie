@@ -54,14 +54,21 @@
                             <td><?php echo $category->cat_name; ?></td>
                             <td>
                                 @php
+                                $i=0;
                                     if($category->parent_id==null){
                                         echo "<span class='text-danger' title='This is parent Category'> None </span>";
                                     }
+                                    
                                     else{
                                         foreach ($categories as $key => $cat) {
                                             if ($category->parent_id==$cat->id) {
                                                 echo $cat->cat_name;
+                                                $i=1;
                                             }
+                                            
+                                        }
+                                        if ($i!=1) {
+                                            echo "<span class='text-danger' title='This is parent Category'> None </span>";
                                         }
                                     }
 

@@ -9,3 +9,7 @@
 #shopping_cart {
     color: black;
 }
+
+.note-editor.note-frame.fullscreen {
+    background-color: white
+}

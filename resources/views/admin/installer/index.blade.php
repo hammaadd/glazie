@@ -28,13 +28,13 @@
                     <div class="col-lg-8">
                         <div class="d-md-flex">
                             <div class="m-b-10">
-                                <select class="custom-select" style="min-width: 180px;" >
+                                {{-- <select class="custom-select" style="min-width: 180px;" >
                                     <option selected>Status</option>
                                     <option value="all">All</option>
                                     <option value="approved">Approved</option>
                                     <option value="pending">Pending</option>
                                     <option value="rejected">Rejected</option>
-                                </select>
+                                </select> --}}
                             </div>
                         </div>
                     </div>

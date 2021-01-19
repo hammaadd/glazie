@@ -126,4 +126,13 @@ class CustomerController extends Controller
         $order_details = Order::find($id);
         return view('customer/order_dtails',['order' =>$order_details]);
     }
+    public function requests(){
+        $customer_id = Auth::id();
+        $requests = RequestHiring::where('customer_id','=',$customer_id)->get();
+        return view('customer/requests',['requests'=>$requests]);
+    }
+    public function requestsdetails($id){
+        $request = RequestHiring::find($id);
+        return view('customer/requestdetails',['requesthire'=>$request]);
+    }
 }

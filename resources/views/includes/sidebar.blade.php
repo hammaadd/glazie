@@ -16,7 +16,7 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <i class="anticon anticon-user"></i>
+                                    <i class="anticon anticon-appstore"></i>
                                 </span>
                                 <span class="title">Products</span>
                                 <span class="arrow">
@@ -24,8 +24,8 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li @if ($url=="admin/product/list") class="active" @endif>
-                                    <a href="{{url('admin/product/list')}}">Product List</a>
+                                <li @if ($url=="admin/products") class="active" @endif>
+                                    <a href="{{url('admin/products')}}">Product List</a>
                                 </li>
                                 <li @if ($url=="admin/products/add") class="active" @endif>
                                     <a href="{{url('admin/products/add')}}">Add Product</a>
@@ -67,7 +67,7 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <i class="anticon anticon-user"></i>
+                                    <i class="anticon anticon-hdd"></i>
                                 </span>
                                 <span class="title">Orders</span>
                                 <span class="arrow">
@@ -93,7 +93,7 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <i class="anticon anticon-user"></i>
+                                    <i class="fa fa-users"></i>
                                 </span>
                                 <span class="title">Customers</span>
                                 <span class="arrow">
