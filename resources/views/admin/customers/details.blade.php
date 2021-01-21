@@ -1,20 +1,15 @@
 @extends('admin-layout.layouts')
-@section('title','installer details')
+@section('title','Customer Details')
 @section('content')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h2 class="header-title">Installer Details</h2>
+            <h2 class="header-title">Customer Details</h2>
             <div class="header-sub-title">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a href="{{url('admin/installer')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Installer</a>
-                    <span class="breadcrumb-item" href="#">Installer Details</span>
+                    <a href="{{url('admin/customers')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Customers</a>
+                    <span class="breadcrumb-item" href="#">Customer Details</span>
                     
                 </nav>
             </div>
@@ -96,6 +91,19 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
+                                        <ul class="nav nav-tabs nav-justified" id="myTabJustified" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="home-tab-justified" data-toggle="tab" href="#home-justified" role="tab" aria-controls="home-justified" aria-selected="true">Customer  Info</a>
+                                            </li>
+                                          
+                                            
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="profile-tab-justified" data-toggle="tab" href="#profile-justified" role="tab" aria-controls="profile-justified" aria-selected="false">Order Details</a>
+                                            </li>
+                                            
+                                            
+                                            
+                                        </ul>
                                       
                                         <div class="tab-content m-t-15" id="myTabContentJustified">
                                             <div class="tab-pane fade show active" id="home-justified" role="tabpanel"  aria-labelledby="home-tab-justified">
@@ -142,6 +150,36 @@
                                                 </div>
 
 
+                                            </div>
+                                            <div class="tab-pane fade" id="profile-justified" role="tabpanel" aria-labelledby="profile-tab-justified">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Sr #</th>
+                                                                    <th> Total Amount</th>
+                                                                    <th>Discount</th>
+                                                                    <th>Net Total</th>
+                                                                    <th>Date</th>
+                                                                    <th>status</th>
+                                                                    <th>Action </th>
+                                                                </tr>
+                                                                @foreach ($user->orders as $order)
+                                                                    <tr>
+                                                                        <td>{{$loop->iteration}}</td>
+                                                                        <td>{{$order->total_amount}}</td>
+                                                                        <td>{{$order->discount}}</td>
+                                                                        <td>{{$order->net_total}}</td>
+                                                                        <td>{{$order->status}}</td>
+                                                                        <td>{{$order->created_at}}</td>
+                                                                        <td><a href="{{url('admin/customerorder/details/'.$order->id)}}" class="btn btn-warning btn-xs"> <i class="fa fa-eye"></i></a></td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                             </div>
                                           
                                             

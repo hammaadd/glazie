@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -123,5 +124,9 @@ class AdmincustomerController extends Controller
     }
     public function changepassword($id){
         return view('admin/customers/changepassword',['id'=>$id]);
+    }
+    public function orderdetails($id){
+        $order = Order::find($id);
+        return view('admin/customers/orderdetails',['order'=>$order]);
     }
 }

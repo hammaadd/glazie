@@ -101,7 +101,7 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu"><li @if ($url=="admin/customer") class="active" @endif>
-                                <a href="{{ url('admin/customer') }}">Customers</a>
+                                <a href="{{ url('admin/customers') }}">Customers</a>
                             </li>
                             <li @if ($url=="admin/addcustomer") class="active" @endif>
                                 <a href="{{ url('admin/addcustomer') }}">Add Customer</a>

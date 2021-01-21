@@ -77,6 +77,7 @@ Route::prefix('admin')->group(function () {
     Route::get('customers/details/{id}','AdmincustomerController@details');
     Route::get('customers/deactivate/{id}','AdmincustomerController@deactivate');
     Route::get('customers/changepassword/{id}','AdmincustomerController@changepassword');
+    Route::get('customerorder/details/{id}','AdmincustomerController@orderdetails');
     // CateGories Routes
     Route::get('categories','CategoriesController@index');
     Route::get('categories/add','CategoriesController@add');
