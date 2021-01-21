@@ -96,7 +96,7 @@
                         
                         <div class="row">
                             <div class="col-md-12">
-                            <button type="submit" class="btn btn-success mt-3"><i class="anticon anticon-plus-circle"></i> Add Installer</button>
+                            <button type="submit" class="btn btn-success mt-3"><i class="anticon anticon-edit"></i> Update Customer</button>
                             <a href="{{url('admin/customers')}}" class="btn btn-danger mt-3 ml-3"><i class="anticon anticon-close"></i> Cancel</a>
                             </div>
                        

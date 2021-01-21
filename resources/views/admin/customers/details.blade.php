@@ -165,6 +165,9 @@
                                                                     <th>status</th>
                                                                     <th>Action </th>
                                                                 </tr>
+                                                                @if (count($user->orders)>0)
+                                                                    
+                                                                
                                                                 @foreach ($user->orders as $order)
                                                                     <tr>
                                                                         <td>{{$loop->iteration}}</td>
@@ -176,6 +179,17 @@
                                                                         <td><a href="{{url('admin/customerorder/details/'.$order->id)}}" class="btn btn-warning btn-xs"> <i class="fa fa-eye"></i></a></td>
                                                                     </tr>
                                                                 @endforeach
+                                                                @else
+                                                                <tr>
+                                                                    <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td><span class="text-danger font-weight-bold">No Record Found</span></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                </tr>
+                                                                @endif
                                                             </thead>
                                                         </table>
                                                     </div>

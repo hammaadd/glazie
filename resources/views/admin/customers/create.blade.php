@@ -98,8 +98,8 @@
                         
                         <div class="row">
                             <div class="col-md-12">
-                            <button type="submit" class="btn btn-success mt-3"><i class="anticon anticon-plus-circle"></i> Add Installer</button>
-                            <a href="{{url('admin/orders/installer')}}" class="btn btn-danger mt-3 ml-3"><i class="anticon anticon-close"></i> Cancel</a>
+                            <button type="submit" class="btn btn-success mt-3"><i class="anticon anticon-plus-circle"></i> Add customer</button>
+                            <a href="{{url('admin/customers')}}" class="btn btn-danger mt-3 ml-3"><i class="anticon anticon-close"></i> Cancel</a>
                             </div>
                        
                         </div>
