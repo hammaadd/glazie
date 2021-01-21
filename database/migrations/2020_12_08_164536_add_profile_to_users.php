@@ -19,7 +19,8 @@ class AddProfileToUsers extends Migration
             $table->string('avatar')->nullable();
             $table->string('contact_no')->nullable();
             $table->string('address')->nullable();
-            $table->enum('status', ['0', '1']);
+            $table->enum('status', ['0', '1'])->default(1);
+            $table->enum('login_status',['activate','deactivate','suspend'])->default('activate');
         });
     }
 

@@ -1,6 +1,9 @@
 @extends('admin-layout.layouts')
 @section('title','Edit  Brand')
 @section('content')
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
@@ -38,14 +41,19 @@
                             
                         </div>
                         
-                            <div class="row ">
-                                <div class="col-md-3"></div>
-                                <div class="col-md-6">
-                                    <img src="{{asset('admin-assets/brands/'.$brands->image)}}" alt="" width="100%">
+                            <div class="row mt-4">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4" id="imagediv"> 
+                                    @if ($brands->image)
+                                        
+                                    
+                                    <img src="{{asset('admin-assets/brands/'.$brands->image)}}" alt="" width="100px" height="100px">
+                                    <button type="button" class="btn btn-danger btn-xs mt-2" onclick="deleteimage({{$brands->id}})"> <i class="fa fa-times"></i> Remove Image</button>
+                                    @endif
                                 </div>
                             </div>
                         
-                        <div class="row">
+                        <div class="row mt-3">
                             
                             <label for="">Brand Image </label>
                             <input type="file" class="form-control" name="image" placeholder="Brand Image" >
@@ -75,45 +83,38 @@
 
 @endsection
 @section('script')
-<script src="{{url('admin-assets/js/pages/form-elements.js')}}"></script>
+{{-- <script src="{{url('admin-assets/js/pages/form-elements.js')}}"></script> --}}
 
 
     <script src="{{url('admin-assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')"></script>
-    <script>
-        var pwd = document.getElementById('oldpwd');
-        var eye1 = document.getElementById('eye1');
+    <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
+   <script>
+    function deleteimage(id)
+    {
+        $.ajaxSetup({
+				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
+            });
+            url = "{{url('admin/brands/removeimage')}}";
+            console.log(url);
+            $.ajax({
+           type:'POST',
+           url:url,
 
-        eye1.addEventListener('click',togglePass);
+            data:{
+                id:id,  
+                type:"brand"
+           },
+           success:function(result){
+               if(result=="1")
+               {
+                   $("#imagediv").remove();
+                   toastr.success("The image removed successfully");
 
-        function togglePass(){
-        eye1.classList.toggle('active');
-        
-        (pwd.type=='password')? pwd.type='text' :
-        pwd.type='password';
-        eye.classList.toggle('active');
-        
-        
-
+               }
+           }
+            });
     }
-        var newpwd = document.getElementById('newpwd');
-        var conpwd = document.getElementById('cpassword');
-        var eye2 = document.getElementById('eye2');
-
-        eye2.addEventListener('click',togglePass1);
-
-        function togglePass1(){
-        eye2.classList.toggle('active');
-        
-        (newpwd.type=='password')? newpwd.type='text' :
-        newpwd.type='password';
-        (conpwd.type=='password')? conpwd.type='text' :
-        conpwd.type='password';
-        eye2.classList.toggle('active');
-        
-        
-
-    }
+            
     $("#form-validation").validate({
     ignore: ':hidden:not(:checkbox)',
     errorElement: 'label',
@@ -134,5 +135,27 @@
     }
 });
 
-    </script>
+
+     </script>
+     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+ 
+     <script>
+         toastr.options = {
+         "closeButton": true,
+         "debug": false,
+         "newestOnTop": false,
+         "progressBar": true,
+         "positionClass": "toast-top-right",
+         "preventDuplicates": true,
+         "onclick": null,
+         "showDuration": "300",
+         "hideDuration": "1000",
+         "timeOut": "5000",
+         "extendedTimeOut": "1000",
+         "showEasing": "swing",
+         "hideEasing": "linear",
+         "showMethod": "fadeIn",
+         "hideMethod": "fadeOut"
+     }
+     </script>
 @endsection

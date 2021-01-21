@@ -2,7 +2,9 @@
 @section('title','Categories List')
 @section('content')
 <link href="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet">
-
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <!-- page js -->
 
 <div class="page-container">
@@ -17,17 +19,9 @@
                 </nav>
             </div>
         </div>
-        @if(session('info'))
-				<div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <div class="alert alert-success" style="background-color: green;color:white;"><i class="fa fa-check"></i> {{session('info')}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: white"><span aria-hidden="true">&times;</span></button>
-                        </div>
-
-                    </div>
-                </div>
-				@endif
+        @if (session('info'))
+        <script type="text/javascript">toastr.success("{{session('info')}}");</script>
+        @endif   
         <div class="row">
             <div class="col-md-3">
                 <a  class="btn btn-success btn-xs" href="{{url('admin/categories/add')}}"><i class="fa fa-plus"></i>Add Category</a>
@@ -111,6 +105,27 @@
 <script src="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.js')}}"></script>
 <script>
 $("#categories").DataTable();
+</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+    toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
 </script>
 @endsection
 

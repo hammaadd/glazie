@@ -67,6 +67,16 @@ Route::prefix('admin')->group(function () {
     Route::get('/user/updateavat/{id}','UserController@avatarupdate');
     Route::post('user/avatupdate/{id}','UserController@update_user_avatar');
 
+    // Customer Routes
+    Route::get('customers','AdmincustomerController@index');
+    Route::get('customers/add','AdmincustomerController@add');
+    Route::post('customers/create','AdmincustomerController@create');
+    Route::get('customers/edit/{id}','AdmincustomerController@edit');
+    Route::post('customers/update/{id}','AdmincustomerController@update');
+    Route::get('customers/delete/{id}','AdmincustomerController@delete');
+    Route::get('customers/details/{id}','AdmincustomerController@details');
+    Route::get('customers/deactivate/{id}','AdmincustomerController@deactivate');
+    Route::get('customers/changepassword/{id}','AdmincustomerController@changepassword');
     // CateGories Routes
     Route::get('categories','CategoriesController@index');
     Route::get('categories/add','CategoriesController@add');
@@ -82,6 +92,7 @@ Route::prefix('admin')->group(function () {
     Route::get('brands/edit/{id}','BrandsController@edit');
     Route::post('brands/update/{id}','BrandsController@update');
     Route::get('brands/delete/{id}','BrandsController@delete');
+    Route::post('brands/removeimage','BrandsController@removeimage');
     // proucts Routes
     Route::get('products','ProductsController@index');
     Route::get('products/add','ProductsController@add');
@@ -106,7 +117,7 @@ Route::prefix('admin')->group(function () {
     Route::get('orderconfirm','ProductsController@orderconfirm');
     Route::get('requesthiring/details','ProductsController@hiredetails');
     Route::get('editinstaller','ProductsController@editinstaller');
-    Route::get('customer','ProductsController@customer');
+    //Route::get('customer','ProductsController@customer');
     Route::get('addcustomer','ProductsController@addcustomer');
     Route::get('editcustomer','ProductsController@editcustomer');
     Route::get('editproduct','ProductsController@editproduct');

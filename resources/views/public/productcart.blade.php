@@ -28,13 +28,18 @@
                 @foreach ($carts as $cart)
                 @php
                         $products = $cart->product;
+                        $i=0;
                         $prdimgs = $products->gallery;
                         foreach ($prdimgs as $key => $prdimg) {
                             if ($prdimg->is_primary=='1') {
                                 $image = $prdimg->image;
+                                $i=1;
                             }
                             
                         } 
+                        if ($i!=1) {
+                            $image = $prdimg->image;
+                        }
                         $quantity+= $cart->quantity;
                         $price += $cart->price*$cart->quantity;
                     @endphp

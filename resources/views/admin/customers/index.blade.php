@@ -1,18 +1,15 @@
 @extends('admin-layout.layouts')
-@section('title','Products List')
+@section('title','Customers List')
 @section('content')
 <link href="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet">
-
-<!-- page js -->
-
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h2 class="header-title ">products</h2>
+            <h2 class="header-title">Customers</h2>
             <div class="header-sub-title">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="#">products</a>
+                    <a class="breadcrumb-item" href="#">Customer</a>
                     
                 </nav>
             </div>
@@ -35,26 +32,21 @@
                 <div class="row m-b-30">
                     <div class="col-lg-8">
                         <div class="d-md-flex">
-                            <div class="m-b-10 m-r-15">
-                                <select class="custom-select" style="min-width: 180px;">
-                                    <option selected>Catergory</option>
-                                    <option value="all">All</option>
-                                    
-                                </select>
-                            </div>
+                            
                             <div class="m-b-10">
                                 <select class="custom-select" style="min-width: 180px;" id="status" onchange="filtertable()">
                                     <option value="">All</option>
-                                    <option value="in stock">In Stock </option>
-                                    <option value="Out of stock">Out of Stock</option>
+                                    <option value="activate">Activate</option>
+                                    <option value="de activate">Deactivate</option>
+                                    <option value="suspend">Suspend</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 text-right">
-                        <a class="btn btn-primary" href="{{url('admin/products/add')}}">
+                        <a class="btn btn-primary" href="{{url('admin/customers/add')}}">
                             <i class="anticon anticon-plus-circle m-r-5"></i>
-                            <span>Add Product</span>
+                            <span>Add Customer</span>
                         </a>
                     </div>
                 </div>
@@ -62,44 +54,42 @@
                 <table class="table table-hover" id="products">
                     <thead>
                         <th>Sr.#</th>
-                        <th>Produt Name </th>
-                        <th>Brand</th>
-                        <th>Description</th>
-                        <th>Available Quantity</th>
+                        <th>Customer Name  </th>
+                        <th>Email</th>
+                        <th>Contact No </th>
+                        <th>Activate /Deactivate</th>
                         <th>Action</th>
                     </thead>
-                    <tbody>
-                        <?php
-                        $i=1;
-                        ?>
-                        
-
-                        @if(count($products)>0)
-                        @foreach($products as $product)
+                    <tbody>                    
+                        @if(count($customers)>0)
+                        @foreach($customers as $customer)
 
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td>{{$product->product_name}}</td>
-                            <td>{{$product->brand_name}}</td>
-
-                            <td>@php
-                                echo substr($product->short_description, 0, 30);
-                            @endphp</td>
+                            <td>{{$customer->name}}</td>
+                            <td>{{$customer->email}}</td>
+                            
+                            <td>{{$customer->contact_no}}</td>
                             <td>
-                                @if ($product->quantity==0)
-                                <span class="text-danger">Out of stock</span>
-                                @else
-                                <span class="text-success">In stock</span>
+                                @if ($customer->login_status=='activate')
+                                <span class="badge badge-pill  badge-green">Activate</span>
                                 @endif
+                                @if ($customer->login_status=='deactivate')
+                                <span class="badge badge-pill  badge-red">De Activate</span>   
+                                @endif
+                                @if ($customer->login_status=='suspend')
+                                <span class="badge badge-pill  badge-orange">Suspend</span>
+                                @endif
+                                
                             </td>
                             <td>
-                                <a href="{{url('admin/products/view/'.$product->id)}}" class="badge badge-warning"> <i class="fa fa-eye"></i> View</a>
-                                <a href="{{url('admin/products/edit/'.$product->id)}}" class="badge badge-primary"> <i class="fa fa-edit"></i> Edit</a>
-                                <a href="{{url('admin/products/delete/'.$product->id)}}" class="badge badge-danger" onclick="return confirm('Are You Sure to delete?')"> <i class="fa fa-trash"></i> Delete</a> 
+                                <a href="{{url('admin/customers/details/'.$customer->id)}}" title="Details" class="badge badge-warning"> <i class="fa fa-eye"></i> </a>
+                                <a href="{{url('admin/customers/edit/'.$customer->id)}}" title="Edit" class="badge badge-primary"> <i class="fa fa-edit"></i> </a>
+                                <a href="{{url('admin/customers/delete/'.$customer->id)}}" title="Delete" class="badge badge-danger" onclick="return confirm('Are You Sure to delete?')"> <i class="fa fa-times"></i> </a> 
+                                <a href="{{url('admin/customers/deactivate/'.$customer->id)}}" title="De Activate Account" class="badge badge-danger" onclick="return confirm('Are You Sure to to de activate?')"> <i class="fa fa-trash"></i></a> 
                             </td>
                         </tr>
-                        <?php
-                        $i++; ?>
+                       
                         @endforeach
                         @endif
                     </tbody>

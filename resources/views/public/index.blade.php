@@ -16,25 +16,24 @@
     <div class="row">
         @foreach ($products as $product)
         <?php $product_gallery = $product->gallery;
-        
-            foreach ($product_gallery as $key => $prd_img) {
-                if ($prd_img->is_primary=='1') {
-                    $profile_image = $prd_img->image;
-                }
-                else{
-                    $image = $prd_img->image;
-                }
-            } 
-            if (!$profile_image) {
-                $profile_image=$image;
-            }
+        $i=0;
+        foreach ($product->gallery as $key => $value) {
+           if ($value->is_primary=="1") {
+               $image = $value->image;
+               $i=1;
+           }
+
+       }
+       if ($i==0) {
+           $image = $value->image;
+       }
         ?>
         
         <div class="col-md-4 d-flex">
             <a href="{{ url('productdetails/'.$product->id)}}">
                 <div class="card">
                     
-                        <div class="card-body "> <img src="{{asset($profile_image)}}"
+                        <div class="card-body "> <img src="{{asset($image)}}"
                             <?php $profile_image=""; ?>
                              width="100%"> </div>
                         <div class="card-body">

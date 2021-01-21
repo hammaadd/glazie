@@ -13,3 +13,7 @@
 .note-editor.note-frame.fullscreen {
     background-color: white
 }
+
+#catlist {
+    list-style-type: none;
+}

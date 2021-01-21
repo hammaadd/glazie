@@ -177,7 +177,7 @@ class IndexController extends Controller
         $user->save();
         $user_id = $user->id;
         
-       // $user->notify(new SendPassword($password));
+        //$user->notify(new SendPassword($password));
 
 
     }

@@ -9,4 +9,9 @@ class ProductCategory extends Model
 {
     use HasFactory;
     protected $guarded= [];
+
+    public function catrecord()
+    {
+        return $this->belongsTo(Categories::class, 'category_id', 'id');
+    }
 }

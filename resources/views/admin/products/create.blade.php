@@ -74,7 +74,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="">Weight</label>
-                            <input type="number" name="weight" class="form-control" min="1"> 
+                            <input type="text" name="weight" class="form-control" > 
                             </div>
                             <div class="col-md-6">
                                 <label for="">Quantity </label>
@@ -262,8 +262,7 @@ $(document).ready(function() {
             min:1
         },
         weight: {
-            required: true,
-            min:1            
+            required: true         
         },
         quantity: {
             required: true,

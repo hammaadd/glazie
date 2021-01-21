@@ -7,22 +7,19 @@
             
             
             <?php $product_gallery = $product->gallery;
-            
-                foreach ($product_gallery as $key => $prd_img) {
-                    if ($prd_img->is_primary=='1') {
-                        $profile_image = $prd_img->image;
-                        $prdimg = $prd_img->image;
-                    }
-                    else{
-                        $image = $prd_img->image;
-                    }
-                } 
-                if (!$profile_image) {
-                    $profile_image=$image;
-                    $prdimg = $image;
-                }
+                 $i=0;
+        foreach ($product->gallery as $key => $value) {
+           if ($value->is_primary=="1") {
+               $image = $value->image;
+               $i=1;
+           }
+
+       }
+       if ($i==0) {
+           $image = $value->image;
+       }
             ?>
-            <img src="{{asset($profile_image)}}"
+            <img src="{{asset($image)}}"
             <?php $profile_image=""; ?> width="100%">
             <div class="row mt-3">
            @foreach ($product_gallery as $images)
@@ -53,7 +50,7 @@
                 <input type="hidden" name="product_id" value="{{$product->id}}">
                 <input type="hidden" name="product_name" value="{{$product->product_name}}">
                 <input type="hidden" name="price" value="{{$product->sale_price}}">        
-                <input type="hidden" name="photo" value="{{$prdimg}}">
+                <input type="hidden" name="photo" value="{{$image}}">
                 <button type="button" class="btn btn-danger" id="minus" disabled>-</button><input type="text" name="quantity" class="text-center" id="quantity" size="1" value="1" onkeypress="return isNumberKey(event)" readonly>
                 <button type="button" class="btn btn-success" id="plus" >+</button>
               </div>

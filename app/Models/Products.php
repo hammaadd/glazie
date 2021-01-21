@@ -19,4 +19,12 @@ class Products extends Model
         return $this->hasMany(ProductAttribute::class);
     }
  
+    public function categories()
+    {
+        return $this->hasMany(ProductCategory::class,'product_id','id');
+    }
+    public function brands()
+    {
+        return $this->belongsTo(Brands::class, 'brand_id', 'id');
+    }
 }

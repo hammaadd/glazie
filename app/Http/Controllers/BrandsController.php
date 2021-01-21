@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brands;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Categories;
 
 class BrandsController extends Controller
 {
@@ -95,5 +96,29 @@ class BrandsController extends Controller
             ->update($update_brand);
         
         return redirect('admin/brands')->with('info','The Brand is deleted Successfully');
+    }
+    public function removeimage(Request $request){
+        $id = $request->input('id');
+        $type = $request->input('type');
+        if ($type=="brand") {
+            # code...
+        
+            $update_brand =  array(
+                'image' =>null,
+            );
+            
+            Brands::where('id',$id)
+            ->update($update_brand);
+            echo json_encode(1);
+        }
+        if ($type=="categories") {
+            $update_catgories =  array(
+                'image' =>null,
+            );
+            
+            Categories::where('id',$id)
+            ->update($update_catgories);
+            echo json_encode(1);
+        }
     }
 }
