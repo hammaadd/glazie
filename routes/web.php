@@ -25,7 +25,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/admin/dashboard', 'AdminController@index')->name('admin.dashboard');
 Route::get('admin/adminlogout' ,'AdminController@admin_logout');
 
-
+Route::post('subscribe','IndexController@subscribe');
 Route::get('/admin/login','Auth\AdminLoginController@showloginForm');
 Route::post('/admin/login','Auth\AdminLoginController@login')->name('admin.login');
 Route::get('/admin/profile/edit','AdminsController@edit_profile');

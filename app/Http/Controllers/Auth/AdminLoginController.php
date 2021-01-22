@@ -24,7 +24,7 @@ class AdminLoginController extends Controller
             return redirect()->intended(route('admin.dashboard'));
             
         }
-        return redirect("/admin/login");
+        return redirect("/admin/login")->with('error', "The crediential not match the records");
         
     }
 }

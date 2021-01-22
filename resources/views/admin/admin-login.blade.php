@@ -44,7 +44,13 @@
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
+                                             
                                             </div>
+                                            @if(session('error'))
+                                        
+                                            <span class="text-danger text-center">  <b>{{session('error')}}</b></span>
+                                         
+                                     @endif
                                         </div>
 
                                         <div class="form-group row">

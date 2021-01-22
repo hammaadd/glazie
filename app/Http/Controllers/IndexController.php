@@ -21,6 +21,7 @@ use App\Models\Categories;
 use App\Models\RequestHiring;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use App\Models\Subscribe;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Notifications\SendPassword;
@@ -363,5 +364,14 @@ class IndexController extends Controller
         $installers = User::where('status','=','1')->where('name','like', '%'.$installer.'%')->where('type','=','installer')->get();
         return view('public/get_installer',['installers'=>$installers]);
     }
-    
+    public function subscribe(Request $request){
+        $validatedData = $request->validate([
+            'email'=>['unique:subscribes', 'max:255']    
+            ]);
+         
+        $subscribe = new Subscribe;
+        $subscribe->email = $request->input('email');
+        $subscribe->save();
+        return redirect('/')->with('info','Thank You for Your Subscription');
+    }
 }

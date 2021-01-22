@@ -2,7 +2,11 @@
 @section('title','Welcome to the Admin Panel')
 @section('content')
 <div class="page-container">
-                
+    <style>
+    .canvasjs-chart-credit{
+        display: none;
+    }
+    </style>            
 
     <!-- Content Wrapper START -->
     <div class="main-content">
@@ -13,26 +17,11 @@
                     <div class="card-body">
                         <div class="media align-items-center">
                             <div class="avatar avatar-icon avatar-lg avatar-cyan">
-                                <i class="anticon anticon-line-chart"></i>
+                                <i class="anticon anticon-user"></i>
                             </div>
                             <div class="m-l-15">
-                                <h2 class="m-b-0">+ 17.21%</h2>
-                                <p class="m-b-0 text-muted">Growth</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="media align-items-center">
-                            <div class="avatar avatar-icon avatar-lg avatar-gold">
-                                <i class="anticon anticon-profile"></i>
-                            </div>
-                            <div class="m-l-15">
-                                <h2 class="m-b-0">3,685</h2>
-                                <p class="m-b-0 text-muted">Orders</p>
+                                <h2 class="m-b-0">{{$installers}}</h2>
+                                <p class="m-b-0 text-muted">Installers</p>
                             </div>
                         </div>
                     </div>
@@ -46,32 +35,14 @@
                                 <i class="anticon anticon-user"></i>
                             </div>
                             <div class="m-l-15">
-                                <h2 class="m-b-0">1,832</h2>
+                                <h2 class="m-b-0">{{$customers}}</h2>
                                 <p class="m-b-0 text-muted">Customers</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-           
-            <div class="col-md-6 col-lg-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="media align-items-center">
-                            <div class="avatar avatar-icon avatar-lg avatar-cyan">
-                                <i class="anticon anticon-profile"></i>
-                            </div>
-                            <div class="m-l-15">
-                                <h2 class="m-b-0">798</h2>
-                                <p class="m-b-0 text-muted">Today Sale</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="media align-items-center">
@@ -79,14 +50,36 @@
                                 <i class="anticon anticon-profile"></i>
                             </div>
                             <div class="m-l-15">
-                                <h2 class="m-b-0">2285</h2>
-                                <p class="m-b-0 text-muted">Weekly Sale</p>
+                                <h2 class="m-b-0">{{$orders}}</h2>
+                                <p class="m-b-0 text-muted">Orders</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3">
+            
+        </div>
+        <div class="row">
+           
+            <div class="col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media align-items-center">
+                            <div class="avatar avatar-icon avatar-lg avatar-cyan">
+                                <i class="anticon anticon-profile"></i>
+                            </div>
+                            <div class="m-l-15">
+                                <h2 class="m-b-0"> @php
+                                    echo number_format($today_sale, 0);
+                                @endphp</h2>
+                                <p class="m-b-0 text-muted">Today Quantity  Sale</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="col-md-6 col-lg-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="media align-items-center">
@@ -94,7 +87,9 @@
                                 <i class="anticon anticon-profile"></i>
                             </div>
                             <div class="m-l-15">
-                                <h2 class="m-b-0">7025</h2>
+                                <h2 class="m-b-0"> @php
+                                    echo number_format($monthly_sale, 0);
+                                @endphp</h2>
                                 <p class="m-b-0 text-muted">Monthly Sale</p>
                             </div>
                         </div>
@@ -109,7 +104,9 @@
                                 <i class="anticon anticon-profile"></i>
                             </div>
                             <div class="m-l-15">
-                                <h2 class="m-b-0">25885</h2>
+                                <h2 class="m-b-0"> @php
+                                    echo number_format($yearly_sale, 0);
+                                @endphp  </h2>
                                 <p class="m-b-0 text-muted">Yearly Sale</p>
                             </div>
                         </div>
@@ -119,6 +116,34 @@
         </div>
      <div class="row">
          <div class="col-md-12">
+             @php
+             $door = $window= $handle =$frame = $lentern=0; 
+                 foreach($product_type as $product){
+                    $product_qty = $product->quantity;
+                    if($product->product->product_type=="door")
+                    {
+                        $door = $door+$product->quantity;
+                    }
+                    if($product->product->product_type=="handle")
+                    {
+                        $handle = $handle+$product->quantity;
+                    }
+                    if($product->product->product_type=="window")
+                    {
+                        $window = $window+$product->quantity;
+                    }
+                    
+                    if($product->product->product_type=="frame")
+                    {
+                        $frame = $frame+$product->quantity;
+                    }
+                    
+                    if($product->product->product_type=="lentern")
+                    {
+                        $lentern = $lentern+$product->quantity;
+                    }
+                 }
+             @endphp
             <script>
                 window.onload = function () {
                 
@@ -135,12 +160,14 @@
                         type: "column",  
                         showInLegend: true, 
                         legendMarkerColor: "grey",
-                        legendText: "MMbbl = one hundred barrels",
+                        legendText: "",
                         dataPoints: [      
-                            { y: 644, label: "Doors" },
-                            { y: 414, label: "Windows" },
-                            { y: 545,  label: "Frame" },
-                            { y: 32,  label: "Lentern" }
+                            { y: {{$door}}, label: "Door" },
+                            { y: {{$window}}, label: "Window" },
+                            { y: {{$frame}}, label: "Frame" },
+                            { y: {{$handle}}, label: "Handle" },
+                            { y: {{$lentern}}, label: "Lentern" },
+                            
                            
                             
                         ]
@@ -172,39 +199,16 @@
                                         <th>Price <small>(per unit)</small></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>12</td>
-                                        <td>Alumenium Door</td>
-                                        <td>2</td>
-                                        <td>$400</td>
-                                    </tr>
-                                    <tr>
-                                        <td>13</td>
-                                        <td>Wood Door</td>
-                                        <td>3</td>
-                                        <td>$400</td>
-                                    </tr>
-                                    <tr>
-                                        <td>12</td>
-                                        <td>Window</td>
-                                        <td>2</td>
-                                        <td>$400</td>
-                                    </tr>
-                                    <tr>
-                                        <td>12</td>
-                                        <td>Widow Frame</td>
-                                        <td>2</td>
-                                        <td>$400</td>
-                                    </tr>
-                                    <tr>
-                                        <td>12</td>
-                                        <td>Lentern</td>
-                                        <td>2</td>
-                                        <td>$400</td>
-                                    </tr>
-                                    
-                                </tbody>
+                               <tbody>
+                                   @foreach ($latest_products as $products)
+                                       <tr>
+                                           <td>{{$products->id}}</td>
+                                           <td>{{$products->product_name}}</td>
+                                           <td>{{$products->quantity}}</td>
+                                           <td>{{$products->sale_price}}</td>
+                                       </tr>
+                                   @endforeach
+                               </tbody>
                             </table>
                         </div>
                     </div>
@@ -228,36 +232,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>#5331</td>
-                                            <td>John Smith</td>
-                                            <td><?php echo date('d/M/Y');?></td>
-                                            <td><div class="badge badge-info badge-dot m-r-10"></div>Pending</td>
-                                        </tr>
-                                        <tr>
-                                            <td>#5345</td>
-                                            <td>David</td>
-                                            <td><?php echo date('d/M/Y');?></td>
-                                            <td><div class="badge badge-info badge-dot m-r-10"></div>Pending</td>
-                                        </tr>
-                                        <tr>
-                                            <td>#5346</td>
-                                            <td>Smith</td>
-                                            <td><?php echo date('d')-1.. date('/M/Y');?></td>
-                                            <td><div class="badge badge-info badge-dot m-r-10"></div>Pending</td>
-                                        </tr>
-                                        <tr>
-                                            <td>#5348</td>
-                                            <td>smantha</td>
-                                            <td><?php echo date('d')-1.. date('/M/Y');?></td>
-                                            <td><div class="badge badge-info badge-dot m-r-10"></div>Pending</td>
-                                        </tr>
-                                        <tr>
-                                            <td>#5376</td>
-                                            <td>Harper.</td>
-                                            <td><?php echo date('d')-1.. date('/M/Y');?></td>
-                                            <td><div class="badge badge-info badge-dot m-r-10"></div>Pending</td>
-                                        </tr>
+                                        @foreach ($latest_orders as $ordersdetails)
+                                            <tr>
+                                                <td>{{$ordersdetails->id}}</td>
+                                                <td>{{$ordersdetails->customer->name}}</td>
+                                                <td>{{$ordersdetails->created_at}}</td>
+                                                <td>{{$ordersdetails->status}}</td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -269,20 +251,7 @@
         </div>
 
     </div>
-    <!-- Content Wrapper END -->
-
-    <!-- Footer START -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p class="m-b-0">Copyright © 2019 Theme_Nate. All rights reserved.</p>
-            <span>
-                <a href="" class="text-gray m-r-15">Term &amp; Conditions</a>
-                <a href="" class="text-gray">Privacy &amp; Policy</a>
-            </span>
-        </div>
-    </footer>
-    <!-- Footer END -->
-
+  
 </div>
 @endsection
 @section('script')
