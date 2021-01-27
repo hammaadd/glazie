@@ -175,7 +175,21 @@ Route::prefix('admin')->group(function () {
     Route::post('updatecompanydata/{id}','InstallerController@update_company_data');
     Route::get('installerpassword/{id}','InstallerController@installerpassword');
     Route::post('chngeinstallerpwd/{id}','InstallerController@changepassword');
-    
+
+    // NewsLetter And SubScription
+
+Route::get('subscription','SubscriptionController@index');
+Route::get('deletesubscription/{id}','SubscriptionController@delete');
+
+// Feedback
+Route::get('deletefeedback/{feedback_id}','ProductsController@deletefeedback');
+
+// Notification 
+    Route::post('countnotification' , 'NotificationController@count');
+    Route::post('getnotification' , 'NotificationController@get');
+    Route::get('notifydetails/{id}','NotificationController@details');
+    Route::get('notifications','NotificationController@index');
+    Route::get('deletenotify/{id}','NotificationController@delete');
 });
 
 // Public Routes
@@ -195,7 +209,8 @@ Route::get('installerdetails/{id}','IndexController@installerdetails');
 
 Route::post('hirerequest','IndexController@hirerequest');
 Route::post('get_installer','IndexController@get_installer');
-
+// Feedback 
+Route::post('feedback','IndexController@feedback');
 // Customr Routes are here
 Route::prefix('customer')->group(function () {
     Route::get('profile/edit','CustomerController@editprofile');

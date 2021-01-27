@@ -141,7 +141,50 @@
                                 </li> -->
                             </ul>
                         </li>
-                        
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-user"></i>
+                                </span>
+                                <span class="title">SubScription</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{url('admin/subscription')}}">Subscription</a>
+                                </li >
+                                
+                               
+                                
+                                <!--<li>
+                                    <a href="index-projects.html">Projects</a>
+                                </li> -->
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-user"></i>
+                                </span>
+                                <span class="title">All Notifications</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{url('admin/notifications')}}">Notifications</a>
+                                </li >
+                                
+                               
+                                
+                                <!--<li>
+                                    <a href="index-projects.html">Projects</a>
+                                </li> -->
+                            </ul>
+                        </li>
                       
                
                

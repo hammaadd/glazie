@@ -10,8 +10,10 @@ use App\Models\Attribute;
 use App\Models\ProductTag;
 use App\Models\Term;
 use App\Models\Categories;
+use App\Models\ProductReviews;
 use Illuminate\Support\Facades\Auth;
 use DB;
+
 use Illuminate\Http\Request;
 
 
@@ -312,54 +314,69 @@ class ProductsController extends Controller
         ->update($product_primary);
         echo json_encode($result);
     }
-    public function addon(){
+    // public function addon(){
        
-        return view('admin/products/addon');
+    //     return view('admin/products/addon');
     
-    }
-    public function orderlist(){
-        return view('admin/products/list');
-    } 
-    public function installer(){
-        return view('admin/products/installer');
-    } 
-    public function productslist()
-    {
-        return view('admin/products/products_list');
-    }
-    public function productdetail()
-    {
-        return view('admin/products/productdetail');
-    }
-    public function requesthiring()
-    {
-        return view('admin/products/requesthiring');
-    }
+    // }
+    // public function orderlist(){
+    //     return view('admin/products/list');
+    // } 
+    // public function installer(){
+    //     return view('admin/products/installer');
+    // } 
+    // public function productslist()
+    // {
+    //     return view('admin/products/products_list');
+    // }
+    // public function productdetail()
+    // {
+    //     return view('admin/products/productdetail');
+    // }
+    // public function requesthiring()
+    // {
+    //     return view('admin/products/requesthiring');
+    // }
   
-    public function orderdetails(){
-        return view('admin/products/order_details');
-    }
-    public function orderconfirm(){
-        return view('admin/products/orderconfirm');
-    }
-    public function hiredetails(){
-        return view('admin/products/hiredetails');
-    }
-    public function editinstaller()
+    // public function orderdetails(){
+    //     return view('admin/products/order_details');
+    // }
+    // public function orderconfirm(){
+    //     return view('admin/products/orderconfirm');
+    // }
+    // public function hiredetails(){
+    //     return view('admin/products/hiredetails');
+    // }
+    // public function editinstaller()
+    // {
+    //     return view('admin/products/editinstaller');
+    // }
+    // public function customer(){
+    //     return view('admin/products/customer');
+    // } 
+    // public function addcustomer(){
+    //     return view('admin/products/addcustomer');
+    // }
+    // public function editcustomer(){
+    //     return view('admin/products/editcustomer');
+    // }
+    // public function editproduct(){
+    //     return view('admin/products/editproduct');
+    // }
+    public function deletefeedback($feedback_id)
     {
-        return view('admin/products/editinstaller');
+        
+        $product_primary = array(
+            "status" =>"0"
+        );
+        $result = ProductReviews::where('id',$feedback_id)
+        ->update($product_primary);
+        $feedback = ProductReviews::find($feedback_id);
+        
+        $id = $feedback->products_id;
+        echo $id;
+        
+        return redirect('admin/products/view/'.$id)->with('info','The Feedback is deleted  Successfully');
+        
     }
-    public function customer(){
-        return view('admin/products/customer');
-    } 
-    public function addcustomer(){
-        return view('admin/products/addcustomer');
-    }
-    public function editcustomer(){
-        return view('admin/products/editcustomer');
-    }
-    public function editproduct(){
-        return view('admin/products/editproduct');
-    }
-    
 }

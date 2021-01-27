@@ -202,7 +202,7 @@
                                <tbody>
                                    @foreach ($latest_products as $products)
                                        <tr>
-                                           <td>{{$products->id}}</td>
+                                           <td>{{$loop->iteration}}</td>
                                            <td>{{$products->product_name}}</td>
                                            <td>{{$products->quantity}}</td>
                                            <td>{{$products->sale_price}}</td>
@@ -234,7 +234,7 @@
                                     <tbody>
                                         @foreach ($latest_orders as $ordersdetails)
                                             <tr>
-                                                <td>{{$ordersdetails->id}}</td>
+                                                <td>{{$loop->iteration}}</td>
                                                 <td>{{$ordersdetails->customer->name}}</td>
                                                 <td>{{$ordersdetails->created_at}}</td>
                                                 <td>{{$ordersdetails->status}}</td>

@@ -27,4 +27,8 @@ class Products extends Model
     {
         return $this->belongsTo(Brands::class, 'brand_id', 'id');
     }
+    public function feedback()
+    {
+        return $this->hasMany(ProductReviews::class, 'products_id', 'id');
+    }
 }

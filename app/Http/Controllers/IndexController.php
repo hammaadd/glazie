@@ -11,12 +11,14 @@ use App\Models\ProductTag;
 use App\Models\Countries;
 use App\Models\Address;
 use App\Models\Term;
+use App\Models\ProductReviews;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Cities;
-use App\Models\States;
+use App\Models\States; 
+use App\Models\Notification;
 use App\Models\Categories;
 use App\Models\RequestHiring;
 use Illuminate\Support\Facades\Auth;
@@ -46,12 +48,14 @@ class IndexController extends Controller
         $price = $request->input('price');
         $quantity =  $request->input('quantity');
         $photo =  $request->input('photo');
+        $regular_price = $request->input('regular_price');
         
         $cart = [
         
                 "product_id" =>  $product_id,
                 "product_name" =>  $product_name,
                 "price" =>$price,
+                'regular_price' => $regular_price,
                 "quantity" => $quantity,
                 "photo" => $photo
         ];
@@ -77,6 +81,7 @@ class IndexController extends Controller
         $cart->session_id = session()->getId();
         $cart->product_id = $product_id;
         $cart->price = $price;
+        $cart->regular_price = $regular_price;
         $cart->quantity = $quantity;
         $cart->save();
         $cart->id;
@@ -116,7 +121,7 @@ class IndexController extends Controller
     public function updatecartproduct(Request $request)
     {
         $session_id = session()->getId();
-        $quantity = $price = 0;
+        $quantity = $price= $regular_price = 0;
         $no_of_qty =$request->input('no_of_qty');
         $cart_id = $request->input('cart_id');
         $update_prd_cart =  array(
@@ -128,9 +133,11 @@ class IndexController extends Controller
         $carts = Cart::where('session_id','=',$session_id)->where('status','=','1')->get();
         foreach ($carts as $key => $cart) {
             $price  += $cart->price*$cart->quantity;
+            $regular_price  += $cart->regular_price*$cart->quantity;
             $quantity += $cart->quantity;
+            
         }
-        $obj = (object) array($price,$quantity);
+        $obj = (object) array($price,$quantity,$regular_price);
 		echo json_encode($obj);
     }
     public function checkout(){
@@ -283,9 +290,10 @@ class IndexController extends Controller
         $session_id = session()->getId();
         $carts = Cart::where('session_id','=',$session_id)->where('status','=','1')->get();
         foreach ($carts as $key => $cart) {
-            $total_amount += $cart->quantity*$cart->product->sale_price;
+            $total_amount += $cart->quantity*$cart->product->regular_price;
+            $net_total += $cart->quantity*$cart->product->sale_price;
         }
-        $net_total = $total_amount-$discount;
+        $discount = $total_amount - $net_total; 
         $order = new Order;
         $order->customer_id =$user_id;
         $order->total_amount =$total_amount;
@@ -306,6 +314,14 @@ class IndexController extends Controller
        $orderdetails->save();
        
     }
+    
+    $notify =new Notification;
+    $notify->name = "New Order ";
+    $notify->message ="New Order of Products is received";
+    $notify->type = "Subscription";
+    $notify->link = "admin/orders";
+    $notify->save(); 
+
     $request->session()->regenerate();
     return redirect('/')->with('info','Order Is created successfull Soon You Recived Email  ');
     
@@ -354,7 +370,13 @@ class IndexController extends Controller
         $requesthiring->estimated_time = $request->input('estimated_time');
         $requesthiring->customer_id = $user->id;
         $requesthiring->save();
-        
+
+        $notify =new Notification;
+        $notify->name = "New Installer Request ";
+        $notify->message ="Request of the installer for hiring is received ";
+        $notify->type = "Subscription";
+        $notify->link = "admin/requesthiring";
+        $notify->save();
         
         return redirect('installerlist')->with('info','Your Request is created Soon you recieve mail Soon');
     }
@@ -372,6 +394,37 @@ class IndexController extends Controller
         $subscribe = new Subscribe;
         $subscribe->email = $request->input('email');
         $subscribe->save();
+        $notify =new Notification;
+        $notify->name = "New SubScription";
+        $notify->message =$request->input('email')."subscribed successfully";
+        $notify->type = "Subscription";
+        $notify->link = "admin/subscription";
+        $notify->save(); 
         return redirect('/')->with('info','Thank You for Your Subscription');
+    }
+    public function feedback(Request $request){
+        print_r($_POST);
+        $validatedData = $request->validate([
+            'rating'=>'required',
+            'name'=>'required',
+            'email'=>'required',
+                
+            ]);
+        $product_review = new ProductReviews; 
+        $product_review->rating =$request->input('rating'); 
+        $product_review->products_id = $request->input('product_id');
+        
+        $product_review->name =$request->input('name'); 
+        $product_review->email =$request->input('email'); 
+        $product_review->reviews =$request->input('reviews');
+        $product_review->save();
+
+        $notify =new Notification;
+        $notify->name = "Product Rating";
+        $notify->message =$request->input('email')."rated the product";
+        $notify->type = "Product Rating";
+        $notify->link = "admin/products/view/".$request->input('product_id');
+        $notify->save(); 
+        return redirect('/')->with('info','Thank You for Your Feedback');
     }
 }

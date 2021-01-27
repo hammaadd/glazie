@@ -36,7 +36,7 @@
                             <div class="m-b-10">
                                 <select class="custom-select" style="min-width: 180px;" id="status" onchange="filtertable()">
                                     <option value="">All</option>
-                                    <option value="activate">Activate</option>
+                                    <option value="Active">Activate</option>
                                     <option value="de activate">Deactivate</option>
                                     <option value="suspend">Suspend</option>
                                 </select>
@@ -72,7 +72,7 @@
                             <td>{{$customer->contact_no}}</td>
                             <td>
                                 @if ($customer->login_status=='activate')
-                                <span class="badge badge-pill  badge-green">Activate</span>
+                                <span class="badge badge-pill  badge-green">Active</span>
                                 @endif
                                 @if ($customer->login_status=='deactivate')
                                 <span class="badge badge-pill  badge-red">De Activate</span>   

@@ -19,6 +19,7 @@ class CreateCartsTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
             $table->double('quantity',9,2);
+            $table->double('regular_price',9,2); 
             $table->double('price',9,2);
             $table->enum('status',['0','1'])->default('1');
             $table->unsignedBigInteger('created_by')->nullable();

@@ -139,9 +139,10 @@
         </div>    
         <div class="col-md-3">
             @php
-            $price=$quantity=0;
+            $price=$quantity=$regular_price = 0;
                 foreach ($carts as $key => $cart) {
                     $quantity+=$cart->quantity;
+                    $regular_price +=$cart->quantity*$cart->regular_price;
                     $price +=$cart->quantity*$cart->price; 
                 }
             @endphp
@@ -151,11 +152,19 @@
                 </div>
                 <div class="card-body">
                     <table class="table">
+                       
                         <tr>
                             <th>Total Quantity:</th>
                             <td> <span >{{$quantity}}</span> </td>
                         </tr>
-                        
+                        <tr>
+                            <th>Total Amount</th>
+                            <td>{{$regular_price}}</td>
+                        </tr>
+                        <tr>
+                            <th>Discount</th>
+                            <td>{{$regular_price-$price}}</td>
+                        </tr>
                         <tr>
                             <th>Total Amount:</th>
                             <td><span >{{$price}}</span></td>

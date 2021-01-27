@@ -11,7 +11,7 @@ class OrdersController extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        $orders = Order::all();
+        $orders = Order::orderby('id','desc')->get();
       return view('admin/orders/index',['orders'=>$orders]);
 
     }

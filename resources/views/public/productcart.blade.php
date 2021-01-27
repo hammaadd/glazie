@@ -18,12 +18,14 @@
                         <th>Prodcut Name</th>
                         <th>Product Image</th>
                         <th>Quantity</th>
+                        <th>Product Price</th>
+                        <th>Discount</th>
                         <th>Price</th>
                         <th>Remove</th>
                     </tr>
                 </thead>
                 @php
-                    $quantity =$price = 0;
+                    $quantity =$price = $net_discount = $net_regular_price= 0;
                 @endphp
                 @foreach ($carts as $cart)
                 @php
@@ -42,14 +44,23 @@
                         }
                         $quantity+= $cart->quantity;
                         $price += $cart->price*$cart->quantity;
+                        $net_regular_price += $cart->regular_price*$cart->quantity;
                     @endphp
                     <tr>
                         <td>{{$products->product_name}}</td>
                         <td>
+                            <input type="hidden" id="regular_price{{$cart->id}}" value="{{$products->regular_price}}">
                             <input type="hidden" id="itemquantity{{$cart->id}}" value="{{$cart->price}}">
                             <a href="{{asset($image)}}"><img src="{{asset($image)}}" width="70px" height="70px"></a>
                         </td>
                         <td><input type="number" value="{{$cart->quantity}}" class="text-center" min="1" max="{{$products->quantity}}" oninput="update_qty({{$cart->id}})" id="no_of_qty{{$cart->id}}"></td>
+                           <td id="regular_prices{{$cart->id}}">{{$cart->quantity*$products->regular_price}}</td>
+                           @php
+                           
+                               $discount = $cart->quantity*$products->regular_price-$cart->quantity*$products->sale_price;
+                               $net_discount = $net_discount +$discount;
+                           @endphp
+                           <td id="discounts{{$cart->id}}">{{$discount}}</td> 
                         <td id="item_total_price{{$cart->id}}">{{$cart->price*$cart->quantity}}</td>
                         <td > <span class="badge badge-secondary m-3" onclick="remove({{$cart->id}})"><i class="fa fa-times" title="Remove this product from Cart" ></i></span></td></td>
                     </tr>
@@ -68,6 +79,17 @@
                 <th><b>Quantity:</b></th>
                 <td id="total_qty"><?= $quantity ?></td>
             </tr>
+
+            <tr>
+                <th>Total Amount</th>
+                <td id="net_regular_price">{{$net_regular_price}}</td>
+            </tr>
+            
+            <tr>
+                <th>Discount</th>
+                <td id="net_discounts">{{$net_discount}}</td>
+            </tr>
+            
             <tr>
                 <th><b>Price:</b></th>
                 <td id="total_price"><?= $price ?></td>
@@ -142,7 +164,14 @@
                     $('#total_qty').html(jsonResult[1]);
                     $('#total_price').html(jsonResult[0]);
                     $('#cart_items').html(jsonResult[1]);
-           }
+                    $('#net_regular_price').html(jsonResult[2]);
+                    var regular_price = parseInt($('#regular_price'+cart_id).val())*parseInt(no_of_qty);
+                    $('#regular_prices'+cart_id).html(regular_price);
+                    discount = regular_price -item_result; 
+                    $('#discounts'+cart_id).html(discount);
+                    var net_discount = parseInt(jsonResult[2])-parseInt(jsonResult[0])
+                    $('#net_discounts').html(net_discount);
+                }
            		
             });
         
