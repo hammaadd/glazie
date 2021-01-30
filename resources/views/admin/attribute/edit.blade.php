@@ -25,8 +25,10 @@
                         <div class="row">
                         @if(count($errors)>0)
                                 @foreach($errors->all() as $error)
-                                <div class="alert alert-danger">
-                                    {{$error}}
+                                <div class="col-md-6">
+                                    <div class="alert alert-danger text-light" style="background-color: #e2584c">
+                                        {{$error}}
+                                    </div>
                                 </div>
                                 @endforeach
                             @endif
@@ -36,42 +38,11 @@
                                 <label for="">Attribute Name</label>
                                 <input type="text" class="form-control" name="attribute_name" placeholder="Attribute Name" autofocus value="{{$attribute->attribute_name}}">
                             </div>
-                            <div class="col-md-6">
-                                <label for="">Attribute Price </label>
-                            <input type="number" class="form-control" name="attribute_price" placeholder="Price of the Attribute"  value="{{$attribute->attribute_price}}">
-                            </div>
+                           
                             @csrf
                            
+                    
                             
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="">Procut Type</label>
-                                
-                                <select name="product_type"  class="form-control">
-                                    <option value="">--Select Product Type--</option>
-                                    <option value="door" 
-                                    @if ($attribute->product_type=="door")
-                                        selected
-                                    @endif
-                                    >Door</option>
-                                    <option value="handle"
-                                     @if ($attribute->product_type=="handle")
-                                        selected
-                                    @endif>Handle</option>
-                                    <option value="lentern" 
-                                    @if ($attribute->product_type=="lentern")
-                                        selected
-                                    @endif>Lentern</option>
-                                    <option value="frame" @if ($attribute->product_type=="frame")
-                                        selected
-                                    @endif>Frame</option>
-                                    <option value="window"
-                                     @if ($attribute->product_type=="window")
-                                        selected
-                                    @endif>Window</option>
-                                </select>
-                            </div>
                             <div class="col-md-6">
                                 <label for="">Image</label>
                                 <input type="file" class="form-control" name="image">
@@ -103,58 +74,18 @@
 
 
     <script src="{{url('admin-assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')"></script>
+    <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
     <script>
-        var pwd = document.getElementById('oldpwd');
-        var eye1 = document.getElementById('eye1');
-
-        eye1.addEventListener('click',togglePass);
-
-        function togglePass(){
-        eye1.classList.toggle('active');
-        
-        (pwd.type=='password')? pwd.type='text' :
-        pwd.type='password';
-        eye.classList.toggle('active');
-        
-        
-
-    }
-        var newpwd = document.getElementById('newpwd');
-        var conpwd = document.getElementById('cpassword');
-        var eye2 = document.getElementById('eye2');
-
-        eye2.addEventListener('click',togglePass1);
-
-        function togglePass1(){
-        eye2.classList.toggle('active');
-        
-        (newpwd.type=='password')? newpwd.type='text' :
-        newpwd.type='password';
-        (conpwd.type=='password')? conpwd.type='text' :
-        conpwd.type='password';
-        eye2.classList.toggle('active');
-        
-        
-
-    }
-    $("#form-validation").validate({
+    $("#attribute").validate({
     ignore: ':hidden:not(:checkbox)',
     errorElement: 'label',
     errorClass: 'is-invalid',
     validClass: 'is-valid',
     rules: {
-        oldpwd: {
+        attribute_name: {
             required: true
-        },
-        newpwd: {
-            required: true
-           
-        },
-        conf_password: {
-            required: true ,
-            equalTo: '#cpassword'  
         }
+      
     }
 });
 

@@ -42,13 +42,31 @@ class AdminController extends Controller
         // Customers data
         $customers = User::where('status','=','1')->where('type','=','customer')->count();
         //  Today  total Quantity sale 
-        $today_sale = OrderDetails::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "=", $ed)->sum('quantity');
-        
+        $today = Order::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "=", $ed)->where('status','=','completed')->get();
+        $today_sale = 0;
+        foreach($today as $todays){
+            foreach($today->details as $orderdetails){
+                $today_sale += $orderdetails->quantity;
+            }
+        }
         // Total Quantity of this year
-        $monthly_sale = OrderDetails::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), ">=", $msd)->where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "<=", $ed)->sum('quantity');
+        $month = Order::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), ">=", $msd)->where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "<=", $ed)->where('status','=','completed')->get();
+        $monthly_sale = 0;
+        foreach($month as $months){
+            foreach($months->details as $orderdetails){
+                $monthly_sale += $orderdetails->quantity;
+            }
+        }
+        
         // Order of this year
-        $yearly_sale = OrderDetails::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), ">=", $ysd)->where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "<=", $ed)->sum('quantity');
-        // Order Counting
+        $yearly = Order::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), ">=", $ysd)->where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "<=", $ed)->get();        // Order Counting
+        $yearly_sale = 0;
+        foreach($yearly as $year){
+            foreach($year->details as $yearorderdetails){
+                $yearly_sale += $yearorderdetails->quantity;
+            }
+        }
+       // echo $yearly_sale;
         $orders = Order::count();
       
         //  The latest Orders

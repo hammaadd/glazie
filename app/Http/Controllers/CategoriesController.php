@@ -26,13 +26,13 @@ class CategoriesController extends Controller
     public function create(Request $request){
         $user = Auth::user();
         $validatedData = $request->validate([
-            'cat_name' => 'required',
+            'category_name' => 'required',
             'image' => 'mimes:jpg,png,jpeg,gif,svg|max:5048',
         ]);
         $new_cat =  new Categories;
         
             $new_cat->parent_id = $request->input('parent_id');
-            $new_cat->cat_name = $request->input('cat_name');
+            $new_cat->cat_name = $request->input('category_name');
             $new_cat->description = $request->input('description');
             $new_cat->created_by = $user->id;
             if ($request->file('image')) {
@@ -58,16 +58,17 @@ class CategoriesController extends Controller
     public function update($id,Request $request){
         $user = Auth::user();
         $validatedData = $request->validate([
-            'cat_name' => 'required',
-
+            'category_name' => 'required',
+            'image' => 'mimes:jpg,png,jpeg,gif,svg|max:5048',
         ]);
         $update_cat =  array(
         
             'parent_id' => $request->input('parent_id'),
-            'cat_name' => $request->input('cat_name'),
+            'cat_name' => $request->input('category_name'),
             'description' => $request->input('description'),
             'updated_by' => $user->id
         );
+        Categories::where('id',$id)->update($update_cat);
         
         if($request->file('image')){
             $file = $request->file('image');
@@ -76,17 +77,15 @@ class CategoriesController extends Controller
             $imgname = uniqid() . $filename;
             $destinationPath = public_path('/admin-assets/categories');
             $file->move($destinationPath, $imgname);
-            $update_cat =  array(
-                'parent_id' => $request->input('parent_id'),
-                'cat_name' => $request->input('cat_name'),
-                'description' => $request->input('description'),
-                'updated_by' => $user->id,
+            $update_image =  array(
+              
                 'image' => $imgname
                 
             );
+            Categories::where('id',$id)->update($update_image);
         }
             
-            Categories::where('id',$id)->update($update_cat);
+           
         
         
         return redirect('admin/categories')->with('info','The Category is Updated Successfully');

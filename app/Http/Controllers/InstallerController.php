@@ -153,6 +153,7 @@ class InstallerController extends Controller
 
     }
     public function update($id, Request $request){
+      
         if ($request->input('company_info')==1) {
             $company_info = "1";
         }
@@ -187,7 +188,7 @@ class InstallerController extends Controller
             User::where('id',$id)->update($userimage);
         }
             User::where('id',$id)->update($user_array);
-
+            echo 
             $installerinfoid = $request->input('installinfoid');
             $types = $request->input('installation_type');
             $installation_type =  implode(",",$types);
@@ -267,10 +268,11 @@ class InstallerController extends Controller
                 );
                 InstallerCompany::where('id',$company_id)->update($company_logo);
             }
+    
             
-            
-            return redirect('admin/installer')->with('info','The Installer is updated');
+           
         }
+        return redirect('admin/installer')->with('info','The Installer is updated');
         
     }
     public function details($id){

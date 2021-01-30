@@ -1,5 +1,5 @@
 @extends('admin-layout.layouts')
-@section('title','Add new installer')
+@section('title','Add new Customer')
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
@@ -25,48 +25,45 @@
                         <h4 class="card-title">Add New Customer</h4>
                     </div>
                     <div class="card-body">
-                        @if($errors)
-                        @foreach($errors as $error)
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-6">
-                                <div class="alert alert-danger">
-                                    @$error
-                                </div>
-                            </div>
+                        
+                            @if(count($errors)>0)
+                        @foreach($errors->all() as $error)
+                        <div class="col-md-6 alert alert-danger" style="background-color: #e2584c">
+                            <li class="text-light" style="list-style-type: none"><b>{{$error}}</b></li>
                         </div>
                         @endforeach
-                        @endif
+                    @endif
+                       
                         <div class="row">
                         @csrf
                             <div class="col-md-6">
                                 <label for="" >First Name</label>
-                                <input type="text" class="form-control" name="first_name" placeholder="First Name">
+                                <input type="text" class="form-control" name="first_name" placeholder="First Name" value="{{old('first_name')}}">
                             </div>
                             <div class="col-md-6">
                                 <label for="" >Last Name</label>
-                                <input type="text" class="form-control" name="last_name" placeholder="Last Name ">
+                                <input type="text" class="form-control" name="last_name" placeholder="Last Name " value="{{old('last_name')}}">
                                 
                             </div>   
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="" >Contact No</label>
-                                <input type="text" class="form-control" name="contact_no" placeholder="Contact No ">
+                                <input type="text" class="form-control" name="contact_no" placeholder="Contact No " value="{{old('contact_no')}}">
                             </div>
                             <div class="col-md-6">
                                 <label for="" >Email Address</label>
-                                <input type="email" class="form-control" name="email" placeholder="Email address">
+                                <input type="email" class="form-control" name="email" placeholder="Email address" value="{{old('email')}}">
                             </div>   
                         </div>
                         <div class="row">
                         <div class="col-md-6">
                                 <label for="">Password</label>
-                                <input type="password" class="form-control" name="password" id="password" placeholder="Password"> 
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Password" value="{{old('password')}}"> 
                             </div>
                             <div class="col-md-6">
                                 <label for="" >Confirm Password</label>
-                                <input type="password" class="form-control" name="confpass" id="conf_pass" placeholder="Confirm Password">
+                                <input type="password" class="form-control" name="confpass" id="conf_pass" placeholder="Confirm Password" value="{{old('confpass')}}">
                             </div> 
                             
                         </div>
@@ -77,7 +74,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="" >Address</label>
-                                <input type="text" class="form-control" name="address" placeholder="Address">
+                                <input type="text" class="form-control" name="address" placeholder="Address" value="{{old('address')}}">
                             </div> 
                             
                         </div>
@@ -86,9 +83,21 @@
                                 <label for="">Status</label>
                                 <select name="login_status"  class="form-control">
                                     <option value="">Select Status</option>
-                                    <option value="activate">Activate</option>
-                                    <option value="deactivate">De Activate</option>
-                                    <option value="suspend">Suspend</option>
+                                    <option value="activate"
+                                    @if (old('login_status')=="activate")
+                                        selected
+                                    @endif
+                                    >Activate</option>
+                                    <option value="deactivate"
+                                    @if (old('login_status')=="deactivate")
+                                        selected
+                                    @endif 
+                                    >De Activate</option>
+                                    <option value="suspend"
+                                    
+                                    @if (old('login_status')=="suspend")
+                                        selected
+                                    @endif>Suspend</option>
                                 </select>
                             </div>
                             
@@ -168,40 +177,9 @@
         address:{
             required:true,  
         },
-        recharge:{
+        login_status:{
             required:true,
            
-        },
-        experience:{
-            required:true,
-           
-        },
-        installation_type:{
-            required:true,
-        },
-        company_name:{
-            required:true
-        },
-        company_email:{
-            required:true
-        },
-        country_id:{
-            required:true
-        },
-        city_id:{
-            required:true
-        },
-        state_id:{
-            required:true
-        },
-        postcode:{
-            required:true
-        },
-        company_contactno:{
-            required:true
-        },
-        company_address:{
-            required:true
         }
     }
 });

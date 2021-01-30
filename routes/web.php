@@ -190,6 +190,15 @@ Route::get('deletefeedback/{feedback_id}','ProductsController@deletefeedback');
     Route::get('notifydetails/{id}','NotificationController@details');
     Route::get('notifications','NotificationController@index');
     Route::get('deletenotify/{id}','NotificationController@delete');
+
+
+    // Content Management Routes
+    Route::get('cms','CMSController@index');
+    Route::get('cms/add','CMSController@add');
+    Route::post('cms/create','CMSController@create');
+    Route::get('cms/edit/{id}','CMSController@edit');
+    Route::get('cms/view/{id}','CMSController@view');
+    Route::post('cms/update/{id}','CMSController@update');
 });
 
 // Public Routes
@@ -211,6 +220,11 @@ Route::post('hirerequest','IndexController@hirerequest');
 Route::post('get_installer','IndexController@get_installer');
 // Feedback 
 Route::post('feedback','IndexController@feedback');
+// Getting nav item
+
+Route::post('getnavlinks','IndexController@navlink');
+
+Route::get('cms/{id}','IndexController@cmspage');
 // Customr Routes are here
 Route::prefix('customer')->group(function () {
     Route::get('profile/edit','CustomerController@editprofile');

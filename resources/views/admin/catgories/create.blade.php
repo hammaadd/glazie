@@ -25,8 +25,16 @@
                     <div class="card-body">
                         <div class="row">
                         @csrf
-                        
-                                        <br>
+                        @if(count($errors)>0)
+                        @foreach($errors->all() as $error)
+                        <div class="col-md-12">
+                            <div class="alert alert-danger text-light" style="background-color: #e2584c">
+                                {{$error}}
+                            </div>
+                        </div>
+                        @endforeach
+                        @endif
+                            <br>
                             <label for="" >Select Parent category</label>
                             
                             <select name="parent_id"  class="form-control">
@@ -39,14 +47,8 @@
                         </div>
                         <div class="row">
                             <label for="">Category Name</label>
-                            <input type="text" class="form-control" name="cat_name">
-                            @if(count($errors)>0)
-                                        @foreach($errors->all() as $error)
-                                        <span class="text-danger">
-                                            {{$error}}
-                                        </span>
-                                        @endforeach
-                                        @endif
+                            <input type="text" class="form-control" name="category_name" value="{{old('cat_name')}}" placeholder="Category Name">
+                           
                         </div>
                         <div class="row">
                             <label for="">Image</label>
@@ -54,7 +56,7 @@
                         </div>
                         <div class="row">
                             <label for="">Description</label>
-                            <textarea name="description" class="form-control" rows="10"></textarea>
+                            <textarea name="description" class="form-control" rows="10" placeholder="Description"> {{old('description')}}</textarea>
                         </div>
                         
                         <div class="row">
@@ -87,7 +89,7 @@
     errorClass: 'is-invalid',
     validClass: 'is-valid',
     rules: {
-        cat_name: {
+        category_name: {
             required: true
         }
     }

@@ -29,8 +29,8 @@
                 </div>
 				@endif
         <div class="row">
-            <div class="col-md-3">
-                <a  class="btn btn-success btn-xs" href="{{url('admin/attributes/add')}}"><i class="fa fa-plus"></i>Add New Attribute</a>
+            <div class="col-md-12">
+                <a  class="btn btn-primary  float-right mb-2" href="{{url('admin/attributes/add')}}"><i class="fa fa-plus"></i>Add New Attribute</a>
             </div>
             <div class="col-md-12">
                 

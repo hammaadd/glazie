@@ -49,7 +49,7 @@
                         <th>Sr.#</th>
                         <th>Brand Name</th>
                         <th>Description</th>
-                        <th></th>
+                        <th>Image</th>
                         <th>Action</th>
                     </thead>
                     <tbody>

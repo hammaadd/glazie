@@ -1,5 +1,5 @@
 @extends('admin-layout.layouts')
-@section('title','Edit Installer')
+@section('title','Edit Customer')
 @section('content')
 <div class="page-container">
     <div class="main-content">
@@ -23,18 +23,13 @@
                         <h4 class="card-title">Edit Customer</h4>
                     </div>
                     <div class="card-body">
-                        @if($errors)
-                        @foreach($errors as $error)
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-6">
-                                <div class="alert alert-danger">
-                                    @$error
-                                </div>
-                            </div>
+                        @if(count($errors)>0)
+                        @foreach($errors->all() as $error)
+                        <div class="col-md-6 alert alert-danger" style="background-color: #e2584c">
+                            <li class="text-light" style="list-style-type: none"><b>{{$error}}</b></li>
                         </div>
                         @endforeach
-                        @endif
+                    @endif
                         <div class="row">
                         @csrf
                             <div class="col-md-6">

@@ -1,6 +1,20 @@
 @extends('public/layouts/layouts')
 @section('title','Installer List')
 @section('content')
+<style>
+   #sortingicon{
+       font-size: 20px;
+       padding: 10px;
+       color:#43A0AB;
+   } 
+   #sortingicon:hover{
+       background-color: cadetblue;
+       color: white;
+       border-radius: 20%;
+       pointer-events: cursor;
+
+   }
+</style>
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
@@ -12,14 +26,16 @@
     @if (session('info'))
     <script type="text/javascript">toastr.success("{{session('info')}}");</script>
     @endif  
-        <div class="row">    
+        <div class="row mt-4">    
             <div class="col-md-3">
-               <h3 class="mt-4">Installer List</h3> 
+               <h3>Installer List</h3> 
             </div>
-            <div class="col-md-6 mt-4">
+            <div class="col-md-6 ">
                 @csrf
                 <input type="text" class="form-control" id="installer" placeholder="Search Installer" >
             </div>
+            <div class="col-md-1"><i class="fas fa-sort-amount-down-alt" id="sortingicon"></i></div>
+            <div class="col-md-1"><i class="fas fa-sort-amount-up  " id="sortingicon"></i></div>
         </div>
         <div class="row mt-4"  id="data_records">
             @foreach ($installers as $installer)

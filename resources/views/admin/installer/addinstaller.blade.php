@@ -1,6 +1,7 @@
 @extends('admin-layout.layouts')
 @section('title','Add new installer')
 @section('content')
+
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <div class="page-container">
@@ -25,17 +26,12 @@
                         <h4 class="card-title">Add New Installer</h4>
                     </div>
                     <div class="card-body">
-                        @if($errors)
-                        @foreach($errors as $error)
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-6">
-                                <div class="alert alert-danger">
-                                    @$error
-                                </div>
+                        @if(count($errors)>0)
+                            @foreach($errors->all() as $error)
+                            <div class="col-md-6 alert alert-danger" style="background-color: #e2584c">
+                                <li class="text-light" style="list-style-type: none"><b>{{$error}}</b></li>
                             </div>
-                        </div>
-                        @endforeach
+                            @endforeach
                         @endif
                         <div class="row">
                         @csrf
@@ -182,7 +178,7 @@
                         <div class="row">
                             <div class="col-md-12">
                             <button type="submit" class="btn btn-success mt-3"><i class="anticon anticon-plus-circle"></i> Add Installer</button>
-                            <a href="{{url('admin/orders/installer')}}" class="btn btn-danger mt-3 ml-3"><i class="anticon anticon-close"></i> Cancel</a>
+                            <a href="{{url('admin/installer')}}" class="btn btn-danger mt-3 ml-3"><i class="anticon anticon-close"></i> Cancel</a>
                             </div>
                        
                         </div>

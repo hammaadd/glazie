@@ -22,6 +22,7 @@ use App\Models\Notification;
 use App\Models\Categories;
 use App\Models\RequestHiring;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ContentManagementSystem;
 use DB;
 use App\Models\Subscribe;
 use Illuminate\Support\Facades\Hash;
@@ -426,5 +427,14 @@ class IndexController extends Controller
         $notify->link = "admin/products/view/".$request->input('product_id');
         $notify->save(); 
         return redirect('/')->with('info','Thank You for Your Feedback');
+    }
+    public function navlink(){
+        $links = ContentManagementSystem::where('status','=','1')->where('publish','=','1')->get();
+        return view('public/navlinks',['links'=>$links]);
+    }
+    public function cmspage($id)
+    {
+        $cms = ContentManagementSystem::find($id);
+        return view('public/cmspage',['cms'=>$cms]);
     }
 }

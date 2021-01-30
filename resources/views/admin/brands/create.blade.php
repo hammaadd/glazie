@@ -18,7 +18,7 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="card">
-                    <form action="{{ url('/admin/brands/create')}}"  method="post" enctype="multipart/form-data">
+                    <form action="{{ url('/admin/brands/create')}}"  method="post" enctype="multipart/form-data" id="create_brand">
                     <div class="card-header">
                         <h4 class="card-title">Add New Brand</h4>
                     </div>
@@ -26,8 +26,10 @@
                         <div class="row">
                         @if(count($errors)>0)
                                 @foreach($errors->all() as $error)
-                                <div class="alert alert-danger">
-                                    {{$error}}
+                                <div class="col-md-12">
+                                    <div class="alert alert-danger text-light" style="background-color: #e2584c">
+                                        {{$error}}
+                                    </div>
                                 </div>
                                 @endforeach
                             @endif
@@ -35,19 +37,19 @@
                         <div class="row">
                             @csrf
                             <label for="">Brand Name</label>
-                            <input type="text" class="form-control" name="brand_name" placeholder="Brand Name" autofocus>
+                            <input type="text" class="form-control" name="brand_name" placeholder="Brand Name" autofocus value="{{old('brand_name')}}">
                             
                         </div>
                         <div class="row">
                             
                             <label for="">Brand Image </label>
-                            <input type="file" class="form-control" name="image" placeholder="Brand Image" >
+                            <input type="file" class="form-control" name="image" placeholder="Brand Image" value="{{old('image')}}">
                             
                         </div>
                         <div class="row">
                             
                             <label for="">Descrition </label>
-                            <textarea name="description" class="form-control" cols="30" rows="10"></textarea>
+                            <textarea name="description" class="form-control" cols="30" rows="10">{{old('description')}}</textarea>
                         </div>
                         
                         <div class="row">
@@ -69,59 +71,18 @@
 
 
     <script src="{{url('admin-assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')"></script>
+    <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
     <script>
-        var pwd = document.getElementById('oldpwd');
-        var eye1 = document.getElementById('eye1');
-
-        eye1.addEventListener('click',togglePass);
-
-        function togglePass(){
-        eye1.classList.toggle('active');
-        
-        (pwd.type=='password')? pwd.type='text' :
-        pwd.type='password';
-        eye.classList.toggle('active');
-        
-        
-
-    }
-        var newpwd = document.getElementById('newpwd');
-        var conpwd = document.getElementById('cpassword');
-        var eye2 = document.getElementById('eye2');
-
-        eye2.addEventListener('click',togglePass1);
-
-        function togglePass1(){
-        eye2.classList.toggle('active');
-        
-        (newpwd.type=='password')? newpwd.type='text' :
-        newpwd.type='password';
-        (conpwd.type=='password')? conpwd.type='text' :
-        conpwd.type='password';
-        eye2.classList.toggle('active');
-        
-        
-
-    }
-    $("#form-validation").validate({
+    $("#create_brand").validate({
     ignore: ':hidden:not(:checkbox)',
     errorElement: 'label',
     errorClass: 'is-invalid',
     validClass: 'is-valid',
     rules: {
-        oldpwd: {
-            required: true
-        },
-        newpwd: {
-            required: true
-           
-        },
-        conf_password: {
-            required: true ,
-            equalTo: '#cpassword'  
+        brand_name:{
+            required:true
         }
-    }
+        }
 });
 
     </script>

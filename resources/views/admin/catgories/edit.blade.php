@@ -22,7 +22,7 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="card">
-                    <form action="{{ url('/admin/category/update/'.$categories->id)}}"  method="post" enctype="multipart/form-data">
+                    <form action="{{ url('/admin/category/update/'.$categories->id)}}"  method="post" enctype="multipart/form-data" id="categrory">
                     <div class="card-header">
                         <h4 class="card-title">Edit Category</h4>
                     </div>
@@ -32,7 +32,7 @@
                         <div class="col-md-12">
                         @if(count($errors)>0)
                             @foreach($errors->all() as $error)
-                            <div class="alert alert-danger ">
+                            <div class="alert alert-danger text-light" style="background-color: #e2584c">
                                 {{$error}}
                             </div>
                             @endforeach
@@ -62,7 +62,7 @@
                         </div>
                         <div class="row">
                             <label for="">Category Name</label>
-                            <input type="text" class="form-control" name="cat_name" value="{{$categories->cat_name}}">
+                            <input type="text" class="form-control" name="category_name" value="{{$categories->cat_name}}">
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-4"></div>
@@ -127,22 +127,14 @@
             });
     }
             
-    $("#form-validation").validate({
+    $("#categrory").validate({
     ignore: ':hidden:not(:checkbox)',
     errorElement: 'label',
     errorClass: 'is-invalid',
     validClass: 'is-valid',
     rules: {
-        oldpwd: {
+        category_name: {
             required: true
-        },
-        newpwd: {
-            required: true
-           
-        },
-        conf_password: {
-            required: true ,
-            equalTo: '#cpassword'  
         }
     }
 });

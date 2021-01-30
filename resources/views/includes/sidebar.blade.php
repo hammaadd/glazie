@@ -37,6 +37,9 @@
                                 <li @if ($url=="admin/categories") class="active" @endif>
                                     <a href="{{url('admin/categories')}}">Categories</a>
                                 </li>
+                                <li @if ($url=="admin/categories") class="active" @endif>
+                                    <a href="{{url('admin/attributes')}}">Attributes</a>
+                                </li>
                                 <li @if ($url=="admin/brands")
                                 class="active"
                             @endif>
@@ -176,6 +179,28 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="{{url('admin/notifications')}}">Notifications</a>
+                                </li >
+                                
+                               
+                                
+                                <!--<li>
+                                    <a href="index-projects.html">Projects</a>
+                                </li> -->
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-user"></i>
+                                </span>
+                                <span class="title">WebSite Content </span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{url('admin/cms')}}">Manage Web Content</a>
                                 </li >
                                 
                                

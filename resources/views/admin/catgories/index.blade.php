@@ -23,8 +23,8 @@
         <script type="text/javascript">toastr.success("{{session('info')}}");</script>
         @endif   
         <div class="row">
-            <div class="col-md-3">
-                <a  class="btn btn-success btn-xs" href="{{url('admin/categories/add')}}"><i class="fa fa-plus"></i>Add Category</a>
+            <div class="col-md-12">
+                <a  class="btn btn-primary float-right m-3" href="{{url('admin/categories/add')}}"><i class="fa fa-plus-circle"></i> Add Category</a>
             </div>
             <div class="col-md-12">
                 <div class="table-responsive" ></div>

@@ -17,7 +17,7 @@
          
             <div class="col-md-12">
                 <div class="card">
-                    <form action="{{ url('/admin/attributes/create')}}"  method="post" enctype="multipart/form-data">
+                    <form action="{{ url('/admin/attributes/create')}}"  method="post" enctype="multipart/form-data" id="attribute">
                     <div class="card-header">
                         <h4 class="card-title">Add New Attribute</h4>
                     </div>
@@ -25,51 +25,43 @@
                         <div class="row">
                         @if(count($errors)>0)
                                 @foreach($errors->all() as $error)
-                                <div class="alert alert-danger">
+                               <div class="col-md-6">
+                                <div class="alert alert-danger text-light" style="background-color: #E2584C">
                                     {{$error}}
                                 </div>
+                               </div>
                                 @endforeach
                             @endif
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="">Attribute Name</label>
-                                <input type="text" class="form-control" name="attribute_name" placeholder="Attribute Name" autofocus>
+                                <input type="text" class="form-control" name="attribute_name" placeholder="Attribute Name" autofocus value="{{old('attribute_name')}}">
                             </div>
-                            <div class="col-md-6">
-                                <label for="">Attribute Price </label>
-                            <input type="number" class="form-control" name="attribute_price" placeholder="Price of the Attribute" >
-                            </div>
+                          
                             @csrf
                            
-                            
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="">Procut Type</label>
-                                <select name="product_type"  class="form-control">
-                                    <option value="">--Select Product Type--</option>
-                                    <option value="door">Door</option>
-                                    <option value="handle">Handle</option>
-                                    <option value="lentern">Lentern</option>
-                                    <option value="frame">Frame</option>
-                                    <option value="window">Window</option>
-                                </select>
-                            </div>
+                       
+                           
                             <div class="col-md-6">
                                 <label for="">Image</label>
                                 <input type="file" class="form-control" name="image">
                             </div>
+                            <div class=""></div>
                         </div>
                         <div class="row">
-                           <label for="">Description</label>
+                           <div class="col-md-12">
+                            <label for="">Description</label>
                            
-                           <textarea name="description" class="form-control" cols="30" rows="10" placeholder="Attribute Description"></textarea>
+                            <textarea name="description" class="form-control" rows="5" placeholder="Attribute Description">{{old('description')}}</textarea>
+                           </div>
                         </div>
                         
                         <div class="row">
+                           <div class="col-md-12">
                             <button type="submit" class="btn btn-success mt-3"><i class="fa fa-plus"></i> Create Attribute</button>
                             <a href="{{url('admin/attributes') }}" class="btn btn-danger mt-3 ml-3"> <i class="fa fa-times"></i> Cancel</a>
+                           </div>
                        
                         </div>
                     </div>
@@ -87,58 +79,18 @@
 
 
     <script src="{{url('admin-assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')"></script>
-    <script>
-        var pwd = document.getElementById('oldpwd');
-        var eye1 = document.getElementById('eye1');
-
-        eye1.addEventListener('click',togglePass);
-
-        function togglePass(){
-        eye1.classList.toggle('active');
-        
-        (pwd.type=='password')? pwd.type='text' :
-        pwd.type='password';
-        eye.classList.toggle('active');
-        
-        
-
-    }
-        var newpwd = document.getElementById('newpwd');
-        var conpwd = document.getElementById('cpassword');
-        var eye2 = document.getElementById('eye2');
-
-        eye2.addEventListener('click',togglePass1);
-
-        function togglePass1(){
-        eye2.classList.toggle('active');
-        
-        (newpwd.type=='password')? newpwd.type='text' :
-        newpwd.type='password';
-        (conpwd.type=='password')? conpwd.type='text' :
-        conpwd.type='password';
-        eye2.classList.toggle('active');
-        
-        
-
-    }
-    $("#form-validation").validate({
+    <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
+   <script>
+    $("#attribute").validate({
     ignore: ':hidden:not(:checkbox)',
     errorElement: 'label',
     errorClass: 'is-invalid',
     validClass: 'is-valid',
     rules: {
-        oldpwd: {
-            required: true
-        },
-        newpwd: {
-            required: true
-           
-        },
-        conf_password: {
-            required: true ,
-            equalTo: '#cpassword'  
+        attribute_name: {
+           required : true
         }
+       
     }
 });
 

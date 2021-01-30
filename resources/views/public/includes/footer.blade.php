@@ -65,5 +65,17 @@
          		  	
            		
             });
+            url = "{{url('getnavlinks')}}";
+            $.ajax({
+           type:'POST',
+           url:url,
+           success:function(result){
+            //console.log(result);
+            $('#dropdownlink').html(result);
+       
+}
+         		  	
+           		
+            });
     });
   </script>

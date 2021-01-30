@@ -21,7 +21,7 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="card">
-                    <form action="{{ url('/admin/brands/update/'.$brands->id)}}"  method="post" enctype="multipart/form-data">
+                    <form action="{{ url('/admin/brands/update/'.$brands->id)}}"  method="post" enctype="multipart/form-data" id="brand">
                     <div class="card-header">
                         <h4 class="card-title">Edit  Brand</h4>
                     </div>
@@ -29,8 +29,10 @@
                         <div class="row">
                         @if(count($errors)>0)
                                 @foreach($errors->all() as $error)
-                                <div class="alert alert-danger">
-                                    {{$error}}
+                                <div class="col-md-12 " >
+                                    <div class="alert alert-danger text-light" style="background-color: #e2584c">
+                                        {{$error}}
+                                    </div>
                                 </div>
                                 @endforeach
                             @endif</div>
@@ -62,7 +64,7 @@
                         <div class="row">
                             
                             <label for="">Descrition </label>
-                            <textarea name="description" class="form-control" cols="30" rows="10">{{$brands->description}}</textarea>
+                            <textarea name="description" class="form-control" cols="30" rows="10">{{$brands->description}}{{old('description')}}</textarea>
                         </div>
                         
                         
@@ -115,23 +117,15 @@
             });
     }
             
-    $("#form-validation").validate({
+    $("#brand").validate({
     ignore: ':hidden:not(:checkbox)',
     errorElement: 'label',
     errorClass: 'is-invalid',
     validClass: 'is-valid',
     rules: {
-        oldpwd: {
-            required: true
-        },
-        newpwd: {
-            required: true
-           
-        },
-        conf_password: {
-            required: true ,
-            equalTo: '#cpassword'  
-        }
+       brand_name:{
+           required:true
+       }
     }
 });
 
