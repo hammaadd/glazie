@@ -56,8 +56,8 @@
                                 {{-- <li @if ($url=="admin/attributes") class="active" @endif>
                                     <a href="{{url('admin/attributes')}}">Attributes</a>
                                 </li> --}}
-                                <li @if ($url=="admin/products/addon") class="active" @endif>
-                                    <a href="{{url('admin/products/addon')}}">AddOns</a>
+                                <li @if ($url=="admin/addon") class="active" @endif>
+                                    <a href="{{url('admin/addon')}}">AddOns</a>
                                 </li>
                                  {{-- <li>
                                     <a href="{{ url('admin/productattribute') }}">Product Attribute</a>
@@ -210,7 +210,75 @@
                                 </li> -->
                             </ul>
                         </li>
-                      
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-user"></i>
+                                </span>
+                                <span class="title">User Message </span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{url('admin/usermessage
+                                    ')}}">User's Message</a>
+                                </li >
+                                
+                               
+                                
+                                <!--<li>
+                                    <a href="index-projects.html">Projects</a>
+                                </li> -->
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-user"></i>
+                                </span>
+                                <span class="title">Coupen </span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{url('admin/coupen
+                                    ')}}">Coupen</a>
+                                </li >
+                                
+                               
+                                
+                                <!--<li>
+                                    <a href="index-projects.html">Projects</a>
+                                </li> -->
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="anticon anticon-user"></i>
+                                </span>
+                                <span class="title">Site Setting</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{url('admin/social
+                                    ')}}">Site Setting</a>
+                                </li >
+                                
+                               
+                                
+                                <!--<li>
+                                    <a href="index-projects.html">Projects</a>
+                                </li> -->
+                            </ul>
+                        </li>
                
                
                     </ul>

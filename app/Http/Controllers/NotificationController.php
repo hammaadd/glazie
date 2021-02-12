@@ -11,12 +11,12 @@ class NotificationController extends Controller
         $this->middleware('auth:admin');
     }
     public function count(){
-        $notifications = Notification:: where('status','=','unread')->where('delete_status','=','1')->count();
+        $notifications = Notification::where('status','=','unread')->count();
         echo json_encode($notifications);
     }
     public function get()
     {
-        $notifications = Notification:: where('status','=','unread')->where('delete_status','=','1')->get();
+        $notifications = Notification:: where('status','=','unread')->get();
         return view("admin/notification/all",['notifications'=>$notifications]);
     }
     public function details($id){
@@ -29,15 +29,13 @@ class NotificationController extends Controller
     }
     public function index()
     {
-        $notifications = Notification::where('delete_status','=','1')->orderBy('id','desc')->get();
+        $notifications = Notification::orderBy('id','desc')->get();
         return view('admin/notification/index',['notifications'=>$notifications]);
     }
     public function delete($id)
     {
-        $delete_notiifcation = array(
-            'delete_status' =>'0'
-        );
-        Notification::where('id',$id)->update($delete_notiifcation);
+       
+        Notification::where('id',$id)->delete();
         return redirect('admin/notifications')->with('info','Notification is deleted Successfully');
 
     }

@@ -8,8 +8,12 @@ use App\Rules\Newmatchold;
 use App\Models\RequestHiring;
 Use App\Models\Order;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\SendCode;
+use Mail;
+use Session;
 class CustomerController extends Controller
 {
+
     public function __construct(){
         $this->middleware('auth');
         
@@ -43,6 +47,13 @@ class CustomerController extends Controller
         return redirect('customer/profile/edit')->with('status', 'Image Has been uploaded');
     
     
+    }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('login');
     }
     public function changeprofile(){
         return view('customer/changeprofile');
@@ -123,8 +134,10 @@ class CustomerController extends Controller
     }    
     public function orderdetails($id)
     {   
-        $order_details = Order::find($id);
+        abort_if(!$order_details = Order::find($id),403);
+      
         return view('customer/order_dtails',['order' =>$order_details]);
+      
     }
     public function requests(){
         $customer_id = Auth::id();
@@ -135,4 +148,46 @@ class CustomerController extends Controller
         $request = RequestHiring::find($id);
         return view('customer/requestdetails',['requesthire'=>$request]);
     }
+    public function changeaccount(){
+        return view('customer/changeaccount');
+    }
+
+    public function changeemail(Request $request){
+        $request->validate([
+            'email'=>'required|email'
+        ]);
+        $email = $request->input('email');
+        global $details;
+        $details = rand(100000,999999);
+        $request->session()->put('code', $details);
+        $request->session()->put('email', $email);
+        //     Mail::to($email)->send(new SendCode($details));
+       
+        return redirect('customer/verify');
+    }
+    public function verify(){
+       
+        return view('customer/verify');
+    }
+    public function checkcode(Request $request){
+        $validatedData = $request->validate([
+            'newcode' => 'required'
+        ]);
+        $code =  Session::get('code');
+        $email =  Session::get('email');
+        
+        $newcode = $request->input('newcode');
+        if($code == $newcode){
+            $id = Auth::user()->id;
+            $data = array(
+                'email'=>$email
+            );
+            User::where('id',$id)->update($data);
+            return redirect('customer/profile/edit')->with('info','Your Account Email has been changed');
+        }
+        else{
+            return redirect('customer/verify')->with('status','The code is not correct');
+        }
+    }
+
 }

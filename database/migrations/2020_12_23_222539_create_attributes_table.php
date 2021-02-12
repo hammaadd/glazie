@@ -18,7 +18,7 @@ class CreateAttributesTable extends Migration
             $table->string('attribute_name');
             $table->text('description')->nullable();
             $table->string('image')->nullable();
-            $table->enum('status',['0','1'])->default('1');
+            $table->softDeletes();
             $table->unsignedBigInteger('crated_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

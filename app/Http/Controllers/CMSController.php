@@ -10,7 +10,7 @@ class CMSController extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        $contents = ContentManagementSystem::where('status','=','1')->get();
+        $contents = ContentManagementSystem::all();
         return view('admin/cms/index',['contents' =>$contents ]);
     }
     public function add(){
@@ -32,6 +32,7 @@ class CMSController extends Controller
         $cms->met_description = $request->input('meta_description');
         $cms->description = $request->input('description');
         $cms->meta_title = $request->input('meta_title');
+        $cms->slug = $request->input('slug');
         $cms->created_by = $user_id;
         if ($request->file('image')) {
             // Image code
@@ -48,8 +49,10 @@ class CMSController extends Controller
     }
     public function edit($id)
     {
-        $cms = ContentManagementSystem::find($id);
-        return view('admin/cms/edit',['cms'=>$cms]);
+        abort_if(!$cms = ContentManagementSystem::find($id),403);
+       
+            return view('admin/cms/edit',['cms'=>$cms]);
+       
     }
     public function update($id,Request $request){
         $user_id = Auth::id();
@@ -59,6 +62,7 @@ class CMSController extends Controller
             'meta_description'=>'required',
             'meta_title' =>'required',
             'publish'=>'required',
+            'description'=>'required',
             
         ]);
         $updatecms = array(
@@ -67,6 +71,7 @@ class CMSController extends Controller
         'met_description' => $request->input('meta_description'),
         'description' => $request->input('description'),
         'meta_title' => $request->input('meta_title'),
+        'slug' => $request->input('slug'),
         'updated_by' => $user_id
         );
         ContentManagementSystem::where('id',$id)->update($updatecms);
@@ -88,8 +93,10 @@ class CMSController extends Controller
     }
     public function view($id)
     {
-        $cms = ContentManagementSystem::find($id);
+        abort_if(!$cms = ContentManagementSystem::find($id),403);
+     
         return view('admin/cms/view',['cms'=>$cms]);
+     
     }
 }
  

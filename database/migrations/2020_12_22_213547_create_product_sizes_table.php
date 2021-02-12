@@ -22,7 +22,7 @@ class CreateProductSizesTable extends Migration
             $table->double('width',9,2);
             $table->double('thickness',9,2);
             $table->double('price',9,2);
-            $table->enum('status',['0','1'])->default('1');            
+            $table->softDeletes();           
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

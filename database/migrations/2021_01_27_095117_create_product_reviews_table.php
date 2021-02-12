@@ -21,7 +21,7 @@ class CreateProductReviewsTable extends Migration
             $table->string('email');
             $table->float('rating', 2, 1);
             $table->longText('reviews')->nullable();
-            $table->enum('status',['0','1'])->default('1');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

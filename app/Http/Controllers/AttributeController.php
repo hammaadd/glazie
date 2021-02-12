@@ -16,7 +16,7 @@ class AttributeController extends Controller
        
     }
     public function index(){
-        $attributes = Attribute::where('status','=','1')->get();
+        $attributes = Attribute::all();
      
         return view('admin/attribute/index',['attributes' =>$attributes]);
     }
@@ -51,8 +51,9 @@ class AttributeController extends Controller
         return redirect('admin/attributes')->with('info','The Attribute is created Successfully');
     }
     public function edit($id){
-        $attribute =Attribute::find($id);
-        return view('admin/attribute/edit',['attribute' =>$attribute]);
+        abort_if(!$attribute =Attribute::find($id),403);
+        
+            return view('admin/attribute/edit',['attribute' =>$attribute]);
         
     }
     public function update($id,Request $request){
@@ -93,12 +94,10 @@ class AttributeController extends Controller
 
     }
     public function delete($id){
-        $delete_attribute = array(
-            'status' => '0'
-        );
+      
 
         Attribute::where('id',$id)
-            ->update($delete_attribute);
+            ->delete();
         return redirect('admin/attributes')->with('info','The Attributes is deleted  Successfully');
     }
     public function createattr(Request $request){

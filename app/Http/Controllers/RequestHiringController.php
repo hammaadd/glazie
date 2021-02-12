@@ -13,7 +13,7 @@ class RequestHiringController extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        $requesthire = RequestHiring::where('status','=','1')->get();
+        $requesthire = RequestHiring::all();
         return view('admin/requesthiring/index',['requesthires' =>$requesthire]);
     }
     public function change_hirestatus(Request $request)
@@ -45,8 +45,8 @@ class RequestHiringController extends Controller
      return redirect('admin/requesthiring')->with('info', 'Status is Changed');
     }
     public function hiringdetails($id){
-        $requesthire = RequestHiring::find($id);
-        $users = User::where('status','=','1')->where('type','=','installer')->get();
+        abort_if(!$requesthire = RequestHiring::find($id), 403);
+        $users = User::where('type','=','installer')->get();
         return view('admin/requesthiring/details',['requesthire' =>$requesthire,'users'=>$users]);
     }
 }

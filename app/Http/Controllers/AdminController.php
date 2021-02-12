@@ -38,17 +38,20 @@ class AdminController extends Controller
         $ed = date('Y-m-d');
         //echo $ed;
         // Getting data of installers
-        $installers = User::where('status','=','1')->where('type','=','installer')->count(); 
+        $installers = User::where('type','=','installer')->count(); 
         // Customers data
-        $customers = User::where('status','=','1')->where('type','=','customer')->count();
+        $customers = User::where('type','=','customer')->count();
         //  Today  total Quantity sale 
         $today = Order::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "=", $ed)->where('status','=','completed')->get();
+        //print_r($today);
+        
         $today_sale = 0;
         foreach($today as $todays){
-            foreach($today->details as $orderdetails){
+            foreach($todays->details as $orderdetails){
                 $today_sale += $orderdetails->quantity;
             }
         }
+        
         // Total Quantity of this year
         $month = Order::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), ">=", $msd)->where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "<=", $ed)->where('status','=','completed')->get();
         $monthly_sale = 0;
@@ -72,7 +75,7 @@ class AdminController extends Controller
         //  The latest Orders
         $latest_orders = Order::orderBy('id', 'desc')->limit(5)->get();
          // Latees  Products 
-        $latest_products = Products::where('status','=','1')->orderBy('id', 'desc')->limit(5)->get();
+        $latest_products = Products::orderBy('id', 'desc')->limit(5)->get();
 
         $product_type =   OrderDetails::all();
 

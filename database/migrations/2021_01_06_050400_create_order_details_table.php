@@ -21,6 +21,8 @@ class CreateOrderDetailsTable extends Migration
             $table->foreign('product_id')->references('id')->on('products');
             $table->unsignedBigInteger('quantity');
             $table->double('price',9,2);
+            $table->enum('type',['customer','installer']);
+            $table->softDeletes();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

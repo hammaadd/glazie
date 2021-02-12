@@ -13,7 +13,7 @@ class UserController extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        $users= User::where('status','=','1')->get();
+        $users= User::all();
 
         return view('admin/user/index',['users'=>$users]);
     }
@@ -40,7 +40,7 @@ class UserController extends Controller
         $new_user->password = Hash::make($request->input('password'));
         $new_user->address = $request->input('address');
         $new_user->contact_no = $request->input('contact_no');
-        $new_user->status = '1';
+    
         $new_user->name = $request->input('first_name')."".$request->input('last_name');
         $file = $request->file('image');
         
@@ -61,22 +61,19 @@ class UserController extends Controller
 
     }
     public function delete($id){
-        $delete_user =  array(
-        
-            'status'=>'0'
-        );
-            User::where('id',$id)->update($delete_user);
+       
+            User::where('id',$id)->delete();
         
         
         return redirect('admin/user')->with('info','The User is Deleted Successfully');
     
     }
     public function profile($id){
-        $user = User::find($id);
+        abort_if($user = User::find($id), 403);
         return view('admin/user/profile',['user'=>$user]);
     }
     public function editprofile($id){
-        $user = User::find($id);
+        abort($user = User::find($id), 403);
         return view('admin/user/editprofile',['user'=>$user]);
     }
     public function changeprofile($id,Request $request){
@@ -122,7 +119,7 @@ class UserController extends Controller
     
     }
     public function avatarupdate($id){
-        $user = User::find($id);
+        abort_if(!$user = User::find($id), 403);
         
         return view('admin/user/avatar_update',['user'=>$user]);
     }

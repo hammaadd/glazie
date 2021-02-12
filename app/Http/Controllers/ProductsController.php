@@ -30,14 +30,14 @@ class ProductsController extends Controller
         $products = DB::table('products')
         ->join('brands', 'brands.id', '=', 'products.brand_id')
         ->select('products.*', 'brands.brand_name')
-          ->where('products.status', '=', '1')->get();
+        ->where('products.deleted_at','=',null)->get();
         
         return view('admin/products/index',['products'=>$products]);
     }
     public function add(){
-        $brands = Brands::where('status','=','1')->get();
-        $attributes = Attribute::where('status','=','1')->get();
-        $categories = Categories::where('status','=','1')->get();
+        $brands = Brands::all();
+        $attributes = Attribute::all();
+        $categories = Categories::all();
         return view('admin/products/create',['brands' =>$brands,'attributes'=>$attributes,'categories'=>$categories]);
     }
     public function create(Request $request){
@@ -77,8 +77,8 @@ class ProductsController extends Controller
             $imgname = uniqid() . $filename;
             $year = date('Y');
             $month = date("m");
-            $destinationPath = public_path('productimages/'.$year."/".$month);
-            $imgname ='productimages/'.$year."/".$month."/".uniqid() . $filename;
+            $destinationPath = public_path('productimages/');
+            $imgname =uniqid() . $filename;
             $file->move($destinationPath, $imgname);
             // save image
             $prodgallery = new Productgallery;
@@ -86,7 +86,7 @@ class ProductsController extends Controller
             $prodgallery->image = $imgname;
             $prodgallery->image_title = $request->input('product_name');
             $prodgallery->is_primary = "0";
-            $prodgallery->status = "1";
+           
             $prodgallery->created_by = $user->id;
             $prodgallery->save();
         }
@@ -132,19 +132,19 @@ class ProductsController extends Controller
          
     }
     public function edit($id){
-       $products = Products::find($id);
-       $brands = Brands::where('status','=','1')->get();
-       $product_cats = ProductCategory::where('status','=','1')->where('product_id','=',$id)->get();
-       $attributes = Attribute::where('status','=','1')->get();
+       abort_if(!$products = Products::find($id),403);
+       $brands = Brands::all();
+       $product_cats = ProductCategory::where('product_id','=',$id)->get();
+       $attributes = Attribute::all();
        $product_id = $products->id;
-      $product_attrs = ProductAttribute::where('product_id','=',$id)->where('status','=','1')->get();
+      $product_attrs = ProductAttribute::where('product_id','=',$id)->get();
       foreach ($product_attrs as $key => $product_attr) {
          
           
       }
-      $terms = Term::where('attribute_id','=',$product_attr->attribute_id)->where('status','=','1')->get();
+      $terms = Term::where('attribute_id','=',$product_attr->attribute_id)->get();
       
-       $categories = Categories::where('status','=','1')->get();
+       $categories = Categories::all();
        $image_gallery = $products->gallery;
        
        return view('admin/products/edit',['brands'=>$brands, 'products' =>$products,'image_gallery' =>$image_gallery,'attributes'=>$attributes,'product_cats'=>$product_cats,'categories'=>$categories,'product_attr'=>$product_attr,'terms'=>$terms]);
@@ -153,21 +153,19 @@ class ProductsController extends Controller
         $user = Auth::user();
                
         $prodcut_categories = $request->input('category_id');
-        $product_cats = ProductCategory::where('status','=','1')->where('product_id','=',$id)->get();
-        $table_prdcats= ProductCategory::where('product_id','=',$id)->where('status','=','1')
+        $product_cats = ProductCategory::where('product_id','=',$id)->get();
+        $table_prdcats= ProductCategory::where('product_id','=',$id)
         ->whereNotIn('category_id',$prodcut_categories)
         ->get();
         foreach ($table_prdcats as $key => $table_prdcat) {
-            $update_table = array(
-                'status' =>'0'
-            );
-            ProductCategory::where('id','=',$table_prdcat->id)->update($update_table);
+           
+            ProductCategory::where('id','=',$table_prdcat->id)->delete();
         }
         
         foreach ($prodcut_categories as $product_cat) {
             ProductCategory::updateOrCreate(
-                ['product_id' => $id, 'category_id' => $product_cat,'status' => '1'],
-                ['product_id' => $id, 'category_id' => $product_cat,'created_by'=>$user->id,'status'=>'1']
+                ['product_id' => $id, 'category_id' => $product_cat],
+                ['product_id' => $id, 'category_id' => $product_cat,'created_by'=>$user->id]
             );
            
            
@@ -209,8 +207,8 @@ class ProductsController extends Controller
             $imgname = uniqid() . $filename;
             $year = date('Y');
             $month = date("m");
-            $destinationPath = public_path('productimages/'.$year."/".$month);
-            $imgname ='productimages/'.$year."/".$month."/".uniqid() . $filename;
+            $destinationPath = public_path('productimages/');
+            $imgname =uniqid() . $filename;
             $file->move($destinationPath, $imgname);
             // save image
             $prodgallery = new Productgallery;
@@ -218,7 +216,7 @@ class ProductsController extends Controller
             $prodgallery->image = $imgname;
             $prodgallery->image_title = $request->input('product_name');
             $prodgallery->is_primary = "0";
-            $prodgallery->status = "1";
+            
             $prodgallery->created_by = $user->id;
             $prodgallery->save();
         }
@@ -251,21 +249,19 @@ class ProductsController extends Controller
         }
                
         $prodcut_categories = $request->input('category_id');
-        $product_cats = ProductCategory::where('status','=','1')->where('product_id','=',$id)->get();
-        $table_prdcats= ProductCategory::where('product_id','=',$id)->where('status','=','1')
+        $product_cats = ProductCategory::where('product_id','=',$id)->get();
+        $table_prdcats= ProductCategory::where('product_id','=',$id)
         ->whereNotIn('category_id',$prodcut_categories)
         ->get();
         foreach ($table_prdcats as $key => $table_prdcat) {
-            $update_table = array(
-                'status' =>'0'
-            );
-            ProductCategory::where('id','=',$table_prdcat->id)->update($update_table);
+            
+            ProductCategory::where('id','=',$table_prdcat->id)->delete();
         }
         
         foreach ($prodcut_categories as $product_cat) {
             ProductCategory::updateOrCreate(
-                ['product_id' => $id, 'category_id' => $product_cat,'status' => '1'],
-                ['product_id' => $id, 'category_id' => $product_cat,'created_by'=>$user->id,'status'=>'1']
+                ['product_id' => $id, 'category_id' => $product_cat],
+                ['product_id' => $id, 'category_id' => $product_cat,'created_by'=>$user->id]
             );
            
            
@@ -274,16 +270,12 @@ class ProductsController extends Controller
          return redirect('admin/products')->with('info','The Product is updated  Successfully');
     }
     public function delete($id){
-        $delete_product = array(
-            'status' => '0'
-        );
 
-        Products::where('id',$id)
-            ->update($delete_product);
+        Products::where('id',$id)->delete();
         return redirect('admin/products')->with('info','The Product is deleted  Successfully');
     }
     public function view($id){
-        $products = Products::find($id);
+        abort_if(!$products = Products::find($id), 403);
         return view('admin/products/view',['products'=>$products]);
     }
     public function makeprimary(Request $request){
@@ -374,7 +366,7 @@ class ProductsController extends Controller
         $feedback = ProductReviews::find($feedback_id);
         
         $id = $feedback->products_id;
-        echo $id;
+        
         
         return redirect('admin/products/view/'.$id)->with('info','The Feedback is deleted  Successfully');
         

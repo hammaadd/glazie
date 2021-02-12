@@ -18,7 +18,7 @@ class CreateProductTagsTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
             $table->string('tag_name');
-            $table->enum('status',['0','1'])->default('1');
+            $table->softDeletes();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

@@ -55,7 +55,11 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$content->title}}</td>
-                                <td>{{$content->image}}</td>
+                                <td>
+                                    @if ($content->image)
+                                        <img src="{{asset('admin-assets/cms/'.$content->image)}}" alt="" width="60px" height="60px">
+                                    @endif
+                                </td>
                                 <td>
                                     <a href="{{url('admin/cms/view/'.$content->id)}}" class="btn btn-info btn-xs"><i class="fa fa-eye"></i> View</a>
                                     

@@ -21,7 +21,7 @@ class CreateInstallInfosTable extends Migration
             $table->longText('skills')->nullable();
             $table->double('recharge');
             $table->string('installation_type');
-            $table->enum('status', ['0', '1'])->default('1');
+            $table->softDeletes();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

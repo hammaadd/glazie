@@ -23,7 +23,7 @@ class CreateAddonsTable extends Migration
             $table->double('quantity',9,2);
             $table->string('image')->nullable();
             $table->double('sale_price',9,2);
-            $table->enum('status', ['0', '1'])->default('1');
+            $table->softDeletes();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

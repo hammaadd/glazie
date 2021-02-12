@@ -23,7 +23,7 @@ class CreateRequestHiringsTable extends Migration
             $table->unsignedBigInteger('installer_id');
             $table->foreign('installer_id')->references('id')->on('users');
             $table->enum('hiring_status', ['pending', 'inprogress','cancel','complete'])->default('pending');
-            $table->enum('status', ['0', '1'])->default('1');
+            $table->softDeletes();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

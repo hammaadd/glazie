@@ -18,13 +18,13 @@ class ProductSizeController extends Controller
         ->join('products', 'products.id', '=', 'product_sizes.product_id')
         
         ->select('product_sizes.*', 'products.product_name')
-          ->where('product_sizes.status', '=', '1')->get();
+          ->get();
        
         return view('admin/productsize/index',['products'=>$products]);
         //productsize
     }
     public function add(){
-        $products = Products::where('status','=','1')->get();
+        $products = Products::all();
         return view('admin/productsize/create',['products'=>$products]);
     }
     public function create(Request $request){
@@ -51,8 +51,8 @@ class ProductSizeController extends Controller
 
     }
     public function edit($id){
-        $products = Products::where('status','=','1')->get();
-        $productsize = ProductSize::find($id);
+        abort_if(!$productsize = ProductSize::find($id), 403);
+        $products = Products::all();
         return view('admin/productsize/edit',['products'=>$products,'productsize'=>$productsize]);
     }
     public function update($id , Request $request){
@@ -83,12 +83,7 @@ class ProductSizeController extends Controller
 
     }
     public function delete($id){
-        $deleteproductsize = array(
-            'status'=> '0'
-            );
-           
-            
-            Productsize::where('id',$id)->update($deleteproductsize);
-            return redirect('admin/productsize')->with('info','The Product Size is deleted  Successfully');
+        Productsize::where('id',$id)->delete();
+        return redirect('admin/productsize')->with('info','The Product Size is deleted  Successfully');
     }
 }

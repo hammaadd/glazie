@@ -15,12 +15,12 @@ class CategoriesController extends Controller
         $user = Auth::user();
     }
     public function index(){
-        $categories = Categories::where('status','=','1')->get();
+        $categories = Categories::all();
 
         return view('admin/catgories/index',['categories'=>$categories]);
     }
     public function add(){
-        $categories = Categories::where('parent_id','=',null)->where('status','=','1')->get();
+        $categories = Categories::where('parent_id','=',null)->get();
         return view('admin/catgories/create',['categories'=>$categories]);
     }
     public function create(Request $request){
@@ -51,9 +51,15 @@ class CategoriesController extends Controller
         return redirect('admin/categories')->with('info','The Category is created Successfully');
     }
     public function edit($id){
-        $categories= Categories::find($id);
-        $select_cat = Categories::where('parent_id','=',null)->where('status','=','1')->get();
-  		return view('admin/catgories/edit',['categories'=>$categories,'select_cat'=>$select_cat]);    
+        abort_if(!$categories= Categories::find($id),403);
+        
+            
+                $select_cat = Categories::where('parent_id','=',null)->get();
+          		return view('admin/catgories/edit',['categories'=>$categories,'select_cat'=>$select_cat]); 
+            
+           
+        
+        
     }
     public function update($id,Request $request){
         $user = Auth::user();
@@ -91,19 +97,7 @@ class CategoriesController extends Controller
         return redirect('admin/categories')->with('info','The Category is Updated Successfully');
     }
     public function delete($id){
-        $delete_cat =  array(
-        
-            'status'=>'0'
-        );
-            Categories::where('id',$id)->update($delete_cat);
-        
-        
+        Categories::where('id',$id)->delete();
         return redirect('admin/categories')->with('info','The Category is Deleted Successfully');
-    }
-    public function details($id){
-        $sub_cat = Categories::where('parent_id','=',$id)->where('status','=','1')->get();
-        $parent = Categories::where('id','=',$id)->where('status','=','1')->get();
-        
-        return view('admin/catgories/details',['categories'=>$sub_cat,'parent'=>$parent]);
     }
 }

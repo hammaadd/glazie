@@ -10,6 +10,8 @@ use App\Models\Attribute;
 use App\Models\ProductTag;
 use App\Models\Countries;
 use App\Models\Address;
+use Validator;
+use App\Models\Coupen;
 use App\Models\Term;
 use App\Models\ProductReviews;
 use App\Models\Cart;
@@ -24,6 +26,8 @@ use App\Models\RequestHiring;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ContentManagementSystem;
 use DB;
+use Session;
+use App\Models\ContactUs;
 use App\Models\Subscribe;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -32,14 +36,24 @@ use App\Notifications\SendPassword;
 class IndexController extends Controller
 {
     public function index(){
-        $products = Products::where('status','=','1')->where('quantity','>',0)->get();
+        $brands = Brands::all();
+        $categories = Categories::all();
        
      
-        return view('public/index',['products'=>$products]);
+        return view('public/index',['brands'=>$brands,'categories'=>$categories]);
     }
+    public function availproducts(){
+        $products = Products::all();
+        
+        return view('public/availproducts',['products'=>$products]);
+    } 
     public function product_details($id){
-        $product = Products::find($id);
-        return view('public/product_details',['product'=>$product]);
+        abort_if(! $product = Products::find($id),403);
+        $product_type = $product->product_type;
+        //echo $product_type;
+        $products = Products::where('product_type','=',$product_type)->get();
+            return view('public/product_details',['product'=>$product,'related_products'=>$products]);
+        
     }
   
     public function addtocart(Request $request,$id){
@@ -62,11 +76,11 @@ class IndexController extends Controller
         ];
 
         $request->session()->push('cart', $cart);
-        $cartdata = Cart::where('session_id','=',session()->getId())->where('product_id','=',$product_id)->where('status','=','1')->get();
+        $cartdata = Cart::where('session_id','=',session()->getId())->where('product_id','=',$product_id)->get();
         echo count($cartdata);
         
         if (count($cartdata)>0) {
-        //    echo 
+       
             foreach ($cartdata as $key => $cart) {}
             $update_cart = array(
                 "quantity"=>$quantity +$cart->quantity,
@@ -95,7 +109,7 @@ class IndexController extends Controller
     public function countproduct(){
         $count = 0;
         $session_id = session()->getId();
-        $carts = Cart::where('session_id','=',$session_id)->where('status','=','1')->get();
+        $carts = Cart::where('session_id','=',$session_id)->get();
         foreach($carts as $cart){
             $count = $cart->quantity+$count; 
         }
@@ -103,20 +117,17 @@ class IndexController extends Controller
     }
     public function productcart(){
         $session_id = session()->getId();
-        $carts = Cart::where('session_id','=',$session_id)->where('status','=','1')->get();
+        $carts = Cart::where('session_id','=',$session_id)->get();
         return view('public/productcart',['carts'=>$carts]);
     }
     public function removecartproduct(Request $request)
     {
         $id = $request->input('id');
         
-        $delete_cart_prd =  array(
         
-            'status'=>'0'
-        );
-            Cart::where('id',$id)->update($delete_cart_prd);
+            Cart::where('id',$id)->delete();
         $session_id = session()->getId();
-        $carts = Cart::where('session_id','=',$session_id)->where('status','=','1')->get();
+        $carts = Cart::where('session_id','=',$session_id)->get();
         return view('public/updatecart',['carts'=>$carts]);
     }
     public function updatecartproduct(Request $request)
@@ -126,12 +137,10 @@ class IndexController extends Controller
         $no_of_qty =$request->input('no_of_qty');
         $cart_id = $request->input('cart_id');
         $update_prd_cart =  array(
-        
             'quantity'=>$no_of_qty
         );
-
          Cart::where('id',$cart_id)->update($update_prd_cart);
-        $carts = Cart::where('session_id','=',$session_id)->where('status','=','1')->get();
+        $carts = Cart::where('session_id','=',$session_id)->get();
         foreach ($carts as $key => $cart) {
             $price  += $cart->price*$cart->quantity;
             $regular_price  += $cart->regular_price*$cart->quantity;
@@ -143,13 +152,13 @@ class IndexController extends Controller
     }
     public function checkout(){
         $session_id = session()->getId();
-        $carts = Cart::where('session_id','=',$session_id)->where('status','=','1')->get();
+        $carts = Cart::where('session_id','=',$session_id)->get();
         $countries = Countries::all();
         return view('public/checkout',['carts'=>$carts,'countries'=>$countries]);
     }
     public function checkoutsubmit(Request $request)
     {   
-        
+   
         $user = Auth::user();
         $first_name = $request->input('first_name');
         $last_name = $request->input('last_name');
@@ -181,7 +190,7 @@ class IndexController extends Controller
         $user->contact_no = $contact_no;
         $user->address = $address;
         $user->type=$user_type;
-        $user->status='1';
+      
         $user->avatar="defaultimg.png";
         $user->save();
         $user_id = $user->id;
@@ -288,13 +297,37 @@ class IndexController extends Controller
         $net_total=0;
         $discount = 0;
         $total_amount=0;
+        $net_total1 = 0;
         $session_id = session()->getId();
-        $carts = Cart::where('session_id','=',$session_id)->where('status','=','1')->get();
+        $carts = Cart::where('session_id','=',$session_id)->get();
         foreach ($carts as $key => $cart) {
             $total_amount += $cart->quantity*$cart->product->regular_price;
             $net_total += $cart->quantity*$cart->product->sale_price;
         }
+        $coupenid =  Session::get('coupunid');
+       
+        $coupendata = Coupen::find($coupenid);
+        
+       if (isset($coupendata)) {
+        
+         if ($coupendata->discount_type=="amount") {
+             $net_total =  $net_total-$coupendata->discount;
+         }
+         else{
+             $net_total = $net_total-$net_total*$coupendata->discount/100;
+         }
+         $updatecoupen = array(
+            'status'=>'used',
+            'usedamount'=>$coupendata->discount
+        );
+        Coupen::where('id',$coupenid)->update($updatecoupen);
+        
+       }
+      
+       
+        
         $discount = $total_amount - $net_total; 
+
         $order = new Order;
         $order->customer_id =$user_id;
         $order->total_amount =$total_amount;
@@ -313,6 +346,13 @@ class IndexController extends Controller
        $orderdetails->price = $cart->quantity*$cart->product->sale_price;
        $orderdetails->created_by = $user_id;
        $orderdetails->save();
+       $products = Products::find($cart->product_id);
+       $prdquantity = $products->quantity-$cart->quantity;
+       
+       $updateprdqty = array(
+           'quantity'=>$prdquantity
+       );
+       Products::where('id',$cart->product_id)->update($updateprdqty);
        
     }
     
@@ -320,21 +360,24 @@ class IndexController extends Controller
     $notify->name = "New Order ";
     $notify->message ="New Order of Products is received";
     $notify->type = "Subscription";
-    $notify->link = "admin/orders";
+    $notify->link = "admin/orderconfirm";
     $notify->save(); 
 
     $request->session()->regenerate();
+    $request->session()->put('coupunid',null);
     return redirect('/')->with('info','Order Is created successfull Soon You Recived Email  ');
     
     }
     public function installerlist(){
-        $installers = User::where('status','=','1')->where('type','=','installer')->inRandomOrder()->limit(6)->get();
+        $installers = User::where('type','=','installer')->inRandomOrder()->limit(6)->get();
         return view('public/installerlist',['installers'=>$installers]);
     }
     public function installerdetails($id)
     {
-        $installer = User::find($id);
+        abort_if(!$installer = User::find($id),403);
+       
         return view('public/installerdetails',['installer'=>$installer]);
+      
     }
     public function hirerequest(Request $request)
     {
@@ -360,7 +403,7 @@ class IndexController extends Controller
         $user->address = $request->input('address');
         $user->contact_no = $request->input('contact_no');
         $user->name = $request->input('first_name')."".$request->input('last_name');
-        $user->status = "1";
+        
         $user->type="customer";
         $user->save();
     
@@ -384,7 +427,7 @@ class IndexController extends Controller
     public function get_installer(Request $request)
     {
         $installer = $request->input('installer');
-        $installers = User::where('status','=','1')->where('name','like', '%'.$installer.'%')->where('type','=','installer')->get();
+        $installers = User::where('name','like', '%'.$installer.'%')->where('type','=','installer')->get();
         return view('public/get_installer',['installers'=>$installers]);
     }
     public function subscribe(Request $request){
@@ -404,7 +447,7 @@ class IndexController extends Controller
         return redirect('/')->with('info','Thank You for Your Subscription');
     }
     public function feedback(Request $request){
-        print_r($_POST);
+        //print_r($_POST);
         $validatedData = $request->validate([
             'rating'=>'required',
             'name'=>'required',
@@ -429,12 +472,87 @@ class IndexController extends Controller
         return redirect('/')->with('info','Thank You for Your Feedback');
     }
     public function navlink(){
-        $links = ContentManagementSystem::where('status','=','1')->where('publish','=','1')->get();
+        $links = ContentManagementSystem::where('publish','=','1')->get();
         return view('public/navlinks',['links'=>$links]);
     }
     public function cmspage($id)
     {
-        $cms = ContentManagementSystem::find($id);
-        return view('public/cmspage',['cms'=>$cms]);
+        $cmss = ContentManagementSystem::where('slug','=',$id)->get();
+        foreach($cmss as $cms)
+
+        {}
+        if (isset($cms)) {
+            return view('public/cmspage',['cms'=>$cms]);     
+        }
+        else{
+            abort(403);
+        }
+        
+       
+    }
+    public function installerbyamount(Request $request)
+    {
+        $installer = $request->input('installer');
+         $sortype = $request->input('sortype');
+         $installers  = DB::table('users')
+         ->join('install_infos', 'install_infos.installer_id', '=', 'users.id')
+         ->select('users.*')
+         ->where('users.name','like', '%'.$installer.'%')->where('type','=','installer')
+         ->orderBy('install_infos.recharge', $sortype)->get();
+       
+        return view('public/get_installer',['installers'=>$installers]);
+    }
+    public function contactus()
+    {
+        return view('public/contact_us');
+    }
+    public function contactsubmit(Request $request){
+        $validatedData = $request->validate([
+            'name'=>'required',
+            'email'=>'required|email',
+            'message'=>'required',
+            ]);
+        $contact_us = new ContactUs;
+        $contact_us->name=$request->input('name');
+        $contact_us->email=$request->input('email');
+        $contact_us->message=$request->input('message');
+        $contact_us->save();
+
+        $notify =new Notification;
+        $notify->name = "New User Message";
+        $notify->message ="New User sent message ";
+        $notify->type = "message";
+        $notify->link = "admin/usermessage";
+        $notify->save();
+
+ return redirect('/')->with('info','Your Message is received Soon You will receive email');
+    
+    }
+    public function checkcoupen(Request $request)
+    {
+        $coupen = $request->input('coupen');
+        $coupen_amount = Coupen::where('coupen_code','=',$coupen)->where('status','=','unuse')->get();
+        if(count($coupen_amount)>0){
+            foreach($coupen_amount  as $coupens){
+
+            }
+            if($coupens->discount_type=="percentage"){
+                $discount = $coupens->discount-$coupens->usedamount.",p";
+                $request->session()->put('coupunid', $coupens->id);
+                
+                echo $coupens->discount-$coupens->usedamount.",p";
+            }
+            else{
+                $discount = $coupens->discount;
+                $request->session()->put('coupunid', $coupens->id);
+                
+                echo $coupens->discount;
+                
+            }
+        }else{
+            $request->session()->put('coupunid',null);
+            echo 0;
+            
+        }
     }
 }

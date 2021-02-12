@@ -16,7 +16,7 @@ class InstallerController extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        $installers =  User::where('status','=','1')->where('type','=','installer')->get();
+        $installers =  User::where('type','=','installer')->get();
         return view('admin/installer/index',['installers'=>$installers]);
     }
     public function add()
@@ -45,7 +45,7 @@ class InstallerController extends Controller
         $installer->contact_no = $request->input('contact_no');
         $installer->address = $request->input('address');
         $installer->type = 'installer';
-        $installer->status= '1';
+        
         $installer->name = $request->input('first_name')."".$request->input('last_name');
         if ($request->input('company_info')==1) {
             $installer->company_info = "1";
@@ -138,8 +138,9 @@ class InstallerController extends Controller
     }
     public function edit($id)
     {
+        abort_if(!$user = User::find($id),403);
         $countries = Countries::all();
-        $user = User::find($id);
+        
         if ($user->company_info=="1") {
             $company_data = $user->companies;
             $state = States::find($company_data->state_id);
@@ -276,8 +277,9 @@ class InstallerController extends Controller
         
     }
     public function details($id){
+        abort_if(!$user = User::find($id), 403);
         $countries = Countries::all();
-        $user = User::find($id);
+        
         if ($user->company_info=="1") {
             $company_data = $user->companies;
             $state = States::find($company_data->state_id);
@@ -291,10 +293,8 @@ class InstallerController extends Controller
     }
     public function delete($id)
     {
-        $installer = array(
-            'status'=> "0"
-        );
-        User::where('id',$id)->update($installer);
+        
+        User::where('id',$id)->delete();
         return redirect('admin/installer')->with('info','The Installer is deleted');
     }
     public function updloadprofile(Request $request,$id){

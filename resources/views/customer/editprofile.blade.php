@@ -48,6 +48,11 @@
                             <div class="col-md-2"></div>
                             <div class="col-md-6"><?php echo $user->email ?> </div>
                         </div>
+                        <div class="row mt-3">
+                            <div class="col-md-4"><b>Change Account </b></div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-6"><a href="{{url('customer/changeaccount')}}">Change Email</a> </div>
+                        </div>
                         <br>
                         <div class="row">
                             <div class="col-md-4"><b>Password</b></div>

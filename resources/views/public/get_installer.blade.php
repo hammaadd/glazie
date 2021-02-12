@@ -5,7 +5,7 @@
          <div  class="card-body text-center">
              <h4>{{$installer->name}}</h4>
              <h5>{{$installer->email}}</h5>
-             <p>{{$installer->adddress}}</p>
+             <p>{{$installer->address}}</p>
              <p><span class="font-weight-bold"> Phone No:</span>{{$installer->contact_no}}</p>
              <a href="{{url('installerdetails/'.$installer->id)}}" class="btn btn-outline-info"> <i class="fa fa-eye"></i> Details</a>
          </div>

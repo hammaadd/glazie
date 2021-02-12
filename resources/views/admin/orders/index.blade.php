@@ -26,11 +26,11 @@
         <script type="text/javascript">toastr.success("{{session('info')}}");</script>
         @endif  
         <ul class="nav nav-tabs nav-justified" id="myTabJustified" role="tablist">
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link active" id="pending-tab-justified" data-toggle="tab" href="#pending-justified" role="tab" aria-controls="pending-justified" aria-selected="true"><i class="fas fa-sign-in-alt text-info"></i> Pending</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="cancel-tab-justified" data-toggle="tab" href="#cancel-justified" role="tab" aria-controls="cancel-justified" aria-selected="true"> <i class="fa fa-ban text-danger"></i> Cancled</a>
+            </li> --}}
+            <li class="nav-item active">
+                <a class="nav-link active" id="cancel-tab-justified" data-toggle="tab" href="#cancel-justified" role="tab" aria-controls="cancel-justified" aria-selected="true"> <i class="fa fa-ban text-danger"></i> Cancled</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="shipped-tab-justified" data-toggle="tab" href="#shipped-justified" role="tab" aria-controls="shipped-justified" aria-selected="false"> <i class="fas fa-sign-out-alt text-warning"></i> Shipped</a>
@@ -40,7 +40,7 @@
             </li>
         </ul>
         <div class="tab-content m-t-15" id="myTabContentJustified">
-            <div class="tab-pane fade show active" id="pending-justified" role="tabpanel" aria-labelledby="pending-tab-justified">
+            {{-- <div class="tab-pane fade show active" id="pending-justified" role="tabpanel" aria-labelledby="pending-tab-justified">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
@@ -104,8 +104,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="tab-pane fade" id="cancel-justified" role="tabpanel" aria-labelledby="cancel-tab-justified">
+            </div> --}}
+            <div class="tab-pane fade show active" id="cancel-justified" role="tabpanel" aria-labelledby="cancel-tab-justified">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
@@ -139,6 +139,7 @@
                                         <td>
                                             <form action="{{url('admin/checkorder')}}" method="post">
                                                 @csrf
+                                                <input type="hidden" name="redirect" value="2">
                                                 <input type="hidden" value="{{$order->id}}" name="order_id">
                                                 <select name="status" id="" class="form-control" required>
                                                     <option value="">Select Order </option>

@@ -18,7 +18,7 @@ class CreateTermsTable extends Migration
             $table->unsignedBigInteger('attribute_id');
             $table->foreign('attribute_id')->references('id')->on('attributes');
             $table->string('name');
-            $table->enum('status',['0','1'])->default('1');
+            $table->softDeletes();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

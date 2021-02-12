@@ -31,7 +31,7 @@ class CreateInstallerCompaniesTable extends Migration
             $table->foreign('city_id')->references('id')->on('cities');
             $table->string('postcode')->nullable();
             $table->longtext('company_description')->nullable();
-            $table->enum('status',['0','1'])->default('1');
+            $table->softDeletes();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

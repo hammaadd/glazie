@@ -13,7 +13,7 @@ class AddonController extends Controller
         $this->middleware('auth:admin');
     }
     public function create(){
-        $prodcuts = Products::where('status','=','1')->where('type','=','customize')->get();
+        $prodcuts = Products::where('type','=','customize')->get();
         return view('admin/addon/create',['products'=>$prodcuts]);
     }
     public function store(Request $request){
@@ -51,9 +51,7 @@ class AddonController extends Controller
         $file->move($destinationPath, $imgname);
         $addon->image= $imgname;
         }
-        if ($addon->save()) {
-            echo "data is inserted";
-        }
+        $addon->save();
         return redirect('admin/addon')->with('info','Add Oncreated Successfully');
     }
 }

@@ -13,7 +13,7 @@ class AdmincustomerController extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        $customers = User::where('status','=','1')->where('type','=','customer')->get();
+        $customers = User::where('type','=','customer')->get();
         return view('admin/customers/index',['customers'=>$customers]);
     }
     public function add(){
@@ -57,8 +57,10 @@ class AdmincustomerController extends Controller
     }
     public function edit($id)
     {
-        $customer  =  User::find($id);
+        abort_if(!$customer  =  User::find($id),403);
+      
         return view('admin/customers/edit',['customer'=>$customer]);
+      
     }
     public function update($id,Request $request)
     {
@@ -103,10 +105,8 @@ class AdmincustomerController extends Controller
        
     }
     public function delete($id){
-        $status = array(
-            'status' =>"0" 
-        );                
-            User::where('id',$id)->update($status);
+                        
+            User::where('id',$id)->delete();
             return redirect('admin/customers')->with('info','The customer is deleted');
     }
     
@@ -119,14 +119,16 @@ class AdmincustomerController extends Controller
     }
     public function details($id)
     {
-        $customer  =  User::find($id);
+        abort_if(!$customer  =  User::find($id),403);
+       
         return view('admin/customers/details',['user'=>$customer]);
+     
     }
     public function changepassword($id){
         return view('admin/customers/changepassword',['id'=>$id]);
     }
     public function orderdetails($id){
-        $order = Order::find($id);
+        abort_if(! $order = Order::find($id),403);    
         return view('admin/customers/orderdetails',['order'=>$order]);
     }
 }

@@ -51,7 +51,7 @@
                         <td>
                             <input type="hidden" id="regular_price{{$cart->id}}" value="{{$products->regular_price}}">
                             <input type="hidden" id="itemquantity{{$cart->id}}" value="{{$cart->price}}">
-                            <a href="{{asset($image)}}"><img src="{{asset($image)}}" width="70px" height="70px"></a>
+                            <a href="{{asset('productimages/'.$image)}}"><img src="{{asset('productimages/'.$image)}}" width="70px" height="70px"></a>
                         </td>
                         <td><input type="number" value="{{$cart->quantity}}" class="text-center" min="1" max="{{$products->quantity}}" oninput="update_qty({{$cart->id}})" id="no_of_qty{{$cart->id}}"></td>
                            <td id="regular_prices{{$cart->id}}">{{$cart->quantity*$products->regular_price}}</td>
@@ -97,16 +97,22 @@
         </table>
     </div>
 </div>
-<div class="row">
+<div class="row mb-3">
     <div class="col-md-10"></div>
     <div class="col-md-2">
-        <a class="btn btn-success" href="{{url('checkout')}}"> <i class="fa fa-check"></i> CheckOut</a>
+        <a class="btn btn-info rounded-0 text-light" href="{{url('checkout')}}"> <i class="fa fa-check"></i> CheckOut</a>
     </div>
 </div>
 @else
     <div class="row">
-        <div class="col-md-8">
-            <h3>Your Cart is empty <u> <a href="{{url('/')}}" class="btn btn-light"><i class="fa fa-backward"></i> Go Back </a></u></h3>
+        <div class="container">
+            <div class="row">
+             
+                    <div class="col-md-8">
+                        <h3>Your Cart is empty <u> <a href="{{url('/')}}" class="btn btn-info text-light rounded-0" id="button"><i class="fa fa-backward"></i> Go Back </a></u></h3>
+                    </div>
+                
+            </div>
         </div>
     </div>
 @endif

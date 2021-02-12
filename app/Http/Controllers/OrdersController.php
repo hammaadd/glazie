@@ -20,6 +20,7 @@ class OrdersController extends Controller
         $order_status="";
         $order_id = $request->input('order_id');
         $status = $request->input('status');
+        $redirect = $request->input('redirect');
         $order=Order::find($order_id);
         $user_data = $order->customer;
         
@@ -37,11 +38,20 @@ class OrdersController extends Controller
                 $order_status = "On the way will reached in two days";
                // $user_data->notify(new OrderNotification($order_status));
             }
-        return redirect('admin/orders')->with('info','The order is updated');
+        if ($redirect==1) {
+            return redirect('admin/orderconfirm')->with('info','The order is updated');
+        }
+        else{
+            return redirect('admin/orders')->with('info','The order is updated');
+        }
     }
     public function orderdetaails($id)
     {
-        $order = Order::find($id);
+        abort_if(!$order = Order::find($id), 403);
         return view('admin/orders/orderdetails',['order'=>$order]);
+    }
+    public function orderconfrim(){
+        $orders = Order::where('status','=','pending')->orderby('id','desc')->get();
+        return view('admin/orders/orderconfirm',['orders'=>$orders]);
     }
 }

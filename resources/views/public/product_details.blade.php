@@ -27,13 +27,13 @@ crossorigin="anonymous"></script>
            $image = $value->image;
        }
             ?>
-            <img src="{{asset($image)}}"
+            <img src="{{asset('productimages/'.$image)}}"
             <?php $profile_image=""; ?> width="100%">
             <div class="row mt-3">
            @foreach ($product_gallery as $images)
            @if ($images->is_primary!=1)
            <div class="col-md-2 d-flex">
-            <img src="{{asset($images->image)}}" alt="" width="100%">
+            <img src="{{asset('productimages/'.$images->image)}}" alt="" width="100%">
          </div>
            @endif
            @endforeach
@@ -42,10 +42,10 @@ crossorigin="anonymous"></script>
            @endphp
             @foreach ($product->feedback as $feedback)
             @php
-            if($feedback->status=="1"){
+          
                 $net_feedback +=$feedback->rating;
                 $g++;
-            }
+            
             //echo $net_feedback;
         @endphp
             @endforeach
@@ -89,7 +89,7 @@ crossorigin="anonymous"></script>
               </div>
               
               <br>
-              <button class="btn btn-success mt-3"> <i class="fas fa-shopping-cart"></i> Add to cart</button>
+              <button class="btn btn-info text-light mt-3 rounded-0" id="button"> <i class="fas fa-shopping-cart"></i> Add to cart</button>
             </form>
         </div>
     </div>
@@ -128,17 +128,87 @@ crossorigin="anonymous"></script>
                 <div class="row">
                     <div class="col-md-12">
                         <label for="">Reviews</label>
-                        <textarea name="reviews"  class="form-control" rows="10"></textarea>
+                        <textarea name="reviews"  class="form-control" rows="10" placeholder="Enter Your Reivews"></textarea>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-12">
-                        <button class="btn btn-success"> <i class="fa fa-check"></i> Submit</button>
+                        <button type="submit" class="btn btn-info rounded-0 mb-3 text-light" id="button" name="submit" value="Submit"><i class="fa fa-check"></i> Submit</button>
                     </div>
                 </div> 
             </form>
         </div>
     </div>
+    <section class="section product-section">
+        <div class="title-box">
+            <div class="container">
+                <!--Sec Title-->
+                <div class="sec-title text-center">
+                    <div class="title-inner">
+                        <h2>Related <span class="theme_color">Products</span></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lower-section">
+            <div class="lower-inner-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="brand-carousel owl-carousel">
+                                @foreach ($related_products as $related_product)
+                                <?php $product_gallery = $related_product->gallery;
+                                $i=0;
+                                foreach ($related_product->gallery as $key => $value) {
+                                if ($value->is_primary=="1") {
+                                    $image = $value->image;
+                                    $i=1;
+                                }
+                            
+                            }
+                            if ($i==0) {
+                                $image = $value->image;
+                            }
+                                ?>
+            
+            <div class="item">
+                <div class="product">
+                    <span class="pr_flash">Sale</span>
+                    <div class="product_img">
+                        <a href="shop-product-detail.html">
+                            <img src="{{asset('productimages/'.$image)}}" alt="Aluminium Front Door 1361 – Stainless Steel Applications in 9005 Matt with Stainless Steel hardware">
+                        </a>
+                        <div class="product_action_box">
+                            <ul class="list_none pr_action_btn">
+                                <li class="add-to-cart"><a href="#"><i class="bx bx-cart"></i> Add To Cart</a></li>
+                                <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li>
+                                <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>
+                                <li><a href="#"><i class="bx bx-heart"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product_info">
+                        <h6 class="product_title text-center"><a href="{{url('productdetails/'.$related_product->id)}}">{{$related_product->product_name}}</a></h6>
+                        <div class="product_price text-center">
+                            <span class="price"><span class="currencySymbol">£</span>{{$related_product->sale_price}}</span>
+                            <del><span class="currencySymbol">£</span>{{$related_product->regular_price}}</del>
+                        </div>
+                    </div>
+                </div>
+        </div>
+            
+            
+            
+                                
+                            @endforeach
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
   
 </div>
 <script>

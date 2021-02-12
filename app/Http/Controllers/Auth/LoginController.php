@@ -43,7 +43,7 @@ class LoginController extends Controller
             "email"  => "required|email",
             "password" =>"required|min:6"
         ]);
-        if (Auth::guard()->attempt(['email'=>$request->email,'password' => $request->password,'login_status' => 'activate','status'=>'1'],$request->remember )) {
+        if (Auth::guard()->attempt(['email'=>$request->email,'password' => $request->password,'login_status' => 'activate'],$request->remember )) {
             
             return redirect()->intended(route('home'));    
         }
@@ -52,5 +52,12 @@ class LoginController extends Controller
         }
 
 
+    }
+    public function logout()
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('login');
     }
 }

@@ -18,12 +18,14 @@ class CreateCategoriesTable extends Migration
             $table->string("cat_name");
             $table->longText('description')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
-            $table->enum('status', ['0', '1'])->default(1);
+            
             $table->string("image")->nullable();
             $table->foreign('parent_id')->references('id')->on('categories')->onDelete('set null');
+            $table->softDeletes();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
+
         });
     }
 

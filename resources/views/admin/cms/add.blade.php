@@ -45,7 +45,7 @@
                             @csrf
                             <div class="col-md-6">
                                 <label for="">Page Title</label>
-                                <input type="text" class="form-control" name="title" placeholder="Page Title" autofocus>
+                                <input type="text" class="form-control" name="title" placeholder="Page Title" autofocus id="title">
                                 </div>
                             <div class="col-md-6">
                                
@@ -56,9 +56,8 @@
                        
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="">Mata Description</label>
-                                <input type="text" name="meta_description" class="form-control" placeholder="Meta description"> 
-                                   
+                                <label for="">Slug</label>
+                                <input type="text" class="form-control" name="slug" placeholder="Slug" id="slug" readonly>
                             </div>
                             <div class="col-md-6">
                             <label for="">Pubsish</label>
@@ -72,8 +71,14 @@
                         </div>
                        
                         <div class="row">
-                            <div class="col-md-12"><label for="">Meta Titles</label>
+                            <div class="col-md-6"><label for="">Meta Titles</label>
                                 <input type="text" class="form-control" name="meta_title" placeholder="Meta Title for page">
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="">Mata Description</label>
+                                <input type="text" name="meta_description" class="form-control" placeholder="Meta description"> 
+                                   
                             </div>
                             
                         </div>
@@ -117,6 +122,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
+        $(document).ready(function(){
+            $('#title').on('input',function(){
+                var title =  $('#title').val();
+                var slug = title.replace(" ",'-');
+                newslug = slug.toLowerCase();
+                $('#slug').val(newslug);
+            })
+        });
       
         $(document).ready(function() {
         $('#summernote').summernote({

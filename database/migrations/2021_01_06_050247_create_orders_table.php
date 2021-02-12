@@ -21,6 +21,8 @@ class CreateOrdersTable extends Migration
             $table->double('discount',9,2);
             $table->double('net_total',9,2);
             $table->enum('status',['pending','canceled','shipped','completed'])->default('pending');
+            $table->enum('type',['customer','installer']);
+            $table->softDeletes();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

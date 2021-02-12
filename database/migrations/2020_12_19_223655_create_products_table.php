@@ -25,7 +25,8 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('quantity');
             $table->string('weight')->nullable();
             $table->enum('product_type',['window','door','frame','lentern','handle']);
-            $table->enum('status',['0','1'])->default('1');
+            $table->enum('type',['simple','customize']);
+            $table->softDeletes();
             $table->unsignedBigInteger('crated_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

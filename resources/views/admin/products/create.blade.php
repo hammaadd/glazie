@@ -177,7 +177,7 @@
                             <div class="col-md-12">
                                 <label for="" ></label>
                                 <button type="submit"  class="btn btn-success mt-3 "><i class="fa fa-plus" ></i> Add Product</button>
-                                <a href="{{url('admin/product/list')}}" class="btn btn-danger mt-3 ml-3"> <i class="fa fa-times"> Cancel</i> </a>
+                                <a href="{{url('admin/products')}}" class="btn btn-danger mt-3 ml-3"> <i class="fa fa-times"> Cancel</i> </a>
                             </div>
                             
                         </div>
@@ -247,6 +247,18 @@ $(document).ready(function() {
             required: true
            
         },
+        'image_gallery[]': {
+        required: true,
+        minlength: 1
+        },
+        category_id:{
+            required:true
+        },
+        terms: {
+            required: true,
+            minlength: 1
+        },
+      
      
         product_type: {
             required: true
@@ -260,6 +272,9 @@ $(document).ready(function() {
         sale_price: {
             required: true,
             min:1
+        },
+        attribute:{
+            required:true
         },
         weight: {
             required: true         

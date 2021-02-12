@@ -13,7 +13,7 @@ class BrandsController extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        $brands = Brands::where('status','=','1')->get();
+        $brands = Brands::all();
        
         return view('admin/brands/index',['brands'=>$brands]);
     }
@@ -48,8 +48,10 @@ class BrandsController extends Controller
         return redirect('admin/brands')->with('info','The Brand is created Successfully');
     }
     public function edit($id){
-        $brands= Brands::find($id);
-  		return view('admin/brands/edit',['brands'=>$brands]);
+        abort_if(! $brands= Brands::find($id),403);
+       
+            return view('admin/brands/edit',['brands'=>$brands]);
+       
     }
     public function update($id,Request $request){
        
@@ -88,12 +90,10 @@ class BrandsController extends Controller
         return redirect('admin/brands')->with('info','The Brand is Updated Successfully');
     }
     public function delete($id){
-        $update_brand =  array(
-            'status' =>'0',
-        );
+       
             
             Brands::where('id',$id)
-            ->update($update_brand);
+            ->delete();
         
         return redirect('admin/brands')->with('info','The Brand is deleted Successfully');
     }

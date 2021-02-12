@@ -24,8 +24,9 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/admin/dashboard', 'AdminController@index')->name('admin.dashboard');
 Route::get('admin/adminlogout' ,'AdminController@admin_logout');
-
+Route::get('availproducts','IndexController@availproducts');
 Route::post('subscribe','IndexController@subscribe');
+Route::post('checkcoupen','IndexController@checkcoupen');
 Route::get('/admin/login','Auth\AdminLoginController@showloginForm');
 Route::post('/admin/login','Auth\AdminLoginController@login')->name('admin.login');
 Route::get('/admin/profile/edit','AdminsController@edit_profile');
@@ -115,7 +116,7 @@ Route::prefix('admin')->group(function () {
     
   
     Route::get('orderdetails','ProductsController@orderdetails');
-    Route::get('orderconfirm','ProductsController@orderconfirm');
+   
     Route::get('requesthiring/details','ProductsController@hiredetails');
     Route::get('editinstaller','ProductsController@editinstaller');
     //Route::get('customer','ProductsController@customer');
@@ -150,6 +151,7 @@ Route::prefix('admin')->group(function () {
     Route::get('orders','OrdersController@index');
     Route::post('checkorder','OrdersController@checkorder');
     Route::get('orderdetails/{id}','OrdersController@orderdetaails');
+    Route::get('orderconfirm','OrdersController@orderconfrim');
     
     // Product Addon Route
     Route::get('addon','AddonController@create');
@@ -199,6 +201,27 @@ Route::get('deletefeedback/{feedback_id}','ProductsController@deletefeedback');
     Route::get('cms/edit/{id}','CMSController@edit');
     Route::get('cms/view/{id}','CMSController@view');
     Route::post('cms/update/{id}','CMSController@update');
+    // New User Message 
+    Route::get('usermessage','UserMessageController@index');
+    Route::get('messagedetails/{id}','UserMessageController@messagedetails');
+    Route::get('messagedelete/{id}','UserMessageController@messagedelete');
+
+    // Routes for coupen 
+    Route::get('coupen','CoupenController@index');
+    Route::get('coupen/create','CoupenController@add');
+    Route::post('coupen/store','CoupenController@store');
+    Route::get('coupen/edit/{id}','CoupenController@edit');
+    Route::post('coupen/update/{id}','CoupenController@update');
+    Route::get('coupen/delete/{id}','CoupenController@delete');
+    // Route site setting
+    Route::get('social','SocialController@index'); 
+    Route::get('social/create','SocialController@create');
+    Route::post('social/store','SocialController@store');
+    Route::get('social/edit/{id}','SocialController@edit');
+    Route::post('social/update/{id}','SocialController@update');
+    Route::get('social/delete/{id}','SocialController@delete');
+
+
 });
 
 // Public Routes
@@ -218,13 +241,17 @@ Route::get('installerdetails/{id}','IndexController@installerdetails');
 
 Route::post('hirerequest','IndexController@hirerequest');
 Route::post('get_installer','IndexController@get_installer');
+Route::post('installerbyamount','IndexController@installerbyamount');
 // Feedback 
 Route::post('feedback','IndexController@feedback');
 // Getting nav item
 
-Route::post('getnavlinks','IndexController@navlink');
 
-Route::get('cms/{id}','IndexController@cmspage');
+Route::post('getnavlinks','IndexController@navlink');
+// contact Us Routes
+Route::get('contact-us','IndexController@contactus');
+Route::post('contactsubmit','IndexController@contactsubmit');
+Route::get('{id}','IndexController@cmspage');
 // Customr Routes are here
 Route::prefix('customer')->group(function () {
     Route::get('profile/edit','CustomerController@editprofile');
@@ -241,5 +268,9 @@ Route::prefix('customer')->group(function () {
     Route::get('orderdetails/{id}','CustomerController@orderdetails');
     Route::get('requests','CustomerController@requests');
     Route::get('requestdetails/{id}','CustomerController@requestsdetails');
-
+    Route::get('changeaccount','CustomerController@changeaccount');
+    Route::post('changeemail','CustomerController@changeemail');
+    Route::get('verify','CustomerController@verify');
+    Route::post('confirmcode','CustomerController@checkcode');
+    Route::get('customerlogout','CustomerController@logout');
 });

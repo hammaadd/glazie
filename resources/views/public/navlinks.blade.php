@@ -1,3 +1,3 @@
 @foreach ($links as $link)
-<a class="dropdown-item" href="{{url('cms/'.$link->id)}} ">{{$link->title}}</a>
+<li><a class="dropdown-item" href="{{url($link->slug)}} ">{{$link->title}}</a></li>
 @endforeach

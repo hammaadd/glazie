@@ -140,6 +140,7 @@
                                         <form action="{{url('admin/checkorder')}}" method="post" class="mt-3">
                                             @csrf
                                             <div class="row">
+                                                <input type="hidden" name="redirect" value="3">
                                                 <div class="col-md-9"> <input type="hidden" value="{{$order->id}}" name="order_id">
                                                     <select name="status" id="" class="form-control" required>
                                                         <option value="">Select Order </option>

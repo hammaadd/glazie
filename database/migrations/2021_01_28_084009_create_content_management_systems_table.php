@@ -16,11 +16,12 @@ class CreateContentManagementSystemsTable extends Migration
         Schema::create('content_management_systems', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug');
             $table->string('meta_title')->nullable();
             $table->longText('description')->nulable();
             $table->longText('met_description')->nullable();
             $table->string('image')->nullable();
-            $table->enum('status',['1','0'])->default('1');
+            $table->softDeletes();
             $table->enum('publish',['1','0']);
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

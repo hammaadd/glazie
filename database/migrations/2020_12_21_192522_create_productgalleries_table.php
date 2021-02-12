@@ -20,7 +20,7 @@ class CreateProductgalleriesTable extends Migration
             $table->string('image');
             $table->string('image_title')->nullable();
             $table->enum('is_primary',['0','1']);
-            $table->enum('status',['0','1'])->default('1');
+            $table->softDeletes();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

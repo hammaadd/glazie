@@ -120,22 +120,19 @@
     
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-4">
                     <div class="col-md-6">
                         <label for="">Address </label>
-                        <input type="text" class="form-control" name="shipaddress" placeholder="House No Street No ">
-    
+                        <input type="text" class="form-control" name="shipaddress" placeholder="House No Street No " >
+                        <input type="hidden" id="paidamount">
+                        
                     </div>
                     
                     
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-outline-success mt-3"><i class="fa fa-check"></i> Submit</button>
-                </div>
-            </div>
-        </form>
+         
+        
         </div>    
         <div class="col-md-3">
             @php
@@ -152,7 +149,7 @@
                 </div>
                 <div class="card-body">
                     <table class="table">
-                       
+                        <input type="hidden" id="net_total" value="{{$price}}">
                         <tr>
                             <th>Total Quantity:</th>
                             <td> <span >{{$quantity}}</span> </td>
@@ -166,12 +163,36 @@
                             <td>{{$regular_price-$price}}</td>
                         </tr>
                         <tr>
-                            <th>Total Amount:</th>
+                            <th>Net Total:</th>
                             <td><span >{{$price}}</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                Use Coupen to get discount
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="text" class="form-control" id="coupen" placeholder="Coupen Code">
+                                <span class="text-success text-center" style="display: none" id="discountmessage"></span>
+                                <span class="text-danger text-center" style="display: none" id="coupenmessage">Invalid Coupen</span> <br>
+                                <button class="btn btn-xs btn btn-fill-out mt-1 rounded-0" type="button" onclick="checkcoupen()">Add</button>
+                            </td>
+                        </tr>
+                        <tr id="paidrow" style="display: none">
+                            <th>Amount Paid</th>
+                            <td id="totalpaidamount"></td>
                         </tr>
                     </table>
                 </div>
             </div>
+            <div class="row m-3">
+                <div class="col-md-12">
+                    <button class="btn btn-fill-out rounded-0 px-4 py-2"> <i class="fa fa-check" type="submit"></i> Submit</button>
+                 
+                </div>
+            </div>
+        </form>
         </div>
     </div>
     
@@ -298,7 +319,53 @@
 
     }
 });
+function checkcoupen()
+{
+    var coupen = $('#coupen').val();
+    if(coupen){
+        url = "{{url('checkcoupen')}}";
+            $.ajax({
+           type:'POST',
+           url:url,
+           data:{
+               coupen:coupen
+           },
+           success:function(result){
+            if(result==0){
+                $('#coupenmessage').show();
+                $('#discountmessage').hide();
+                $('#paidrow').hide();
+            }
+            else{
+                var res = result.split(",");
+                if(res[1]=='a'){
+                    $('#coupenmessage').hide();
+                    $('#discountmessage').show();
+                    $('#discountmessage').html("You got the discount of "+res[0]);
+                    var net_total = $('#net_total').val();
+                    net_total = parseInt(net_total);
+                    paidamount = net_total-res[0];
+                    $('#paidrow').show();
+                    $('#totalpaidamount').html(paidamount);
 
+                }
+                else{
+                    $('#coupenmessage').hide();
+                    $('#discountmessage').show();
+                    $('#discountmessage').html("You got the discount of "+res[0]);
+                    var net_total = $('#net_total').val();
+                    net_total = parseInt(net_total);
+                    paidamount = net_total-net_total*res[0]/100;
+                    $('#paidrow').show();
+                    $('#totalpaidamount').html(paidamount);
+                }
+            }
+            //$('#dropdownlink').html(result);
+       
+            }	
+            });
+    }
+}
   
 
 </script>

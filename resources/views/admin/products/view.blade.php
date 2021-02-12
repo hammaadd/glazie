@@ -64,10 +64,10 @@
         @foreach ($products->feedback
         as $feedback)
             @php
-                if($feedback->status=="1"){
+               
                     $net_feedback +=$feedback->rating;
                     $i++;
-                }
+                
                 //echo $net_feedback;
             @endphp
         @endforeach
@@ -257,13 +257,23 @@
                             </h4>
                         </div>
                         <div class="card-body" >
-                           <P class="text-justify" id="longdesc">
-                                @php
-                                    echo  substr($products->description, 0, 40);
-                                @endphp
-                           </P>
-                           <p class="text-justify" id="longdescription" style="display: none">{!!$products->description!!}</p>
-                            <button class="btn btn-success" id="longdescbtn"> Read More</button>
+                            {{-- <div class="row">
+                                <div class="col-md-12" id="halflongdesc">
+                                   <p id="halflongdesc">
+                                       @php
+                                           echo substr($products->description,0,40);
+                                       @endphp
+                                   </p>
+                                </div>
+                            </div> --}}
+                            <div class="row">
+                                <div class="col-md-12" style="display: none;" id="completedescription">
+                                    <p class="text-justify">
+                                        {!!$products->description!!}
+                                    </p>
+                                </div>
+                            </div>
+                           <button class="btn btn-success" id="longdescbtn">Read</button>
                         </div>
                     </div>
                 </div>
@@ -327,16 +337,19 @@
 @section('script')
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
+    
+   
     $(document).ready(function(){
     $("#short_btn").click(function(){
       $('#shortdes').toggle(1000);
       $('#shortdescription').toggle(1000);
     });
-    
-  $("#longdescbtn").click(function(){
-    $("#longdesc").toggle(1000);
-    $("#longdescription").toggle(1000);
-  });
+    $('#longdescbtn').click(function(){
+        $("#halflongdesc").toggle(1000);
+        $('#completedescription').toggle(1000);
+    });
+   
+  
 
   });  
  

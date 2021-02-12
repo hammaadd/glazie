@@ -18,12 +18,11 @@ class ProductattributeController extends Controller
         $products = DB::table('product_attributes')
         ->join('products', 'products.id', '=', 'product_attributes.product_id')
         ->join('attributes', 'attributes.id', '=', 'product_attributes.attribute_id')
-        ->select('product_attributes.*', 'products.product_name','attributes.attribute_name')
-          ->where('product_attributes.status', '=', '1')->get();
+        ->select('product_attributes.*', 'products.product_name','attributes.attribute_name')->where('product_attributes.status', '=', '1')->get();
            return view('admin/productattribute/index',['products_attrbutes' =>$products]);
     }    
     public function add(){
-        $products = Products::where('status','=','1')->get();
+        $products = Products::all();
         return view('admin/productattribute/create',['products'=>$products]);
 
     }
@@ -47,7 +46,7 @@ class ProductattributeController extends Controller
         $product_id =  $request->input('product_id');
         $product = Products::find($product_id);
         $product_type  = $product->product_type;
-        $avail_attrs = Attribute::where('status','=','1')->where('product_type','=',$product_type)->get();
+        $avail_attrs = Attribute::where('product_type','=',$product_type)->get();
         foreach ($avail_attrs as $key => $availattr) {
             array_push($attrbute_id,$availattr->id);
             array_push($attrbute_name,$availattr->attribute_name);
@@ -58,7 +57,7 @@ class ProductattributeController extends Controller
         
     }
     public function edit($id){
-        $prdattrbute = ProductAttribute::find($id);
+        abort_if(!$prdattrbute = ProductAttribute::find($id), 403);
         $products = Products::where('status','=','1')->get();
         
         return view('admin/productattribute/edit',['products'=>$products,'prdattrbute'=>$prdattrbute]);
@@ -81,12 +80,10 @@ class ProductattributeController extends Controller
      
     }
     public function delete($id){
-        $delete_prdattr = array(
-            'status' => '0'
-        );
+      
 
         ProductAttribute::where('id',$id)
-            ->update($delete_prdattr);
+            ->delete();
         return redirect('admin/productattribute')->with('info','The Product Attribute is deleted  Successfully');
     }
 }

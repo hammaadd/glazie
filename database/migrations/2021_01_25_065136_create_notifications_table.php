@@ -20,7 +20,7 @@ class CreateNotificationsTable extends Migration
             $table->string('type');
             $table->string('link')->nullable();
             $table->enum('status',['read','unread'])->default('unread');
-            $table->enum('delete_status',['1','0'])->default('1');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -26,7 +26,7 @@ class CreateAddressesTable extends Migration
             $table->string('postcode');
             $table->string('address');
             $table->enum('address_type',['billing','shipping']);
-            $table->enum('status',['0','1'])->default('1');
+            $table->enum('type',['customer','installer']);
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

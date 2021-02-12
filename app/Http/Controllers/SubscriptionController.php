@@ -11,15 +11,13 @@ class SubscriptionController extends Controller
         $this->middleware('auth:admin');
     }
     public function  index(){
-        $subcriptions = Subscribe::where('delete_status','=','1')->get();
+        $subcriptions = Subscribe::all();
         return view("admin/newsletter/index",['subscriptions'=>$subcriptions]);
     }
     public function delete($id)
     {
-        $deletesub = array(
-            'delete_status' => '0'
-        );
-        Subscribe::where('id',$id)->update($deletesub);
+        
+        Subscribe::where('id',$id)->delete();
         
 
         return redirect('admin/subscription')->with('info','Subscription Is deleted Successfully');

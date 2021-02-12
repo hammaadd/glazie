@@ -148,7 +148,7 @@
                                         <i class="anticon font-size-10 anticon-right"></i>
                                     </div>
                                 </a>
-                                <a href="{{url('admin/adminlogout')}}" class="dropdown-item d-block p-h-15 p-v-10">
+                                <a href="{{url('customer/customerlogout')}}" class="dropdown-item d-block p-h-15 p-v-10">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
                                             <i class="anticon opacity-04 font-size-16 anticon-logout"></i>
