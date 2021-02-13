@@ -57,10 +57,10 @@
                 <div class="col-sm-4 offset-sm-4">
                   <div class="column-inner">
                     <div class="dt-sc-contact-info">
-                      <a href="tel:08004480556">
+                      <a id="phone_link">
                         <i class='bx bx-phone'></i>
                         <h6>Phone</h6>
-                        <p>08004480556</p>
+                        <p id="phoneno"></p>
                       </a>
                     </div>
                   </div>
@@ -68,10 +68,10 @@
                 <div class="col-sm-4">
                   <div class="column-inner">
                     <div class="dt-sc-contact-info">
-                      <a href="mailto:enquiries@glazieltd.co.uk">
+                      <a id="mail_link" >
                         <i class='bx bx-paper-plane'></i>
                         <h6>Email</h6>
-                        <p>enquiries@glazieltd.co.uk</p>
+                        <p id="adminmail"></p>
                       </a>
                     </div>
                   </div>

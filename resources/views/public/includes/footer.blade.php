@@ -147,5 +147,28 @@
        
             }	
             });
+            url = "{{url('getmail')}}";
+            $.ajax({
+           type:'POST',
+           url:url,
+           success:function(result){
+            var length = result.length;
+            var email = phone = '';
+            console.log(result);
+            for (let index = 0; index < result.length; index++) {
+                if (result[index]['key']=="admin_phone") {
+                $('#phoneno').html(result[index]['value']);
+                $('#phone_link').prop('href','tel:'+result[index]['value']);
+                }
+                if (result[index]['key']=="admin_email") {
+                $('#adminmail').html(result[index]['value']);
+                $('#mail_link').prop('href','mailto:'+result[index]['value']);
+                }
+                
+                
+            }
+       
+            }	
+            });
     });
   </script>

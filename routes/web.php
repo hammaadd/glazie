@@ -37,6 +37,9 @@ Route::post('/admin/avat/update','AdminsController@updateavatar');
 Route::get('/admin/profile/change','AdminsController@changeprofile');
 Route::post('/admin/change/profile','AdminsController@profilechange');
 Route::get('admin/assignment', 'AssignmentController@index');
+Route::post('quoteforinstaller','IndexController@quoteforinstaller');
+Route::post('getmail','IndexController@getmail');
+
 Route::prefix('admin')->group(function () {
     // Permisssion Routes
     // Route::get('permission','PermissionController@index');

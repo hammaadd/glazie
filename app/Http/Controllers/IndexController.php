@@ -27,10 +27,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\ContentManagementSystem;
 use DB;
 use Session;
+use App\Models\SiteSetting;
 use App\Models\ContactUs;
 use App\Models\Subscribe;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use App\Models\InstallQuote;
+use App\Mail\InstallerQuote;
+use Mail;
 use App\Notifications\SendPassword;
 
 class IndexController extends Controller
@@ -316,10 +320,11 @@ class IndexController extends Controller
          else{
              $net_total = $net_total-$net_total*$coupendata->discount/100;
          }
-         $updatecoupen = array(
-            'status'=>'used',
-            'usedamount'=>$coupendata->discount
-        );
+         if ($coupendata->limiteduser=='yes') {
+             $updatecoupen = array(
+                 'no_of_user'=>$coupendata->no_of_user-1
+             );
+         }
         Coupen::where('id',$coupenid)->update($updatecoupen);
         
        }
@@ -530,29 +535,74 @@ class IndexController extends Controller
     }
     public function checkcoupen(Request $request)
     {
+        $date = date('Y-m-d');
         $coupen = $request->input('coupen');
         $coupen_amount = Coupen::where('coupen_code','=',$coupen)->where('status','=','unuse')->get();
         if(count($coupen_amount)>0){
             foreach($coupen_amount  as $coupens){
 
             }
-            if($coupens->discount_type=="percentage"){
-                $discount = $coupens->discount-$coupens->usedamount.",p";
-                $request->session()->put('coupunid', $coupens->id);
-                
-                echo $coupens->discount-$coupens->usedamount.",p";
+            if($coupens->limiteduser=="yes" && $coupens->no_of_user==0) {
+                echo 'limit Cros';
+            }
+             else if($coupens->limited_time=="yes" && $coupens->last_date<=$date) {
+                echo 'date expire';
             }
             else{
-                $discount = $coupens->discount;
-                $request->session()->put('coupunid', $coupens->id);
-                
-                echo $coupens->discount;
-                
+                if($coupens->discount_type=="percentage"){
+                    $coupens->discount.",p";
+                    $request->session()->put('coupunid', $coupens->id);
+                    
+                    echo $coupens->discount.",p";
+                }
+                else{
+                    $discount = $coupens->discount;
+                    $request->session()->put('coupunid', $coupens->id);
+                    
+                    echo $coupens->discount.",a";
+                    
+                }
             }
-        }else{
-            $request->session()->put('coupunid',null);
-            echo 0;
-            
         }
+        else{
+            echo 'invalid Copun';
+        }
+    }
+    public function quoteforinstaller(Request $request){
+        $validatedData = $request->validate([
+            'name'=>'required',
+            'email'=>'required',
+            'message'=>'required',
+            ]);
+        $quote = new InstallQuote;
+        $quote->installer_id = $request->input('installer_id');
+        $quote->name = $request->input('name');
+        $quote->email = $request->input('email');
+        $quote->message = $request->input('message');
+        $quote->save();
+        $installer_data = User::find($request->input('installer_id'));
+        $installeremail = $installer_data->email;
+        
+        $details = array(
+            'name' =>$request->input('name'),
+            'email'=>$request->input('email'),
+            'message'=>$request->input('message')
+        );
+        //Mail::to($installeremail)->send(new InstallerQuote($details));
+        $notify =new Notification;
+        $notify->name = "Message for installer";
+        $notify->message ="User's Message for Installer ";
+        $notify->type = "Question";
+        $notify->link = ".";
+        $notify->save();
+        
+        return redirect('installerlist')->with('info','Your Request is created Soon you recieve mail Soon');
+  
+    }
+    public function getmail(){
+       
+        $datas = SiteSetting::where('key','=','admin_email')->orWhere('key','admin_phone')->get();
+        
+        return $datas;
     }
 }

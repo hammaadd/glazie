@@ -173,9 +173,9 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input type="text" class="form-control" id="coupen" placeholder="Coupen Code">
+                                <input type="text" class="form-control" id="coupen" placeholder="Coupen Code" onchange="checkcoupen()">
                                 <span class="text-success text-center" style="display: none" id="discountmessage"></span>
-                                <span class="text-danger text-center" style="display: none" id="coupenmessage">Invalid Coupen</span> <br>
+                                <span class="text-danger text-center" style="display: none" id="coupenmessage"></span> <br>
                                 <button class="btn btn-xs btn btn-fill-out mt-1 rounded-0" type="button" onclick="checkcoupen()">Add</button>
                             </td>
                         </tr>
@@ -331,7 +331,21 @@ function checkcoupen()
                coupen:coupen
            },
            success:function(result){
-            if(result==0){
+               console.log(result);
+            if(result=='invalid Copun'){
+                $('#coupenmessage').html("Invalid Coupen");
+                $('#coupenmessage').show();
+                $('#discountmessage').hide();
+                $('#paidrow').hide();
+            }
+            else if(result=="limit Cros"){
+                $('#coupenmessage').html('The Limited user ');
+                $('#coupenmessage').show();
+                $('#discountmessage').hide();
+                $('#paidrow').hide();
+            }
+            else if(result=="date expire"){
+                $('#coupenmessage').html('Expire Coupen');
                 $('#coupenmessage').show();
                 $('#discountmessage').hide();
                 $('#paidrow').hide();
@@ -352,7 +366,7 @@ function checkcoupen()
                 else{
                     $('#coupenmessage').hide();
                     $('#discountmessage').show();
-                    $('#discountmessage').html("You got the discount of "+res[0]);
+                    $('#discountmessage').html("You got the discount of "+res[0]+"%");
                     var net_total = $('#net_total').val();
                     net_total = parseInt(net_total);
                     paidamount = net_total-net_total*res[0]/100;

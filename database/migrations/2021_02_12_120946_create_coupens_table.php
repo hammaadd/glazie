@@ -17,10 +17,12 @@ class CreateCoupensTable extends Migration
             $table->id();
             $table->string('coupen_name');
             $table->string('coupen_code');
-            $table->enum('free_shipping',['yes','no'])->default('no');
             $table->enum('discount_type',['amount','percentage'])->nullable();
             $table->double('discount')->nullable();
-            $table->double('usedamount')->default(0)->nullable();
+            $table->enum('limiteduser',['yes','no']);
+            $table->unsignedBigInteger("no_of_user")->nullable();
+            $table->enum('limited_time',['yes','no']);
+            $table->date('last_date')->nullable();    
             $table->enum('status',['unuse','remaining','used'])->default("unuse");
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

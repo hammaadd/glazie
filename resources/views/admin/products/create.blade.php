@@ -153,6 +153,11 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn mt-1 btn-xs btn-success float-right" type="button" id="add"> Add</button>
+                            </div>
+                        </div>
+                        <div class="row">
                             
                             {{-- <div class="col-md-4">
                                 <label for="">Add new Attribute</label>
@@ -345,7 +350,7 @@ $(document).ready(function() {
                
             },
             success:function(result){
-                //console.log(result)
+                console.log(result);
                 var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
                
                var len =jsonResult[0].length;

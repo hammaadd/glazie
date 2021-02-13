@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Coupen extends Model
+use Illuminate\Database\Eloquent\SoftDeletes;
+class InstallQuote extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 }

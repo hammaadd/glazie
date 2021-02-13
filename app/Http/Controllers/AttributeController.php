@@ -126,7 +126,7 @@ class AttributeController extends Controller
         $term_id = array();
         $attribute_id = $request->input('attr');
     
-    $terms = Term::where('status','=','1')->where('attribute_id','=',$attribute_id)->get();
+    $terms = Term::where('attribute_id','=',$attribute_id)->get();
   
     foreach ($terms as $key => $term) {
         array_push($term_id,$term->id);

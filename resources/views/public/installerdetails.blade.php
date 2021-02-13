@@ -18,12 +18,16 @@
                           <h5 class="text-right font-weight-bold mt-2">Phoen No:</h5>
                           <h5 class="text-right font-weight-bold mt-2">Address:</h5>
                       </div>
-                      <div class="col-md-9">
+                      <div class="col-md-6">
                           <h5 class="mt-2">{{$installer->name}}</h5>
                           <h5 class="mt-2">{{$installer->email}}</h5>
                           
                           <h5 class="mt-2">{{$installer->contact_no}}</h5>
                           <h5 class="mt-2">{{$installer->address}}</h5>
+                      </div>
+                      <div class="col-md-3">
+                        
+
                       </div>
                   </div>
               </div>
@@ -120,20 +124,50 @@
                       <div class="row">
                           <div class="col-md-12">
                               <label for="">Working Details</label>
-                              <textarea name="working_details" id="summernote" class="form-control" rows="10" placeholder="Work Details"> {{ old('working_details') }}</textarea>
+                              <textarea name="working_details" id="summernote" class="form-control" rows="5" placeholder="Work Details"> {{ old('working_details') }}</textarea>
                           </div>
                       </div>
                       <div class="row">
                           <div class="col-md-12">
-                              <button type="submit" class="btn btn-success btn-tone mt-3"> <i class="fa fa-check"></i> Submit</button>
-                              <a href="" class="btn btn-tone btn-danger mt-3 ml-3"><i class="anticon anticon-close"></i> Cancel</a>
+                              <button type="submit" class="btn btn-fill-out rounded-0 px-4 py-2 mt-3"> <i class="fa fa-check"></i> Submit</button>
+                              <a href="" class="btn btn-fill-out theme_bgcolor2 text-white px-4 py-2 rounded-0 mt-3 ml-3"><i class="anticon anticon-close"></i> Cancel</a>
                           </div>
                       </div>
+                  </form>
+                  <form action="{{url('quoteforinstaller')}}" method="post">
+                      <div class="row">
+                          <div class="col-md-3"></div>
+                          <div class="col-md-6">
+                              <h3>Questionare For Quote</h3>
+                              <div class="form-group">
+                                  @csrf
+                                  <label for="">Name</label>
+                                  <input type="hidden" name="installer_id" value="{{$installer->id}}">
+                                  <input type="text" class="form-control" name="name" placeholder="Enter Your Name">
+
+                              </div>
+                              <div class="form-group">
+                                  <label for="">Email</label>
+                                  <input type="email" class="form-control" name="email" placeholder="Enter Email Address">
+                              </div>
+                              <div class="form-group">
+                                  <label for="">Message / Question </label>
+                                  <textarea name="message"  class="form-control" rows="10"></textarea>
+                              </div>
+                              <div class="form-group mt-3 mb-3">
+                                  <button class="btn btn-fill-out rounded-0 px-4 py-2"><i class="fa fa-check"></i> Submit</button>
+                                  <a href="" class="btn btn-fill-out theme_bgcolor2 text-white px-4 py-2 rounded-0 ml-5"><i class="anticon anticon-close"></i> Cancel</a>
+                              </div>
+                          </div>
+                      </div>
+
                   </form>
              
         </div>
      </div>   
 </div>
+
+
     <!-- Model Start Here-->
     
     

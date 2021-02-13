@@ -1,5 +1,5 @@
 @extends('admin-layout.layouts')
-@section('title','Edit Coupen')
+@section('title','Coupen List')
 @section('content')
 <link href="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet">
 
@@ -48,13 +48,13 @@
                                 <div class="col-md-6">
                                     <label for="">Discount Type</label>
                                     <select name="discount_type" class="form-control" id="discount_type">
-                                        <option value="amount"
-                                        @if ($coupen->discount_type=='amount')
+                                        <option value="amount" 
+                                        @if ($coupen->discount_type=="amount")
                                             selected
                                         @endif
                                         >Amount</option>
-                                        <option value="percentage" 
-                                        @if ($coupen->discount_type=='percentage')
+                                        <option value="percentage"
+                                        @if ($coupen->discount_type=="percentage")
                                             selected
                                         @endif
                                         >Percentage</option>
@@ -65,27 +65,66 @@
                                     <input type="number" class="form-control" name="discount_amount" placeholder="Enter Discount Amount" id="discount_amount" value="{{$coupen->discount}}">
                                 </div>
                             </div>
-                            <div class="row">
-                                @if ($coupen->discount_type=='amount')
+                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="">Used Amount</label>
-                                    <input type="number" name="usedamount" readonly value="{{$coupen->usedamount}}" class="form-control">
+                                    <label for="">Llimited User</label>
+                                    <select name="limited_user" id="limituser" class="form-control">
+                                        <option value="yes"
+                                        @if ($coupen->limiteduser=="yes")
+                                            selected
+                                        @endif
+                                        >Yes</option>
+                                        <option value="no"
+                                        @if ($coupen->limiteduser=="no")
+                                            selected
+                                        @endif
+                                        >No</option>
+                                    </select>
                                 </div>
-                                @endif
                                 <div class="col-md-6">
-                                    <label for="">Status</label>
-                                    <input type="text" class="form-control" value="{{$coupen->status}}" readonly>
-                                </div>
+                                    <label for="">No Of User</label>
+                                    <input type="number" class="form-control" name="no_of_user" placeholder="No Of User" id="no_of_user" 
+                                    @if ($coupen->limiteduser=="no")
+                                            disabled
+                                        @else
+                                        value="{{$coupen->no_of_user}}"
+                                        @endif
+                                    >
+                                </div> 
                             </div>
-                             <div class="row m-2">
-                                {{--<div class="col-md-12">
-                                    <input type="checkbox" name="freeshipping"> Free Shipping
-                                </div>--}}
-                            </div> 
                             <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Limited Days</label>
+                                    <select name="limited_time" id="limitedtime" class="form-control">
+                                        <option value="yes"
+                                            @if ($coupen->limited_time=="yes")
+                                                selected
+                                            @endif
+                                        >Yes</option>
+                                        <option value="no"
+                                        @if ($coupen->limited_time=="no")
+                                                selected
+                                            @endif
+                                        >No</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Expiry Date</label>
+                                    <input type="date" class="form-control" name="timelimit" placeholder="No Of User" id="limit" min="{{date('Y-m-d')}}" 
+                                    
+                                    @if ($coupen->limited_time=="no")
+                                        disabled
+                                        @else                                  value="{{$coupen->last_date}}"
+                                        @endif
+
+                                >
+                                </div> 
+                            </div> 
+                            
+                            <div class="row mt-3">
                                 <div class="col-md-12">
                                     <button class="btn btn-success mr-1" type="submit"> <i class="fa fa-check"></i> Submit</button>
-                                    <a href="{{url('admin/coupen')}}" class="btn btn-danger"> <i class="anticon anticon-close-circle"></i> Cancel</a>
+                                    <a href="{{url('coupen')}}" class="btn btn-danger"> <i class="anticon anticon-close-circle"></i> Cancel</a>
                                 </div>
                             </div>
                         </form>
@@ -138,6 +177,26 @@ $('#discount_type').on('change',function(){
        } 
     }
 });
+$('#limituser').change(function(){
+    var limited_user = $('#limituser').val();
+    if (limited_user=="no") {
+        $('#no_of_user').prop('disabled',true);
+        $('#no_of_user').val('');
+    }
+    else{
+        $('#no_of_user').prop('disabled',false);
+    }
+});
+$('#limitedtime').change(function(){
+    var limited_time = $('#limitedtime').val();
+    if (limited_time=="no") {
+        $('#limit').prop('disabled',true);
+        $('#limit').val('');
+    }
+    else{
+        $('#limit').prop('disabled',false);
+    }
+});
 $("#coupen").validate({
     ignore: ':hidden:not(:checkbox)',
     errorElement: 'label',
@@ -153,8 +212,11 @@ $("#coupen").validate({
         },
      
         discount_amount: {
-            required: true  
-        }
+            required: true,
+            min:1
+        },
+
+      
 
         
     }
