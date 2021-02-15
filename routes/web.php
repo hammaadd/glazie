@@ -112,6 +112,9 @@ Route::prefix('admin')->group(function () {
     Route::post('attribute/get_terms','AttributeController@get_terms');
     // Testing Routes
     Route::get('products/addon','ProductsController@addon');
+
+    Route::post('products/get_attributess','ProductsController@get_attribute');
+
     Route::get('orders/list','ProductsController@orderlist');
     Route::get('orders/installer','ProductsController@installer');
     Route::get('product/list','ProductsController@productslist');

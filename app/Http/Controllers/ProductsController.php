@@ -41,7 +41,11 @@ class ProductsController extends Controller
         return view('admin/products/create',['brands' =>$brands,'attributes'=>$attributes,'categories'=>$categories]);
     }
     public function create(Request $request){
-        
+      
+        $user = Auth::user();
+        $no_of_attribute = $request->input('no_of_attribute');
+        //print_r($terms);
+    
         $user = Auth::user();
         $validatedData = $request->validate([
            'product_name'=>'required',
@@ -51,7 +55,7 @@ class ProductsController extends Controller
            'weight'=>'required',
            'quantity'=>'required',
            'product_type'=>'required',
-           'attribute'=>'required'
+           
         ]);
            
          $products = new Products;
@@ -90,26 +94,31 @@ class ProductsController extends Controller
             $prodgallery->created_by = $user->id;
             $prodgallery->save();
         }
+        for($attr=1;$attr<=$no_of_attribute;$attr++)
+      {
+        $attri_id =  $request->input('attribute'.$attr);
         $product_attribute = new ProductAttribute;
         $product_attribute->product_id = $product_id;
-        $product_attribute->attribute_id = $request->input('attribute');
+        $product_attribute->attribute_id = $attri_id;
         $product_attribute->created_by = $user->id;
         $product_attribute->save();
         $attribute_id = $product_attribute->id;
-        $terms = $request->input('terms');
-        //print_r($terms);
-        
-        foreach ($terms as $key => $term) {
+        $terms = $request->input('terms'.$attr);
+        if (isset($terms)) {
+            foreach ($terms as $key => $term) {
             
-            if(!(int)$term){
-            $add_term = new Term;
-            $add_term->name = $term;
-            $add_term->attribute_id = $request->input('attribute');
-            $add_term->created_by = $user->id;
-            $add_term->save();
-            
+                if(!(int)$term){
+                $add_term = new Term;
+                $add_term->name = $term;
+                $add_term->attribute_id =$attri_id;
+                $add_term->created_by = $user->id;
+                $add_term->save();
+                
+                }
             }
         }
+      }
+    
         $prodcut_categories = $request->input('category_id');
         foreach ($prodcut_categories as  $prodcut_category) {
            $add_prdcat = new ProductCategory;
@@ -370,5 +379,10 @@ class ProductsController extends Controller
         
         return redirect('admin/products/view/'.$id)->with('info','The Feedback is deleted  Successfully');
         
+    }
+    public function get_attribute()
+    {
+        $attributes = Attribute::all();
+        return view('admin/products/attribut',['attributes'=>$attributes]);
     }
 }

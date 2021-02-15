@@ -4,6 +4,9 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
+
+
+
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
@@ -24,6 +27,7 @@
                     <form action="{{ url('/admin/products/create')}}"  method="post" enctype="multipart/form-data" id="add_product">
                     <div class="card-header" style="background-color: #E3E3E3">
                         <h4 class="card-title">Add New Product</h4>
+                        
                     </div>
                     <div class="card-body">
                         
@@ -135,7 +139,7 @@
                         </div>
                         
                         
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-md-6">
                                 <label for="">Attribute</label>
                                 <select name="attribute" id="attribute" class="form-control">
@@ -147,14 +151,29 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="">Terms</label>
-                                <select name="terms[]" id="terms" multiple="multiple" class="form-control select2">
+                                
   
                                 </select>
+                            </div>
+                        </div> --}}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" id="no_of_attribute" name="no_of_attribute">
+                                <button class="btn mt-1 btn-xs btn-success float-right" type="button" id="add"> Add</button>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <button class="btn mt-1 btn-xs btn-success float-right" type="button" id="add"> Add</button>
+                                <table class="table" id="tableattr">
+                                    <thead>
+                                        <th>Attribute</th>
+                                        <th>Terms</th>
+                                        <th>Action</th>
+                                    </thead>
+                                    <tbody >
+                                    
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div class="row">
@@ -230,6 +249,7 @@
             tokenSeparators: [",", " "]
         }
     );
+    
 });
 $(document).ready(function() {
     $('#category,#terms1').select2();
@@ -336,9 +356,9 @@ $(document).ready(function() {
     
     });
     $("#attribute").change(function(){
-        $.ajaxSetup({
-				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
-            });
+       
+        
+        
        var attr = $("#attribute").val();
        
        url = "{{url('admin/attribute/get_terms')}}";
@@ -373,5 +393,76 @@ $(document).ready(function() {
     });
 });
     });
+    let i = 1;
+    $("#add").click(function(){
+        var document_array = <?php echo json_encode($attributes,JSON_PRETTY_PRINT)?>;
+        let row = '';
+        row+='<tr>';
+        row+='<td>';
+        
+        row+='<select class="form-control" data-id="'+i+'" id="attribute'+i+'" onchange="abc('+i+')" name="attribute'+i+'" > ';
+        row+='<option value="" selected disabled>Select Attribute</option>';
+        
+        for (let i = 0; i < document_array.length; i++) {
+          row+='<option value="'+document_array[i]["id"]+'">'+document_array[i]["attribute_name"]+'</option>';
+            
+        }
+    
+        row+='</select>';
+        row+='</td>';
+        row+='<td><select name="terms'+i+'[]" id="terms'+i+'" class="form-control" disabled multiple> </select></td>';
+        row+='<td> <button class="btn btn-danger btn-xs remove" type="button"> <i class="fa fa-minus"></i></button></td></tr>';
+        
+        $('#tableattr').append(row);
+        $('#terms'+i).select2(
+        {
+            tags:true,
+            tokenSeparators: [",", " "]
+        });
+        $('#no_of_attribute').val(i);
+        i++;
+        
+    });
+    $(document).on('click', '.remove', function(){
+        
+        $(this).closest("tr").remove();
+        });
+    function abc(l){
+        var attr = $("#attribute"+l).val();
+       
+       url = "{{url('admin/attribute/get_terms')}}";
+            $.ajax({
+           type:'POST',
+           url:url,
+            data:{
+                attr:attr,
+               
+            },
+            success:function(result){
+                console.log(result);
+                var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
+               
+               var len =jsonResult[0].length;
+               var option = "";
+                $('#terms'+i).empty();
+                var option = "<option disabled>"+" Select Terms"+"</option>";
+                for(var i=0; i<len; i++)
+                    {
+                    var attrId = jsonResult[0][i];
+                    var attrName = jsonResult[1][i];
+                    option += "<option value='"+ attrId +"' selected>"+attrName+"</option>";
+                    }
+
+                    $('#terms'+l).html(option);
+                    $('#terms'+l).prop('disabled',false);
+                    //console.log(option);
+
+         		}
+         		  	
+               
+         		
+    });  
+    }
+
 </Script>
 @endsection
