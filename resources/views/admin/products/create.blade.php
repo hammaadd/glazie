@@ -11,10 +11,10 @@
     <div class="main-content">
         <div class="page-header">
             <h2 class="header-title">Add New product</h2>
-            <div class="header-sub-title">
+            <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a href="{{url('admin/product/list')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Products</a>
+                    <a href="{{url('admin/product/list')}}" class="breadcrumb-item"></i>Products</a>
                     <a class="breadcrumb-item" href="#">Add new product</a>
                     
                 </nav>
@@ -89,15 +89,13 @@
                         
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="">Product Type</label>
-                            <select name="product_type"  class="form-control">
-                                <option value="">--Select Product Type--</option>
-                                <option value="door">Door</option>
-                                <option value="handle">Handle</option>
-                                <option value="lentern">Lentern</option>
-                                <option value="frame">Frame</option>
-                                <option value="window">Window</option>
-                            </select>
+                                <label for="">Product Variety </label>
+                                <select name="verity_id" class="form-control">
+                                    <option value="">Select Variety</option>
+                                    @foreach ($varieties as $variety)
+                                        <option value="{{$variety->id}}">{{$variety->prd_name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-md-6">
                                 <label for="">Image <sub class="text-danger">(Press CTRL to upload more than one)</sub></label>
@@ -158,16 +156,16 @@
                         </div> --}}
                         <div class="row">
                             <div class="col-md-12">
-                                <input type="text" id="no_of_attribute" name="no_of_attribute">
-                                <button class="btn mt-1 btn-xs btn-success float-right" type="button" id="add"> Add</button>
+                                <input type="hidden" id="no_of_attribute" name="no_of_attribute">
+                                <button class="btn mt-1 btn-xs btn-success float-right" type="button" id="add"> <i class="fa fa-plus-circle"></i> Add</button>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <table class="table" id="tableattr">
+                                <table class="table" id="tableattr" style="display: none">
                                     <thead>
                                         <th>Attribute</th>
-                                        <th>Terms</th>
+                                        <th>Attribute Options</th>
                                         <th>Action</th>
                                     </thead>
                                     <tbody >
@@ -395,6 +393,7 @@ $(document).ready(function() {
     });
     let i = 1;
     $("#add").click(function(){
+        $('#tableattr').show();
         var document_array = <?php echo json_encode($attributes,JSON_PRETTY_PRINT)?>;
         let row = '';
         row+='<tr>';
@@ -421,6 +420,7 @@ $(document).ready(function() {
         });
         $('#no_of_attribute').val(i);
         i++;
+        
         
     });
     $(document).on('click', '.remove', function(){
@@ -464,5 +464,5 @@ $(document).ready(function() {
     });  
     }
 
-</Script>
+</script>
 @endsection

@@ -98,6 +98,13 @@ Route::prefix('admin')->group(function () {
     Route::post('brands/update/{id}','BrandsController@update');
     Route::get('brands/delete/{id}','BrandsController@delete');
     Route::post('brands/removeimage','BrandsController@removeimage');
+    // Products Variety Routes
+    Route::get('prdvariety', "PrdVarietyController@index");
+    Route::get('prdvariety/create', "PrdVarietyController@create");
+    Route::post('prdvariety/store', "PrdVarietyController@store");
+    Route::get('prdvariety/edit/{id}', "PrdVarietyController@edit");
+    Route::post('prdvariety/update/{id}', "PrdVarietyController@update");
+    Route::get('prdvariety/delete/{id}', "PrdVarietyController@delete");
     // proucts Routes
     Route::get('products','ProductsController@index');
     Route::get('products/add','ProductsController@add');
@@ -114,7 +121,7 @@ Route::prefix('admin')->group(function () {
     Route::get('products/addon','ProductsController@addon');
 
     Route::post('products/get_attributess','ProductsController@get_attribute');
-
+    Route::post('products/filter','ProductsController@filter');
     Route::get('orders/list','ProductsController@orderlist');
     Route::get('orders/installer','ProductsController@installer');
     Route::get('product/list','ProductsController@productslist');

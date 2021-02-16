@@ -1,5 +1,5 @@
 @extends('admin-layout.layouts')
-@section('title','Product Add On ')
+@section('title','Product Add On')
 @section('content')
 <link href="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -13,11 +13,11 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h2 class="header-title ">Orders</h2>
-            <div class="header-sub-title">
-                <nav class="breadcrumb breadcrumb-dash">
+            <h1 class="header-title">Product Add On</h1>
+            <div class="header-sub-title float-right">
+                <nav class="breadcrumb breadcrumb-dash ">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="#">Order</a>
+                    <a class="breadcrumb-item" href="#">Product Add On</a>
                     
                 </nav>
             </div>
@@ -28,9 +28,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h2>Product  Addon </h2>
-                    </div>
+                    
                     <div class="card-body">
                         @if(count($errors)>0)
                         @foreach($errors->all() as $error)

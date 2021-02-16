@@ -8,8 +8,8 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h2 class="header-title ">Attributes</h2>
-            <div class="header-sub-title">
+            <h2 class="header-title">Attributes</h2>
+            <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
                     <a class="breadcrumb-item" href="#">Attributes</a>
@@ -28,13 +28,16 @@
                     </div>
                 </div>
 				@endif
+                <div class="card">
+                    <div class="card-body">
+                        
         <div class="row">
             <div class="col-md-12">
                 <a  class="btn btn-primary  float-right mb-2" href="{{url('admin/attributes/add')}}"><i class="fa fa-plus"></i>Add New Attribute</a>
             </div>
             <div class="col-md-12">
                 
-                <div class="table-responsive" ></div>
+                <div class="table-responsive" >
                 <table class="table table-hover" id="brands">
                     <thead>
                         <th>Sr.#</th>
@@ -72,6 +75,10 @@
                         @endif
                     </tbody>
                 </table>
+            </div>
+            
+                </div>
+            </div>
             </div>
             </div>
             

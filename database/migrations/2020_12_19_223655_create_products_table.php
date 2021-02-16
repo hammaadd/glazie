@@ -16,15 +16,17 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('brand_id');
-            $table->string('product_name');
             $table->foreign('brand_id')->references('id')->on('brands');
+            $table->unsignedBigInteger('verity_id');
+            $table->foreign('verity_id')->references('id')->on('prd_varieties');
+            $table->string('product_name');
             $table->double('regular_price',9,2);
             $table->double('sale_price',9,2);
+            $table->enum('publish',['private','public']);
             $table->text('short_description')->nullable();
             $table->longText('description')->nullable();
             $table->unsignedBigInteger('quantity');
             $table->string('weight')->nullable();
-            $table->enum('product_type',['window','door','frame','lentern','handle']);
             $table->enum('type',['simple','customize']);
             $table->softDeletes();
             $table->unsignedBigInteger('crated_by');

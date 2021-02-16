@@ -10,11 +10,11 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            {{-- <h2 class="header-title">Categories</h2> --}}
-            <div class="header-sub-title">
-                <nav class="breadcrumb breadcrumb-dash">
+             <h2 class="header-title">Latest Orders</h2> 
+            <div class="header-sub-title float-right">
+                <nav class="breadcrumb breadcrumb-dash ">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="#">New Orders</a>
+                    <a class="breadcrumb-item" href="#">Latest Orders</a>
                     
                 </nav>
             </div>

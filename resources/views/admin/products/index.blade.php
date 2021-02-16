@@ -8,11 +8,11 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h2 class="header-title ">products</h2>
-            <div class="header-sub-title">
+            <h2 class="header-title ">Products</h2>
+            <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="#">products</a>
+                    <a class="breadcrumb-item" href="#">Products</a>
                     
                 </nav>
             </div>
@@ -36,17 +36,17 @@
                     <div class="col-lg-8">
                         <div class="d-md-flex">
                             <div class="m-b-10 m-r-15">
-                                <select class="custom-select" style="min-width: 180px;">
+                                {{-- <select class="custom-select" style="min-width: 180px;">
                                     <option selected>Catergory</option>
                                     <option value="all">All</option>
                                     
-                                </select>
+                                </select> --}}
                             </div>
                             <div class="m-b-10">
                                 <select class="custom-select" style="min-width: 180px;" id="status" onchange="filtertable()">
                                     <option value="">All</option>
-                                    <option value="in stock">In Stock </option>
-                                    <option value="Out of stock">Out of Stock</option>
+                                    <option value="instock">In Stock </option>
+                                    <option value="stockout">Out of Stock</option>
                                 </select>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="table-responsive" >
+                <div class="table-responsive" id="productstable">
                 <table class="table table-hover" id="products">
                     <thead>
                         <th>Sr.#</th>
@@ -69,10 +69,7 @@
                         <th>Action</th>
                     </thead>
                     <tbody>
-                        <?php
-                        $i=1;
-                        ?>
-                        
+                    
 
                         @if(count($products)>0)
                         @foreach($products as $product)
@@ -98,8 +95,7 @@
                                 <a href="{{url('admin/products/delete/'.$product->id)}}" class="badge badge-danger" onclick="return confirm('Are You Sure to delete?')"> <i class="fa fa-trash"></i> Delete</a> 
                             </td>
                         </tr>
-                        <?php
-                        $i++; ?>
+                   
                         @endforeach
                         @endif
                     </tbody>
@@ -126,26 +122,24 @@
 <script src="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.js')}}"></script>
 <script>
 $("#products").DataTable();
-function filtertable() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("status");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("products");
-  tr = table.getElementsByTagName("tr");
-
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[4];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
+function filtertable()
+{
+    var status = $('#status').val();
+    url = "{{url('admin/products/filter')}}";
+            $.ajax({
+           type:'POST',
+           url:url,
+            data:{
+                status:status,
+               
+            },
+            success:function(result){
+                $('#productstable').html(result);
+            }
+         		  	
+               
+         		
+    });  
 }
 </script>
 @endsection

@@ -53,9 +53,9 @@ class IndexController extends Controller
     } 
     public function product_details($id){
         abort_if(! $product = Products::find($id),403);
-        $product_type = $product->product_type;
+        $product_type = $product->verity_id;
         //echo $product_type;
-        $products = Products::where('product_type','=',$product_type)->get();
+        $products = Products::where('verity_id','=',$product_type)->get();
             return view('public/product_details',['product'=>$product,'related_products'=>$products]);
         
     }

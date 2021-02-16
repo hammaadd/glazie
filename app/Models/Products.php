@@ -31,4 +31,8 @@ class Products extends Model
     {
         return $this->hasMany(ProductReviews::class, 'products_id', 'id');
     }
+    public function varities()
+    {
+        return $this->belongsTo(PrdVariety::class, 'verity_id', 'id');
+    }
 }

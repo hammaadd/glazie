@@ -12,6 +12,7 @@ use App\Models\Term;
 use App\Models\Categories;
 use App\Models\ProductReviews;
 use Illuminate\Support\Facades\Auth;
+use App\Models\PrdVariety;
 use DB;
 
 use Illuminate\Http\Request;
@@ -38,7 +39,8 @@ class ProductsController extends Controller
         $brands = Brands::all();
         $attributes = Attribute::all();
         $categories = Categories::all();
-        return view('admin/products/create',['brands' =>$brands,'attributes'=>$attributes,'categories'=>$categories]);
+        $varieties = PrdVariety::all();
+        return view('admin/products/create',['brands' =>$brands,'attributes'=>$attributes,'categories'=>$categories,'varieties'=>$varieties]);
     }
     public function create(Request $request){
       
@@ -54,7 +56,7 @@ class ProductsController extends Controller
            'sale_price'=>'required',
            'weight'=>'required',
            'quantity'=>'required',
-           'product_type'=>'required',
+           'verity_id'=>'required'
            
         ]);
            
@@ -66,7 +68,7 @@ class ProductsController extends Controller
          $products->weight = $request->input('weight');
          $products->quantity = $request->input('quantity');
          $products->type = $request->input('type');
-         $products->product_type = $request->input('product_type');
+         $products->verity_id = $request->input('verity_id');
          $products->short_description =$request->input('short_description');
          $products->description =$request->input('description');
          $products->crated_by = $user->id;
@@ -384,5 +386,13 @@ class ProductsController extends Controller
     {
         $attributes = Attribute::all();
         return view('admin/products/attribut',['attributes'=>$attributes]);
+    }
+    public function filter(Request $request)
+    {
+        $status = $request->input('status');
+        if($status=='instock'){
+            $products = Products::where('quantity','>','0')->get();
+            return view('admin/products/filterproduct',['products'=>$products]);
+        }
     }
 }

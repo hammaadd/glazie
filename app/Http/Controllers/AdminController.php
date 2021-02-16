@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Products;
+use App\Models\PrdVariety;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -71,18 +72,18 @@ class AdminController extends Controller
         }
        // echo $yearly_sale;
         $orders = Order::count();
-      
+        $varities = PrdVariety::all();
         //  The latest Orders
         $latest_orders = Order::orderBy('id', 'desc')->limit(5)->get();
          // Latees  Products 
         $latest_products = Products::orderBy('id', 'desc')->limit(5)->get();
 
-        $product_type =   OrderDetails::all();
+        $product_type =   OrderDetails::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), ">=", $msd)->where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "<=", $ed)->get();
 
         // Latest Products
         // $latest_products = Products::where('status','=','1')->orderBy('id', 'desc')->limit(5)->get();
         
-        return view('admin/index',['installers'=>$installers,'customers'=>$customers,'orders'=>$orders ,'today_sale'=>$today_sale,'monthly_sale' =>$monthly_sale,'yearly_sale'=>$yearly_sale,'latest_orders' =>$latest_orders,'latest_products'=>$latest_products,'product_type'=>$product_type]);
+        return view('admin/index',['installers'=>$installers,'customers'=>$customers,'orders'=>$orders ,'today_sale'=>$today_sale,'monthly_sale' =>$monthly_sale,'yearly_sale'=>$yearly_sale,'latest_orders' =>$latest_orders,'latest_products'=>$latest_products,'product_type'=>$product_type,'varities'=>$varities]);
     }
     public function admin_logout(Request $request)
     {

@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-container">
     <style>
-    .canvasjs-chart-credit{
+    .canvasjs-chart-credit,{
         display: none;
     }
     </style>            
@@ -11,7 +11,9 @@
     <!-- Content Wrapper START -->
     <div class="main-content">
         <div class="row">
-           
+           @php
+               $product_name = array();
+           @endphp
             <div class="col-md-6 col-lg-4">
                 <div class="card">
                     <div class="card-body">
@@ -22,6 +24,12 @@
                             <div class="m-l-15">
                                 <h2 class="m-b-0">{{$installers}}</h2>
                                 <p class="m-b-0 text-muted">Installers</p>
+                               @foreach ($product_type as $products)
+                                   @php
+                                       array_push($product_name,$products->product->varities->prd_name);
+
+                                   @endphp
+                               @endforeach
                             </div>
                         </div>
                     </div>
@@ -96,7 +104,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6 col-lg-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="media align-items-center">
@@ -116,40 +124,13 @@
         </div>
      <div class="row">
          <div class="col-md-12">
-             @php
-             $door = $window= $handle =$frame = $lentern=0; 
-                 foreach($product_type as $product){
-                    $product_qty = $product->quantity;
-                    if($product->product->product_type=="door")
-                    {
-                        $door = $door+$product->quantity;
-                    }
-                    if($product->product->product_type=="handle")
-                    {
-                        $handle = $handle+$product->quantity;
-                    }
-                    if($product->product->product_type=="window")
-                    {
-                        $window = $window+$product->quantity;
-                    }
-                    
-                    if($product->product->product_type=="frame")
-                    {
-                        $frame = $frame+$product->quantity;
-                    }
-                    
-                    if($product->product->product_type=="lentern")
-                    {
-                        $lentern = $lentern+$product->quantity;
-                    }
-                 }
-             @endphp
+             
             <script>
                 window.onload = function () {
                 
                 var chart = new CanvasJS.Chart("chartContainer", {
                     animationEnabled: true,
-                    theme: "light1", // "light1", "light2", "dark1", "dark2"
+                    theme: "light2", // "light1", "light2", "dark1", "dark2"
                     title:{
                         text: "Total Sales"
                     },
@@ -162,11 +143,8 @@
                         legendMarkerColor: "grey",
                         legendText: "",
                         dataPoints: [      
-                            { y: {{$door}}, label: "Door" },
-                            { y: {{$window}}, label: "Window" },
-                            { y: {{$frame}}, label: "Frame" },
-                            { y: {{$handle}}, label: "Handle" },
-                            { y: {{$lentern}}, label: "Lentern" },
+                            { y: 5, label: "Door" },
+                            
                             
                            
                             
@@ -178,15 +156,15 @@
                 }
                 </script>
                
-                <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                <div id="chartContainer" style="height: 300px; width: 100%; "></div>
                 
          </div>
      </div>
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-md-12 col-lg-6">
                 <div class="card">
                     <div class="card-header ">
-                        <h4 class="mt-2">Latest Sales</h4>
+                        <h4 class="mt-2">Top Selling Product</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -202,7 +180,7 @@
                                <tbody>
                                    @foreach ($latest_products as $products)
                                        <tr>
-                                           <td>{{$loop->iteration}}</td>
+                                           <td><a href="{{url('admin/products/view/'.$products->id)}}" target="_blank">{{$products->id}}</a></td>
                                            <td>{{$products->product_name}}</td>
                                            <td>{{$products->quantity}}</td>
                                            <td>{{$products->sale_price}}</td>
@@ -225,7 +203,7 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th></th>
                                             <th>Customer Name</th>
                                             <th>Date</th>
                                             <th>Status</th>
@@ -234,8 +212,8 @@
                                     <tbody>
                                         @foreach ($latest_orders as $ordersdetails)
                                             <tr>
-                                                <td>{{$loop->iteration}}</td>
-                                                <td>{{$ordersdetails->customer->name}}</td>
+                                                <td><a href="{{url('admin/orderdetails/'.$ordersdetails->id)}}">{{$ordersdetails->id}}</a></td>
+                                                <td><a href="{{url('admin/customers/details/'.$ordersdetails->customer->id)}}">{{$ordersdetails->customer->name}}</a></td>
                                                 <td>{{$ordersdetails->created_at}}</td>
                                                 <td>{{$ordersdetails->status}}</td>
                                             </tr>

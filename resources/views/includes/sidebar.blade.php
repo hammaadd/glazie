@@ -67,6 +67,7 @@
                                 </li> -->
                             </ul>
                         </li>
+                       
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
@@ -87,6 +88,29 @@
                                 <li @if ($url=="admin/orderconfirm") class="active" @endif>
                                     <a href="{{url('admin/orderconfirm')}}">Order Confirmation </a>
                                 </li>
+                                
+                                <!--<li>
+                                    <a href="index-projects.html">Projects</a>
+                                </li> -->
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="far fa-money-bill-alt"></i>
+                                </span>
+                                <span class="title">Coupun </span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{url('admin/coupen
+                                    ')}}">Coupun</a>
+                                </li >
+                                
+                               
                                 
                                 <!--<li>
                                     <a href="index-projects.html">Projects</a>
@@ -149,14 +173,14 @@
                                 <span class="icon-holder">
                                     <i class="anticon anticon-user"></i>
                                 </span>
-                                <span class="title">SubScription</span>
+                                <span class="title">SubScribers</span>
                                 <span class="arrow">
                                     <i class="arrow-icon"></i>
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{{url('admin/subscription')}}">Subscription</a>
+                                    <a href="{{url('admin/subscription')}}">Subscribers</a>
                                 </li >
                                 
                                
@@ -166,7 +190,7 @@
                                 </li> -->
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
+                        {{-- <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-user"></i>
@@ -187,11 +211,11 @@
                                     <a href="index-projects.html">Projects</a>
                                 </li> -->
                             </ul>
-                        </li>
+                        </li> --}}
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <i class="anticon anticon-user"></i>
+                                    <i class="fas fa-info-circle"></i>
                                 </span>
                                 <span class="title">WebSite Content </span>
                                 <span class="arrow">
@@ -213,7 +237,7 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <i class="anticon anticon-user"></i>
+                                    <i class="fa fa-envelope"></i>
                                 </span>
                                 <span class="title">User Message </span>
                                 <span class="arrow">
@@ -233,35 +257,13 @@
                                 </li> -->
                             </ul>
                         </li>
+                        
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <i class="anticon anticon-user"></i>
+                                    <i class="fas fa-cogs"></i>
                                 </span>
-                                <span class="title">Coupen </span>
-                                <span class="arrow">
-                                    <i class="arrow-icon"></i>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{{url('admin/coupen
-                                    ')}}">Coupen</a>
-                                </li >
-                                
-                               
-                                
-                                <!--<li>
-                                    <a href="index-projects.html">Projects</a>
-                                </li> -->
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="dropdown-toggle" href="javascript:void(0);">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-user"></i>
-                                </span>
-                                <span class="title">Site Setting</span>
+                                <span class="title">Site Settings</span>
                                 <span class="arrow">
                                     <i class="arrow-icon"></i>
                                 </span>
@@ -269,7 +271,7 @@
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="{{url('admin/social
-                                    ')}}">Site Setting</a>
+                                    ')}}">Site Settings</a>
                                 </li >
                                 
                                
