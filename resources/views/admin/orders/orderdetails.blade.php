@@ -25,80 +25,87 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header" style="background-color: #e3e3e3">
-                        <h2 style="padding: 10px">Order #{{$order->id}}</h2>
-                    </div>
                     <div class="card-body">
-                      
-                     
                         <div class="row">
-                            <div class="col-md-3">
-                                <h5 style="float: right">Invoice:</h5>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12" style="background-color: lightgray">
+                                        <h2 class="font-weight-bold">Order Info</h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 class="font-weight-bold">Order No </h5>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5>{{$order->id}}</h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 class="font-weight-bold">Order Date </h5>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5>{{$order->created_at}}</h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" style="background-color: lightgray">
+                                        <h2 class="font-weight-bold">Customer Info</h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 >Customer Name </h5>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5>{{$order->customer->name}}</h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 >Customer Email </h5>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5>{{$order->customer->email}}</h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 > Address </h5>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5>{{$order->customer->address}}</h5>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-9">
-                                <h5 class="text-info">{{$order->id}}</h5>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <h5 style="float: right">Order Date</h5>
-                            </div>
-                            <div class="col-md-9">
-                                <h5>{{date('d-m-Y', strtotime($order->created_at))}}</h5>
-                            </div>
-                        </div>
-                        
-                    
-                
-                    <div class="row" style="background-color: #e3e3e3">
-                        <div class="col-md-12">
-                            <h2 style="padding: 10px">Buyer Information</h2>
-                        </div>
-                    </div>
-                    
-                        <div class="row">
-                            <div class="col-md-3">
-                                <h5 style="float: right">Name:</h5>
-                            </div>
-                            <div class="col-md-9">
-                                <h5>{{$order->customer->name}}</h5>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <h5 style="float: right">Email:</h5>
-                            </div>
-                            <div class="col-md-9">
-                                <h5 class="text-info">{{$order->customer->email}}</h5>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <h5 style="float: right">Phone No:</h5>
-                            </div>
-                            <div class="col-md-9">
-                                <h5 >{{$order->customer->contact_no}}</h5>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <h5 style="float: right">Shipping Address:</h5>
-                            </div>
-                            <div class="col-md-9">
-                                <h5> {{$order->customer->address}}</h5>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <h5 style="float: right">Billing Address:</h5>
-                            </div>
-                            <div class="col-md-9">
-                                <h5> {{$order->customer->address}}</h5>
-                            </div>
-                        </div>
-                        <div class="row" style="background-color: #e3e3e3">
-                            <div class="col-md-12">
-                                <h2 style="padding: 10px">Products</h2>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form action="{{url('admin/checkorder')}}" method="post" class="mt-3">
+                                            @csrf
+                                            <div class="form-group">
+                                                <select name="status" id="" class="form-control" required>
+                                                    <option value="">Select Order </option>
+                                                    <option value="canceled">Cancel</option>
+                                                    <option value="shipped">shipped</option>
+                                                    <option value="completed">Completed</option>
+                                                </select>
+                                                <input type="hidden" value="{{$order->id}}" name="order_id">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Message</label>
+                                                <textarea name="message"  rows="5" class="form-control" placeholder="Enter Message "></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-success btn-xs mt-2 pull-center"><i class="fa fa-check"></i> Submit</button>
+                                        
+                                            </div>
+                                           
+                                           
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -137,25 +144,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <form action="{{url('admin/checkorder')}}" method="post" class="mt-3">
-                                            @csrf
-                                            <div class="row">
-                                                <input type="hidden" name="redirect" value="3">
-                                                <div class="col-md-9"> <input type="hidden" value="{{$order->id}}" name="order_id">
-                                                    <select name="status" id="" class="form-control" required>
-                                                        <option value="">Select Order </option>
-                                                        <option value="canceled">Cancel</option>
-                                                        <option value="shipped">shipped</option>
-                                                        <option value="completed">Completed</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-3">
-                                                     <button class="btn btn-success btn-xs mt-2 pull-center"><i class="fa fa-check"></i> Submit</button>
-                                                </div>
-                                            </div>
-                                           
-                                           
-                                        </form>
+                                        
                                     </div>
                                     <div class="col-md-2">
                                         <h6>Sub Total</h6>
@@ -183,47 +172,8 @@
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </div>
     </div>
-    <!-- Model Start Here-->
-    
-    
-    <link href="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet">
-
-@endsection
-@section('script')
-
-<!-- page js -->
-<script src="{{asset('admin-assets/vendors/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.js')}}"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-<script>
-    toastr.options = {
-    "closeButton": true,
-    "debug": false,
-    "newestOnTop": false,
-    "progressBar": true,
-    "positionClass": "toast-top-right",
-    "preventDuplicates": true,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "5000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-}
-
-$("#pending,#cancel,#shipped,#completed").DataTable();
-
-
-</script>
-@endsection
-
-
+</div>

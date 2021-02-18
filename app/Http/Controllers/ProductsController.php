@@ -31,7 +31,7 @@ class ProductsController extends Controller
         $products = DB::table('products')
         ->join('brands', 'brands.id', '=', 'products.brand_id')
         ->select('products.*', 'brands.brand_name')
-        ->where('products.deleted_at','=',null)->get();
+        ->where('products.deleted_at','=',null)->orderBy('products.id','desc')->get();
         
         return view('admin/products/index',['products'=>$products]);
     }
@@ -56,8 +56,8 @@ class ProductsController extends Controller
            'sale_price'=>'required',
            'weight'=>'required',
            'quantity'=>'required',
-           'verity_id'=>'required'
-           
+           'verity_id'=>'required',
+           'publish' =>'required'
         ]);
            
          $products = new Products;
@@ -71,6 +71,7 @@ class ProductsController extends Controller
          $products->verity_id = $request->input('verity_id');
          $products->short_description =$request->input('short_description');
          $products->description =$request->input('description');
+         $products->publish = $request->input('publish');
          $products->crated_by = $user->id;
          $products->save();
          $product_id = $products->id;
@@ -392,7 +393,15 @@ class ProductsController extends Controller
         $status = $request->input('status');
         if($status=='instock'){
             $products = Products::where('quantity','>','0')->get();
-            return view('admin/products/filterproduct',['products'=>$products]);
+            
         }
+        else if($status=='stockout'){
+            $products = Products::where('quantity','=','0')->get();
+           
+        }
+        else{
+            $products = Products::all();
+        }
+        return view('admin/products/filterproduct',['products'=>$products]);
     }
 }

@@ -16,7 +16,7 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <i class="anticon anticon-appstore"></i>
+                                    <i class="fab fa-product-hunt"></i>
                                 </span>
                                 <span class="title">Products</span>
                                 <span class="arrow">
@@ -67,7 +67,23 @@
                                 </li> -->
                             </ul>
                         </li>
-                       
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    
+                                    <i class="fas fa-puzzle-piece"></i>
+                                </span>
+                                <span class="title">Product Add On</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item dropdown">
+                                    <a href="{{url('admin/addons')}}">Model List</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">

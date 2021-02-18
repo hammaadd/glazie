@@ -40,7 +40,7 @@
                                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                                 @error('email')
-                                                    <span class="invalid-feedback" role="alert">
+                                                    <span class="invalid-feedback text-center" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -48,9 +48,14 @@
                                             </div>
                                             @if(session('error'))
                                         
-                                            <span class="text-danger text-center">  <b>{{session('error')}}</b></span>
+                                            
                                          
                                      @endif
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 text-center mb-2">
+                                                <span class="text-danger ">  <b>{{session('error')}}</b></span>
+                                            </div>
                                         </div>
 
                                         <div class="form-group row">

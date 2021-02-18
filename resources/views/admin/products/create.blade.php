@@ -14,7 +14,7 @@
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a href="{{url('admin/product/list')}}" class="breadcrumb-item"></i>Products</a>
+                    <a href="{{url('admin/products')}}" class="breadcrumb-item"></i>Products</a>
                     <a class="breadcrumb-item" href="#">Add new product</a>
                     
                 </nav>
@@ -72,7 +72,7 @@
                                  <label for="">Sale Price</label>
                             <input type="number" name="sale_price" class="form-control" min="1"> 
                             </div>
-                               
+                              <input type="hidden" id="attributelength" value="{{count($attributes)}}"> 
                         </div>
                        
                         <div class="row">
@@ -124,14 +124,14 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="">Short Descrition </label>
+                                <label for="">Short Description </label>
                                 <textarea name="short_description" class="form-control"  rows="5"></textarea>
                             
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="">Long Descrition </label>
+                                <label for="">Long Description </label>
                             <textarea name="description" id="summernote"class="form-control" cols="30" rows="5"></textarea>
                             </div>
                         </div>
@@ -157,6 +157,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <input type="hidden" id="no_of_attribute" name="no_of_attribute">
+                                <input type="hidden" id="no_of_attributes" name="no_of_attribute">
                                 <button class="btn mt-1 btn-xs btn-success float-right" type="button" id="add"> <i class="fa fa-plus-circle"></i> Add</button>
                             </div>
                         </div>
@@ -186,11 +187,18 @@
                             
                         </div>
                         <div class="row">
-                           <div class="col-md-12">
+                           <div class="col-md-6">
                                <label for="">Search Tags <small class="text-danger">(Press Space to Add new Tag)</small></label>
                                <select name="tags[]" id="tags" multiple="multiple" class="form-control select2">
                                     <option value="" disabled> Create Tag for Product</option>
                                 </select>
+                           </div>
+                           <div class="col-md-6">
+                               <label for="">Publish Product</label>
+                               <select name="publish" class="form-control">
+                                   <option value="public">Yes</option>
+                                   <option value="private">No</option>
+                               </select>
                            </div>
                             
                            
@@ -392,6 +400,7 @@ $(document).ready(function() {
 });
     });
     let i = 1;
+    let j=1;
     $("#add").click(function(){
         $('#tableattr').show();
         var document_array = <?php echo json_encode($attributes,JSON_PRETTY_PRINT)?>;
@@ -419,13 +428,23 @@ $(document).ready(function() {
             tokenSeparators: [",", " "]
         });
         $('#no_of_attribute').val(i);
+        $('#no_of_attributes').val(j);
+        attributelength = $('#attributelength').val();
+        if(attributelength==j) {
+          $('#add').prop("disabled",true);  
+        }
         i++;
+        j++;
         
         
     });
     $(document).on('click', '.remove', function(){
-        
+        j--;
+       
         $(this).closest("tr").remove();
+        
+          $('#add').prop("disabled",false);  
+        
         });
     function abc(l){
         var attr = $("#attribute"+l).val();

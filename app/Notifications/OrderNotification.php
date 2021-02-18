@@ -43,7 +43,7 @@ class OrderNotification extends Notification
     {
         return (new MailMessage)
                     ->subject('Glazie Ltd')
-                    ->line('Your Order is '.$this->order_status)
+                    ->line($this->order_status)
                     
                     ->line('Thank you for using our application!');
     }

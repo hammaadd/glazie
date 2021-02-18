@@ -17,11 +17,14 @@ class OrdersController extends Controller
     }
     public function checkorder(Request $request)
     {   
-        $order_status="";
+      
         $order_id = $request->input('order_id');
         $status = $request->input('status');
         $redirect = $request->input('redirect');
         $order=Order::find($order_id);
+        $order_status = $request->input('message');
+        
+        
         $user_data = $order->customer;
         
         $check_order = array(
@@ -30,14 +33,13 @@ class OrdersController extends Controller
         );
         
         Order::where('id',$order_id)->update($check_order);
-            if ($status=="canceled") {
-                $order_status = "Canceled Due to some Reason";
-               // $user_data->notify(new OrderNotification($order_status));
-            }
-            if ($status=="shipped") {
-                $order_status = "On the way will reached in two days";
-               // $user_data->notify(new OrderNotification($order_status));
-            }
+            
+                
+             if (!empty($order_status)) {
+                //$user_data->notify(new OrderNotification($order_status));
+             }
+            
+           
         if ($redirect==1) {
             return redirect('admin/orderconfirm')->with('info','The order is updated');
         }

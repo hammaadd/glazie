@@ -35,4 +35,6 @@ class Products extends Model
     {
         return $this->belongsTo(PrdVariety::class, 'verity_id', 'id');
     }
+    
+  
 }

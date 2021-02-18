@@ -166,8 +166,25 @@ Route::prefix('admin')->group(function () {
     Route::get('orderdetails/{id}','OrdersController@orderdetaails');
     Route::get('orderconfirm','OrdersController@orderconfrim');
     
+    // Product Add on Types
+    Route::get('addontype','AddOnTypController@index');
+    Route::get('addontype/create','AddOnTypController@create');
+    Route::post('addontype/store','AddOnTypController@store');
+    Route::get('addontype/edit/{id}','AddOnTypController@edit');
+    Route::post('addontype/update/{id}','AddOnTypController@update');
+    Route::get('addontype/delete/{id}','AddOnTypController@delete');
+// Colors Routes
+    Route::get('colors','ColorController@index');
+    Route::get('colors/create','ColorController@create');
+    Route::post('colors/store','ColorController@store');
+    Route::get('colors/edit/{id}','ColorController@edit');
+    Route::post('colors/update/{id}','ColorController@update');
+    Route::get('colors/delete/{id}','ColorController@delete');
+    
     // Product Addon Route
     Route::get('addon','AddonController@create');
+    Route::get('addons','AddonController@index');
+    Route::get('addon/view/{id}','AddonController@view');
     Route::post('create_addon','AddonController@store');
 
     // Request Hiring Route For Admin Side 
@@ -205,7 +222,8 @@ Route::get('deletefeedback/{feedback_id}','ProductsController@deletefeedback');
     Route::get('notifydetails/{id}','NotificationController@details');
     Route::get('notifications','NotificationController@index');
     Route::get('deletenotify/{id}','NotificationController@delete');
-
+    Route::get('readnotify/{id}','NotificationController@read');
+    
 
     // Content Management Routes
     Route::get('cms','CMSController@index');

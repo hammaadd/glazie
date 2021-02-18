@@ -53,7 +53,8 @@
                                              <span class="badge badge-pill badge-red">Un Read</span>  
                                             @endif</td>
                                                <td>
-                                                   <a href="{{url('admin/deletenotify/'.$notification->id)}}" class="btn btn-info btn-xs" onclick="return confirm('Are you sure to remove')"> <i class="anticon anticon-delete"></i> </a>
+                                                    <a href="{{url('admin/readnotify/'.$notification->id)}}" class="btn btn-info btn-xs" title="Read"> <i class="fa fa-book"></i></a>
+                                                   <a href="{{url('admin/deletenotify/'.$notification->id)}}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to remove')" title="Delete"> <i class="anticon anticon-delete" ></i> </a>
                                                </td>
                                             
                                            </tr>

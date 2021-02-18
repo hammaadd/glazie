@@ -27,8 +27,8 @@
                     @if(count($errors)>0)
                     @foreach($errors->all() as $error)
                    <div class="row">
-                       <div class="col-md12">
-                        <div class="alert alert-danger bg-danger">
+                       <div class="col-md-12">
+                        <div class="alert alert-danger bg-danger text-light" style="background-color: red">
                             {{$error}}
                         </div>
                        </div>

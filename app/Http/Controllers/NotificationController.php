@@ -39,5 +39,13 @@ class NotificationController extends Controller
         return redirect('admin/notifications')->with('info','Notification is deleted Successfully');
 
     }
+    public function read($id){
+        $read = array(
+            'status'=>'read'
+        );
+        Notification::where('id',$id)->update($read);
+        return redirect('admin/notifications')->with('info','Notification is read Successfully');
+       
+    }
     
 }

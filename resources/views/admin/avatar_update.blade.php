@@ -45,7 +45,7 @@
                                 @if(count($errors)>0)
                                         @foreach($errors->all() as $error)
                                     
-                                        <div class="alert alert-danger bg-red">
+                                        <div class="alert alert-danger bg-danger text-light">
                                             
                                             {{$error}}
                                         </div>
@@ -77,7 +77,5 @@
 
 @endsection
 @section('script')
-<script>
-    toast.success("{{ Session::get('message') }}");
-</script>
+
 

@@ -1,3 +1,5 @@
+<link href="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+
 <table class="table table-hover" id="products">
     <thead>
         <th>Sr.#</th>
@@ -16,7 +18,7 @@
         <tr>
             <td>{{$loop->iteration}}</td>
             <td>{{$product->product_name}}</td>
-            <td>{{$product->brand_name}}</td>
+            <td>{{$product->brands->brand_name}}</td>
 
             <td>@php
                 echo substr($product->short_description, 0, 30);
@@ -39,3 +41,7 @@
         @endif
     </tbody>
 </table>
+<script src="{{asset('admin-assets/vendors/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.js')}}"></script>
+<script>
+$("#products").DataTable();
