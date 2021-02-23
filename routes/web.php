@@ -182,9 +182,13 @@ Route::prefix('admin')->group(function () {
     Route::get('colors/delete/{id}','ColorController@delete');
     
     // Product Addon Route
-    Route::get('addon','AddonController@create');
+    Route::get('addon/create','AddonController@create');
     Route::get('addons','AddonController@index');
     Route::get('addon/view/{id}','AddonController@view');
+    
+    Route::get('addon/edit/{id}','AddonController@edit');
+    Route::post('addon/update/{id}','AddonController@update');
+    Route::get('addon/delete/{id}','AddonController@delete');
     Route::post('create_addon','AddonController@store');
     Route::get('addframe/{id}','AddonController@addframe');
     Route::post('addon_color','AddonController@createaddoncolor');

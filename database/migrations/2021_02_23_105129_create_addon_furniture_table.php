@@ -17,7 +17,7 @@ class CreateAddonFurnitureTable extends Migration
             $table->id();
             $table->unsignedBigInteger('addon_id');
             $table->foreign('addon_id')->references('id')->on('add_ons');
-            $table->enum('type',['handle','knocker,','letterbox']);
+            $table->enum('type',['handle','knocker','letterbox']);
             $table->string('name');
             $table->string('image');
             $table->unsignedBigInteger('quantity');

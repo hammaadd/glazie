@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <a href="{{url('')}}" class="btn btn-primary float-right mt-3"> <i class="fa fa-pencil"></i> Edit</a>
+                                <a href="{{url('admin/addon/edit/'.$addon->id)}}" class="btn btn-primary float-right mt-3"> <i class="fa fa-pencil"></i> Edit</a>
                             </div> 
                         </div>
                         <div class="row">

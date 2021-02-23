@@ -79,16 +79,52 @@ class AddonController extends Controller
                 $addoncolor->color_code = Color::find($intercolor_code[$i])->color_code;
                 $addoncolor->quantity = $interquantity[$i];
                 $addoncolor->price = $interprice[$i];
-                $addoncoloruse->created_by = Auth::id();
+                $addoncolor->created_by = Auth::id();
                 $addoncolor->save();
                 }  
-        return redirect('admin/addon')->with('info','Add Oncreated Successfully');
+        return redirect('admin/addons')->with('info','Add Oncreated Successfully');
             
     }
     public function view($id)
     {
         $addon = AddOn::find($id);
         return view('admin/addon/view',['addon'=>$addon]);
+    }
+    public function edit($id)
+    {
+        $prodcuts = Products::where('type','=','customize')->get();
+        $addon = AddOn::find($id);
+        return view('admin/addon/edit',['addon'=>$addon,'products'=>$prodcuts]);
+    }
+    public function update($id,Request $request)
+    {
+        $product_id = $request->input('product_id');
+        $model_name = $request->input('model_name');
+
+        if ($request->file('svgimage')) {
+            $file = $request->file('svgimage');
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $imgname = uniqid() . $filename;
+            $destinationPath = public_path('/admin-assets/addon');
+            $file->move($destinationPath, $imgname);
+            $updateaddonimage = array(
+                'svgimage'=>$imgname
+            );
+            AddOn::where('id',$id)->update($updateaddonimage);
+        }
+        $updateaddon =  array(
+            'product_id'=>$product_id,
+            'model_name'=>$model_name
+        );
+        AddOn::where('id',$id)->update($updateaddon);
+        return redirect('admin/addons')->with('info','Add On Updated  Successfully');
+    }
+    public function delete($id)
+    {
+        AddOn::where('id',$id)->delete();
+        return redirect('admin/addons')->with('info','Add On Deleted  Successfully');
+       
     }
     public function addcolor($id)
     {
@@ -485,6 +521,7 @@ class AddonController extends Controller
        $price = $request->input('price');
        $quantity = $request->input('quantity');
        $files = $request->file('images');
+       
        for ($i=0; $i <count($name) ; $i++) { 
            $addon = new AddonFurniture;
            $addon->addon_id = $addon_id;
@@ -572,4 +609,5 @@ class AddonController extends Controller
         AddonHinge::where('id',$id)->delete();
         return redirect('admin/addon/view/'.$addon_id)->with('info','Hinge removed successfully');
     }
+   
 }
