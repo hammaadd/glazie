@@ -186,7 +186,46 @@ Route::prefix('admin')->group(function () {
     Route::get('addons','AddonController@index');
     Route::get('addon/view/{id}','AddonController@view');
     Route::post('create_addon','AddonController@store');
+    Route::get('addframe/{id}','AddonController@addframe');
+    Route::post('addon_color','AddonController@createaddoncolor');
+    Route::get('addcolor/{id}','AddonController@addcolor');
+    Route::get('deletecolor/{id}','AddonController@deletecolor');
+    Route::get('editcolor/{id}','AddonController@editcolor');
+    Route::post('updatecolor/{id}','AddonController@updatecolor');
+    Route::post('createframe','AddonController@createframe');
+    Route::get('deleteframe/{id}','AddonController@deleteframe');
+    Route::get('editframe/{id}','AddonController@editframe');
+    Route::post('updateframe/{id}','AddonController@updateframe');
 
+    // Frame Colors
+    Route::get('framecolors/{id}','AddonController@framecolors');
+    Route::get('framecolor/create/{id}','AddonController@addframecolor');
+    Route::post('createframcolor','AddonController@addframcolor');
+    Route::get('framecolor/edit/{id}','AddonController@editframcolor');
+    Route::post('updateframecolor/{id}','AddonController@updateframcolor');
+    Route::get('framecolor/delete/{id}','AddonController@deleteframcolor'); 
+
+    // frame Glasses
+    Route::get('frameglasses/{id}','AddonController@frameglass');
+    Route::get('frameglass/create/{id}','AddonController@addframeglass');
+    Route::post('createfraemglass','AddonController@createframeglass');
+    Route::get('frameglass/edit/{id}','AddonController@editframeglass');
+    Route::post('updateframeglass/{id}','AddonController@updateframeglass');
+    Route::get('frameglass/delete/{id}','AddonController@deleteframeglass');
+
+    // Furniture addon
+    Route::get('addfurniture/{id}','AddonController@addfurniture');
+    Route::post('createfurniture','AddonController@createfurniture');
+    Route::get('editfurniture/{id}','AddonController@editfurniture');
+    Route::post('updatefurniture/{id}','AddonController@updatefurniture');
+    Route::get('deletefurniture/{id}','AddonController@deletefurniture');
+
+    // Glasses
+    Route::get('addglass/{id}','AddonController@addglass');
+    Route::post('createglass','AddonController@createglass');
+    Route::get('editglass/{id}','AddonController@editglass');
+    Route::post('updateglass/{id}','AddonController@updateglass');
+    Route::get('deleteglass/{id}','AddonController@deleteglass');
     // Request Hiring Route For Admin Side 
     Route::get('requesthiring','RequestHiringController@index');
     Route::post('hirestatus','RequestHiringController@change_hirestatus');

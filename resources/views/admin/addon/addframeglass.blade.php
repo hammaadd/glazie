@@ -12,10 +12,11 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h1 class="header-title">Product Add On</h1>
+            <h1 class="header-title">Add Frame Glass</h1>
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash ">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+                    <a class="breadcrumb-item" href="{{url('admin/addon/view/'.$addon_id)}}">Product</a>
                     <a class="breadcrumb-item" href="#">Product Add On</a>
                     
                 </nav>
@@ -39,22 +40,23 @@
                         </div>
                         @endforeach
                         @endif
-                        <form action="{{url('admin/addon_color')}}" method="post" enctype="multipart/form-data" id="addon">
+                        <form action="{{url('admin/createfraemglass')}}" method="post" enctype="multipart/form-data" id="addon">
                             @csrf
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="button" class="btn btn-success btn-xs float-right" id="addcolor"><i class="fa fa-plus-circle"></i> Add Color</button>
+                                    <button type="button" class="btn btn-success btn-xs float-right" id="addcolor"><i class="fa fa-plus-circle"></i> Add Frame Glass</button>
+                                    
                                 </div>
                             </div>
-                            <input type="hidden" name="addon_id" value="{{$id}}">
+                            <input type="hidden" name="frame_id" value="{{$id}}">
                             <div class="row">
                                <div class="col-md-12">
                                    <div class="table-responsive" >
                                     <table class="table" id="colortable" >
                                         <thead>
-                                            <th>Side</th>
-                                            <th>Color Name</th>
+                                            <th>Frame Glass Name</th>
+                                            <th>Image</th>
                                             <th>Price</th>
                                             <th>Quantity</th>
                                             <th>Remove</th>
@@ -68,7 +70,7 @@
                             
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-success" ><i class="fa fa-check"> Submit</i></button>
+                                    <button type="submit" class="btn btn-success" ><i class="fa fa-check" > Submit</i></button>
                                 </div>
                             </div>
                         </form>
@@ -112,30 +114,23 @@ $(document).ready(function(){
        
         let row = '';
         
-        var document_array = <?php echo json_encode($colors,JSON_PRETTY_PRINT)?>;
+       
         
         row+='<tr>';
             row+='<td>';
-            row+='<select name="side[]" class="form-control">';
-            row+='<option vlaue="internal">Internal</option>';
-            row+='<option vlaue="internal">External</option>';
-            row+='</select>'
+            row+='<input type="text" class="form-control rounded-0" name="name[]" placeholder="Frame Glass Name" required>';
+            
             row+='</td>';
         row+='<td>';
-            
-        row+='<select name="intercolor_code[]" class="form-control rounded-0">';
-            
-            for (let i = 0; i < document_array.length; i++) {
-                row+='<option value="'+document_array[i]["id"]+'">'+document_array[i]["name"]+'</option>';
-            }
-            row+='</select>';
+            row+='<input type="file" class="form-control rounded-0" name="images[]" placeholder="Frame Glass Name" required>'; 
+       
         row+='</td>';
         row+='<td>';
         
-        row+='<input type="number" required min="1" class="form-control rounded-0 " placeholder="Color Price" name="interprice[]">';
+        row+='<input type="number" required min="1" class="form-control rounded-0 " placeholder="Color Price" name="price[]" required>';
         row+='</td>';
         row+='<td>';
-        row+='<input type="number" class="form-control rounded-0 " name="interquantity[]" placeholder="Enter Quantity" required >';
+        row+='<input type="number" class="form-control rounded-0 " name="quantity[]" placeholder="Enter Quantity" required >';
         row+='</td>';
         row+='<td>';
         row+='<button class="btn btn-danger btn-xs removecolor"  type="button"> <i class="fa fa-minus"></i> </button>';
@@ -158,24 +153,7 @@ $(document).on('click', '.removecolor', function(){
       
         });
 
-    $("#addon").validate({
-    ignore: ':hidden:not(:checkbox)',
-    errorElement: 'label',
-    errorClass: 'is-invalid',
-    validClass: 'is-valid',
-    rules: {
-        product_id:{
-            required:true
-        },
-        svgimage:{
-            required:true
-        },
-        color_code:{
-            required:true
-        },
-        
-        }
-});
+
 
 
 

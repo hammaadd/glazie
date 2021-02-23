@@ -24,12 +24,12 @@ class ColorController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'product_id'=>'required',
+            
             'name'=>'required',
             'color_code'=>'required'       
         ]);
         $colors = new Color;
-        $colors->product_id = $request->input('product_id');
+        
         $colors->name = $request->input('name');
         $colors->color_code = $request->input('color_code');
         $colors->created_by = Auth::id();
@@ -49,7 +49,6 @@ class ColorController extends Controller
             'color_code'=>'required'       
         ]);
       $updatecolor = array(
-        'product_id' => $request->input('product_id'),
         'name' => $request->input('name'),
         'color_code' => $request->input('color_code'),
         'updated_by' => Auth::id()

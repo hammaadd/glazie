@@ -21,6 +21,9 @@
                 </nav>
             </div>
         </div>
+        @if (session('info'))
+        <script type="text/javascript">toastr.success("{{session('info')}}");</script>
+        @endif 
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -66,33 +69,47 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Sr #</th>
-                                                            <th>Color Name</th>
-                                                            <th>Color</th>
-                                                            <th>Price </th>
-                                                            <th>Quantity</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                        @foreach ($addon->colors as $color)
-                                                            <tr>
-                                                                <td>{{$loop->iteration}}</td>
-                                                                <td>{{$color->name}}</td>
-                                                                <td><div style="background-color: {{$color->color_code}}; height:50px; width:50px;border-radius:50%;" ></div></td>
-                                                                <td>{{$color->price}}</td>
-                                                                <td>{{$color->quantity}}</td>
-                                                                <td>
-                                                                    <a href="{{url('admin/editcolor/'.$color->id)}}" class="btn btn-info btn-xs"> <i class="anticon anticon-edit"></i> Edit</a>
-                                                                    <a href="{{url('admin/deletecolor/'.$color->id)}}" class="btn btn-danger btn-xs"> <i class="anticon anticon-delete"></i> Delete</a>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </thead>
-                                                </table>
-                                            </div>
-                                        </div>
+                                                        @if (count($addon->colors)>0)
+                                                            
+                                                        
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Sr #</th>
+                                                                    <th>Color Name</th>
+                                                                    <th>Side</th>
+                                                                    <th>Color</th>
+                                                                    <th>Price </th>
+                                                                    <th>Quantity</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                                @foreach ($addon->colors as $color)
+                                                                    <tr>
+                                                                        <td>{{$loop->iteration}}</td>
+                                                                        <td>{{$color->name}}</td>
+                                                                        <td><div style="background-color: {{$color->color_code}}; height:50px; width:50px;border-radius:50%;" ></div></td>
+                                                                        <td>
+                                                                            @if ($color->side=="external")
+                                                                            <span class="text-success"><b>External</b></span>
+                                                                            @else
+                                                                            <span class="text-danger"><b>Internal</b></span>
+                                                                            
+                                                                            @endif
+
+                                                                        </td>
+                                                                        <td>{{$color->price}}</td>
+                                                                        <td>{{$color->quantity}}</td>
+                                                                        <td>
+                                                                            <a href="{{url('admin/editcolor/'.$color->id)}}" class="btn btn-info btn-xs"> <i class="anticon anticon-edit"></i> Edit</a>
+                                                                            <a href="{{url('admin/deletecolor/'.$color->id)}}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure?')"> <i class="anticon anticon-delete"></i> Delete</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </thead>
+                                                        </table>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +123,56 @@
                                         </div>
                                         <div id="collapseThreeDefault" class="collapse" data-parent="#accordion-default">
                                             <div class="card-body">
-                                                ...
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <a href="{{url('admin/addframe/'.$addon->id)}}" class="btn btn-success btn-xs float-right"> <i class="fa fa-plus-circle"></i> Add Frame </a>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        @if (count($addon->frames)>0)
+                                                            
+                                                        
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Sr #</th>
+                                                                    <th>Frame Name</th>
+                                                                    <th>Price</th>
+                                                                    <th>Quantity</th>
+                                                                    <th>Image</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                                @php
+                                                                    $i=1;
+                                                                @endphp
+                                                                @foreach ($addon->frames as $frame)
+                                                                    @if ($frame->type=="frame")
+                                                                    <tr>
+                                                                        <td>{{$i}}</td>
+                                                                        <td>{{$frame->name}}</td>
+                                                                        <td>{{$frame->frame_price}}</td>
+                                                                        <td>{{$frame->quantity}}</td>
+                                                                        <td><img src="{{asset('admin-assets/addon/frame/'.$frame->image)}}" height="100px"></td>
+                                                                        
+                                                                        <td>
+                                                                            <a href="{{url('admin/framecolors/'.$frame->id)}}" class="btn btn-warning btn-xs" title="View Frame Colors"> <i class="anticon anticon-eye"></i>Colors</a>
+                                                                            
+                                                                            <a href="{{url('admin/frameglasses/'.$frame->id)}}" class="btn btn-primary btn-xs" title="View Frame Glasses"> <i class="anticon anticon-eye"></i>Glass</a>
+                                                                            <a href="{{url('admin/editframe/'.$frame->id)}}" class="btn btn-info btn-xs"> <i class="anticon anticon-edit"></i> Edit</a>
+                                                                            <a href="{{url('admin/deleteframe/'.$frame->id)}}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete')"> <i class="anticon anticon-delete"></i> Delete</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    @php
+                                                                        $i++;
+                                                                    @endphp
+                                                                    @endif
+                                                                @endforeach
+                                                            </thead>
+                                                        </table>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -114,13 +180,118 @@
                                         <div class="card-header">
                                             <h5 class="card-title">
                                                 <a class="collapsed" data-toggle="collapse" href="#collapseThreeDefaults">
-                                                    <span>Frame Glass</span>
+                                                    <span>Glass</span>
                                                 </a>
                                             </h5>
                                         </div>
                                         <div id="collapseThreeDefaults" class="collapse" data-parent="#accordion-default">
                                             <div class="card-body">
-                                                ...
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <a href="{{url('admin/addglass/'.$addon->id)}}" class="btn btn-success btn-xs float-right"> <i class="fa fa-plus-circle"></i> Add Glass </a>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        @if (count($addon->frames)>0)
+                                                            
+                                                        
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Sr #</th>
+                                                                    <th>Glass Name</th>
+                                                                    <th>Price</th>
+                                                                    <th>Quantity</th>
+                                                                    <th>Image</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                                @php
+                                                                    $i=1;
+                                                                @endphp
+                                                                @foreach ($addon->frames as $glass)
+                                                                    @if ($glass->type=="glass")
+                                                                    <tr>
+                                                                        <td>{{$i}}</td>
+                                                                        <td>{{$glass->name}}</td>
+                                                                        <td>{{$glass->frame_price}}</td>
+                                                                        <td>{{$glass->quantity}}</td>
+                                                                        <td><img src="{{asset('admin-assets/addon/glass/'.$glass->image)}}" height="100px" width="100px"></td>
+                                                                        
+                                                                        <td>
+                                                                          
+                                                                            
+                                                                            <a href="{{url('admin/editglass/'.$glass->id)}}" class="btn btn-info btn-xs"> <i class="anticon anticon-edit"></i> Edit</a>
+                                                                            <a href="{{url('admin/deleteglass/'.$glass->id)}}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete')"> <i class="anticon anticon-delete"></i> Delete</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    @php
+                                                                        $i++;
+                                                                    @endphp
+                                                                    @endif
+                                                                @endforeach
+                                                            </thead>
+                                                        </table>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">
+                                                <a class="collapsed" data-toggle="collapse" href="#collapsefourDefaults">
+                                                    <span>Furniture</span>
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="collapsefourDefaults" class="collapse" data-parent="#accordion-default">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <a href="{{url('admin/addfurniture/'.$addon->id)}}" class="btn btn-success btn-xs float-right"> <i class="fa fa-plus-circle"></i> Add Furniture </a>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        @if (count($addon->furniture)>0)
+                                                            
+                                                        
+                                                        <table class="table table-re">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Sr #</th>
+                                                                    <th>Name</th>
+                                                                    <th>Furniture Type</th>
+                                                                    <th>Price</th>
+                                                                    <th>Quantity</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                              
+                                                                @foreach ($addon->furniture as $furniture)
+                                                                    
+                                                                    <tr>
+                                                                        <td>{{$loop->iteration}}</td>
+                                                                        <td>{{$furniture->name}}</td>
+                                                                        <td>{{$furniture->type}}</td>
+                                                                        <td>{{$furniture->type}}</td>
+                                                                        <td><img src="{{asset('admin-assets/addon/furniture/'.$furniture->image)}}" height="100px"></td>
+                                                                        
+                                                                        <td>
+                                                                          
+                                                                            
+                                                                            <a href="{{url('admin/editfurniture/'.$furniture->id)}}" class="btn btn-info btn-xs"> <i class="anticon anticon-edit"></i> Edit</a>
+                                                                            <a href="{{url('admin/deletefurniture/'.$furniture->id)}}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete')"> <i class="anticon anticon-delete"></i> Delete</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                   
+                                                                @endforeach
+                                                            </thead>
+                                                        </table>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -164,67 +335,6 @@
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
 }
-let j=1;
-$(document).ready(function(){
-    $('#addcolor').click(function(){
-       
-        let row = '';
-        
-        $('#colortable').show();
-        row=`<tr>
-        <td>
-        <input type="text" class="form-control rounded-0" name="name[]" placeholder="Color Name">    
-        </td>
-        <td>
-        <input type="color" class="form-control rounded-0" name="color_code[]" >
-        </td>
-        <td>
-        <input type="number" required min="1" class="form-control rounded-0 " placeholder="Color Price" name="price[]">    
-        </td>
-        <td>
-        <input type="number" class="form-control rounded-0 " name="quantity[]" placeholder="Enter Quantity" required >
-        </td>
-        <td>
-        <button class="btn btn-danger btn-xs removecolor"  type="button"> <i class="fa fa-minus"></i> </button>
-        </td>
-        </tr>`;
-       
-        $('#colortable').append(row);
-        j++;
-    });
-    
-    
-});
-$(document).on('click', '.removecolor', function(){
-     
-       
-        $(this).closest("tr").remove();
-        j--;
-         if(j==1){
-            $('#table').hide();
-         }  
-      
-        });
-
-    $("#addon").validate({
-    ignore: ':hidden:not(:checkbox)',
-    errorElement: 'label',
-    errorClass: 'is-invalid',
-    validClass: 'is-valid',
-    rules: {
-        product_id:{
-            required:true
-        },
-        svgimage:{
-            required:true
-        },
-        color_code:{
-            required:true
-        },
-        
-        }
-});
-
 
 
 

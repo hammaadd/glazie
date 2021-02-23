@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFrameDetailsTable extends Migration
+class CreateColorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateFrameDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('frame_details', function (Blueprint $table) {
+        Schema::create('colors', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('frame_id');
-            $table->foreign('frame_id')->references('id')->on('model_frames');
-            $table->string('color_name')->nullable();
-            $table->unsignedBigInteger('quantity');
-            $table->double('price');
+            $table->string('name');
+            $table->string('color_code');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->softDeletes();
@@ -34,6 +31,6 @@ class CreateFrameDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('frame_details');
+        Schema::dropIfExists('colors');
     }
 }

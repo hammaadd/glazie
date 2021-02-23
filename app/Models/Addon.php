@@ -14,4 +14,18 @@ class AddOn extends Model
     {
         return $this->hasMany(AddonColor::class, 'addon_id', 'id');
     }
+    public function frames()
+    {
+        return $this->hasMany(ModelFrame::class, 'addon_id', 'id');
+    }
+    
+    public function glass()
+    {
+        return $this->hasMany(ModelGlass::class, 'addon_id', 'id');
+    }
+    
+    public function furniture()
+    {
+        return $this->hasMany(AddonFurniture::class, 'addon_id', 'id');
+    }
 }

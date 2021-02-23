@@ -12,7 +12,7 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h1 class="header-title">Product Add On</h1>
+            <h1 class="header-title">Add Frame Color</h1>
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash ">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
@@ -39,73 +39,27 @@
                         </div>
                         @endforeach
                         @endif
-                        <form action="{{url('admin/create_addon')}}" method="post" enctype="multipart/form-data" id="addon">
+                        <form action="{{url('admin/createframcolor')}}" method="post" enctype="multipart/form-data" id="addon">
                             @csrf
-                            <div class="row">
-                                <div class="col-md-6">
-                                   
-                                    <label for="">Products</label>
-                                    <select name="product_id" class="form-control rounded-0">
-                                        @foreach ($products as $product)
-                                            <option value="{{$product->id}}">{{$product->product_name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="">Model Name </label>
-                                    <input type="text" class="form-control rounded-0" name="model_name" placeholder="Enter Model Name">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="">Image</label>
-                                    <input type="text" name="addon_id" value="{{$id}}">
-                                    <input type="file" class="form-control rounded-0" name="svgimage">
-                                </div>
-                            </div>
+
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="button" class="btn btn-success btn-xs float-right m-3" id="addexternalcolor"><i class="fa fa-plus-circle"></i> Add External Color</button>
+                                    <button type="button" class="btn btn-success btn-xs float-right" id="addcolor"><i class="fa fa-plus-circle"></i> Add Color</button>
                                 </div>
                             </div>
-                            
+                            <input type="hidden" name="frame_id" value="{{$id}}">
                             <div class="row">
                                <div class="col-md-12">
                                    <div class="table-responsive" >
-                                    <table class="table" id="externalcolor" style="display: none">
+                                    <table class="table" id="colortable" >
                                         <thead>
-                                            
-                                            <th>Value</th>
+                                            <th>Side</th>
+                                            <th>Color Name</th>
                                             <th>Price</th>
                                             <th>Quantity</th>
                                             <th>Remove</th>
                                         </thead>
                                         <tbody>
-                                            
-                                        </tbody>
-                                    </table>
-                                   </div>
-                               </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button type="button" class="btn btn-success btn-xs float-right m-3" id="addinternalcolor"><i class="fa fa-plus-circle"></i> Add Internal Color</button>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                               <div class="col-md-12">
-                                   <div class="table-responsive" >
-                                    <table class="table" id="internalcolor" style="display: none">
-                                        <thead>
-                                           
-                                            <th>Color Value</th>
-                                            <th>Price</th>
-                                            <th>Quantity</th>
-                                            <th>Remove</th>
-                                        </thead>
-                                        <tbody>
-                                            
                                         </tbody>
                                     </table>
                                    </div>
@@ -154,44 +108,21 @@
 }
 let j=1;
 $(document).ready(function(){
-    $('#addexternalcolor').click(function(){
-        var document_array = <?php echo json_encode($colors,JSON_PRETTY_PRINT)?>;
+    $('#addcolor').click(function(){
+       
         let row = '';
         
-        $('#externalcolor').show();
-        row+='<tr>';
-        
-        row+='<td>';
-        row+='<select name="extercolor_code[]" class="form-control rounded-0">';
-            
-            for (let i = 0; i < document_array.length; i++) {
-                row+='<option value="'+document_array[i]["id"]+'">'+document_array[i]["name"]+'</option>';
-            }
-            row+='</select>';
-        row+='</td>';
-        row+='<td>';
-        
-        row+='<input type="number" required min="1" class="form-control rounded-0 " placeholder="Color Price" name="exterprice[]">';
-        row+='</td>';
-        row+='<td>';
-        row+='<input type="number" class="form-control rounded-0 " name="exterquantity[]" placeholder="Enter Quantity" required >';
-        row+='</td>';
-        row+='<td>';
-        row+='<button class="btn btn-danger btn-xs removecolor"  type="button"> <i class="fa fa-minus"></i> </button>';
-        row+='</td>';
-        row+='</tr>';
-       
-        $('#externalcolor').append(row);
-        j++;
-    });
-    $('#addinternalcolor').click(function(){
         var document_array = <?php echo json_encode($colors,JSON_PRETTY_PRINT)?>;
-       let row = '';
-       
-       $('#internalcolor').show();
-       row+='<tr>';
         
+        row+='<tr>';
+            row+='<td>';
+            row+='<select name="side[]" class="form-control">';
+            row+='<option vlaue="internal">Internal</option>';
+            row+='<option vlaue="internal">External</option>';
+            row+='</select>'
+            row+='</td>';
         row+='<td>';
+            
         row+='<select name="intercolor_code[]" class="form-control rounded-0">';
             
             for (let i = 0; i < document_array.length; i++) {
@@ -210,12 +141,10 @@ $(document).ready(function(){
         row+='<button class="btn btn-danger btn-xs removecolor"  type="button"> <i class="fa fa-minus"></i> </button>';
         row+='</td>';
         row+='</tr>';
-       
-        
-       $('#internalcolor').append(row);
-       j++;
-   });
-   
+        j++;
+        $('#colortable').append(row);
+    });
+    
     
 });
 $(document).on('click', '.removecolor', function(){

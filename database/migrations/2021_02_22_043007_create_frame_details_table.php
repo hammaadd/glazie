@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAddonColorsTable extends Migration
+class CreateFrameDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateAddonColorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('addon_colors', function (Blueprint $table) {
+        Schema::create('frame_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('addon_id');
-            $table->foreign('addon_id')->references('id')->on('add_ons');
-            $table->string('name')->nullable();
-            $table->string('color_code');
-            $table->unsignedBigInteger('quantity')->nullable();
-            $table->unsignedBigInteger('price');
+            $table->unsignedBigInteger('frame_id');
+            $table->foreign('frame_id')->references('id')->on('model_frames');
+            $table->enum('side',['internal','external'])->nullable();
+            $table->string('value');
+            $table->unsignedBigInteger('quantity');
+            $table->double('price');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->softDeletes();
-
             $table->timestamps();
         });
     }
@@ -36,6 +35,6 @@ class CreateAddonColorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('addon_colors');
+        Schema::dropIfExists('frame_details');
     }
 }

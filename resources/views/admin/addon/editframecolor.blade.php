@@ -12,7 +12,7 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h1 class="header-title">Product Add On</h1>
+            <h1 class="header-title">Edit Frame Color</h1>
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash ">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
@@ -25,7 +25,8 @@
         <script type="text/javascript">toastr.success("{{session('info')}}");</script>
         @endif  
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
                 <div class="card">
                     
                     <div class="card-body">
@@ -39,34 +40,54 @@
                         </div>
                         @endforeach
                         @endif
-                        <form action="{{url('admin/addon_color')}}" method="post" enctype="multipart/form-data" id="addon">
+                        <form action="{{url('admin/updateframecolor/'.$framecolor->id)}}" method="post" enctype="multipart/form-data" id="addon">
                             @csrf
-
+                            <input type="hidden" name="frame_id" value="{{$framecolor->frame_id}}">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="button" class="btn btn-success btn-xs float-right" id="addcolor"><i class="fa fa-plus-circle"></i> Add Color</button>
+                                    <div class="from-group">
+                                        <label for="">Frame Side</label>
+                                        <select name="side" id="" class="form-control">
+                                           
+                                            <option value="internal" 
+                                            @if ($framecolor->side=="internal")
+                                                selected
+                                            @endif
+                                            >Internal</option>
+                                            <option value="external"
+                                            @if ($framecolor->side=="external")
+                                                selected
+                                            @endif
+                                            >External</option>
+                                        </select>
+                                        
+                                    </div>
+                                    <div class="from-group">
+                                        <label for="">Color Name </label>
+                                        <select name="value" id="" class="form-control rounded-0">
+                                            @foreach ($colors as $color)
+                                                <option value="{{$color->id}}"
+                                                    @if ($framecolor->value ==$color->color_code)
+                                                        selected
+                                                    @endif
+                                                    >{{$color->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="from-group">
+                                        <label for="">Quantity</label>
+                                        <input type="number" class="form-control" name="quantity" value="{{$framecolor->quantity}}">
+                                    </div>
+                                    <div class="from-group">
+                                        <label for="">Price</label>
+                                        <input type="number" class="form-control" name="price" value="{{$framecolor->price}}">
+                                    </div>
+                                    
+
                                 </div>
                             </div>
-                            <input type="hidden" name="addon_id" value="{{$id}}">
-                            <div class="row">
-                               <div class="col-md-12">
-                                   <div class="table-responsive" >
-                                    <table class="table" id="colortable" >
-                                        <thead>
-                                            <th>Side</th>
-                                            <th>Color Name</th>
-                                            <th>Price</th>
-                                            <th>Quantity</th>
-                                            <th>Remove</th>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                   </div>
-                               </div>
-                            </div>
                             
-                            <div class="row">
+                            <div class="row mt-3">
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-success" ><i class="fa fa-check"> Submit</i></button>
                                 </div>

@@ -39,28 +39,29 @@
                         </div>
                         @endforeach
                         @endif
-                        <form action="{{url('admin/create_addon')}}" method="post" enctype="multipart/form-data" id="addon">
+                        <form action="{{url('admin/createframe')}}" method="post" enctype="multipart/form-data" id="addon">
                             @csrf
                             <div class="row">
+                               
                                 <div class="col-md-6">
-                                   
-                                    <label for="">Products</label>
-                                    <select name="product_id" class="form-control rounded-0">
-                                        @foreach ($products as $product)
-                                            <option value="{{$product->id}}">{{$product->product_name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="">Model Name </label>
+                                    <label for="">Frame  Name </label>
                                     <input type="text" class="form-control rounded-0" name="model_name" placeholder="Enter Model Name">
                                 </div>
-                            </div>
-                            <div class="row">
+                          
                                 <div class="col-md-6">
                                     <label for="">Image</label>
-                                    <input type="text" name="addon_id" value="{{$id}}">
-                                    <input type="file" class="form-control rounded-0" name="svgimage">
+                                    <input type="file" class="form-control rounded-0" name="image">
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <label for="">Price</label>
+                                    <input type="number" class="form-control rounded-0" name="price" placeholder="Price of the Frame">
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Quantity</label>
+                                    <input type="hidden" name="addon_id" value="{{$id}}">
+                                    <input type="number" class="form-control rounded-0" placeholder="Quantity" name="quantity">
                                 </div>
                             </div>
                             <div class="row">
@@ -74,7 +75,6 @@
                                    <div class="table-responsive" >
                                     <table class="table" id="externalcolor" style="display: none">
                                         <thead>
-                                            
                                             <th>Value</th>
                                             <th>Price</th>
                                             <th>Quantity</th>

@@ -82,6 +82,9 @@
                                 <li class="nav-item dropdown">
                                     <a href="{{url('admin/addons')}}">Model List</a>
                                 </li>
+                                <li class="nav-item dropdown">
+                                    <a href="{{url('admin/colors')}}">Available Colors</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">

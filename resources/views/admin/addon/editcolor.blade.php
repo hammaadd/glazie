@@ -25,7 +25,8 @@
         <script type="text/javascript">toastr.success("{{session('info')}}");</script>
         @endif  
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
                 <div class="card">
                     
                     <div class="card-body">
@@ -39,36 +40,50 @@
                         </div>
                         @endforeach
                         @endif
-                        <form action="{{url('admin/addon_color')}}" method="post" enctype="multipart/form-data" id="addon">
+                        <form action="{{url('admin/updatecolor/'.$color->id)}}" method="post" enctype="multipart/form-data" id="addon">
                             @csrf
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button type="button" class="btn btn-success btn-xs float-right" id="addcolor"><i class="fa fa-plus-circle"></i> Add Color</button>
-                                </div>
+                            <div class="form-group">
+                                <label for="">Side</label>
+                                <select name="side" class="form-control rounded-0">
+                                    <option value="internal"
+                                        @if ($color->side=="internal")
+                                            selected
+                                        @endif
+                                    >Internal</option>
+                                    <option value="external"
+                                    @if ($color->side=="external")
+                                            selected
+                                        @endif
+                                    >External</option>
+                                </select>
                             </div>
-                            <input type="hidden" name="addon_id" value="{{$id}}">
-                            <div class="row">
-                               <div class="col-md-12">
-                                   <div class="table-responsive" >
-                                    <table class="table" id="colortable" >
-                                        <thead>
-                                            <th>Side</th>
-                                            <th>Color Name</th>
-                                            <th>Price</th>
-                                            <th>Quantity</th>
-                                            <th>Remove</th>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                   </div>
-                               </div>
+                            <div class="form-group">
+                                <label for="">Color Name</label>
+                                <select name="color_code" class="form-control rounded-0">
+                                    @foreach ($colors as $item_color)
+                                        <option value="{{$item_color->id}}" 
+                                                @if ($color->color_code==$item_color->color_code)
+                                                    selected
+                                                @endif
+                                            >{{$item_color->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
+                            <div class="form-group">
+                                <label for="">Price</label>
+                                <input type="number" name="price" class="form-control rounded-0" placeholder="Enter Price" value="{{$color->price}}" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="addon_id" value="{{$color->addon_id}}">
+                                <label for="">Quantity</label>
+                                <input type="number" class="form-control rounded-0" name="quantity" placeholder="Enter No of Available Quantity" value="{{$color->quantity}}" min="1" required>
+                            </div>
+                            
                             
                             <div class="row">
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-success" ><i class="fa fa-check"> Submit</i></button>
+                                    <a href="{{url('admin/addon/view/'.$color->addon_id)}}" class="btn btn-danger"> <i class="anticon anticon-close"></i> Cancel</a>
                                 </div>
                             </div>
                         </form>

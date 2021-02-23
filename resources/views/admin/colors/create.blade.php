@@ -32,17 +32,12 @@
                         </div>
                         @endforeach
                     @endif
+
                         <form action="{{url('admin/colors/store')}}" method="post" id="varieties">
-                            <div class="form-group">
-                                <label for="">Product</label>
-                                <select name="product_id" class="form-control">
-                                    @foreach ($products as $product)
-                                       <option value="{{$product->id}}">{{$product->product_name}}</option> 
-                                    @endforeach
-                                </select>
-                            </div>
+                           
                             <div class="form-group">
                                 @csrf
+                                
                                 <label for="">Color Name</label>
                                 <input type="text" class="form-control" name="name" placeholder="Enter Color Name ">
                             </div>
