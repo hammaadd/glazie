@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-container">
     <style>
-    .canvasjs-chart-credit,{
+    .canvasjs-chart-credit{
         display: none;
     }
     </style>            
@@ -31,7 +31,7 @@
                                    @endphp
                                @endforeach
                                @php
-                                    print_r($product_name);
+                                    //print_r($product_name);
                                @endphp
                             </div>
                         </div>

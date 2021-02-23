@@ -10,6 +10,7 @@ use App\Models\Color;
 use App\Models\AddonFurniture;
 use App\Models\ModelFrame;
 use App\Models\FrameGlass;
+use App\Models\AddonHinge;
 use App\Models\FrameDetails;
 use Illuminate\Support\Facades\Redirect;
 
@@ -78,16 +79,52 @@ class AddonController extends Controller
                 $addoncolor->color_code = Color::find($intercolor_code[$i])->color_code;
                 $addoncolor->quantity = $interquantity[$i];
                 $addoncolor->price = $interprice[$i];
-                $addoncoloruse->created_by = Auth::id();
+                $addoncolor->created_by = Auth::id();
                 $addoncolor->save();
                 }  
-        return redirect('admin/addon')->with('info','Add Oncreated Successfully');
+        return redirect('admin/addons')->with('info','Add Oncreated Successfully');
             
     }
     public function view($id)
     {
         $addon = AddOn::find($id);
         return view('admin/addon/view',['addon'=>$addon]);
+    }
+    public function edit($id)
+    {
+        $prodcuts = Products::where('type','=','customize')->get();
+        $addon = AddOn::find($id);
+        return view('admin/addon/edit',['addon'=>$addon,'products'=>$prodcuts]);
+    }
+    public function update($id,Request $request)
+    {
+        $product_id = $request->input('product_id');
+        $model_name = $request->input('model_name');
+
+        if ($request->file('svgimage')) {
+            $file = $request->file('svgimage');
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $imgname = uniqid() . $filename;
+            $destinationPath = public_path('/admin-assets/addon');
+            $file->move($destinationPath, $imgname);
+            $updateaddonimage = array(
+                'svgimage'=>$imgname
+            );
+            AddOn::where('id',$id)->update($updateaddonimage);
+        }
+        $updateaddon =  array(
+            'product_id'=>$product_id,
+            'model_name'=>$model_name
+        );
+        AddOn::where('id',$id)->update($updateaddon);
+        return redirect('admin/addons')->with('info','Add On Updated  Successfully');
+    }
+    public function delete($id)
+    {
+        AddOn::where('id',$id)->delete();
+        return redirect('admin/addons')->with('info','Add On Deleted  Successfully');
+       
     }
     public function addcolor($id)
     {
@@ -436,6 +473,7 @@ class AddonController extends Controller
     public function editframeglass($id)
     {
         $frame =FrameGlass::find($id);
+        
         return view('admin/addon/editframeglass',['frame'=>$frame]);
     }
     public function updateframeglass($id, Request $request)
@@ -483,6 +521,7 @@ class AddonController extends Controller
        $price = $request->input('price');
        $quantity = $request->input('quantity');
        $files = $request->file('images');
+       
        for ($i=0; $i <count($name) ; $i++) { 
            $addon = new AddonFurniture;
            $addon->addon_id = $addon_id;
@@ -544,4 +583,31 @@ class AddonController extends Controller
     {
         return view('admin/addon/addhinge',['id'=>$id]);
     }
+    public function checkhinge(Request $request)
+    {
+        $addon_id = $request->input('addon_id');
+        $hinge = $request->input('hinge');
+        $data = AddonHinge::where('addon_id','=',$addon_id)->where('hingeside','=',$hinge)->get();
+        echo count($data);
+
+    }
+    public function createhinge(Request $request)
+    {
+        $addon_id  = $request->input('addon_id');
+        $hinge = $request->input('hinge');
+        $newhinge = new AddonHinge;
+        $newhinge->addon_id = $addon_id;
+        $newhinge->hingeside = $hinge;
+        $newhinge->created_by = Auth::id();
+        $newhinge->save();
+        return redirect('admin/addon/view/'.$addon_id)->with('info','Hinge created successfully');
+
+    }
+    public function removehinge($id)
+    {
+        $addon_id = AddonHinge::find($id)->addon_id;
+        AddonHinge::where('id',$id)->delete();
+        return redirect('admin/addon/view/'.$addon_id)->with('info','Hinge removed successfully');
+    }
+   
 }

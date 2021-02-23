@@ -34,7 +34,7 @@
                             
                         </div>
                         <div class="col-lg-4 text-right">
-                            <a class="btn btn-primary" href="{{url('admin/addontype/create')}}">
+                            <a class="btn btn-primary" href="{{url('admin/addon/create')}}">
                                 <i class="anticon anticon-plus-circle m-r-5"></i>
                                 <span>Add New Addon </span>
                             </a>
@@ -65,10 +65,8 @@
                             </td>
                             <td>
                                 <a href="{{url('admin/addon/view/'.$addon->id)}}" class="btn btn-xs btn-warning" ><i class="fa fa-eye"></i> View AddOn</a>
-                                <a href="{{url('admin/addon
-                                /edit/'.$addon->id)}}" class="btn btn-info btn-xs"> <i class="fa fa-edit"></i> Edit</a>
-                                <a href="{{url('admin/addon
-                                /delete/'.$addon->id)}}" class="btn btn-danger btn-xs"> <i class="fa fa-trash"></i> Delete</a>
+                                <a href="{{url('admin/addon/edit/'.$addon->id)}}" class="btn btn-info btn-xs"> <i class="fa fa-edit"></i> Edit</a>
+                                <a href="{{url('admin/addon/delete/'.$addon->id)}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure?')"> <i class="fa fa-trash"></i> Delete</a>
                             </td>
                         </tr>
                       

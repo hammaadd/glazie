@@ -72,6 +72,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-success" ><i class="fa fa-check" > Submit</i></button>
+                                    <a href="{{url('admin/addon/view/'.$id)}}" class="btn btn-danger"> <i class="fa fa-times"></i> Cancel</a>
                                 </div>
                             </div>
                         </form>
@@ -114,9 +115,6 @@ $(document).ready(function(){
     $('#addcolor').click(function(){
        
         let row = '';
-        
-       
-        
         row+='<tr>';
             row+='<td>';
             row+='<input type="text" class="form-control rounded-0" name="name[]" placeholder="Name" required>';
@@ -126,7 +124,7 @@ $(document).ready(function(){
             row+='<select name="type[]" class="form-control rounded-0">';
                 row+='<option value="handle">Handle</option>';
                 row+='<option value="knocker">Knocker</option>';
-                row+='<option value="letterbox">letter Box</option>';
+                row+='<option value="letterbox">Letter Box</option>';
                 row+='</select>';
             
             row+='</td>';

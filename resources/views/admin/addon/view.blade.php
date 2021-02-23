@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <a href="{{url('')}}" class="btn btn-primary float-right mt-3"> <i class="fa fa-pencil"></i> Edit</a>
+                                <a href="{{url('admin/addon/edit/'.$addon->id)}}" class="btn btn-primary float-right mt-3"> <i class="fa fa-pencil"></i> Edit</a>
                             </div> 
                         </div>
                         <div class="row">
@@ -333,7 +333,7 @@
                                                                             <span class="text-danger font-weight-bold">Left</span>
                                                                             @endif
                                                                         </td>
-                                                                        <td><a href="{{url('removehinge/'.$hinge->id)}}" class="btn btn-danger btn-xs" title="Remove"><i class="fa fa-times"></i></a></td>
+                                                                        <td><a href="{{url('admin/addon/removehinge/'.$hinge->id)}}" class="btn btn-danger btn-xs" title="Remove" onclick="return confirm('Are you sure to remove?')"><i class="fa fa-times"></i></a></td>
                                                                     </tr>
                                                                 @endforeach
                                                             </tbody>

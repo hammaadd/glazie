@@ -12,11 +12,12 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h1 class="header-title">Product Add On</h1>
+            <h1 class="header-title">Add Frame</h1>
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash ">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="#">Product Add On</a>
+                    <a href="{{url('admin/addon/view/'.$id)}}" class="breadcrumb-item">Model</a>
+                    <a class="breadcrumb-item" href="#">Add Frame</a>
                     
                 </nav>
             </div>

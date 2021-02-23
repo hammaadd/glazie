@@ -82,27 +82,25 @@ class AdminController extends Controller
 
         // Latest Products
         // $latest_products = Products::where('status','=','1')->orderBy('id', 'desc')->limit(5)->get();
-        echo "<pre>";
-        //print_r($varities);
+        // echo "<pre>";
+        // //print_r($varities);
 
-        $product_name = array();
-        $varity_id = array();
-        foreach($varities as $varity)
-        {
-            array_push($product_name , $varity->prd_name);
+        // $product_name = array();
+        // $varity_id = array();
+        // foreach($varities as $varity)
+        // {
+        //     array_push($product_name , $varity->prd_name);
             
-            foreach($varity->products as $products){
-                //print_r($products->prd_order->quantity);
-            }    
+        //     foreach($varity->products as $products){
+        //         //print_r($products->prd_order->quantity);
+        //     }    
             
-        }
+        //}
     
         
         // print_r($product_name);
         // print_r($varity_id);
        
-
-        die;
         return view('admin/index',['installers'=>$installers,'customers'=>$customers,'orders'=>$orders ,'today_sale'=>$today_sale,'monthly_sale' =>$monthly_sale,'yearly_sale'=>$yearly_sale,'latest_orders' =>$latest_orders,'latest_products'=>$latest_products,'product_type'=>$product_type,'varities'=>$varities]);
 
     }

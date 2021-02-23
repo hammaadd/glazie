@@ -59,7 +59,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="">Image</label>
-                                    <input type="text" name="addon_id" value="{{$id}}">
+                                    
                                     <input type="file" class="form-control rounded-0" name="svgimage">
                                 </div>
                             </div>
@@ -115,6 +115,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-success" ><i class="fa fa-check"> Submit</i></button>
+                                    <a href="{{url('admin/addons')}}" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</a>
                                 </div>
                             </div>
                         </form>
