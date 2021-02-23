@@ -437,6 +437,7 @@ class AddonController extends Controller
     public function editframeglass($id)
     {
         $frame =FrameGlass::find($id);
+        
         return view('admin/addon/editframeglass',['frame'=>$frame]);
     }
     public function updateframeglass($id, Request $request)

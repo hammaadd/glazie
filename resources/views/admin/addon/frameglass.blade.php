@@ -16,7 +16,7 @@
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="{{url('admin/addon/view/'.$id)}}">Product</a>
+                    <a class="breadcrumb-item" href="{{url('admin/addon/view/'.$addon_id)}}">Product</a>
                     <a class="breadcrumb-item" href="#">Frame Glasses</a>
                     
                 </nav>
@@ -76,6 +76,7 @@
                         </tr>
                       
                         @endforeach
+                        
                         @endif
                     </tbody>
                 </table>

@@ -31,7 +31,7 @@
                                    @endphp
                                @endforeach
                                @php
-                                    print_r($product_name);
+                                    //print_r($product_name);
                                @endphp
                             </div>
                         </div>

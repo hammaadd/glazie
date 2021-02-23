@@ -16,6 +16,7 @@
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash ">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+                    <a href="{{url('admin/addon/view/'.$glass->addon_id)}}" class="breadcrumb-item"> Product </a>
                     <a class="breadcrumb-item" href="#">Product Add On</a>
                     
                 </nav>
@@ -25,7 +26,8 @@
         <script type="text/javascript">toastr.success("{{session('info')}}");</script>
         @endif  
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
                 <div class="card">
                     
                     <div class="card-body">
@@ -43,25 +45,26 @@
                             @csrf
                             <div class="row">
                                
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label for="">Glass Name </label>
                                     <input type="text" class="form-control rounded-0" name="model_name" placeholder="Enter Model Name" value="{{$glass->name}}">
                                 </div>
-                          
-                                <div class="col-md-6">
+                            
+
+                                <div class="col-md-12">
                                     <label for="">Image</label>
                                     <input type="file" class="form-control rounded-0" name="image">
                                 </div>
                             </div>
                             <div class="row mb-2">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label for="">Price</label>
-                                    <input type="number" class="form-control rounded-0" name="price" placeholder="Price of the Frame" value="{{$glass->frame_price}}">
+                                    <input type="number" class="form-control rounded-0" name="price" placeholder="Price of the Frame" value="{{$glass->frame_price}}" min="1">
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <label>Quantity</label>
                                     <input type="hidden" name="addon_id" value="{{$glass->addon_id}}">
-                                    <input type="number" class="form-control rounded-0" placeholder="Quantity" name="quantity" value="{{$glass->quantity}}">
+                                    <input type="number" class="form-control rounded-0" placeholder="Quantity" name="quantity" value="{{$glass->quantity}}" min="1">
                                 </div>
                             </div>
                             
@@ -69,6 +72,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-success" ><i class="fa fa-check"> Submit</i></button>
+                                    <a href="{{url('admin/addon/view/'.$glass->addon_id)}}" class="btn btn-danger ml-1"><i class="fa fa-times"></i> Cancel </a>
                                 </div>
                             </div>
                         </form>

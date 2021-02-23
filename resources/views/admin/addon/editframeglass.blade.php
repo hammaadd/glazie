@@ -12,11 +12,13 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h1 class="header-title">Add Frame Glass</h1>
+            <h1 class="header-title">Edit Frame Glass</h1>
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash ">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+                    <a href="{{url('admin/addon/view/'.$frame->modelframe->addon_id)}}" class="breadcrumb-item"> Product View</a>
                     <a class="breadcrumb-item" href="{{url('admin/frameglasses/'.$frame->frame_id)}}">Frame Glasses</a>
+                    
                     <a class="breadcrumb-item" href="#">Product Add On</a>
                     
                 </nav>
@@ -51,6 +53,8 @@
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-success" type="submit"> <i class="fa fa-check"></i> Submit</button>
+                                    <a class="btn btn-danger" href="{{url('admin/frameglasses/'.$frame->frame_id)}}"> <i class="fa fa-times"></i> Cancel</a>
+                    
                                 </div>
                             </form>
                         </div>

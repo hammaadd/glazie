@@ -16,6 +16,8 @@
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash ">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
+                    <a class="breadcrumb-item" href="{{url('admin/addon/view/'.$id)}}"> Product View </a>
+                    
                     <a class="breadcrumb-item" href="#">Product Add On</a>
                     
                 </nav>
@@ -63,6 +65,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-success mt-3" id="btncheck"><i class="fa fa-check"> Submit</i></button>
+                                    <a href="{{url('admin/addon/view/'.$id)}}" class="btn btn-danger mt-3"> <i class="fa fa-times"></i> Cancel</a>
                                 </div>
                             </div>
                         </form>

@@ -17,6 +17,7 @@
                 <nav class="breadcrumb breadcrumb-dash ">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
                     <a class="breadcrumb-item" href="{{url('admin/addon/view/'.$addon_id)}}">Product</a>
+                    <a class="breadcrumb-item" href="{{url('admin/frameglasses/'.$id)}}">Frame Glass</a>
                     <a class="breadcrumb-item" href="#">Product Add On</a>
                     
                 </nav>
@@ -71,6 +72,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-success" ><i class="fa fa-check" > Submit</i></button>
+                                    <a class="btn btn-danger ml-1" href="{{url('admin/frameglasses/'.$id)}}"><i class="fa fa-times"></i> Cancel</a>
                                 </div>
                             </div>
                         </form>

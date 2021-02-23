@@ -16,7 +16,8 @@
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash ">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="#">Product Add On</a>
+                    <a href="{{url('admin/addon/view/'.$color->addon_id)}}" class="breadcrumb-item">  Products</a>
+                    <a class="breadcrumb-item" href="#">Edit Color</a>
                     
                 </nav>
             </div>
