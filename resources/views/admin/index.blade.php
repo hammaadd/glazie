@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-container">
     <style>
-    .canvasjs-chart-credit,{
+    .canvasjs-chart-credit{
         display: none;
     }
     </style>            
