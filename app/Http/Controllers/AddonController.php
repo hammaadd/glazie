@@ -540,4 +540,8 @@ class AddonController extends Controller
         AddonFurniture::where('id',$id)->delete();
         return redirect('admin/addon/view/'.$addon_id)->with('info','Furniture  successfully');
     }
+    public function addhinge($id)
+    {
+        return view('admin/addon/addhinge',['id'=>$id]);
+    }
 }

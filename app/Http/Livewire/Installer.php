@@ -18,7 +18,7 @@ class Installer extends Component
     {
         if($this->name=="" && empty($this->order)){
             return view('livewire.installer',
-            ['installers' => User::inRandomOrder()->limit(4)->get()]);
+            ['installers' => User::where('type','=','installer')->inRandomOrder()->limit(4)->get()]);
         }
         else{
             if($this->order){

@@ -226,10 +226,16 @@ Route::prefix('admin')->group(function () {
     Route::get('editglass/{id}','AddonController@editglass');
     Route::post('updateglass/{id}','AddonController@updateglass');
     Route::get('deleteglass/{id}','AddonController@deleteglass');
+    
+    // Addon Hinge
+    Route::get('addhinge/{id}','AddonController@addhinge');
+
     // Request Hiring Route For Admin Side 
     Route::get('requesthiring','RequestHiringController@index');
     Route::post('hirestatus','RequestHiringController@change_hirestatus');
     Route::get('hiringdetails/{id}','RequestHiringController@hiringdetails');
+
+
     // Installers Route
     
     Route::get('installer','InstallerController@index');
