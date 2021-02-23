@@ -59,7 +59,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="">Image</label>
-                                    <input type="text" name="addon_id" value="{{$id}}">
+                                    
                                     <input type="file" class="form-control rounded-0" name="svgimage">
                                 </div>
                             </div>
