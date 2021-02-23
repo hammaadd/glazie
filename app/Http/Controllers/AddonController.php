@@ -10,6 +10,7 @@ use App\Models\Color;
 use App\Models\AddonFurniture;
 use App\Models\ModelFrame;
 use App\Models\FrameGlass;
+use App\Models\AddonHinge;
 use App\Models\FrameDetails;
 use Illuminate\Support\Facades\Redirect;
 
@@ -543,5 +544,31 @@ class AddonController extends Controller
     public function addhinge($id)
     {
         return view('admin/addon/addhinge',['id'=>$id]);
+    }
+    public function checkhinge(Request $request)
+    {
+        $addon_id = $request->input('addon_id');
+        $hinge = $request->input('hinge');
+        $data = AddonHinge::where('addon_id','=',$addon_id)->where('hingeside','=',$hinge)->get();
+        echo count($data);
+
+    }
+    public function createhinge(Request $request)
+    {
+        $addon_id  = $request->input('addon_id');
+        $hinge = $request->input('hinge');
+        $newhinge = new AddonHinge;
+        $newhinge->addon_id = $addon_id;
+        $newhinge->hingeside = $hinge;
+        $newhinge->created_by = Auth::id();
+        $newhinge->save();
+        return redirect('admin/addon/view/'.$addon_id)->with('info','Hinge created successfully');
+
+    }
+    public function removehinge($id)
+    {
+        $addon_id = AddonHinge::find($id)->addon_id;
+        AddonHinge::where('id',$id)->delete();
+        return redirect('admin/addon/view/'.$addon_id)->with('info','Hinge removed successfully');
     }
 }

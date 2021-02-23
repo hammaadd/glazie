@@ -229,6 +229,9 @@ Route::prefix('admin')->group(function () {
     
     // Addon Hinge
     Route::get('addhinge/{id}','AddonController@addhinge');
+    Route::post('addon/checkhinge','AddonController@checkhinge');
+    Route::post('addon/createhinge','AddonController@createhinge');
+    Route::get('addon/removehinge/{id}','AddonCOntroller@removehinge');
 
     // Request Hiring Route For Admin Side 
     Route::get('requesthiring','RequestHiringController@index');
