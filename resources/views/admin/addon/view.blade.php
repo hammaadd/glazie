@@ -275,7 +275,7 @@
                                                                         <td>{{$loop->iteration}}</td>
                                                                         <td>{{$furniture->name}}</td>
                                                                         <td>{{$furniture->type}}</td>
-                                                                        <td>{{$furniture->type}}</td>
+                                                                        <td>£ {{$furniture->price}}</td>
                                                                         <td><img src="{{asset('admin-assets/addon/furniture/'.$furniture->image)}}" height="100px"></td>
                                                                         
                                                                         <td>
@@ -290,6 +290,54 @@
                                                             </thead>
                                                         </table>
                                                         @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">
+                                                <a class="collapsed" data-toggle="collapse" href="#hinges">
+                                                    <span>Hinge</span>
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="hinges" class="collapse" data-parent="#accordion-default">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        @if (count($addon->hinges)<2)
+                                                        <a href="{{url('admin/addhinge/'.$addon->id)}}" class="btn btn-success btn-xs float-right"> <i class="fa fa-plus-circle"></i> Add Hinge </a>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Sr #</th>
+                                                                    <th>Hinge Side</th>
+                                                                    <th>Delete</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($addon->hinges as $hinge)
+                                                                    <tr>
+                                                                        <td>{{$loop->iteration}}</td>
+                                                                        <td>
+                                                                            @if ($hinge->hingeside=='right')
+                                                                            <span class="text-success font-weight-bold">Right</span>
+                                                                            @else 
+                                                                            <span class="text-danger font-weight-bold">Left</span>
+                                                                            @endif
+                                                                        </td>
+                                                                        <td><a href="{{url('removehinge/'.$hinge->id)}}" class="btn btn-danger btn-xs" title="Remove"><i class="fa fa-times"></i></a></td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
                                             </div>

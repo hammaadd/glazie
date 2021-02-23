@@ -169,7 +169,6 @@ class InstallerController extends Controller
             'contact_no' => $request->input('contact_no'),
             'address' => $request->input('address'),
             'type' => 'installer',
-            'status'=> '1',
             'name' => $request->input('first_name')."".$request->input('last_name'),
             'company_info' =>$company_info
         );

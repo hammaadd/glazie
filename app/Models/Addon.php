@@ -28,4 +28,8 @@ class AddOn extends Model
     {
         return $this->hasMany(AddonFurniture::class, 'addon_id', 'id');
     }
+    public function hinges()
+    { 
+        return $this->hasMany(AddonHinge::class, 'addon_id', 'id');
+    }
 }
