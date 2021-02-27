@@ -84,32 +84,8 @@
                                
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <label for="">Product Type</label>
-                                <select name="product_type"  class="form-control">
-                                    <option value="">--Select Product Type--</option>
-                                    <option value="door" 
-                                    @if ($products->product_type=="door")
-                                        selected
-                                    @endif
-                                    >Door</option>
-                                    <option value="handle"
-                                     @if ($products->product_type=="handle")
-                                        selected
-                                    @endif>Handle</option>
-                                    <option value="lentern" 
-                                    @if ($products->product_type=="lentern")
-                                        selected
-                                    @endif>Lentern</option>
-                                    <option value="frame" @if ($products->product_type=="frame")
-                                        selected
-                                    @endif>Frame</option>
-                                    <option value="window"
-                                     @if ($products->product_type=="window")
-                                        selected
-                                    @endif>Window</option>
-                                </select>
-                            </div>
+                            
+                                
                             <div class="col-md-6">
                                 <label for="">Products images</label>
                                 <input type="file" class="form-control" multiple name="image_gallery[]">
@@ -182,10 +158,26 @@
                                      @endforeach 
                                  </select>
                              </div>  
-                             
+                             <div class="col-md-6">
+                                <label for="">Height <small>(cm)</small></label>
+                                <input type="number" class="form-control" name="height" placeholder="Enter Height of the Product" min="1" value="{{$products->height}}">
+                            </div>
                             
                          </div>
-                        
+                         <div class="row">
+                            <div class="col-md-6">
+                                <label for="">Length <small>(cm)</small></label>
+                                <input type="number" class="form-control" name="length" placeholder="Enter Length of Product" min="1" value="{{$products->length}}">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">Width <small>(cm)</small></label>
+                                <input type="number" class="form-control" name="width" placeholder="Enter Width of the products " min="1" value="{{$products->width}}">
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            
+                        </div>
                         <div class="row">
                             <button type="submit" class="btn btn-success mt-3"><i class="fa fa-edit"></i>Update Product</button>
                             <a href="{{url('admin/products')}}" class="btn btn-danger ml-3 mt-3"><i class="fa fa-times"></i> Cancel</a>

@@ -20,6 +20,10 @@ class CreateModelGlassesTable extends Migration
             $table->string('name');
             $table->string('image');
             $table->double('glass_price');
+            $table->double('wieght');
+            $table->double('length');
+            $table->double('width');
+            $table->double('height');
             $table->unsignedBigInteger('quantity');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

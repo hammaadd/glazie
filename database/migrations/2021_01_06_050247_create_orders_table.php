@@ -17,6 +17,10 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('users');
+            $table->unsignedBigInteger('delivery_id');
+            $table->foreign('delivery_id')->references('id')->on('delivery_times');
+            
+            
             $table->double('total_amount',9,2);
             $table->double('discount',9,2);
             $table->double('net_total',9,2);

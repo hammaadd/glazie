@@ -20,6 +20,10 @@ class CreateModelFramesTable extends Migration
             $table->string('name');
             $table->string('image');
             $table->double('frame_price');
+            $table->double('wieght');
+            $table->double('length');
+            $table->double('width');
+            $table->double('height');
             $table->enum('type',['frame','glass']);
             $table->unsignedBigInteger('quantity');
             $table->unsignedBigInteger('created_by')->nullable();

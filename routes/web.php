@@ -40,6 +40,11 @@ Route::get('admin/assignment', 'AssignmentController@index');
 Route::post('quoteforinstaller','IndexController@quoteforinstaller');
 Route::post('getmail','IndexController@getmail');
 
+// Door Builder Routes
+Route::get('door-build','DoorBuilderController@index');
+
+
+
 Route::prefix('admin')->group(function () {
     // Permisssion Routes
     // Route::get('permission','PermissionController@index');
@@ -82,7 +87,16 @@ Route::prefix('admin')->group(function () {
     Route::get('customers/deactivate/{id}','AdmincustomerController@deactivate');
     Route::get('customers/changepassword/{id}','AdmincustomerController@changepassword');
     Route::get('customerorder/details/{id}','AdmincustomerController@orderdetails');
+    // Delivery TIme Routes
+    Route::get('deliverytimes','DeliverTimeController@index');
+    Route::get('deliverytimes/create','DeliverTimeController@create');
+    Route::post('deliverytimes/store','DeliverTimeController@store');
+    Route::get('deliverytimes/edit/{id}','DeliverTimeController@edit');
+    Route::post('deliverytimes/update/{id}','DeliverTimeController@update');
+    Route::get('deliverytimes/delete/{id}','DeliverTimeController@delete');
+
     // CateGories Routes
+    
     Route::get('categories','CategoriesController@index');
     Route::get('categories/add','CategoriesController@add');
     Route::post('category/create','CategoriesController@create');
@@ -304,7 +318,15 @@ Route::get('deletefeedback/{feedback_id}','ProductsController@deletefeedback');
     Route::post('social/update/{id}','SocialController@update');
     Route::get('social/delete/{id}','SocialController@delete');
 
-
+    // 
+    Route::get('blogs','BlogController@index');
+    Route::get('blogs/create','BlogController@create');
+    Route::post('blogs/store','BlogController@store');
+    Route::get('blogs/view/{id}','BlogController@view');
+    Route::get('blogs/edit/{id}','BlogController@edit');
+    Route::post('blogs/update/{id}','BlogController@update');
+    Route::get('blogs/delete/{id}','BlogController@delete');
+    Route::post('blogs/removeimage','BlogController@removeimage');
 });
 
 // Public Routes
@@ -335,6 +357,10 @@ Route::post('getnavlinks','IndexController@navlink');
 Route::get('contact-us','IndexController@contactus');
 Route::post('contactsubmit','IndexController@contactsubmit');
 Route::get('{id}','IndexController@cmspage');
+
+// Blog Public Post 
+Route::get('blog/posts','IndexController@blogpost');
+Route::get('blog/details/{id}','IndexController@blogdetails');
 // Customr Routes are here
 Route::prefix('customer')->group(function () {
     Route::get('profile/edit','CustomerController@editprofile');
@@ -356,4 +382,10 @@ Route::prefix('customer')->group(function () {
     Route::get('verify','CustomerController@verify');
     Route::post('confirmcode','CustomerController@checkcode');
     Route::get('customerlogout','CustomerController@logout');
+
+    Route::get('blog/posts','CustomerController@blogpost');
+    Route::get('blogs/details/{id}','CustomerController@blogdetails');
+    Route::post('checklike','CustomerController@checklike');
+    Route::post('comment','CustomerController@comment');
+   
 });

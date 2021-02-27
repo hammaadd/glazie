@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\ContentManagementSystem;
 use DB;
 use Session;
+use App\Models\Blog;
 use App\Models\SiteSetting;
 use App\Models\ContactUs;
 use App\Models\Subscribe;
@@ -604,5 +605,17 @@ class IndexController extends Controller
         $datas = SiteSetting::where('key','=','admin_email')->orWhere('key','admin_phone')->get();
         
         return $datas;
+    }
+    public function blogpost(){
+        $blogs = Blog::where('publish','public')->get();
+        return view('public/blogpost',['blogs'=>$blogs]);
+    }
+    public function blogdetails($id)
+    {
+        $blogs = Blog::where('slug','=',$id)->get();
+        foreach ($blogs as  $blog) {
+         
+        }
+        return view('public/blogdetails',['blog'=>$blog]);
     }
 }

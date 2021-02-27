@@ -57,7 +57,10 @@ class ProductsController extends Controller
            'weight'=>'required',
            'quantity'=>'required',
            'verity_id'=>'required',
-           'publish' =>'required'
+           'publish' =>'required',
+           'height'=>'required',
+           'width'=>'required',
+           'length'=>'required'
         ]);
            
          $products = new Products;
@@ -73,6 +76,9 @@ class ProductsController extends Controller
          $products->description =$request->input('description');
          $products->publish = $request->input('publish');
          $products->crated_by = $user->id;
+         $products->length =$request->input('length');
+         $products->height =$request->input('height');
+         $products->width = $request->input('width');
          $products->save();
          $product_id = $products->id;
          
@@ -191,7 +197,10 @@ class ProductsController extends Controller
             'sale_price'=>'required',
             'weight'=>'required',
             'quantity'=>'required',
-            'product_type'=>'required'
+          
+            'height'=>'required',
+           'width'=>'required',
+           'length'=>'required'
      
             ]);
             $update_products = array(
@@ -201,9 +210,12 @@ class ProductsController extends Controller
                 'sale_price' => $request->input('sale_price'),
                 'weight' => $request->input('weight'),
                 'quantity' => $request->input('quantity'),
-                'product_type' => $request->input('product_type'),
+    
                 'short_description' =>$request->input('short_description'),
                 'description' =>$request->input('description'),
+                'length' =>$request->input('length'),
+                'height' =>$request->input('height'),
+                'width' => $request->input('width'),
                 'updated_by' => $user->id
             );
 
