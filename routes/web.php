@@ -95,6 +95,7 @@ Route::prefix('admin')->group(function () {
     Route::post('deliverytimes/update/{id}','DeliverTimeController@update');
     Route::get('deliverytimes/delete/{id}','DeliverTimeController@delete');
 
+
     // CateGories Routes
     
     Route::get('categories','CategoriesController@index');
@@ -141,7 +142,8 @@ Route::prefix('admin')->group(function () {
     Route::get('product/list','ProductsController@productslist');
     Route::get('productdetail','ProductsController@productdetail');
     
-  
+   
+
     Route::get('orderdetails','ProductsController@orderdetails');
    
     Route::get('requesthiring/details','ProductsController@hiredetails');
@@ -157,6 +159,14 @@ Route::prefix('admin')->group(function () {
     Route::get('attributes/edit/{id}','AttributeController@edit');
     Route::post('attributes/update/{id}','AttributeController@update');
     Route::get('attributes/delete/{id}','AttributeController@delete');
+    Route::get('removeprdattribute/{id}','AttributeController@removeproductattribute');
+    Route::get('product/addattr/{id}','AttributeController@addattr');
+    Route::post('prdattr/create/{id}','AttributeController@createprdattr');
+    Route::post('attribute/checkattr','AttributeController@checkattr');
+    Route::get('editprdattribute/{id}','AttributeController@editattr');
+    Route::post('updateterms','AttributeController@updateattr');
+    
+    
     // Prodcut Attributes Routes
     Route::get('productattribute','ProductattributeController@index');
     Route::get('productattribute/add','ProductattributeController@add');

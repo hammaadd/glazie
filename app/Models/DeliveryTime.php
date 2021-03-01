@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class DeliveryTime extends Model
 {
     use HasFactory,SoftDeletes;
+    
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'delivery_id');
+    }
 }

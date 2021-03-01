@@ -173,7 +173,13 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input type="text" class="form-control" id="coupen" placeholder="Coupen Code" onchange="checkcoupen()">
+                                <label for="">Service Type</label>
+                                <select name="delivery_id" class="form-control rounded-0">
+                                    @foreach ($times as $time)
+                                        <option value="{{$time->id}}">{{$time->name}}</option>
+                                    @endforeach
+                                </select>
+                                <input type="text" class="form-control mt-3" id="coupen" placeholder="Coupen Code" onchange="checkcoupen()">
                                 <span class="text-success text-center" style="display: none" id="discountmessage"></span>
                                 <span class="text-danger text-center" style="display: none" id="coupenmessage"></span> <br>
                                 <button class="btn btn-xs btn btn-fill-out mt-1 rounded-0" type="button" onclick="checkcoupen()">Add</button>

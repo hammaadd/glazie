@@ -35,7 +35,9 @@
                             @endforeach
                         </div>
                         @endif
-                        
+                        @php
+                            $image_gallery = $products->gallery;
+                        @endphp
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="">Product Name</label>
@@ -84,13 +86,23 @@
                                
                         </div>
                         <div class="row">
-                            
-                                
                             <div class="col-md-6">
                                 <label for="">Products images</label>
                                 <input type="file" class="form-control" multiple name="image_gallery[]">
                             </div>
-                           
+                           <div class="col-md-6">
+                            <label for="">Product Variety </label>
+                            <select name="verity_id" class="form-control">
+                                <option value="">Select Variety</option>
+                                @foreach ($varieties as $variety)
+                                    <option value="{{$variety->id}}" 
+                                        @if ($variety->id==$products->verity_id)
+                                            selected
+                                        @endif
+                                        >{{$variety->prd_name}}</option>
+                                @endforeach
+                            </select>
+                           </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -107,40 +119,15 @@
                         </div>
                         <div class="row">
                             
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <label for="">Add new Attribute</label>
                                 <input type="text" class="form-control" placeholder="Add new attribute" id="new_attr">
                             </div>
                             <div class="col-md-2">
                                <button type="button" class="btn btn-success btn-xs btn-tone" style="margin-top:35px" id="addbtn"> <i class="fa fa-plus" ></i> Add Attribute</button>
-                            </div>
+                            </div> --}}
                         </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-
-                                <label for="">Attribute</label>
-                                <select name="attribute" id="attribute" class="form-control">
-                                    <option value="">Select Attribute</option>
-                                    @foreach ($attributes as $attribute)
-                                        <option value="{{$attribute->id}}"
-                                            @if ($product_attr->attribute_id==$attribute->id)
-                                                selected
-                                            @endif
-                                            >{{$attribute->attribute_name}}</option>                                        
-                                    @endforeach
-                                </select>
-                                <input type="hidden" name="product_attr_id" value="{{$product_attr->id}}">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="">Terms</label>
-                                <select name="terms[]" id="terms" multiple="multiple" class="form-control select2">
-                                    @foreach ($terms as $term)
-                                        <option value="{{$term->id}}" selected>{{$term->name}}</option>
-                                    @endforeach                                   
-                                </select>
-                            </div>
-                        </div>
+                       
                         <div class="row">
                             <div class="col-md-6">
                                 <label for=""><b>Categories</b></label>
@@ -176,7 +163,14 @@
                             
                         </div>
                         <div class="row">
-                            
+                            <div class="col-md-12">
+                                <label for="">Product Search Tags</label>
+                                <select name="prdtags[]" multiple id="tags" class="form-control">
+                                    @foreach ($product_tag as $search_tag)
+                                       <option value="{{$search_tag->id}}" selected> {{$search_tag->tag_name}} </option> 
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="row">
                             <button type="submit" class="btn btn-success mt-3"><i class="fa fa-edit"></i>Update Product</button>
@@ -191,10 +185,10 @@
         <div class="row">
             
             @foreach ($image_gallery as $images)
-                @if ($images->status=="1")
+                
                    
                      <div class="col-md-2" id="abc{{$images->id}}">
-                        <img src="{{ asset($images->image) }}" alt="" height="150px" width=100%>
+                        <img src="{{ asset('productimages/'.$images->image) }}" alt="" height="150px" width=100%>
                         <div class="row mt-2 mb-4">
                             
                             <div class="col-md-8" id="primary_div{{$images->id}}"> 
@@ -211,7 +205,7 @@
                             </div>
                         </div>
                     </div>
-                @endif
+               
             @endforeach
            
         </div>
@@ -225,7 +219,7 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
     $(document).ready(function() {
-    $('#terms').select2(
+    $('#terms,#tags').select2(
         {
             tags:true,
             tokenSeparators: [",", " "]

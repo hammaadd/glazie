@@ -150,7 +150,7 @@
                                 <a href="{{ url('admin/customers') }}">Customers</a>
                             </li>
                             <li @if ($url=="admin/addcustomer") class="active" @endif>
-                                <a href="{{ url('admin/addcustomer') }}">Add Customer</a>
+                                <a href="{{ url('admin/customer/add') }}">Add Customer</a>
                             </li>
                                 
                                 

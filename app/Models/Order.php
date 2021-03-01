@@ -17,4 +17,9 @@ class Order extends Model
         return $this->hasMany(OrderDetails::class, 'order_id', 'id');
     }
     
+    public function deliverytime()
+    {
+        return $this->belongsTo(DeliveryTime::class, 'delivery_id');
+    }
+    
 }

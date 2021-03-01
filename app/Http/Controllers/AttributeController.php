@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\Attribute;
 use Illuminate\Http\Request;
-
+use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Term;
+use App\Models\ProductTerm;
 
 class AttributeController extends Controller
 {
@@ -135,5 +136,134 @@ class AttributeController extends Controller
     $obj = (object) array($term_id,$term_name);
     echo json_encode($obj);
     
-}
-}
+    }
+    public function removeproductattribute($id)
+    {
+        $product_id = ProductAttribute::find($id)->product_id;
+        
+        ProductAttribute::where('id',$id)->delete();
+        return redirect('admin/products/view/'.$product_id)->with('info','Attribute delete Successfully');
+    }
+    public function addattr($id)
+    {
+       
+        $product_cats = Attribute::all();
+       
+
+        return view('admin/products/addattrbute',['attributes'=>$product_cats,'id'=>$id]);
+
+    }
+    public function createprdattr($id,Request $request)
+    {
+        $validatedData = $request->validate([
+            'attribute_id' => 'required',
+            'terms' =>'required',
+            
+        ]);
+        $attrbute_id = $request->input('attribute_id');
+        $terms = $request->input('terms');
+        
+            
+            $product_attribute = new ProductAttribute;
+            $product_attribute->product_id = $id;
+            $product_attribute->attribute_id = $attrbute_id;
+            $product_attribute->created_by = Auth::id();
+            $product_attribute->save();
+            $attribute_id = $product_attribute->id;
+            $terms = $request->input('terms');
+            
+            if (isset($terms)) {
+                foreach ($terms as $key => $term) {
+                
+                    if(!(int)$term){
+                    $add_term = new Term;
+                    $add_term->name = $term;
+                    $add_term->attribute_id =$attrbute_id;
+                    $add_term->created_by = Auth::id();
+                    $add_term->save();
+  
+                    $prd_terms = new ProductTerm;
+                    $prd_terms->product_id = $id;
+                    $prd_terms->attribute_id = $attrbute_id;
+                    $prd_terms->term_id = $add_term->id;
+                    
+                    $prd_terms->save();
+                    }
+                   else{
+                      $prd_terms = new ProductTerm;
+                      $prd_terms->product_id = $id;
+                      $prd_terms->attribute_id = $attrbute_id;
+                      $prd_terms->term_id = $term;
+                      
+                      $prd_terms->save();
+  
+                   }
+                    
+                }
+            }
+        return redirect('admin/products/view/'.$id)->with('info','Attribute created Successfully');
+    }
+    public function checkattr(Request $request)
+    {
+        $id = $request->input('id');
+        $attr = $request->input('attr');
+    
+
+        $data = ProductAttribute::where('attribute_id','=',$attr)->where('product_id','=',$id)->get();
+      echo count($data);
+    }
+    public function editattr($id){
+        $prd_attr = ProductAttribute::find($id);
+     
+        $product = $prd_attr->product_id;
+        
+        $attr_id = $prd_attr->attribute_id;
+        $avalilterms = Term::where('attribute_id','=',$attr_id)->get();
+        $terms = ProductTerm::where('product_id','=',$product)->where('attribute_id','=',$attr_id)->get();
+        return view('admin/products/editterm',['terms'=>$terms,'attr_id'=>$attr_id,'id'=>$id,'avalilterms'=>$avalilterms,'product_id'=>$product]);
+    }
+    public function updateattr(Request $request)
+    {
+        //Attribute id
+        $attr_id =  $request->input('attr_id');
+
+        //
+        $product_attribute =  $request->input('product_attribute');
+        $terms = $request->input('terms');
+        
+        $productattrs = ProductAttribute::find($product_attribute);
+        $product_id  = $productattrs->product_id;
+        $table_prdcats= ProductTerm::where('product_id','=',$product_id)->where('attribute_id','=',$attr_id)
+        ->whereNotIn('term_id',[$terms])->get();
+        echo "<pre>";
+       foreach($table_prdcats as $tableterm)
+       {
+        ProductTerm::where('id',$tableterm->id)->delete();
+       }
+       foreach($terms as $term)
+       {
+        if((int)$term){
+            ProductTerm::updateOrCreate(
+                ['product_id' => $product_id, 'attribute_id' => $attr_id, 'term_id' => $term],
+                ['product_id' => $product_id, 'attribute_id' => $attr_id, 'term_id' => $term,'created_by'=>Auth::id()],
+            );
+        }
+        else{
+            $add_term = new Term;
+            $add_term->name = $term;
+            $add_term->attribute_id =$attr_id;
+            $add_term->created_by = Auth::id();
+            $add_term->save();
+
+            $prd_terms = new ProductTerm;
+            $prd_terms->product_id = $product_id;
+            $prd_terms->attribute_id = $attr_id;
+            $prd_terms->term_id = $add_term->id;
+            
+            $prd_terms->save();
+            }
+        }
+        return redirect('admin/products/view/'.$product_id)->with('info','Product Terms updated Successfully');
+       }
+} 
+

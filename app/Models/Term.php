@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Term extends Model
 {
     use HasFactory,SoftDeletes;
+   
+    public function prdterms()
+    {
+        return $this->hasMany(ProductTerm::class, 'term_id');
+    }
 }

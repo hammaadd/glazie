@@ -8,6 +8,7 @@ use App\Models\Products;
 use App\Models\PrdVariety;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 use DB;
 class AdminController extends Controller
 {
@@ -37,6 +38,7 @@ class AdminController extends Controller
         $abc = $month-1;
         $msd = date('Y-m-d', strtotime('-'.$abc.' days'));
         $ed = date('Y-m-d');
+        //echo $msd;
         //echo $ed;
         // Getting data of installers
         $installers = User::where('type','=','installer')->count(); 
@@ -79,29 +81,30 @@ class AdminController extends Controller
         $latest_products = Products::orderBy('id', 'desc')->limit(5)->get();
 
         $product_type =   OrderDetails::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), ">=", $msd)->where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "<=", $ed)->get();
-
-        // Latest Products
-        // $latest_products = Products::where('status','=','1')->orderBy('id', 'desc')->limit(5)->get();
-        // echo "<pre>";
-        // //print_r($varities);
-
-        // $product_name = array();
-        // $varity_id = array();
-        // foreach($varities as $varity)
-        // {
-        //     array_push($product_name , $varity->prd_name);
-            
-        //     foreach($varity->products as $products){
-        //         //print_r($products->prd_order->quantity);
-        //     }    
-            
-        //}
-    
+        $prdvarieties = PrdVariety::all();
+        $quantity = 0;
+        $quantity_array = array();
+        $variety_name = array();
+        foreach ($prdvarieties as $variety) {
+            foreach($variety->products as $products){
+             
+                foreach($products->orderdetails as $order)
+                {
+                     if($order->created_at>=$msd){
+                         
+                        $quantity = $quantity +$order->quantity; 
+                     }
+                }
+            } 
+            array_push($quantity_array,$quantity);
+            array_push($variety_name,$variety->prd_name);
+            $quantity =0;
+           
+        }
         
-        // print_r($product_name);
-        // print_r($varity_id);
+    
        
-        return view('admin/index',['installers'=>$installers,'customers'=>$customers,'orders'=>$orders ,'today_sale'=>$today_sale,'monthly_sale' =>$monthly_sale,'yearly_sale'=>$yearly_sale,'latest_orders' =>$latest_orders,'latest_products'=>$latest_products,'product_type'=>$product_type,'varities'=>$varities]);
+        return view('admin/index',['installers'=>$installers,'customers'=>$customers,'orders'=>$orders ,'today_sale'=>$today_sale,'monthly_sale' =>$monthly_sale,'yearly_sale'=>$yearly_sale,'latest_orders' =>$latest_orders,'latest_products'=>$latest_products,'product_type'=>$product_type,'quantity_array'=>$quantity_array,'variety_name'=>$variety_name]);
 
     }
     public function admin_logout(Request $request)

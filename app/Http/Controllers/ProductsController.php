@@ -9,6 +9,7 @@ use App\Models\ProductAttribute;
 use App\Models\Attribute;
 use App\Models\ProductTag;
 use App\Models\Term;
+use App\Models\ProductTerm;
 use App\Models\Categories;
 use App\Models\ProductReviews;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +47,8 @@ class ProductsController extends Controller
       
         $user = Auth::user();
         $no_of_attribute = $request->input('no_of_attribute');
+        
+        
         //print_r($terms);
     
         $user = Auth::user();
@@ -104,29 +107,46 @@ class ProductsController extends Controller
             $prodgallery->save();
         }
         for($attr=1;$attr<=$no_of_attribute;$attr++)
-      {
-        $attri_id =  $request->input('attribute'.$attr);
-        $product_attribute = new ProductAttribute;
-        $product_attribute->product_id = $product_id;
-        $product_attribute->attribute_id = $attri_id;
-        $product_attribute->created_by = $user->id;
-        $product_attribute->save();
-        $attribute_id = $product_attribute->id;
-        $terms = $request->input('terms'.$attr);
-        if (isset($terms)) {
-            foreach ($terms as $key => $term) {
-            
-                if(!(int)$term){
-                $add_term = new Term;
-                $add_term->name = $term;
-                $add_term->attribute_id =$attri_id;
-                $add_term->created_by = $user->id;
-                $add_term->save();
-                
-                }
-            }
+        {
+          $attri_id =  $request->input('attribute'.$attr);
+          $product_attribute = new ProductAttribute;
+          $product_attribute->product_id = $product_id;
+          $product_attribute->attribute_id = $attri_id;
+          $product_attribute->created_by = $user->id;
+          $product_attribute->save();
+          $attribute_id = $product_attribute->id;
+          $terms = $request->input('terms'.$attr);
+          
+          if (isset($terms)) {
+              foreach ($terms as $key => $term) {
+              
+                  if(!(int)$term){
+                  $add_term = new Term;
+                  $add_term->name = $term;
+                  $add_term->attribute_id =$attri_id;
+                  $add_term->created_by = $user->id;
+                  $add_term->save();
+
+                  $prd_terms = new ProductTerm;
+                  $prd_terms->product_id = $product_id;
+                  $prd_terms->attribute_id = $attri_id;
+                  $prd_terms->term_id = $add_term->id;
+                  
+                  $prd_terms->save();
+                  }
+                 else{
+                    $prd_terms = new ProductTerm;
+                    $prd_terms->product_id = $product_id;
+                    $prd_terms->attribute_id = $attri_id;
+                    $prd_terms->term_id = $term;
+                    
+                    $prd_terms->save();
+
+                 }
+                  
+              }
+          }
         }
-      }
     
         $prodcut_categories = $request->input('category_id');
         foreach ($prodcut_categories as  $prodcut_category) {
@@ -152,24 +172,26 @@ class ProductsController extends Controller
     public function edit($id){
        abort_if(!$products = Products::find($id),403);
        $brands = Brands::all();
-       $product_cats = ProductCategory::where('product_id','=',$id)->get();
-       $attributes = Attribute::all();
-       $product_id = $products->id;
-      $product_attrs = ProductAttribute::where('product_id','=',$id)->get();
-      foreach ($product_attrs as $key => $product_attr) {
-         
-          
-      }
-      $terms = Term::where('attribute_id','=',$product_attr->attribute_id)->get();
-      
+       $varieties = PrdVariety::all();
+      $product_cats = ProductCategory::where('product_id','=',$id)->get();
+    //    $attributes = Attribute::all();
+    //    $product_id = $products->id;
+    //   $product_attrs = ProductAttribute::where('product_id','=',$id)->get();
+      $product_tag  = ProductTag::where('product_id','=',$id)->get();
        $categories = Categories::all();
-       $image_gallery = $products->gallery;
-       
-       return view('admin/products/edit',['brands'=>$brands, 'products' =>$products,'image_gallery' =>$image_gallery,'attributes'=>$attributes,'product_cats'=>$product_cats,'categories'=>$categories,'product_attr'=>$product_attr,'terms'=>$terms]);
+    //    
+    //    if (count($product_attrs)>0) {
+        
+    //     foreach ($product_attrs as $product_attr) {}
+    //     $terms = Term::where('attribute_id','=',$product_attr->attribute_id)->get();
+    //     return view('admin/products/edit',['brands'=>$brands, 'products' =>$products,'image_gallery' =>$image_gallery,'attributes'=>$attributes,'product_cats'=>$product_cats,'categories'=>$categories,'product_attr'=>$product_attr,'terms'=>$terms ,'varieties'=>$varieties]);
+    //    }
+       return view('admin/products/edit',['brands'=>$brands, 'products' =>$products,'categories'=>$categories,'varieties'=>$varieties,'product_cats'=>$product_cats,'product_tag'=>$product_tag]);
     }
     public function update($id,Request $request){
         $user = Auth::user();
-               
+         
+         
         $prodcut_categories = $request->input('category_id');
         $product_cats = ProductCategory::where('product_id','=',$id)->get();
         $table_prdcats= ProductCategory::where('product_id','=',$id)
@@ -245,32 +267,28 @@ class ProductsController extends Controller
             $prodgallery->save();
         }
     }
-    $product_attribute = array(
-        'product_id' => $id,
-        'attribute_id' => $request->input('attribute'),
-        'updated_by' => $user->id,
-    );
-    ProductAttribute::where('id',$request->input('product_attr_id'))
-        ->update($product_attribute);
+ 
+    // ProductAttribute::where('id',$request->input('product_attr_id'))
+    //     ->update($product_attribute);
 
 
-        $attribute_id = $request->input('attribute');
-        if ($request->input('terms')) {
-            $terms = $request->input('terms');
-        //print_r($terms);
+    //     $attribute_id = $request->input('attribute');
+    //     if ($request->input('terms')) {
+    //         $terms = $request->input('terms');
+    //     //print_r($terms);
         
-        foreach ($terms as $key => $term) {
+    //     foreach ($terms as $key => $term) {
             
-            if(!(int)$term){
-            $add_term = new Term;
-            $add_term->name = $term;
-            $add_term->attribute_id = $request->input('attribute');
-            $add_term->created_by = $user->id;
-            $add_term->save();
+    //         if(!(int)$term){
+    //         $add_term = new Term;
+    //         $add_term->name = $term;
+    //         $add_term->attribute_id = $request->input('attribute');
+    //         $add_term->created_by = $user->id;
+    //         $add_term->save();
             
-            }
-        }
-        }
+    //         }
+    //     }
+    //     }
                
         $prodcut_categories = $request->input('category_id');
         $product_cats = ProductCategory::where('product_id','=',$id)->get();
@@ -286,10 +304,34 @@ class ProductsController extends Controller
             ProductCategory::updateOrCreate(
                 ['product_id' => $id, 'category_id' => $product_cat],
                 ['product_id' => $id, 'category_id' => $product_cat,'created_by'=>$user->id]
-            );
-           
-           
+            );   
         }
+        
+        
+        $prdtags = $request->input('prdtags');
+        $product_tags = ProductTag::where('product_id','=',$id)->get();
+        $tableprdtags= ProductTag::where('product_id','=',$id)
+        ->whereNotIn('id',$prdtags)
+        ->get();
+        foreach ($tableprdtags as $key => $prdtag) {
+            
+            ProductTag::where('id','=',$prdtag->id)->delete();
+        }
+        foreach ($prdtags as $prodtag) {
+            if(!(int)$prodtag){
+                $add_term = new ProductTag;
+                $add_term->product_id = $id;
+                $add_term->tag_name = $prodtag;
+                $add_term->created_by = $user->id;
+                $add_term->save();
+                
+                }
+        }
+
+        
+           
+           
+        
         
          return redirect('admin/products')->with('info','The Product is updated  Successfully');
     }
@@ -300,7 +342,9 @@ class ProductsController extends Controller
     }
     public function view($id){
         abort_if(!$products = Products::find($id), 403);
-        return view('admin/products/view',['products'=>$products]);
+        $countattribute  =count(Attribute::all());
+      
+        return view('admin/products/view',['products'=>$products,'number'=>$countattribute]);
     }
     public function makeprimary(Request $request){
         $id = $request->input('id');

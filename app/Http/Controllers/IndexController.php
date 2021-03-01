@@ -26,6 +26,7 @@ use App\Models\RequestHiring;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ContentManagementSystem;
 use DB;
+use App\Models\DeliveryTime;
 use Session;
 use App\Models\Blog;
 use App\Models\SiteSetting;
@@ -159,7 +160,8 @@ class IndexController extends Controller
         $session_id = session()->getId();
         $carts = Cart::where('session_id','=',$session_id)->get();
         $countries = Countries::all();
-        return view('public/checkout',['carts'=>$carts,'countries'=>$countries]);
+        $times = DeliveryTime::all();
+        return view('public/checkout',['carts'=>$carts,'countries'=>$countries,'times'=>$times]);
     }
     public function checkoutsubmit(Request $request)
     {   
@@ -335,6 +337,7 @@ class IndexController extends Controller
         $discount = $total_amount - $net_total; 
 
         $order = new Order;
+        $order->delivery_id = $request->input('delivery_id');
         $order->customer_id =$user_id;
         $order->total_amount =$total_amount;
         $order->discount =$discount;

@@ -57,6 +57,9 @@
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#product-images">Product Images</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#product-attribute">Product Attribute</a>
+                </li>
         @php
             $i=0;
             $net_feedback = 0
@@ -285,10 +288,57 @@
                                     
                                 
                                 <div class="col-md-3 d-flex">
-                                    <img class="img-fluid" src="{{asset($productimages->image)}}" alt="">
+                                    <img class="img-fluid" src="{{asset("productimages/".$productimages->image)}}" >
                                 </div>
                                 @endforeach
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="product-attribute">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2>Product Attribute List</h2>
+                                   @if ($number>count($products->attribute))
+                                        <a href="{{url('admin/product/addattr/'.$products->id)}}" class="btn btn-success float-right btn-xs"> <i class="fa fa-plus-circle"></i> Add Product Attribute</a>
+                                   @endif
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr #</th>
+                                                <th> Attribute Name</th>
+                                                <th> Attribute Option</th>
+                                                <th> Action</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+                                            
+                                            @foreach ($products->attribute as $attribute)
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$attribute->attribute->attribute_name}}</td>
+                                                <td>
+                                                    @foreach ($products->terms as $terms)
+                                                        @if($terms->attribute_id==$attribute->attribute->id)
+                                                            <span class="badge badge-pill  badge-{{$terms->term->name}}"> {{$terms->term->name}}</span>
+                                                        @endif  
+                                                    @endforeach
+                                                </td>
+                                                <td>
+                                                     <a href="{{url('admin/editprdattribute/'.$attribute->id)}}" class="btn btn-info btn-xs" ><i class="fa fa-edit"></i> Edit</a>
+                                                    <a href="{{url('admin/removeprdattribute/'.$attribute->id)}}" class="btn btn-danger btn-xs" ><i class="fa fa-times"></i> Remove</a> 
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -309,15 +359,15 @@
                                             </tr>
                                         </thead>
                                     @foreach ($products->feedback as $feedback)
-                                        @if ($feedback->status=="1")
+                                        
                                             <tr>
                                                 <td>{{$feedback->name}}</td>
                                                 <td>{{$feedback->email}}</td>
                                                 <td>{{$feedback->rating}}</td>
                                                 <td>{{$feedback->reviews}}</td>
-                                                <td><a href="{{url('admin/deletefeedback/'.$feedback->id)}}" class="btn btn-xs btn-success" onclick="return confirm('Are you sure ')">Delete</a></td>
+                                                <td><a href="{{url('admin/deletefeedback/'.$feedback->id)}}" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure ')">Delete</a></td>
                                             </tr>
-                                        @endif
+                                     
                                     @endforeach
                                 </table>
                                 </div>

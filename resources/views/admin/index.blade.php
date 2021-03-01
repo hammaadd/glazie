@@ -129,6 +129,9 @@
          <div class="col-md-12">
              
             <script>
+                var quantiy = <?php echo json_encode($quantity_array,JSON_PRETTY_PRINT)?>;
+                var name =  <?php echo json_encode($variety_name,JSON_PRETTY_PRINT)?>;
+                
                 window.onload = function () {
                 
                 var chart = new CanvasJS.Chart("chartContainer", {
@@ -146,7 +149,12 @@
                         legendMarkerColor: "grey",
                         legendText: "",
                         dataPoints: [      
-                            { y: 5, label: "Door" },
+                             
+                                 {y:10, label:"abc"}
+                                    
+                                    
+                            
+                            
                             
                             
                            

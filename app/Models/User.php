@@ -42,14 +42,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function comments()
-    {
-        return $this->hasMany(Order::class);
-    }
-    public function installerinfo()
-    {
-        return $this->hasMany(InstallInfo::class,'installer_id','id');
-    }
+    
+   
     public function companies()
     {
         return $this->hasOne(InstallerCompany::class,'installer_id','id');
@@ -62,8 +56,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class,'customer_id','id');
     }
-  
-   
 
     
 
