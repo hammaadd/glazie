@@ -37,6 +37,7 @@ use Illuminate\Http\Request;
 use App\Models\InstallQuote;
 use App\Mail\InstallerQuote;
 use Mail;
+use App\Models\WeightSlot;
 use App\Notifications\SendPassword;
 
 class IndexController extends Controller
@@ -124,7 +125,8 @@ class IndexController extends Controller
     public function productcart(){
         $session_id = session()->getId();
         $carts = Cart::where('session_id','=',$session_id)->get();
-        return view('public/productcart',['carts'=>$carts]);
+        $times = DeliveryTime::all();
+        return view('public/productcart',['carts'=>$carts,'times'=>$times]);
     }
     public function removecartproduct(Request $request)
     {
@@ -134,7 +136,13 @@ class IndexController extends Controller
             Cart::where('id',$id)->delete();
         $session_id = session()->getId();
         $carts = Cart::where('session_id','=',$session_id)->get();
-        return view('public/updatecart',['carts'=>$carts]);
+        $times = DeliveryTime::all();
+        return view('public/updatecart',['carts'=>$carts,'times'=>$times]);
+    }
+    public function checkservice(Request $request)
+    {
+        $i = $request->input('i');
+        $request->session()->put('service',$i);
     }
     public function updatecartproduct(Request $request)
     {
@@ -156,16 +164,47 @@ class IndexController extends Controller
         $obj = (object) array($price,$quantity,$regular_price);
 		echo json_encode($obj);
     }
-    public function checkout(){
+    public function clearcart(Request $request)
+    {
+        $request->session()->regenerate();
+        return redirect('/availproducts')->with('info','Your Cart is empty');
+    }
+    public function checkout(Request $request){
         $session_id = session()->getId();
         $carts = Cart::where('session_id','=',$session_id)->get();
         $countries = Countries::all();
-        $times = DeliveryTime::all();
-        return view('public/checkout',['carts'=>$carts,'countries'=>$countries,'times'=>$times]);
+        $shipprice = 0;
+        $service = Session::get('service');
+        
+        
+      
+        $servicedata = DeliveryTime::find($service);
+       // print_r($servicedata);
+        
+        $coupenid =  Session::get('coupunid');
+       
+       
+       foreach($carts as $cart)
+       {
+        $weight = $cart->product->weight;
+        $prices = WeightSlot::where('min_weight','<=',$weight)->where('max_weight','>=',$weight)->get();
+        foreach($prices as $price)
+        {
+           $weight_price =  $price->price; 
+        }
+        $totalprice = $weight_price*$cart->quantity;
+        $shipprice+=$totalprice;
+        $totalprice=0;
+       }
+       $request->session()->put('shipprice',$shipprice);
+       $request->session()->put('servicedata',$servicedata);
+       
+        $coupendata = Coupen::find($coupenid);
+        return view('public/checkout',['carts'=>$carts,'countries'=>$countries,'coupendata'=>$coupendata,'service'=>$servicedata,'shipprice'=>$shipprice]);
     }
     public function checkoutsubmit(Request $request)
     {   
-   
+        
         $user = Auth::user();
         $first_name = $request->input('first_name');
         $last_name = $request->input('last_name');
@@ -308,40 +347,44 @@ class IndexController extends Controller
         $session_id = session()->getId();
         $carts = Cart::where('session_id','=',$session_id)->get();
         foreach ($carts as $key => $cart) {
-            $total_amount += $cart->quantity*$cart->product->regular_price;
-            $net_total += $cart->quantity*$cart->product->sale_price;
+            
+            $total_amount += $cart->quantity*$cart->product->sale_price;
         }
         $coupenid =  Session::get('coupunid');
+        
+      Session::get('servicedata');
+        Session::get('shipprice');
        
+        
+       if (isset($coupenid)) {
         $coupendata = Coupen::find($coupenid);
-        
-       if (isset($coupendata)) {
-        
          if ($coupendata->discount_type=="amount") {
-             $net_total =  $net_total-$coupendata->discount;
+             $discount =  $coupendata->discount;
          }
          else{
-             $net_total = $net_total-$net_total*$coupendata->discount/100;
+             $discount = $total_amount*$coupendata->discount/100;
          }
          if ($coupendata->limiteduser=='yes') {
              $updatecoupen = array(
                  'no_of_user'=>$coupendata->no_of_user-1
              );
+             Coupen::where('id',$coupenid)->update($updatecoupen);
          }
-        Coupen::where('id',$coupenid)->update($updatecoupen);
+        
         
        }
       
        
         
-        $discount = $total_amount - $net_total; 
-
+        
+        
         $order = new Order;
-        $order->delivery_id = $request->input('delivery_id');
+        $order->delivery_id = 1;
         $order->customer_id =$user_id;
         $order->total_amount =$total_amount;
+        $order->shipp_cost = Session::get('shipprice')+Session::get('servicedata')->price;
         $order->discount =$discount;
-        $order->net_total =$net_total;
+        $order->net_total =$total_amount+Session::get('shipprice')+Session::get('servicedata')->price-$discount;
         $order->status = 'pending';        
         $order->created_by = $user_id;
         $order->save();
@@ -374,6 +417,9 @@ class IndexController extends Controller
 
     $request->session()->regenerate();
     $request->session()->put('coupunid',null);
+    $request->session()->put('shipprice',null);
+    $request->session()->put('servicedata',null);
+   
     return redirect('/')->with('info','Order Is created successfull Soon You Recived Email  ');
     
     }
@@ -621,4 +667,5 @@ class IndexController extends Controller
         }
         return view('public/blogdetails',['blog'=>$blog]);
     }
+    
 }

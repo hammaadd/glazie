@@ -1,26 +1,22 @@
 @if (count($carts))
-<div class="row">
-    <div class="col-md-6">
-        <h3>Product Carts</h3>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="table-responsive">
-            <table class="table table-hover" id="table">
-                <thead>
-                    <tr>
-                      
-                        <th>Prodcut Name</th>
-                        <th>Product Image</th>
-                        <th>Quantity</th>
-                        <th>Product Price</th>
-                        <th>Discount</th>
-                        <th>Price</th>
-                        <th>Remove</th>
-                    </tr>
-                </thead>
-                @php
+    
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+        
+                <div class="table-content table-responsive cart-table-content" id="tabledata">
+                    <table class="table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Unit Price</th>
+                                <th>Qty</th>
+                                <th>Subtotal</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
                     $quantity =$price = $net_discount = $net_regular_price= 0;
                 @endphp
                 @foreach ($carts as $cart)
@@ -42,67 +38,121 @@
                         $price += $cart->price*$cart->quantity;
                         $net_regular_price += $cart->regular_price*$cart->quantity;
                     @endphp
-                    <tr>
-                        <td>{{$products->product_name}}</td>
-                        <td>
-                            <input type="hidden" id="regular_price{{$cart->id}}" value="{{$products->regular_price}}">
+                            <tr>
+                                <td class="product-thumbnail cart-list">
+                                    <input type="hidden" id="regular_price{{$cart->id}}" value="{{$products->regular_price}}">
                             <input type="hidden" id="itemquantity{{$cart->id}}" value="{{$cart->price}}">
-                            <a href="{{asset($image)}}"><img src="{{asset($image)}}" width="70px" height="70px"></a>
-                        </td>
-                        <td><input type="number" value="{{$cart->quantity}}" class="text-center" min="1" max="{{$products->quantity}}" oninput="update_qty({{$cart->id}})" id="no_of_qty{{$cart->id}}"></td>
-                           <td id="regular_prices{{$cart->id}}">{{$cart->quantity*$products->regular_price}}</td>
-                           @php
+                                    <a href="#"><img src="{{asset('productimages/'.$image)}}" alt=""></a>
+                                </td>
+                                <td class="product-name text-center"><a href="#">{{$products->product_name}}</a></td>
+                                <td class="product-price-cart"><span class="amount">&#163;{{$cart->price}}</span></td>
+                                <td class="product-quantity">
+                                    <div class="cart-plus-minus">
+                                        <div class="dec qtybutton" onclick="removeqty({{$cart->id}})">-</div>
+                                        <input class="cart-plus-minus-box" type="text" name="qtybutton" value="{{$cart->quantity}}"  oninput="update_qty({{$cart->id}})" id="no_of_qty{{$cart->id}}">
+                                        <div class="inc qtybutton" onclick="addqty({{$cart->id}})">+</div>
+                                    </div>
+                                </td>
+                                <td class="product-subtotal" id="item_total_price{{$cart->id}}" >&#163; {{$cart->price*$cart->quantity}}</td>
+                                <td class="product-remove">
+                                    {{-- <a href="#"><i class="fa fa-pencil"></i></a> --}}
+                                    <a style="cursor: pointer;" onclick="remove({{$cart->id}})"><i class="fa fa-times"></i></a>
+                               </td>
+                            </tr>
+                           @endforeach
                            
-                               $discount = $cart->quantity*$products->regular_price-$cart->quantity*$products->sale_price;
-                               $net_discount = $net_discount +$discount;
-                           @endphp
-                           <td id="discounts{{$cart->id}}">{{$discount}}</td> 
-                        <td id="item_total_price{{$cart->id}}">{{$cart->price*$cart->quantity}}</td>
-                        <td > <span class="badge badge-secondary m-3" onclick="remove({{$cart->id}})"><i class="fa fa-times" title="Remove this product from Cart" ></i></span></td></td>
-                    </tr>
-                @endforeach
-            </table>
-            <input type="hidden" id="quantity" value="<?= $quantity ?>">
-            
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="cart-shiping-update-wrapper">
+                            <div class="cart-shiping-update">
+                                <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0" href="{{url('availproducts')}}">Continue Shopping</a>
+                            </div>
+                            <div class="cart-clear">
+                                {{-- <button class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 mx-3">Update Shopping Cart</button> --}}
+                                <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0" href="{{url('clearcart')}}" >Clear Shopping Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="discount-code-wrapper">
+                        <div class="title-wrap">
+                           <h4 class="cart-bottom-title section-bg-gray">Use Coupon Code</h4> 
+                        </div>
+                        <div class="discount-code">
+                            <p>Enter your coupon code if you have one.</p>
+                            
+                                <input type="text" required="" name="name" id="coupen" class="form-control">
+                                
+                                <span class="text-success text-center mb-2" style="display: none" id="discountmessage"></span>
+                                <span class="text-danger text-center mb-2" style="display: none" id="coupenmessage"></span> <br>
+                                <button class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 float-end" onclick="checkcoupen()" type="button">Apply Coupon</button>
+                            
+                        </div>
+                    </div>
+                    <input type="hidden" id="net_total" value="{{$price}}">
+                </div>
+                {{-- <div class="col-lg-4 col-md-6">
+                    <div class="cart-tax">
+                        <div class="title-wrap">
+                            <h4 class="cart-bottom-title section-bg-gray">Estimate Shipping And Tax</h4>
+                        </div>
+                        
+                        <div class="tax-wrapper">
+                            <p>Enter your destination to get a shipping estimate.</p>
+                            <div class="tax-select-wrapper">
+                                <div class="tax-select">
+                                    <label>
+                                        * Region / State
+                                    </label>
+                                    <input type="text">
+                                </div>
+                                <div class="tax-select">
+                                    <label>
+                                        * Zip/Postal Code
+                                    </label>
+                                    <input type="text">
+                                </div>
+                                <button class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 float-end" type="submit">Get A Quote</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+                
+                <div class="col-lg-6 col-md-12">
+                    <div class="grand-totall">
+                        <div class="title-wrap">
+                            <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
+                        </div>
+                        <h5>Total products <span id="total_price">&#163;{{$price}}</span></h5>
+                        <h5 style="display: none" id="disrow" >Discount <span  id="discount"></span></h5>
+                        <div class="total-shipping">
+                            <h5>Total shipping</h5>
+                            <ul>
+                                @foreach ($times as $time)
+                                <li><input type="radio" name="delivery_id" @if ($time->price==0)
+                                    checked
+                                @endif onclick="checkprice({{$time->id}},{{$time->price}})"> {{$time->name}} <span>&#163;{{$time->price}}</span></li>
+                                @if($time->price==0)
+                                <input type="hidden" id="checkprice" value="{{$time->id}}">
+                                <input type="hidden" id="pricevalue" value="{{$time->price}}">
+                                @endif
+                                @endforeach
+                            </ul>
+                        </div>
+                        <h4 class="grand-totall-title" >Grand Total  <span id="grand_total">&#163;{{$price}}</span></h4>
+                        <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 float-end w-100" href="{{url('checkout')}}">Proceed to Checkout</a>
+                    </div>
+                </div>
+                <input type="hidden" id="paidamount" value="{{$price}}">
+            </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-9"></div>
-    <div class="col-md-3">
-        <table class="table">
-            <tr>
-                <th><b>Quantity:</b></th>
-                <td id="total_qty"><?= $quantity ?></td>
-            </tr>
-
-            <tr>
-                <th>Total Amount</th>
-                <td id="net_regular_price">{{$net_regular_price}}</td>
-            </tr>
-            
-            <tr>
-                <th>Discount</th>
-                <td id="net_discounts">{{$net_discount}}</td>
-            </tr>
-            
-            <tr>
-                <th><b>Price:</b></th>
-                <td id="total_price"><?= $price ?></td>
-            </tr>
-        </table>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-        <a class="btn btn-success" href="{{url('checkout')}}"> <i class="fa fa-check"></i> CheckOut</a>
-    </div>
-</div>
-@else
-    <div class="row">
-        <div class="col-md-8">
-            <h3>Your Cart is empty <u> <a href="{{url('/')}}" class="btn btn-light"><i class="fa fa-backward"></i> Go Back </a></u></h3>
-        </div>
-    </div>
-@endif
+    @else 
+    <h3 class="mb-3">Your Cart is empty <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 " href="{{url('availproducts')}}"><i class="fa fa-backward"></i> Go Back </a></h3>
+    @endif

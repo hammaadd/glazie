@@ -225,6 +225,14 @@ Route::prefix('admin')->group(function () {
     Route::get('editframe/{id}','AddonController@editframe');
     Route::post('updateframe/{id}','AddonController@updateframe');
 
+    // weight slotes
+    Route::get('weights','WeightController@index');
+    Route::get('weights/create','WeightController@create');
+    Route::post('weights/store','WeightController@store');
+    Route::get('weights/edit/{id}','WeightController@edit');
+    Route::post('weights/update/{id}','WeightController@update');
+    Route::get('weights/delete/{id}','WeightController@delete');
+
     // Frame Colors
     Route::get('framecolors/{id}','AddonController@framecolors');
     Route::get('framecolor/create/{id}','AddonController@addframecolor');
@@ -350,6 +358,8 @@ Route::post('updatecartproduct','IndexController@updatecartproduct');
 Route::get('checkout','IndexController@checkout');
 Route::get('checkout','IndexController@checkout');
 Route::post('checkoutsubmit','IndexController@checkoutsubmit');
+Route::get('clearcart','IndexController@clearcart');
+Route::post('checkservice','IndexController@checkservice');
 
 Route::get('installerlist','IndexController@installerlist');
 Route::get('installerdetails/{id}','IndexController@installerdetails');
