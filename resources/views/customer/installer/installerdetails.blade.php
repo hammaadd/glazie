@@ -36,7 +36,7 @@
                             <h5>{{$installer->address}}</h5>
                         </div>
                     </div>
-                    @if (count($installer->installerinfo)>0)
+                    @if ($installer->installerinfo)
                         <div class="row">
                             <div class="col-md-12">
                                 <table class="table table-hover">

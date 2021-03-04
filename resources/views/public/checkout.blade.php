@@ -11,7 +11,6 @@
 	<link rel="stylesheet" href="{{asset('assets2/css/style.css')}}">
 	<script src="https://kit.fontawesome.com/94dd3c1954.js" crossorigin="anonymous"></script>
     <div class="main_content">
-
         <div class="checkout-area py-5">
             <div class="container">
                 <form action="{{url('checkoutsubmit')}}" method="post" id="chekcoutform">
@@ -204,9 +203,18 @@
                                                 <div class="panel payment-accordion">
                                                     <div class="panel-heading" id="method-one">
                                                         <h4 class="panel-title">
-                                                            <a data-toggle="collapse" data-parent="#accordion" href="#method1">
-                                                                Cash On Delivery
-                                                            </a>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="radioPayment" id="radioCOD" checked>
+                                                                <label class="form-check-label" for="radioCOD">
+                                                                  Cash On Delivery
+                                                                </label>
+                                                              </div>
+                                                              <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="radioPayment" id="radioCard" >
+                                                                <label class="form-check-label" for="radioCard">
+                                                                 Pay using Credit Card
+                                                                </label>
+                                                              </div>                                          
                                                         </h4>
                                                     </div>
                                                     <div id="method1" class="panel-collapse collapse show">
@@ -349,7 +357,12 @@
         },
         shippost_code: {
             required:true
+        },
+        radioPayment:{
+            required:true
         }
+      
+
 
     }
 });

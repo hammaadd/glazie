@@ -43,7 +43,7 @@
                         @foreach ($requesthires as $request)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{$request->customer->name}}</td>
+                                <td>{{$request->name}}</td>
                                 <td>{{$request->amount}}</td>
                                 <td>{{$request->estimated_time}}</td>
                                 <td> {{$request->installer->name}} </td>

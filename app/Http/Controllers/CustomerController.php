@@ -313,5 +313,8 @@ class CustomerController extends Controller
         $newcomment->save();
         return redirect('customer/blog/posts')->with('info','Comment post successfully');
     }
+    // Submitting the Hire request Feedback 
+    public function hirefeedback(Request $request)
+    {}
 
 }

@@ -11,9 +11,14 @@ class RequestHiring extends Model
 
 
     public function customer(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,"customer_id");
     }
     public function installer(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class ,"installer_id");
+    }
+
+    public function testmonial()
+    {
+        return $this->hasOne(Testmonial::class, 'rh_id');
     }
 }

@@ -25,10 +25,9 @@
                                 <h2 class="m-b-0">{{$installers}}</h2>
                                 <p class="m-b-0 text-muted">Installers</p>
                                @foreach ($product_type as $products)
-                                   {{-- @php
-                                        array_push($product_name,$products->product->varities->prd_name);
-                                   
-                                   @endphp --}}
+                                    @php
+                                      //  array_push($product_name,$products->product->varities->prd_name);
+                                    @endphp
                                @endforeach
                                @php
                                     //print_r($product_name);

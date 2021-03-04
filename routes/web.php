@@ -273,7 +273,14 @@ Route::prefix('admin')->group(function () {
     Route::get('requesthiring','RequestHiringController@index');
     Route::post('hirestatus','RequestHiringController@change_hirestatus');
     Route::get('hiringdetails/{id}','RequestHiringController@hiringdetails');
-
+    // Sliders Routes 
+    Route::get('sliders','SliderController@index');
+    Route::get('sliders/create','SliderController@create');
+    Route::post('sliders/store','SliderController@store');
+    Route::get('sliders/edit/{id}','SliderController@edit');
+    Route::post('sliders/update/{id}','SliderController@update');
+    Route::get('sliders/delete/{id}','SliderController@delete');
+    
 
     // Installers Route
     
@@ -292,6 +299,12 @@ Route::prefix('admin')->group(function () {
     Route::get('installerpassword/{id}','InstallerController@installerpassword');
     Route::post('chngeinstallerpwd/{id}','InstallerController@changepassword');
 
+    // Test monial 
+    Route::get('addtestmonial/{id}','InstallerController@addtestmonial');
+    Route::post('storetestmonial','InstallerController@storetestmonial');
+    Route::get('edittestmonial/{id}','InstallerController@edittestmonial');
+    Route::post('updatetestmonial/{id}','InstallerController@updatetestmonial');
+    Route::get('deletetestmonial/{id}','InstallerController@deletetestmonial');
     // NewsLetter And SubScription
 
 Route::get('subscription','SubscriptionController@index');
@@ -402,10 +415,12 @@ Route::prefix('customer')->group(function () {
     Route::get('verify','CustomerController@verify');
     Route::post('confirmcode','CustomerController@checkcode');
     Route::get('customerlogout','CustomerController@logout');
-
+    
     Route::get('blog/posts','CustomerController@blogpost');
     Route::get('blogs/details/{id}','CustomerController@blogdetails');
     Route::post('checklike','CustomerController@checklike');
     Route::post('comment','CustomerController@comment');
+    // Hire Reequest feedback 
+    Route::post('hirefeedback','CustomerController@hirefeedback');
    
 });

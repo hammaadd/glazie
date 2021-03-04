@@ -26,6 +26,7 @@ use App\Models\RequestHiring;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ContentManagementSystem;
 use DB;
+use App\Models\Slider;
 use App\Models\DeliveryTime;
 use Session;
 use App\Models\Blog;
@@ -39,15 +40,15 @@ use App\Mail\InstallerQuote;
 use Mail;
 use App\Models\WeightSlot;
 use App\Notifications\SendPassword;
-
+use App\Mail\HiringRequests;
 class IndexController extends Controller
 {
     public function index(){
         $brands = Brands::all();
         $categories = Categories::all();
-       
+        $sliders = Slider::all();
      
-        return view('public/index',['brands'=>$brands,'categories'=>$categories]);
+        return view('public/index',['brands'=>$brands,'categories'=>$categories,'sliders'=>$sliders]);
     }
     public function availproducts(){
         $products = Products::all();
@@ -439,7 +440,7 @@ class IndexController extends Controller
         $validatedData = $request->validate([
            'first_name'=>'required',
            'last_name'=>'required',
-           'email'=>['required', 'unique:users', 'max:255'],
+           'email'=>'required', 
            'estimated_time'=>'required',
            'amount' =>'required',
            'contact_no'=>'required',
@@ -450,24 +451,22 @@ class IndexController extends Controller
         
    
         
-        $user = new User;
-        $user->first_name = $request->input('first_name');
-        $user->last_name =  $request->input('last_name');
-        $user->email = $request->input('email');
-        $user->password = Hash::make('admin123');
-        $user->address = $request->input('address');
-        $user->contact_no = $request->input('contact_no');
-        $user->name = $request->input('first_name')."".$request->input('last_name');
-        
-        $user->type="customer";
-        $user->save();
-    
         $requesthiring = new RequestHiring;
+        
+        $requesthiring->email = $request->input('email');
+        $requesthiring->postcode = $request->input('postcode');
+        $requesthiring->address = $request->input('address');
+        $requesthiring->contact_no = $request->input('contact_no');
+        $requesthiring->name = $request->input('first_name')." ".$request->input('last_name');
+        
+       
+    
+        
         $requesthiring->working_details = $request->input('working_details');
         $requesthiring->installer_id = $request->input('installer_id');
         $requesthiring->amount = $request->input('amount');
         $requesthiring->estimated_time = $request->input('estimated_time');
-        $requesthiring->customer_id = $user->id;
+       
         $requesthiring->save();
 
         $notify =new Notification;
@@ -476,7 +475,18 @@ class IndexController extends Controller
         $notify->type = "Subscription";
         $notify->link = "admin/requesthiring";
         $notify->save();
-        
+        $installer_mail = User::find($requesthiring->installer_id)->email;
+      
+       
+        $details = array(
+            'name' =>$requesthiring->name,
+            'email'=>$request->input('email'),
+            'amount'=>$request->input('amount'),
+            'estimated_time'=>$request->input('estimated_time'),
+            'address'=>$request->input('address'),
+            'workingdetails'=>$request->input('working_details')
+        );
+        Mail::to($installer_mail)->send(new HiringRequests($details));
         return redirect('installerlist')->with('info','Your Request is created Soon you recieve mail Soon');
     }
     public function get_installer(Request $request)

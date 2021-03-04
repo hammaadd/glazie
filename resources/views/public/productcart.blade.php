@@ -63,7 +63,7 @@
                                 <td class="product-quantity">
                                     <div class="cart-plus-minus">
                                         <div class="dec qtybutton" onclick="removeqty({{$cart->id}})">-</div>
-                                        <input class="cart-plus-minus-box" type="text" name="qtybutton" value="{{$cart->quantity}}"  oninput="update_qty({{$cart->id}})" id="no_of_qty{{$cart->id}}">
+                                        <input class="cart-plus-minus-box" type="text" name="qtybutton" value="{{$cart->quantity}}"  oninput="update_qty({{$cart->id}})" id="no_of_qty{{$cart->id}}" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)">
                                         <div class="inc qtybutton" onclick="addqty({{$cart->id}})">+</div>
                                     </div>
                                 </td>
@@ -157,6 +157,7 @@
                                 <input type="hidden" id="pricevalue" value="{{$time->price}}">
                                 @endif
                                 @endforeach
+                                <input type="hidden" id="discountt" value="0">
                             </ul>
                         </div>
                         <h4 class="grand-totall-title" >Grand Total  <span id="grand_total">&#163;{{$price}}</span></h4>
@@ -285,20 +286,22 @@
                console.log(result);
             if(result=='invalid Copun'){
                 $('#coupenmessage').html("Invalid Coupen");
+                $('#grand_total').html("&#163;"+$("#net_total").val());
                 $('#coupenmessage').show();
                 $('#discountmessage').hide();
                 $('#paidrow').hide();
                 $('#disrow').hide();
+                $('#discountt').val(0)
             }
             else if(result=="limit Cros"){
-                $('#coupenmessage').html('The Limited user ');
+                $('#coupenmessage').html('The Token is expired');
                 $('#coupenmessage').show();
                 $('#discountmessage').hide();
                 $('#paidrow').hide();
                 $('#disrow').hide();
             }
             else if(result=="date expire"){
-                $('#coupenmessage').html('Expire Coupen');
+                $('#coupenmessage').html('The Token is expired');
                 $('#coupenmessage').show();
                 $('#discountmessage').hide();
                 $('#paidrow').hide();
@@ -315,6 +318,7 @@
                     paidamount = net_total-res[0];
                     $('#paidrow').show();
                     $('#discount').html("&#163;"+res[0]);
+                    $('#discountt').val(res[0]);
                     $('#disrow').show();
                     $('#grand_total').html("&#163;"+paidamount);
                     $('#paidamount').val(paidamount);
@@ -329,6 +333,11 @@
                     var net_total = $('#net_total').val();
                     net_total = parseInt(net_total);
                     paidamount = net_total-net_total*res[0]/100;
+                    discount = net_total*res[0]/100;
+                    
+                    $('#disrow').show();
+                    $('#discount').html("&#163;"+discount);
+                    $('#discountt').val(discount);
                     $('#paidrow').show();
                     $('#grand_total').html("&#163;"+paidamount);
 
@@ -351,7 +360,7 @@ function checkprice(i,j)
                i:i
            },
            success:function(result){ 
-             var grand =  parseInt($('#paidamount').val())+ parseInt(j); 
+             var grand =  parseInt($('#paidamount').val())+ parseInt(j)-$('#discountt').val(); 
              console.log($('#paidamount').val());
              $('#grand_total').html("&#163;"+grand);
            }
@@ -368,8 +377,9 @@ $(document).ready(function(){
                i:i
            },
            success:function(result){ 
-             var grand =  parseInt($('#paidamount').val())+ parseInt(j); 
-             console.log($('#paidamount').val());
+             var grand =  parseInt($('#paidamount').val()) +  parseInt(j); 
+                 
+             
              $('#grand_total').html("&#163;"+grand);
            }
     });

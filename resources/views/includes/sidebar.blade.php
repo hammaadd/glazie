@@ -56,9 +56,7 @@
                                 {{-- <li @if ($url=="admin/attributes") class="active" @endif>
                                     <a href="{{url('admin/attributes')}}">Attributes</a>
                                 </li> --}}
-                                <li @if ($url=="admin/addon") class="active" @endif>
-                                    <a href="{{url('admin/addon')}}">AddOns</a>
-                                </li>
+                              
                                  {{-- <li>
                                     <a href="{{ url('admin/productattribute') }}">Product Attribute</a>
                                 </li> --}}
@@ -100,6 +98,9 @@
                             <ul class="dropdown-menu">
                                 <li @if ($url=="admin/orders/list") class="active" @endif>
                                     <a href="{{url('admin/orders')}}">Orders </a>
+                                </li>
+                                <li @if ($url=="admin/weights") class="active" @endif>
+                                    <a href="{{url('admin/weights')}}">Weight Slot </a>
                                 </li>
                                 {{-- <li @if ($url=="admin/orderdetails") class="active" @endif>
                                     <a href="{{url('admin/orderdetails')}}">Order Details </a>
