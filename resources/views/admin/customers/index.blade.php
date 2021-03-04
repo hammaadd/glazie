@@ -66,7 +66,7 @@
 
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td>{{$customer->name}}</td>
+                            <td>{{$customer->first_name}} {{$customer->last_name}}</td>
                             <td>{{$customer->email}}</td>
                             
                             <td>{{$customer->contact_no}}</td>

@@ -56,12 +56,12 @@ class WeightController extends Controller
         );
         $weights = WeightSlot::where('id',$id)->update($update_weight);
 
-        return redirect('admin/weights')->with('info','Weight created successfully');
+        return redirect('admin/weights')->with('info','Weight Updated successfully');
     }
     public function delete($id)
     {
        $weights = WeightSlot::where('id',$id)->delete();
-        return redirect('admin/weights')->with('info','Weight created successfully');
+        return redirect('admin/weights')->with('info','Weight Deleted successfully');
     }
 
 }

@@ -37,7 +37,7 @@
                                            <th>Sr #</th>
                                            <th>Name </th>
                                            <th>Message</th>
-                                           <th>Read UnRead</th>
+                                           
                                            <th>Action</th>
                                        </tr>
                                    </thead>
@@ -47,11 +47,7 @@
                                                <td>{{$loop->iteration}}</td>
                                                <td>{{$notification->name}}</td>
                                                <td>{{$notification->message}}</td>
-                                               <td> @if ($notification->status=='read')
-                                                <span class="badge badge-pill badge-green">Read</span>
-                                             @else
-                                             <span class="badge badge-pill badge-red">Un Read</span>  
-                                            @endif</td>
+                                               
                                                <td>
                                                     <a href="{{url('admin/readnotify/'.$notification->id)}}" class="btn btn-info btn-xs" title="Read"> <i class="fa fa-book"></i></a>
                                                    <a href="{{url('admin/deletenotify/'.$notification->id)}}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to remove')" title="Delete"> <i class="anticon anticon-delete" ></i> </a>

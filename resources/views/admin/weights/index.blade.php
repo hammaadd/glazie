@@ -65,7 +65,7 @@
                             <td>{{$weight->price}}</td>
                             <td>
                                 <a href="{{url('admin/weights/edit/'.$weight->id)}}" class="btn btn-info btn-xs"> <i class="fa fa-edit"></i> Edit</a>
-                                <a href="{{url('admin/weights/delete/'.$weight->id)}}" class="btn btn-danger btn-xs"> <i class="fa fa-trash"></i> Delete</a>
+                                <a href="{{url('admin/weights/delete/'.$weight->id)}}" class="btn btn-danger btn-xs" onclick="return confirm('Are you Sure')"> <i class="fa fa-trash"></i> Delete</a>
                             </td>
                         </tr>
                       

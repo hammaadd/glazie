@@ -25,8 +25,8 @@
                         <div class="col-md-7">
                             <div class="d-md-flex align-items-center">
                                 <div class="text-center text-sm-left ">
-                                    <div class="avatar avatar-image" style="width: 150px; height:150px">
-                                        <img src="{{asset('customersprofile/'.$user->avatar)}}" alt="">
+                                    <div class="" style="width: 150px; height:150px">
+                                        {{-- <img src="{{asset('customersprofile/'.$user->avatar)}}" alt=""> --}}
                                         
                                     </div>
                                 </div>
@@ -34,7 +34,7 @@
                                     <h2 class="m-b-5">{{$user->name}}</h2>
                                     <p class="text-opacity font-size-13"></p>
                                     <p class="text-dark m-b-20"></p>
-                                    <button class="btn btn-primary btn-tone">Contact</button>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -65,20 +65,7 @@
                                             <p class="col font-weight-semibold">{{$user->address}}</p>
                                         </li>
                                     </ul>
-                                    <div class="d-flex font-size-22 m-t-15">
-                                        <a href="" class="text-gray p-r-20">
-                                            <i class="anticon anticon-facebook"></i>
-                                        </a>        
-                                        <a href="" class="text-gray p-r-20">    
-                                            <i class="anticon anticon-twitter"></i>
-                                        </a>
-                                        <a href="" class="text-gray p-r-20">
-                                            <i class="anticon anticon-behance"></i>
-                                        </a> 
-                                        <a href="" class="text-gray p-r-20">   
-                                            <i class="anticon anticon-dribbble"></i>
-                                        </a>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

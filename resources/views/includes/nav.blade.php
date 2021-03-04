@@ -11,7 +11,7 @@
                 <div class="logo logo-dark">
                     <a href="#" class="ml-3">
                         <img src="{{ asset('admin-assets/images/logo/logo.png')}}" alt="Logo">
-                        <img class="logo-fold" src="{{asset('admin-assets/images/logo/foldlogo.png')}}"  alt="Logo">
+                        <img class="logo-fold" src="{{asset('admin-assets/images/logo/foldlogo.PNG')}}"  alt="Logo">
                     </a>
                 </div>
                 <div class="logo logo-white">

@@ -49,7 +49,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="" >Contact No</label>
-                                <input type="text" class="form-control" name="contact_no" placeholder="Contact No " value="{{old('contact_no')}}">
+                                <input type="number" class="form-control" name="contact_no" placeholder="Contact No " value="{{old('contact_no')}}">
                             </div>
                             <div class="col-md-6">
                                 <label for="" >Email Address</label>
