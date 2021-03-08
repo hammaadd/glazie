@@ -5,7 +5,8 @@ use App\Models\User;
 use App\Models\Order;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-
+use Session;
+use App\Rules\NewMatchOldUser;
 class AdmincustomerController extends Controller
 {
     public function __construct()
@@ -13,7 +14,7 @@ class AdmincustomerController extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        $customers = User::where('type','=','customer')->get();
+        $customers = User::where('type','=','customer')->orderBy('id','DESC')->get();
         return view('admin/customers/index',['customers'=>$customers]);
     }
     public function add(){
@@ -22,8 +23,8 @@ class AdmincustomerController extends Controller
     public function create(Request $request)
     {
         $validatedData = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'first_name' => 'required|alpha',
+            'last_name' => 'required|alpha',
             'email' => 'required',
             'password' => 'required',
             'contact_no' => 'required',
@@ -65,8 +66,8 @@ class AdmincustomerController extends Controller
     public function update($id,Request $request)
     {
         $validatedData = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'first_name' => 'required|alpha',
+            'last_name' => 'required|alpha',
             'email' => 'required',
             'contact_no' => 'required',
             'login_status' =>'required',
@@ -130,5 +131,23 @@ class AdmincustomerController extends Controller
     public function orderdetails($id){
         abort_if(! $order = Order::find($id),403);    
         return view('admin/customers/orderdetails',['order'=>$order]);
+    }
+    public function changecustomerpwd($id,Request $request)
+    {
+        $request->session()->put('id', $id);
+        
+        $validatedData = $request->validate([
+            'oldpassword' => ['required',new NewMatchOldUser],
+            'password' => 'required',
+            'conf_pass' =>'required'
+        ]);
+        $changepasswored = array(
+            'password'=>Hash::make($request->input('password'))
+        );
+        User::where('id',$id)->update($changepasswored);
+        $request->session()->put('id',null);
+        return redirect('admin/customers')->with('info','Password Change successfully');
+
+        
     }
 }

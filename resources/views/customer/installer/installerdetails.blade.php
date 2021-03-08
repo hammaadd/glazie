@@ -94,6 +94,12 @@
                             
                         </div>
                         <div class="row">
+                            <div class="col-md-6">
+                                <label for="">Post Code</label>
+                                <input type="text" class="form-control" name="postcode" placeholder="Enter Post Code">
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12">
                                 <label for="">Working Details</label>
                                 <textarea name="working_details" id="summernote" class="form-control" rows="10" placeholder="Work Details"> {{ old('working_details') }}</textarea>

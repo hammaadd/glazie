@@ -8,11 +8,11 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h2 class="header-title ">Coupen</h2>
+            <h2 class="header-title ">Coupun</h2>
             <div class="header-sub-title">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="#">Coupen</a>
+                    <a class="breadcrumb-item" href="#">Coupun</a>
                     
                 </nav>
             </div>
@@ -54,7 +54,7 @@
                     <div class="col-lg-4 text-right">
                         <a class="btn btn-primary" href="{{url('admin/coupen/create')}}">
                             <i class="anticon anticon-plus-circle m-r-5"></i>
-                            <span>Add Coupen</span>
+                            <span>Add Coupun</span>
                         </a>
                     </div>
                 </div>
@@ -62,8 +62,8 @@
                 <table class="table table-hover" id="products">
                     <thead>
                         <th>Sr.#</th>
-                        <th>Coupen Name </th>
-                        <th>Coupen Code</th>
+                        <th>Coupun Name </th>
+                        <th>Coupun Code</th>
                         
                         <th>Status</th>
                         <th>Action</th>

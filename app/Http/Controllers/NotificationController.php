@@ -16,7 +16,7 @@ class NotificationController extends Controller
     }
     public function get()
     {
-        $notifications = Notification:: where('status','=','unread')->get();
+        $notifications = Notification::where('status','=','unread')->get();
         return view("admin/notification/all",['notifications'=>$notifications]);
     }
     public function details($id){

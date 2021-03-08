@@ -91,8 +91,8 @@
                                                 </button>
 
                                                 @if (Route::has('password.request'))
-                                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                                        {{ __('Forgot Your Password?') }}
+                                                    <a  href="{{ route('password.request') }}">
+                                                        {{ __('Forgot Password?') }}
                                                     </a>
                                                 @endif
                                             </div>
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-none d-md-flex p-h-40 justify-content-between">
+                {{-- <div class="d-none d-md-flex p-h-40 justify-content-between">
                     <span class="">&copy <?php echo date('Y');?> ThemeNate</span>
                     <ul class="list-inline">
                         <li class="list-inline-item">
@@ -113,7 +113,7 @@
                             <a class="text-dark text-link" href="">Privacy</a>
                         </li>
                     </ul>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

@@ -41,6 +41,8 @@ use Mail;
 use App\Models\WeightSlot;
 use App\Notifications\SendPassword;
 use App\Mail\HiringRequests;
+use App\Mail\OrderMail;
+
 class IndexController extends Controller
 {
     public function index(){
@@ -420,7 +422,23 @@ class IndexController extends Controller
     $request->session()->put('coupunid',null);
     $request->session()->put('shipprice',null);
     $request->session()->put('servicedata',null);
-   
+    $username = User::find($user_id)->name;
+    $details = array(
+        'name' =>$username,
+        'email'=>User::find($user_id)->email,       
+        'address'=>$request->input('address'),
+        'message'=>'New Order Of the products is recieved from this email address'.$request->input('email')
+    );
+    $data = SiteSetting::where('key','=','ordermail')->get();
+        foreach($data as $datas)
+        {
+
+        }
+        $mail =  $datas->value;
+       
+
+        Mail::to($mail)->send(new OrderMail($details));
+    
     return redirect('/')->with('info','Order Is created successfull Soon You Recived Email  ');
     
     }
@@ -458,10 +476,6 @@ class IndexController extends Controller
         $requesthiring->address = $request->input('address');
         $requesthiring->contact_no = $request->input('contact_no');
         $requesthiring->name = $request->input('first_name')." ".$request->input('last_name');
-        
-       
-    
-        
         $requesthiring->working_details = $request->input('working_details');
         $requesthiring->installer_id = $request->input('installer_id');
         $requesthiring->amount = $request->input('amount');
@@ -582,6 +596,20 @@ class IndexController extends Controller
         $contact_us->email=$request->input('email');
         $contact_us->message=$request->input('message');
         $contact_us->save();
+        $details = array(
+            'name' =>$request->input('name'),
+            'email'=>$request->input('email'),
+            'message'=>$request->input('message')
+        );
+        $data = SiteSetting::where('key','=','inquirymail')->get();
+        foreach($data as $datas)
+        {
+
+        }
+        $mail =  $datas->value;
+       
+
+        Mail::to($mail)->send(new InstallerQuote($details));
 
         $notify =new Notification;
         $notify->name = "New User Message";

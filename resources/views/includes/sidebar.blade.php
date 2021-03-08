@@ -150,8 +150,8 @@
                             <ul class="dropdown-menu"><li @if ($url=="admin/customer") class="active" @endif>
                                 <a href="{{ url('admin/customers') }}">Customers</a>
                             </li>
-                            <li @if ($url=="admin/addcustomer") class="active" @endif>
-                                <a href="{{ url('admin/customer/add') }}">Add Customer</a>
+                            <li>
+                                <a href="{{ url('admin/customers/add') }}">Add Customer</a>
                             </li>
                                 
                                 

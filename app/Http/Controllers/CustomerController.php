@@ -9,8 +9,9 @@ use App\Models\RequestHiring;
 Use App\Models\Order;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\SendCode;
-use App\Models\BlogComment;
 use Mail;
+use App\Models\BlogComment;
+
 use Session;
 use App\Models\BlogLikes;
 use App\Models\BLog;
@@ -115,6 +116,7 @@ class CustomerController extends Controller
         $validatedData = $request->validate([
             'estimated_time' => 'required',
             'amount' =>'required',
+            'postcode'=>'required',
             'working_details'=>'required'
         ]);
         
@@ -124,7 +126,12 @@ class CustomerController extends Controller
         $requesthire->amount = $request->input('amount');
         $requesthire->installer_id = $request->input('installer_id');
         $requesthire->working_details = $request->input('working_details');
-        $requesthire->customer_id = Auth::user()->id;
+        $requesthire->name = Auth::user()->name;
+        $requesthire->email = Auth::user()->email;
+        $requesthire->address = Auth::user()->address;
+        $requesthire->contact_no = Auth::user()->contact_no;
+        $requesthire->postcode = $request->input('postcode');
+        
         $requesthire->created_by = Auth::user()->id;
         $requesthire->save();
         return redirect('customer/installer')->with('info', "The request is created Soon You will recieve mail");

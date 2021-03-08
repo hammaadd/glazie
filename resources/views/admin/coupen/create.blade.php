@@ -36,11 +36,11 @@
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="">Coupen Name </label>
+                                    <label for="">Coupun Name </label>
                                     <input type="text" class="form-control" name="coupen_name" placeholder="Enter Coupen Name" id="coupen_name">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="">Coupen Code </label>
+                                    <label for="">Coupun Code </label>
                                     <input type="text" class="form-control" name="coupen_code" placeholder="Enter Coupen Name" id="coupencode">
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                             </div>
                              <div class="row">
                                 <div class="col-md-6">
-                                    <label for="">Llimited User</label>
+                                    <label for="">Limited User</label>
                                     <select name="limited_user" id="limituser" class="form-control">
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>

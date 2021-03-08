@@ -42,7 +42,7 @@ crossorigin="anonymous"></script>
                                     <h2 class="m-b-5">{{$user->name}}</h2>
                                     <p class="text-opacity font-size-13"></p>
                                     <p class="text-dark m-b-20"></p>
-                                    <button class="btn btn-primary btn-tone">Contact</button>
+                                    {{-- <button class="btn btn-primary btn-tone">Contact</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@ crossorigin="anonymous"></script>
                                         </li>
                                     </ul>
                                     <div class="d-flex font-size-22 m-t-15">
-                                        <a href="" class="text-gray p-r-20">
+                                        {{-- <a href="" class="text-gray p-r-20">
                                             <i class="anticon anticon-facebook"></i>
                                         </a>        
                                         <a href="" class="text-gray p-r-20">    
@@ -85,7 +85,7 @@ crossorigin="anonymous"></script>
                                         </a> 
                                         <a href="" class="text-gray p-r-20">   
                                             <i class="anticon anticon-dribbble"></i>
-                                        </a>
+                                        </a> --}}
                                     </div>
                                 </div>
                             </div>
@@ -110,7 +110,7 @@ crossorigin="anonymous"></script>
                                             </li>
                                             @endif
                                             <li class="nav-item">
-                                                <a class="nav-link " id="testmonial-tab-justified" data-toggle="tab" href="#testmonial-justified" role="tab" aria-controls="testmonial-justified" aria-selected="false">Test Monials</a>
+                                                <a class="nav-link " id="testmonial-tab-justified" data-toggle="tab" href="#testmonial-justified" role="tab" aria-controls="testmonial-justified" aria-selected="false">Testimonial</a>
                                             </li>
                                             
                                         </ul>
@@ -231,7 +231,7 @@ crossorigin="anonymous"></script>
                                                 
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <a href="{{url('admin/addtestmonial/'.$user->id)}}" class="btn btn-success btn-xs float-right"><i class="fa fa-plus-circle"></i> Add Testmonial </a>
+                                                        <a href="{{url('admin/addtestmonial/'.$user->id)}}" class="btn btn-success btn-xs float-right"><i class="fa fa-plus-circle"></i> Add Testimonial </a>
                                                     </div>
                                                 </div>
                                                 <div class="row">

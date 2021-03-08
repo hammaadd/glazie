@@ -24,7 +24,7 @@ class BrandsController extends Controller
         $user = Auth::user();
         
         $validatedData = $request->validate([
-            'brand_name' => 'required',
+            'brand_name' => 'required|alpha',
             'image' => 'mimes:jpg,png,jpeg,gif,svg|max:5048',
         ]);
         $new_brand =  new Brands;
@@ -56,7 +56,7 @@ class BrandsController extends Controller
     public function update($id,Request $request){
        
         $validatedData = $request->validate([
-            'brand_name' => 'required',
+            'brand_name' => 'required|alpha',
             'image' => 'mimes:jpg,png,jpeg,gif,svg|max:5048',
         ]);
         $update_brand =  array(

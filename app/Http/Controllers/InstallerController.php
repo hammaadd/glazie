@@ -8,6 +8,8 @@ use App\Models\Countries;
 use App\Models\States;
 use App\Models\Cities;
 use App\Models\Testmonial;
+use Session;
+use App\Rules\NewMatchOldUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 class InstallerController extends Controller
@@ -28,8 +30,8 @@ class InstallerController extends Controller
     public function create(Request $request){
         
         $validatedData = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'first_name' => 'required|alpha',
+            'last_name' => 'required|alpha',
             'email' => 'required',
             'password' => 'required',
             'contact_no' => 'required',
@@ -430,9 +432,23 @@ class InstallerController extends Controller
     public function installerpassword($id){
         return view('admin/installer/changepassword' ,['id'=>$id]);
     }
-    public function changepassword($id)
+    public function changepassword($id,Request $request)
     {
+        $request->session()->put('id', $id);
         
+        $validatedData = $request->validate([
+            'oldpassword' => ['required',new NewMatchOldUser],
+            'password' => 'required',
+            'conf_pass' =>'required'
+        ]);
+        $changepasswored = array(
+            'password'=>Hash::make($request->input('password'))
+        );
+        User::where('id',$id)->update($changepasswored);
+        $request->session()->put('id',null);
+        return redirect('admin/installerdetails/'.$id)->with('info','Password Change successfully');
+
+     
     }
     public function addtestmonial($id)
     {

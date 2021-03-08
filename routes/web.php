@@ -40,6 +40,7 @@ Route::get('admin/assignment', 'AssignmentController@index');
 Route::post('quoteforinstaller','IndexController@quoteforinstaller');
 Route::post('getmail','IndexController@getmail');
 
+
 // Door Builder Routes
 Route::get('door-build','DoorBuilderController@index');
 
@@ -75,7 +76,12 @@ Route::prefix('admin')->group(function () {
     Route::post('user/changepassword/{id}','UserController@changepassword');
     Route::get('/user/updateavat/{id}','UserController@avatarupdate');
     Route::post('user/avatupdate/{id}','UserController@update_user_avatar');
-
+    
+    // Routes to chagne the email of the user 
+    Route::get('changeaccount' ,'UserController@changeaccount');
+    Route::post('changeemail','UserController@changeemail');
+    Route::get('verify','UserController@verify');
+    Route::post('confirmcode','UserController@checkcode');
     // Customer Routes
     Route::get('customers','AdmincustomerController@index');
     Route::get('customers/add','AdmincustomerController@add');
@@ -87,6 +93,7 @@ Route::prefix('admin')->group(function () {
     Route::get('customers/deactivate/{id}','AdmincustomerController@deactivate');
     Route::get('customers/changepassword/{id}','AdmincustomerController@changepassword');
     Route::get('customerorder/details/{id}','AdmincustomerController@orderdetails');
+    Route::post('chngecustomerpwd/{id}','AdmincustomerController@changecustomerpwd');
     // Delivery TIme Routes
     Route::get('deliverytimes','DeliverTimeController@index');
     Route::get('deliverytimes/create','DeliverTimeController@create');

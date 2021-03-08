@@ -9,6 +9,7 @@ use App\Models\PrdVariety;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 use DB;
 class AdminController extends Controller
 {
@@ -20,6 +21,9 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware('auth:admin');   
+        if(Auth::guard('admin')){
+            return redirect('/admin/dashboard');
+        }
     }
 
     /**

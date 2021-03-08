@@ -209,12 +209,12 @@
                                                                   Cash On Delivery
                                                                 </label>
                                                               </div>
-                                                              <div class="form-check">
+                                                              {{-- <div class="form-check">
                                                                 <input class="form-check-input" type="radio" name="radioPayment" id="radioCard" >
                                                                 <label class="form-check-label" for="radioCard">
                                                                  Pay using Credit Card
                                                                 </label>
-                                                              </div>                                          
+                                                              </div>                                           --}}
                                                         </h4>
                                                     </div>
                                                     <div id="method1" class="panel-collapse collapse show">

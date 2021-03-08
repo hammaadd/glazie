@@ -8,11 +8,11 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h2 class="header-title ">Coupen</h2>
+            <h2 class="header-title ">Coupun</h2>
             <div class="header-sub-title">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="#">Coupen</a>
+                    <a class="breadcrumb-item" href="#">Coupun</a>
                     
                 </nav>
             </div>
@@ -67,7 +67,7 @@
                             </div>
                              <div class="row">
                                 <div class="col-md-6">
-                                    <label for="">Llimited User</label>
+                                    <label for="">Limited User</label>
                                     <select name="limited_user" id="limituser" class="form-control">
                                         <option value="yes"
                                         @if ($coupen->limiteduser=="yes")

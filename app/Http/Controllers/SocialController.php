@@ -37,7 +37,7 @@ class SocialController extends Controller
         $social = SiteSetting::find($id);
         return view('admin/social/edit',['social'=>$social]);
     }
-    public function update($id){
+    public function update($id,Request $request){
         $validatedData = $request->validate([
             'key'=>'required',
             'value'=>'required'
@@ -47,6 +47,7 @@ class SocialController extends Controller
             'value' => $request->input('value'),
             
             );
+            SiteSetting::where('id',$id)->update($update_site); 
             return redirect('admin/social')->with('info','Social is updated');
     }
     public function delete($id)

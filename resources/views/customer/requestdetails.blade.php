@@ -101,7 +101,7 @@ crossorigin="anonymous"></script>
                     
                   </div>
               </div>
-              @if ($requesthire->hiring_status=='complete' && (!$requesthire->testmonial))
+              {{-- @if ($requesthire->hiring_status=='complete' && (!$requesthire->testmonial))
               <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
@@ -134,7 +134,7 @@ crossorigin="anonymous"></script>
                     </div>
                 </div>
             </div>
-              @endif
+              @endif --}}
           </div>
       </div>
         

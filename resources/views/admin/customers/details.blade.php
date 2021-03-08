@@ -25,9 +25,9 @@
                         <div class="col-md-7">
                             <div class="d-md-flex align-items-center">
                                 <div class="text-center text-sm-left ">
-                                    <div class="" style="width: 150px; height:150px">
-                                        {{-- <img src="{{asset('customersprofile/'.$user->avatar)}}" alt=""> --}}
-                                        
+                                    
+                                    <div class="avatar avatar-image" style="width: 150px; height:150px">
+                                        <img src="{{asset('customersprofile/'.$user->avatar)}}" alt="">
                                     </div>
                                 </div>
                                 <div class="text-center text-sm-left m-v-15 p-l-30">

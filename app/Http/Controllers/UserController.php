@@ -5,7 +5,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Rules\UserNewMatchOld;
-
+use App\Mail\SendCode;
+use Mail;
+use Session;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Admin;
 class UserController extends Controller
 {
     public function __construct()
@@ -146,5 +150,46 @@ class UserController extends Controller
         return redirect('/admin/user/updateavat/'.$id)->with('status', 'Image Has been uploaded');
     
     
+    }
+    public function changeaccount(){
+        return view('admin/changeaccount');
+    }
+
+    public function changeemail(Request $request){
+        $request->validate([
+            'email'=>'required|email'
+        ]);
+        $email = $request->input('email');
+        global $details;
+        $details = rand(100000,999999);
+        $request->session()->put('code', $details);
+        $request->session()->put('email', $email);
+           //  Mail::to($email)->send(new SendCode($details));
+       
+        return redirect('admin/verify');
+    }
+    public function verify(){
+       
+        return view('admin/verify');
+    }
+    public function checkcode(Request $request){
+        $validatedData = $request->validate([
+            'newcode' => 'required'
+        ]);
+        $code =  Session::get('code');
+        $email =  Session::get('email');
+        
+        $newcode = $request->input('newcode');
+        if($code == $newcode){
+            $id = Auth::user()->id;
+            $data = array(
+                'email'=>$email
+            );
+            Admin::where('id',$id)->update($data);
+            return redirect('admin/profile/edit')->with('info','Your Account Email has been changed');
+        }
+        else{
+            return redirect('admin/verify')->with('status','The code is not correct');
+        }
     }
 }

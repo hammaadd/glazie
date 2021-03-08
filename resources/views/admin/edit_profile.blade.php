@@ -38,7 +38,7 @@
                         <div class="row">
                             <div class="col-md-4"><b>Name </b></div>
                             <div class="col-md-2"></div>
-                            <div class="col-md-6"><?php echo $user->name ?> </div>
+                            <div class="col-md-6">{{$user->first_name}} {{$user->last_name}}  </div>
                         </div>
                         <br>
                         <div class="row">
@@ -51,6 +51,11 @@
                             <div class="col-md-4"><b>Password</b></div>
                             <div class="col-md-2"></div>
                             <div class="col-md-6"> <a href="{{url('/admin/changepass')}}">Change Password</a> </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-4"><b>Change Email </b></div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-6"> <a href="{{url('admin/changeaccount')}}">Change Email</a> </div>
                         </div>
                         
                     </div>

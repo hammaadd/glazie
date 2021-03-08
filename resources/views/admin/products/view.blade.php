@@ -96,7 +96,7 @@
                                         <p class="m-b-0 text-muted">{{$net_feedback/$i}} ratings</p>
                                         <div class="jstars" data-value="{{$net_feedback/$i}}"></div>
                                         @else 
-                                        <p class="m-b-0 text-muted">No rating Yet</p>
+                                        <div class="jstars" data-value="0.1"></div>
                                         @endif                                            
 
                                         </div>
@@ -111,7 +111,18 @@
                                         <i class="font-size-40 text-primary anticon anticon-shopping-cart"></i>
                                         <div class="m-l-15">
                                             <p class="m-b-0 text-muted">Sales</p>
-                                            <h3 class="m-b-0 ls-1">1,521</h3>
+                                            
+                                            <h3 class="m-b-0 ls-1">
+                                                @php
+                                                    $quantity = 0;
+                                                @endphp
+                                            @foreach ($products->orderdetails as $order)
+                                                @php
+                                                    $quantity  =  $quantity +$order->quantity;
+                                                @endphp
+                                            @endforeach 
+                                            {{$quantity}}   
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>
@@ -163,11 +174,11 @@
                                             <td>Categories</td>
                                             <td>
                                                 @foreach ($products->categories as $prd_cat)
-                                                    @if ($prd_cat->catrecord->status=='1')
+                                                   
                                                         <ul>
                                                             <li style="list-style-type: none">{{$prd_cat->catrecord->cat_name}}</li>
                                                         </ul>
-                                                    @endif
+                                                    
                                                 @endforeach
                                             </td>
                                         </tr>
@@ -235,6 +246,7 @@
                             </div>
                         </div>
                     </div> --}}
+                    @if ($products->short_description)
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">Product Short Description</h4>
@@ -252,7 +264,8 @@
                                 <button id="short_btn" class="btn btn-success">Read more</button>
                             </div>
                         </div>
-                    
+                    @endif
+                   @if($products->description) 
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">
@@ -260,15 +273,7 @@
                             </h4>
                         </div>
                         <div class="card-body" >
-                            {{-- <div class="row">
-                                <div class="col-md-12" id="halflongdesc">
-                                   <p id="halflongdesc">
-                                       @php
-                                           echo substr($products->description,0,40);
-                                       @endphp
-                                   </p>
-                                </div>
-                            </div> --}}
+                        
                             <div class="row">
                                 <div class="col-md-12" style="display: none;" id="completedescription">
                                     <p class="text-justify">
@@ -279,6 +284,7 @@
                            <button class="btn btn-success" id="longdescbtn">Read</button>
                         </div>
                     </div>
+                    @endif
                 </div>
                 <div class="tab-pane fade" id="product-images">
                     <div class="card">
