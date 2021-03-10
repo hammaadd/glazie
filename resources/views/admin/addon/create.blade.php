@@ -282,7 +282,7 @@ $(document).on('click', '.removecolor', function(){
         },
         quantity:{
             required:true
-        }
+        },
         weight:{
             required:true
         },

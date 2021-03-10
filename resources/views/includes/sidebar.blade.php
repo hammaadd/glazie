@@ -1,6 +1,6 @@
 @section('sidebar')
 @php
-    $url = str_replace("/glazieltd/","6546", $_SERVER["REQUEST_URI"]);
+    $url = str_replace("/glazieltd/","", $_SERVER["REQUEST_URI"]);
 @endphp
 <div class="side-nav" style="background-color: #e3e3e3">
                 <div class="side-nav-inner">
@@ -37,7 +37,7 @@
                                 <li @if ($url=="admin/categories") class="active" @endif>
                                     <a href="{{url('admin/categories')}}">Categories</a>
                                 </li>
-                                <li @if ($url=="admin/categories") class="active" @endif>
+                                <li @if ($url=="admin/attributes") class="active" @endif>
                                     <a href="{{url('admin/attributes')}}">Attributes</a>
                                 </li>
                                 <li @if ($url=="admin/brands")
@@ -77,10 +77,14 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item dropdown">
+                                <li  @if ($url=="admin/addons")
+                                    class="active"
+                                @endif>
                                     <a href="{{url('admin/addons')}}">Model List</a>
                                 </li>
-                                <li class="nav-item dropdown">
+                                <li @if ($url=="admin/colors")
+                                    class="active"
+                                @endif>
                                     <a href="{{url('admin/colors')}}">Available Colors</a>
                                 </li>
                             </ul>
@@ -96,7 +100,7 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li @if ($url=="admin/orders/list") class="active" @endif>
+                                <li @if ($url=="admin/orders") class="active" @endif>
                                     <a href="{{url('admin/orders')}}">Orders </a>
                                 </li>
                                 <li @if ($url=="admin/weights") class="active" @endif>
@@ -125,7 +129,9 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li>
+                                <li @if ($url=="admin/coupen")
+                                    class="active"
+                                @endif>
                                     <a href="{{url('admin/coupen
                                     ')}}">Coupun</a>
                                 </li >
@@ -147,10 +153,12 @@
                                     <i class="arrow-icon"></i>
                                 </span>
                             </a>
-                            <ul class="dropdown-menu"><li @if ($url=="admin/customer") class="active" @endif>
+                            <ul class="dropdown-menu"><li @if ($url=="admin/customers") class="active" @endif>
                                 <a href="{{ url('admin/customers') }}">Customers</a>
                             </li>
-                            <li>
+                            <li @if ($url=="admin/customers/add")
+                                class="active"
+                            @endif>
                                 <a href="{{ url('admin/customers/add') }}">Add Customer</a>
                             </li>
                                 
@@ -163,7 +171,7 @@
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
-                                    <i class="anticon anticon-user"></i>
+                                    <i class="fa fa-hard-hat"></i>
                                 </span>
                                 <span class="title">Installer</span>
                                 <span class="arrow">
@@ -171,7 +179,7 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li @if ($url=="admin/orders/installer") class="active" @endif>
+                                <li @if ($url=="admin/installer") class="active" @endif>
                                     <a href="{{url('admin/installer')}}">Installers List</a>
                                 </li >
                                 <li @if ($url=="admin/addinstaller") class="active" @endif>
@@ -199,7 +207,9 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li>
+                                <li @if ($url=='admin/subscription')
+                                    class="active"   
+                                @endif>
                                     <a href="{{url('admin/subscription')}}">Subscribers</a>
                                 </li >
                                 
@@ -243,7 +253,9 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li>
+                                <li @if ($url=="admin/cms")
+                                    class="active"
+                                @endif>
                                     <a href="{{url('admin/cms')}}">Manage Web Content</a>
                                 </li >
                                 
@@ -265,7 +277,9 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li>
+                                <li @if ($url=="admin/usermessage")
+                                    class="active"
+                                @endif>
                                     <a href="{{url('admin/usermessage
                                     ')}}">User's Message</a>
                                 </li >
@@ -289,7 +303,7 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li>
+                                <li @if($url=="admin/social") class="active" @endif>
                                     <a href="{{url('admin/social
                                     ')}}">Site Settings</a>
                                 </li >

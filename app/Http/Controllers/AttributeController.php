@@ -7,7 +7,7 @@ use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Term;
 use App\Models\ProductTerm;
-
+use DB;
 class AttributeController extends Controller
 {
     public function __construct()
@@ -139,7 +139,13 @@ class AttributeController extends Controller
     }
     public function removeproductattribute($id)
     {
-        $product_id = ProductAttribute::find($id)->product_id;
+        $products= ProductAttribute::find($id);
+        $product_id = $products->product_id;
+        $attribute_id = $products->attribute_id;
+        $product_terms = ProductTerm::where('product_id','=',$product_id)->where('attribute_id','=',$attribute_id)->get();
+        foreach($product_terms as $product_term){
+            ProductTerm::where('id',$product_term->id)->delete();
+        }
         
         ProductAttribute::where('id',$id)->delete();
         return redirect('admin/products/view/'.$product_id)->with('info','Attribute delete Successfully');
@@ -264,6 +270,29 @@ class AttributeController extends Controller
             }
         }
         return redirect('admin/products/view/'.$product_id)->with('info','Product Terms updated Successfully');
+       }
+       public function get_prd_terms(Request $request)
+       {
+          
+           $term_name = array();
+           $term_id = array();
+           $attrbute_id = $request->input('attr');
+           $product_id = $request->input('product_id');
+           $terms = DB::table('terms')
+           ->join('product_terms', 'terms.id', '=', 'product_terms.term_id')
+           ->select('terms.*', 'product_terms.term_id')
+           ->where('product_terms.attribute_id','=',$attrbute_id)
+        ->where('product_terms.product_id','=',$product_id)
+        ->where('product_terms.deleted_at','=',null)->get();
+           
+            
+            foreach ($terms as $key => $term) {
+                array_push($term_id,$term->id);
+                array_push($term_name,$term->name);
+            }
+            $obj = (object) array($term_id,$term_name);
+            echo json_encode($obj);
+       
        }
 } 
 

@@ -12,7 +12,7 @@ class SocialController extends Controller
     }
     public function index()
     {
-        $socials = SiteSetting::all();
+        $socials = SiteSetting::orderBy('id','desc')->get();
         return view('admin/social/index',['socials'=>$socials]);
     }
     public function create()
@@ -28,7 +28,7 @@ class SocialController extends Controller
             $site = new SiteSetting;
             $site->key = $request->input('key');
             $site->value = $request->input('value');
-           
+            $site->deleteable = '0';
             $site->save();
             return redirect('admin/social')->with('info','New Social is created');
     }
@@ -52,8 +52,16 @@ class SocialController extends Controller
     }
     public function delete($id)
     {
-        SiteSetting::where('id',$id)->delete(); 
-        return redirect('admin/social')->with('info','Social is delete');
+
+        $site= SiteSetting::find($id);
+        if($site->deleteable=='1')
+        {
+            return redirect('admin/social')->with('info','Can Not Deleted');
+        } 
+        else{
+            SiteSetting::where('id',$id)->delete();
+        }
+        
     }
     
     

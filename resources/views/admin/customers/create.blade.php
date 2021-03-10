@@ -49,7 +49,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="" >Contact No</label>
-                                <input type="number" class="form-control" name="contact_no" placeholder="Contact No " value="{{old('contact_no')}}">
+                                <input type="text" class="form-control" name="contact_no" placeholder="Contact No" id="contact_no" value="{{old('contact_no')}}"  data-inputmask='"mask": "+99(999)-9999999"'>
                             </div>
                             <div class="col-md-6">
                                 <label for="" >Email Address</label>
@@ -124,8 +124,10 @@
 @endsection
 @section('script')
 <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
+<script src="{{ asset('admin-assets/js/jquery.inputmask.js')}}"></script>
+<script src="{{asset('admin-assets/js/inputmask.js')}}"></script>
 <script>
-    
+     $('#contact_no').inputmask('+99(999)-9999999', { 'placeholder': '_____________' });
     $(document).ready(function() {
     $('#company_info').click(function(){
         if($(this).prop("checked") == true){

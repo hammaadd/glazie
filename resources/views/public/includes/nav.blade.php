@@ -169,7 +169,7 @@
   </div>
 
   <!-- header bottom -->
-  <div class="header-bottom">
+  <div class="header-bottom" id="customheader">
     <nav class="navbar navbar-expand-xl">
       <div class="container">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">

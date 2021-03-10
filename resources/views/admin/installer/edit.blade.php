@@ -54,7 +54,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="" >Contact No</label>
-                                <input type="number" class="form-control" name="contact_no" placeholder="Contact No " value="{{$user->contact_no}}">
+                                <input type="text" class="form-control" name="contact_no" placeholder="Contact No " value="{{$user->contact_no}}" id="contact_no">
                             </div>
                             <div class="col-md-6">
                                 <label for="" >Email Address</label>
@@ -244,7 +244,12 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <!-- page js -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script>
+  
+        <script src="{{ asset('admin-assets/js/jquery.inputmask.js')}}"></script>
+<script src="{{asset('admin-assets/js/inputmask.js')}}"></script>
+<script>
+     $('#contact_no').inputmask('+99 9999 999999', { 'placeholder': '+44 ____ ______' });
+    
         $(document).ready(function() {
         $('#summernote,#company_description').summernote({
         height: 200,

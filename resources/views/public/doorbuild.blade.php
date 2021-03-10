@@ -1,9 +1,21 @@
 @extends('public/layouts/layouts')
-@section('title','Welcome')
+@section('title','Product Cart')
 @section('content')
-<section class="section">
-    <div class="container-fluid">
-        <div class="row w-100 vh-100">
+<link rel="stylesheet" href="{{asset('assets2/vendors/animate/animate.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets2/vendors/bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets2/vendors/owlcarousel/css/owlcarousel.min.css')}}">
+	<!-- <link rel="stylesheet" href="{{asset('assets2/vendors/fontawesome/css/all.min.css')}}"> -->
+	<link rel="stylesheet" href="{{asset('assets2/vendors/boxicons/css/boxicons.min.css')}}">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
+	<link rel="stylesheet" href="{{asset('assets2/css/style.css')}}">
+	<div class="wrapper">
+		<!-- header -->
+		
+		<!-- /header -->
+
+		<div class="builder">
+			<div class="row w-100 vh-100">
 			  <div class="col-md-2 theme_bgcolor2 pe-0 pt-3">
 			    <ul class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 			      <li class="list-unstyled nav-item"><a class="nav-link rounded-0 active text-white" id="v-pills-model-tab" data-bs-toggle="pill" href="#v-pills-model" role="tab" aria-controls="v-pills-model" aria-selected="true"><img src="assets/media/svg/modal.svg" class="pe-3">Model</a></li>
@@ -32,7 +44,7 @@
 			      <li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white text-center pt-4" id="v-pills-refresh-tab" data-bs-toggle="pill" href="#v-pills-refresh" role="tab" aria-controls="v-pills-refresh" aria-selected="true"><img src="assets/media/svg/refresh.svg" width="30px" height="30px"></a></li>
 			    </ul>
 			  </div>
-              <div class="col-md-7 px-4">
+			  <div class="col-md-7 px-4">
 			    <div class="tab-content" id="v-pills-tabContent">
 			      <div class="tab-pane fade show active" id="v-pills-model" role="tabpanel" aria-labelledby="v-pills-model-tab">
 			      	<section class="section product-section">
@@ -53,90 +65,18 @@
 									<div class="row">
 										<div class="col-12">
 											<div id="owl-model" class="owl-builder owl-carousel owl-theme">
+												@foreach ($addons as $addon)
+													
+												
 											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
+											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="abc({{$addon->id}})">
 											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-ffffff.svg" align="">
+											    			<img class="door-image" src="{{asset('admin-assets/addon/'.$addon->svgimage)}}" align="">
 											    		</div>
 											    	</button>
 											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/APA3__c-ffffff.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/APC2__c-ffffff.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/APC3__c-ffffff.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/APG3__c-ffffff.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/APA2__c-ffffff.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/APL2__c-ffffff.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/APM2__c-ffffff.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDM2__c-ffffff.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/APS2__c-ffffff.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/APT2__c-ffffff.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/APTS35__c-ffffff.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
+											    @endforeach
+											   
 											</div>
 											<div class="customNavigation">
 											    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnDefaultSize mb-3">Next</a>
@@ -149,7 +89,7 @@
 
 			      	</section>
 			      </div>
-			      <div class="tab-pane fade show" id="v-pills-default-size" role="tabpanel" aria-labelledby="v-pills-default-size-tab">
+			      {{-- <div class="tab-pane fade show" id="v-pills-default-size" role="tabpanel" aria-labelledby="v-pills-default-size-tab">
 			      	<section class="section product-section">
 			      		<div class="title-box">
 							<div class="container">
@@ -344,123 +284,10 @@
 						</div>						
 
 			      	</section>
-			      </div>
+			      </div>--}}
 
 			      <div class="tab-pane fade" id="v-pills-external-color" role="tabpanel" aria-labelledby="v-pills-external-color-tab">
-			      	<section class="section product-section">
-			      		<div class="title-box">
-							<div class="container">
-								<!--Sec Title-->
-								<div class="sec-title text-center">
-									<div class="title-inner">
-										<h2>Choose Your <span class="theme_color">External Color</span></h2>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="lower-section pt-0">
-							<div class="lower-inner-section">
-								<div class="container">
-									<div class="row">
-										<div class="col-12">
-											<div id="owl-external-color" class="owl-builder owl-carousel owl-theme">
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-ffffff.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-323232.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-2D654C.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-AE1216.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-bc4078.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-07756E.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-B41E20.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-3677C0.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-2D654C.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-DF8245.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-CDCD57.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											</div>
-											<div class="customNavigation">
-												<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnSize">Prev</a>
-											    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btninternalColor">Next</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>						
-
-			      	</section>
+			      
 			      	
 			      </div>
 			      <div class="tab-pane fade" id="v-pills-internal-color" role="tabpanel" aria-labelledby="v-pills-internal-color-tab">
@@ -476,7 +303,7 @@
 							</div>
 						</div>
 
-						<div class="lower-section pt-0">
+						<div class="lower-section pt-0" id="external">
 							<div class="lower-inner-section">
 								<div class="container">
 									<div class="row">
@@ -580,7 +407,7 @@
 			      	</section>
 			      	
 			      </div>
-
+{{--
 			      <div class="tab-pane fade" id="v-pills-glass" role="tabpanel" aria-labelledby="v-pills-glass-tab">
 			      	<section class="section product-section">
 			      		<div class="title-box">
@@ -1328,153 +1155,202 @@
 						</div>						
 
 			      	</section>
-			      </div>
+			      </div> --}}
 
 			      <div class="tab-pane fade" id="v-pills-price" role="tabpanel" aria-labelledby="v-pills-price-tab">
 			      </div>
 			    </div>
 			  </div>
 			  <div class="col-md-3 text-center border-start pt-4">
-				  	<img src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/APA2__c-ffffff.svg" width="138px">
-				  	<h4 class="custom-price pt-4"><span class="theme_color">Price:</span> &#163;999.99</h4>
+				  	<img src="" id="productimage" width="138px">
+				  	<h4 class="custom-price pt-4"><span class="theme_color">Price:</span id=""> &#163;999.99</h4>
 				  	<a href="cart.html" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-4">Add To Cart</a>
 			  </div>
 			</div>
-        </div>
-    </div>
-</section>
-@endsection
-@section('script')
-<script src="{{asset('assets2/js/jquery.min.js')}}"></script>
-<script src="{{asset('assets2/vendors/bootstrap/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('assets2/vendors/owlcarousel/js/owlcarousel.min.js')}}"></script>
-<script src="{{asset('assets2/vendors/videopopup/js/videopopup.js')}}"></script>
-<script src="{{asset('assets2/js/script.js')}}"></script>
-<script type="text/javascript">
-    function showdoortoggle(){
-        $('.colorsubchild').toggle(150);
+		</div>
+		<!-- footer -->
+		<footer class="footer">
+
+			<div class="footer-bottom">
+				<div class="container">
+					<div class="row align-items-md-center">
+						<div class="col-md-6">
+							<div class="dt-sc-copyright text-center text-md-start mb-3 mb-md-0">
+								<p>Copyright © 2020 Glazie LTD</p>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="custom-sub-nav text-center text-md-end">
+								<ul class="dt-custom-nav list-unstyled">
+									<li><a href="#">Privacy Policy</a></li>
+									<li><a href="#">Terms and Conditions</a></li>
+									<li><a href="#">Refund Policy</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!-- /footer -->
+
+	</div>
+	@endsection
+	@section('script')
+	<script src="{{asset('assets2/js/jquery.min.js')}}"></script>
+	<script src="{{asset('assets2/vendors/bootstrap/js/bootstrap.min.js')}}"></script>
+	<script src="{{asset('assets2/vendors/owlcarousel/js/owlcarousel.min.js')}}"></script>
+	<script src="{{asset('assets2/vendors/videopopup/js/videopopup.js')}}"></script>
+	<script src="{{asset('assets2/js/script.js')}}"></script>
+	<script type="text/javascript">
+		function showdoortoggle(){
+			$('.colorsubchild').toggle(150);
+		}
+		function showframetoggle(){
+			$('.framecolorsubchild').toggle(150);
+		}
+		function showsizetoggle(){
+			$('.sizesubchild').toggle(150)
+		}
+		$(document).ready(function() {
+			$("#owl-model").owlCarousel({
+				items : 6
+			});
+		});
+		$(document).ready(function() {
+			$("#owl-default-size").owlCarousel({
+				items : 6
+			});
+		});
+		$(document).ready(function() {
+			$("#owl-external-color,#owl-internal-color").owlCarousel({
+				items : 6
+			});
+		});
+		$(document).ready(function() {
+			$("#owl-glass").owlCarousel({
+				items : 6
+			});
+		});
+		$(document).ready(function() {
+			$("#owl-frame").owlCarousel({
+				items : 6
+			});
+		});
+		$(document).ready(function() {
+			$("#owl-frame-color,#owl-frame-internal-color").owlCarousel({
+				items : 6
+			});
+		});
+		$(document).ready(function() {
+			$("#owl-frame-glass").owlCarousel({
+				items : 6
+			});
+		});
+		$(document).ready(function() {
+			$("#owl-furniture").owlCarousel({
+				items : 6
+			});
+		});
+		$(document).ready(function() {
+			$("#owl-hing-glass").owlCarousel({
+				items : 6
+			});
+		});
+		
+		$('.btnSize').click(function(e){
+	        e.preventDefault();
+	        $('.sizesubchild').show();
+	        $('#v-pills-tab a[href="#v-size-model"]').tab('show');
+	    });
+	    $('.btnDefaultSize').click(function(e){
+	        e.preventDefault();
+	        $('.sizesubchild').show();
+	        $('#v-pills-tab a[href="#v-pills-default-size"]').tab('show');
+	    });
+		$('.btnModel').click(function(e){
+	        e.preventDefault();
+	        $('.sizesubchild').hide();
+	        $('#v-pills-tab a[href="#v-pills-model"]').tab('show');
+	    });
+	    $('.btnColor').click(function(e){
+	        e.preventDefault();
+	        $('.colorsubchild').show();
+	        $('.sizesubchild').hide();
+	        $('#v-pills-tab a[href="#v-pills-external-color"]').tab('show');
+	    });
+	    $('.btninternalColor').click(function(e){
+	        e.preventDefault();
+	        $('.colorsubchild').show();
+	        $('#v-pills-tab a[href="#v-pills-internal-color"]').tab('show');
+	    });
+	    $('.btnGlass').click(function(e){
+	        e.preventDefault();
+	        $('.colorsubchild').hide();
+	        $('#v-pills-tab a[href="#v-pills-glass"]').tab('show');
+	    });
+	    $('.btnFrame').click(function(e){
+	        e.preventDefault();
+	        $('.framecolorsubchild').hide();
+	        $('#v-pills-tab a[href="#v-pills-frame"]').tab('show');
+	    });
+	    $('.btnHinge').click(function(e){
+	        e.preventDefault();
+	        $('#v-pills-tab a[href="#v-pills-hing"]').tab('show');
+	    });
+	    // $('.colortab').click(function(e){
+	    //     e.preventDefault();
+	    //      $('#v-pills-tab a[href="#v-pills-external-color"]').tab('show');
+	    //      $('colortab').removeClass('active');
+	    //      $('.btnColor').addClass('active');
+	    // });
+	    $('.btnFrameGlass').click(function(e){
+	        e.preventDefault();
+	        $('.framecolorsubchild').hide();
+	        $('#v-pills-tab a[href="#v-pills-frame-glass"]').tab('show');
+	    });
+	    $('.btnFrameexternalColor').click(function(e){
+	        e.preventDefault();
+	        $('.framecolorsubchild').show();
+	        $('#v-pills-tab a[href="#v-pills-frame-external-color"]').tab('show');
+	    });
+	    $('.btninternalframecolor').click(function(e){
+	        e.preventDefault();
+	        $('.framecolorsubchild').show()
+	        $('#v-pills-tab a[href="#v-pills-frame-internal-color"]').tab('show');
+	    });
+	    
+	    $('.btnFurniture').click(function(e){
+	        e.preventDefault();
+	        $('#v-pills-tab a[href="#v-pills-furniture"]').tab('show');
+	    });
+	    $('.owl-builder li button').on('click', function(){
+		    $('li button.selected').removeClass('selected');
+		    $(this).addClass('selected');
+		});
+		function abc(id)
+
+			{
+				
+       
+            url = "{{url('get_colors')}}";
+            console.log(url);
+            $.ajax({
+           type:'POST',
+           url:url,
+
+            data:{
+                id:id,  
+              
+           },
+           success:function(result){
+			   $('#v-pills-external-color').html(result);
+			$("#owl-external-color,#owl-internal-color").owlCarousel({
+				items : 6
+			});
+           }
+            });
     }
-    function showframetoggle(){
-        $('.framecolorsubchild').toggle(150);
-    }
-    function showsizetoggle(){
-        $('.sizesubchild').toggle(150)
-    }
-    $(document).ready(function() {
-        $("#owl-model").owlCarousel({
-            items : 6
-        });
-    });
-    $(document).ready(function() {
-        $("#owl-default-size").owlCarousel({
-            items : 6
-        });
-    });
-    $(document).ready(function() {
-        $("#owl-external-color,#owl-internal-color").owlCarousel({
-            items : 6
-        });
-    });
-    $(document).ready(function() {
-        $("#owl-glass").owlCarousel({
-            items : 6
-        });
-    });
-    $(document).ready(function() {
-        $("#owl-frame").owlCarousel({
-            items : 6
-        });
-    });
-    $(document).ready(function() {
-        $("#owl-frame-color,#owl-frame-internal-color").owlCarousel({
-            items : 6
-        });
-    });
-    $(document).ready(function() {
-        $("#owl-frame-glass").owlCarousel({
-            items : 6
-        });
-    });
-    $(document).ready(function() {
-        $("#owl-furniture").owlCarousel({
-            items : 6
-        });
-    });
-    $(document).ready(function() {
-        $("#owl-hing-glass").owlCarousel({
-            items : 6
-        });
-    });
-    
-    $('.btnSize').click(function(e){
-        e.preventDefault();
-        $('.sizesubchild').show();
-        $('#v-pills-tab a[href="#v-size-model"]').tab('show');
-    });
-    $('.btnDefaultSize').click(function(e){
-        e.preventDefault();
-        $('.sizesubchild').show();
-        $('#v-pills-tab a[href="#v-pills-default-size"]').tab('show');
-    });
-    $('.btnModel').click(function(e){
-        e.preventDefault();
-        $('.sizesubchild').hide();
-        $('#v-pills-tab a[href="#v-pills-model"]').tab('show');
-    });
-    $('.btnColor').click(function(e){
-        e.preventDefault();
-        $('.colorsubchild').show();
-        $('.sizesubchild').hide();
-        $('#v-pills-tab a[href="#v-pills-external-color"]').tab('show');
-    });
-    $('.btninternalColor').click(function(e){
-        e.preventDefault();
-        $('.colorsubchild').show();
-        $('#v-pills-tab a[href="#v-pills-internal-color"]').tab('show');
-    });
-    $('.btnGlass').click(function(e){
-        e.preventDefault();
-        $('.colorsubchild').hide();
-        $('#v-pills-tab a[href="#v-pills-glass"]').tab('show');
-    });
-    $('.btnFrame').click(function(e){
-        e.preventDefault();
-        $('.framecolorsubchild').hide();
-        $('#v-pills-tab a[href="#v-pills-frame"]').tab('show');
-    });
-    $('.btnHinge').click(function(e){
-        e.preventDefault();
-        $('#v-pills-tab a[href="#v-pills-hing"]').tab('show');
-    });
-    // $('.colortab').click(function(e){
-    //     e.preventDefault();
-    //      $('#v-pills-tab a[href="#v-pills-external-color"]').tab('show');
-    //      $('colortab').removeClass('active');
-    //      $('.btnColor').addClass('active');
-    // });
-    $('.btnFrameGlass').click(function(e){
-        e.preventDefault();
-        $('.framecolorsubchild').hide();
-        $('#v-pills-tab a[href="#v-pills-frame-glass"]').tab('show');
-    });
-    $('.btnFrameexternalColor').click(function(e){
-        e.preventDefault();
-        $('.framecolorsubchild').show();
-        $('#v-pills-tab a[href="#v-pills-frame-external-color"]').tab('show');
-    });
-    $('.btninternalframecolor').click(function(e){
-        e.preventDefault();
-        $('.framecolorsubchild').show()
-        $('#v-pills-tab a[href="#v-pills-frame-internal-color"]').tab('show');
-    });
-    
-    $('.btnFurniture').click(function(e){
-        e.preventDefault();
-        $('#v-pills-tab a[href="#v-pills-furniture"]').tab('show');
-    });
-    $('.owl-builder li button').on('click', function(){
-        $('li button.selected').removeClass('selected');
-        $(this).addClass('selected');
-    });
-</script>
-@endsection
+		
+	</script>
+	@endsection

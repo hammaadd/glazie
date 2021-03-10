@@ -43,6 +43,7 @@ Route::post('getmail','IndexController@getmail');
 
 // Door Builder Routes
 Route::get('door-build','DoorBuilderController@index');
+Route::post('get_colors','DoorBuilderController@get_colors');
 
 
 
@@ -172,7 +173,7 @@ Route::prefix('admin')->group(function () {
     Route::post('attribute/checkattr','AttributeController@checkattr');
     Route::get('editprdattribute/{id}','AttributeController@editattr');
     Route::post('updateterms','AttributeController@updateattr');
-    
+    Route::post('get_prd_terms','AttributeController@get_prd_terms');
     
     // Prodcut Attributes Routes
     Route::get('productattribute','ProductattributeController@index');
@@ -184,12 +185,15 @@ Route::prefix('admin')->group(function () {
     Route::get('productattribute/delete/{id}','ProductattributeController@delete');
     // Product Size Routes 
     Route::get('productsize','ProductsizeController@index');
-    Route::get('productsize/add','ProductsizeController@add');
-    Route::post('productsize/create','ProductsizeController@create');
+    Route::get('productsize/add/{id}','ProductsizeController@add');
+    Route::post('productsize/create/{id}','ProductsizeController@create');
     Route::get('productsize/edit/{id}','ProductsizeController@edit');
     Route::post('productsize/update/{id}','ProductsizeController@update');
     Route::get('productsize/delete/{id}','ProductsizeController@delete');
 
+
+// Product Variation 
+    Route::get('addproductvariation/{id}','ProductsController@addprdvariation');
 
     // Order Management Routes
     Route::get('orders','OrdersController@index');
@@ -391,7 +395,7 @@ Route::post('installerbyamount','IndexController@installerbyamount');
 Route::post('feedback','IndexController@feedback');
 // Getting nav item
 
-
+Route::get('customizer','IndexController@customizer');
 Route::post('getnavlinks','IndexController@navlink');
 // contact Us Routes
 Route::get('contact-us','IndexController@contactus');

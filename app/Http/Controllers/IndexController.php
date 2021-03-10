@@ -42,6 +42,7 @@ use App\Models\WeightSlot;
 use App\Notifications\SendPassword;
 use App\Mail\HiringRequests;
 use App\Mail\OrderMail;
+use App\Models\AddOn;
 
 class IndexController extends Controller
 {
@@ -705,5 +706,9 @@ class IndexController extends Controller
         }
         return view('public/blogdetails',['blog'=>$blog]);
     }
-    
+    public function customizer()
+    {
+        $addons = AddOn::all();
+        return view('public/customizer',['addons'=>$addons]);
+    }
 }

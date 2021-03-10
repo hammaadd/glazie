@@ -23,14 +23,14 @@ class ProductSizeController extends Controller
         return view('admin/productsize/index',['products'=>$products]);
         //productsize
     }
-    public function add(){
-        $products = Products::all();
-        return view('admin/productsize/create',['products'=>$products]);
+    public function add($id){
+        
+        return view('admin/productsize/create',['id'=>$id]);
     }
-    public function create(Request $request){
+    public function create($id,Request $request){
         $user = Auth::user();
         $validatedData = $request->validate([
-           'product_id'=>'required',
+           
            'name'=>'required',
            'height'=>'required',
            'width'=>'required',
@@ -38,7 +38,7 @@ class ProductSizeController extends Controller
            'price'=>'required'
            ]);
         $productsize = new ProductSize;
-        $productsize->product_id  = $request->input('product_id');
+        $productsize->product_id  = $id;
         $productsize->name  = $request->input('name');
         $productsize->height  = $request->input('height');
         $productsize->width  = $request->input('width');
@@ -46,19 +46,19 @@ class ProductSizeController extends Controller
         $productsize->price  = $request->input('price');
         $productsize->created_by  = $user->id;
         $productsize->save();
-        return redirect('admin/productsize')->with('info','The Product Size is created  is created Successfully');
+        return redirect('admin/products/view/'.$id)->with('info','Product Size created Successfully');
         
 
     }
     public function edit($id){
         abort_if(!$productsize = ProductSize::find($id), 403);
         $products = Products::all();
-        return view('admin/productsize/edit',['products'=>$products,'productsize'=>$productsize]);
+        return view('admin/productsize/edit',['productsize'=>$productsize]);
     }
     public function update($id , Request $request){
         $user = Auth::user();
         $validatedData = $request->validate([
-           'product_id'=>'required',
+        
            'name'=>'required',
            'height'=>'required',
            'width'=>'required',
@@ -66,7 +66,7 @@ class ProductSizeController extends Controller
            'price'=>'required'
            ]);
         $productsize = array(
-        'product_id'  => $request->input('product_id'),
+        'product_id' =>$request->input('product_id'),
         'name'  => $request->input('name'),
         'height'  => $request->input('height'),
         'width'  => $request->input('width'),
@@ -75,10 +75,12 @@ class ProductSizeController extends Controller
         'updated_by'  => $user->id
         
         );
-       
+        $product_id =$request->input('product_id');
         
         Productsize::where('id',$id)->update($productsize);
-        return redirect('admin/productsize')->with('info','The Product Size is updated  Successfully');
+        return redirect('admin/products/view/'.$product_id)->with('info','Product Size updated Successfully');
+        
+
         
 
     }

@@ -58,7 +58,9 @@
                             <td>
                                
                                 <a href="{{url('admin/social/edit/'.$social->id)}}" class="badge badge-primary"> <i class="fa fa-edit"></i> Edit</a>
+                                @if ($social->deleteable=="0")
                                 <a href="{{url('admin/social/delete/'.$social->id)}}" class="badge badge-danger" onclick="return confirm('Are You Sure to delete?')"> <i class="fa fa-trash"></i> Delete</a> 
+                                @endif
                             </td>
                         </tr>
                         

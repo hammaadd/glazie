@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ProductSize extends Model
 {
     use HasFactory,SoftDeletes;
+
+  
+    public function product(){
+        return $this->belongsTo(Products::class, 'product_id');
+    }
 }
+

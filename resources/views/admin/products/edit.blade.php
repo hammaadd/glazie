@@ -1,6 +1,9 @@
 @extends('admin-layout.layouts')
 @section('title','Update Product')
 @section('content')
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <div class="page-container">
@@ -192,7 +195,7 @@
                         <div class="row mt-2 mb-4">
                             
                             <div class="col-md-8" id="primary_div{{$images->id}}"> 
-                                <button class="btn btn-primary btn-xs btn-flat border-0 mt-1" data-id="{{$images->id}}" title="Make this image primary" onclick="makeprimary({{$images->id}})" id="primary" 
+                                <button class="btn btn-primary btn-xs btn-flat border-0 mt-1" id="primary{{$images->id}}" title="Make this image primary" onclick="makeprimary({{$images->id}})" 
                                     @if ($images->is_primary==1)
                                     disabled
                                     @endif
@@ -245,8 +248,8 @@ $(document).ready(function() {
            },
 
            success:function(result){
-                    alert("The image is selected for primary");
-
+            toastr.success("Iamge selected  successfully");
+            $('primary'+id).prop('disabled',true);
          		}
          		  	
            		
@@ -254,26 +257,36 @@ $(document).ready(function() {
         }
     }
     function remove(id){
+        //console.log({{$products->id}});
         confirmation = confirm("Are you sure to delete the image");
-if (confirmation==true) {
-    $.ajaxSetup({
-        headers:{'X-CSRF-Token':'{{csrf_token()}}'}
-    });
-    url = "{{url('admin/products/prdremove')}}";
-    $.ajax({
-   type:'POST',
-   url:url,
-    data:{id:id
-   },
+            if (confirmation==true) {
+                $.ajaxSetup({
+                    headers:{'X-CSRF-Token':'{{csrf_token()}}'}
+                });
+                url = "{{url('admin/products/prdremove')}}";
+                $.ajax({
+            type:'POST',
+            url:url,
+                data:{id:id,
+                    product_id:{{$products->id}}
+            },
 
-   success:function(result){
-            $("#abc"+id).css('display','none');
-          //  alert("The image is removed");
+            success:function(result){
+                console.log(result);
+                if(result==0)
+                {
+                    toastr.success("There should be only one image of product");
+                }
+                else{
+                    toastr.success("Iamge removed successfully");
+                    $('#abc'+id).remove();
+
+                }
+
+            }       
+                    
+                });
             }
-               
-           
-    });
-}
     }
     $(document).ready(function() {
         $('#summernote').summernote({
@@ -335,86 +348,27 @@ if (confirmation==true) {
     }
 });
 
-    </script>
+     </script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script>
-       
-    $(document).ready(function(){
-        $("#addbtn").click(function(){
-            var new_attr = $("#new_attr").val();
-            
-            //alert(product_id);
-            $.ajaxSetup({
-				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
-            });
-            url = "{{url('admin/attribute/creates')}}";
-            $.ajax({
-           type:'POST',
-           url:url,
-            data:{
-                new_attr:new_attr,
-               
-            },
-
-           success:function(result){
-               console.log(result);
-               var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-               
-               var len =jsonResult[0].length;
-               var option = "";
-                $('#attribute').empty();
-                var option = "<option >"+" Select Attribute"+"</option>";
-                for(var i=0; i<len; i++)
-                    {
-                    var attrId = jsonResult[0][i];
-                    var attrName = jsonResult[1][i];
-                    option += "<option value="+ attrId +" selected>"+attrName+"</option>";
-                    }
-                    $('#attribute').html(option);
-
-         		}
-         		  	
-           		
-            });
-        
-    
-    });
-    $("#attribute").change(function(){
-        $.ajaxSetup({
-				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
-            });
-       var attr = $("#attribute").val();
-       
-       url = "{{url('admin/attribute/get_terms')}}";
-            $.ajax({
-           type:'POST',
-           url:url,
-            data:{
-                attr:attr,
-               
-            },
-            success:function(result){
-                //console.log(result)
-                var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-               
-               var len =jsonResult[0].length;
-               var option = "";
-                $('#terms').empty();
-                var option = "<option disabled>"+" Select Terms"+"</option>";
-                for(var i=0; i<len; i++)
-                    {
-                    var attrId = jsonResult[0][i];
-                    var attrName = jsonResult[1][i];
-                    option += "<option value='"+ attrId +"' selected>"+attrName+"</option>";
-                    }
-                    $('#terms').html(option);
-                    //console.log(option);
-
-         		}
-         		  	
-               
-         		
-    });
-});
-    });
+        toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": true,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
     </script>
+
 @endsection

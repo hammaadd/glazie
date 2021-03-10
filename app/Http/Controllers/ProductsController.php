@@ -349,7 +349,7 @@ class ProductsController extends Controller
     public function makeprimary(Request $request){
         $id = $request->input('id');
         $products_id = $request->input('prodcut_id');
-        $products = Productgallery::where('products_id' ,'=',$products_id)->where('status' ,'=',"1")->where('is_primary' ,'=',"1")->get();
+        $products = Productgallery::where('products_id' ,'=',$products_id)->where('is_primary' ,'=',"1")->get();
         foreach($products as $product){
             $remove_primary = array(
                 'is_primary' => "0"
@@ -367,12 +367,20 @@ class ProductsController extends Controller
     }
     public function remove(Request $request){
         $id = $request->input('id');
-        $product_primary = array(
-            "status" =>"0"
-        );
-        $result = Productgallery::where('id',$id)
-        ->update($product_primary);
-        echo json_encode($result);
+        $product_id = $request->input('product_id');
+      
+      
+        $images = Productgallery::where('products_id','=',$product_id)->count();
+
+       
+        if ($images>1) {
+            $result = Productgallery::where('id',$id)
+            ->delete();
+            echo '1';
+        }
+        echo '0';
+        
+        
     }
     // public function addon(){
        
@@ -460,4 +468,72 @@ class ProductsController extends Controller
         }
         return view('admin/products/filterproduct',['products'=>$products]);
     }
+    public function addprdvariation($id)
+    {
+        $dataarray =array();
+      
+        $prodcutattribute = ProductAttribute::where('product_id','=',$id)->get();
+        foreach ($prodcutattribute as $key => $prdattr) {
+            $attribute_id = $prdattr->attribute;
+            //print_r($prdattr->attribute->id);
+           
+            $result = ProductTerm::where('product_id','=',$id)->where('attribute_id','=',$attribute_id->id)->get();
+           
+
+            array_push($dataarray,$result);
+            }
+            $count = 0;
+           for ($i=0;$i<count($dataarray) ;$i++) {
+            for ($j=$i+1;$j<count($dataarray) ;$j++) {
+                $count +=  count($dataarray[$i])* count($dataarray[$j]);
+            }
+           }
+           
+           return view('admin/productsize/addprdvariat',['dataarray'=>$dataarray,'id'=>$id,'count'=>$count]);
+
+        // $provided = [
+        //     'ad' => [
+        //         'color' => ['green', 'red'],
+        //         'size' => ['Small', 'Medium','large'],
+        //         'size2' => ['dummy1', 'dummy2'],
+        //     ],
+        // ]; // Reduced the provided data to reduce the output for sample purposes.
+        
+        // $result = [];
+        
+        // foreach ($provided as $type => $attributes) {
+        //     foreach ($attributes['color'] as $color) {
+        //         foreach ($attributes['size'] as $size) {
+        //             foreach ($attributes['size2'] as $size2) {
+        //                 $result[] = compact('color','size','size2');                                               
+        //             }
+        //         }
+        //     }
+        // }
+        // echo "<pre>";
+        // foreach($result as $res){
+        //     echo $res['color'];
+        //     echo $res['size'];
+        //     echo $res['size2']."<br>";
+        // }
+    //     $term_name = array();
+    //        $term_id = array();
+    //        $attrbute_id = $request->input('attr');
+    //        $product_id = $request->input('product_id');
+    //        $terms = DB::table('terms')
+    //        ->join('product_terms', 'terms.id', '=', 'product_terms.term_id')
+    //        ->select('terms.*', 'product_terms.term_id')
+    //        ->where('product_terms.attribute_id','=',$attrbute_id)
+    //     ->where('product_terms.product_id','=',$product_id)
+    //     ->where('product_terms.deleted_at','=',null)->get();
+           
+            
+    //         foreach ($terms as $key => $term) {
+    //             array_push($term_id,$term->id);
+    //             array_push($term_name,$term->name);
+    //         }
+    //         $obj = (object) array($term_id,$term_name);
+    //     $prodcutattribute = ProductAttribute::where('product_id','=',$id)->get();
+    //     
+     }
 }
