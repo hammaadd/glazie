@@ -471,12 +471,13 @@ class ProductsController extends Controller
     public function addprdvariation($id)
     {
         $dataarray =array();
-      
+        $attrbute_array = array();
         $prodcutattribute = ProductAttribute::where('product_id','=',$id)->get();
         foreach ($prodcutattribute as $key => $prdattr) {
             $attribute_id = $prdattr->attribute;
             //print_r($prdattr->attribute->id);
-           
+
+           array_push($attrbute_array,$attribute_id->attribute_name);
             $result = ProductTerm::where('product_id','=',$id)->where('attribute_id','=',$attribute_id->id)->get();
            
 
@@ -489,7 +490,7 @@ class ProductsController extends Controller
             }
            }
            
-           return view('admin/productsize/addprdvariat',['dataarray'=>$dataarray,'id'=>$id,'count'=>$count]);
+           return view('admin/productsize/addprdvariat',['dataarray'=>$dataarray,'id'=>$id,'count'=>$count,'attrbute_array'=>$attrbute_array]);
 
         // $provided = [
         //     'ad' => [

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Order;
@@ -8,8 +7,6 @@ use App\Models\Products;
 use App\Models\PrdVariety;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-
 use DB;
 class AdminController extends Controller
 {
@@ -21,11 +18,7 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware('auth:admin');   
-        if(Auth::guard('admin')){
-            return redirect('/admin/dashboard');
-        }
     }
-
     /**
      * Show the application dashboard.
      *
@@ -33,7 +26,6 @@ class AdminController extends Controller
      */
     public function index()
     {   
-
         $wed = date('Y-m-d');
         $month = date('d');
         $ysd = date('Y')."-01-01";
@@ -83,12 +75,13 @@ class AdminController extends Controller
         $latest_orders = Order::orderBy('id', 'desc')->limit(5)->get();
          // Latees  Products 
         $latest_products = Products::orderBy('id', 'desc')->limit(5)->get();
-
         $product_type =   OrderDetails::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), ">=", $msd)->where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "<=", $ed)->get();
         $prdvarieties = PrdVariety::all();
         $quantity = 0;
-        $quantity_array = array();
-        $variety_name = array();
+        //$quantity_array = array();
+        //$variety_name = array();
+        $data_array = array();
+        $sales_array = array();
         foreach ($prdvarieties as $variety) {
             foreach($variety->products as $products){
              
@@ -99,17 +92,18 @@ class AdminController extends Controller
                         $quantity = $quantity +$order->quantity; 
                      }
                 }
-            } 
-            array_push($quantity_array,$quantity);
-            array_push($variety_name,$variety->prd_name);
+            }
+            $data_array = array('label' => $variety->prd_name, 'y' => $quantity);
+            array_push($sales_array, $data_array);
+            //array_push($quantity_array,$quantity);
+            //array_push($variety_name,$variety->prd_name);
             $quantity =0;
            
         }
         
-    
+        $sales_array = json_encode($sales_array);
        
-        return view('admin/index',['installers'=>$installers,'customers'=>$customers,'orders'=>$orders ,'today_sale'=>$today_sale,'monthly_sale' =>$monthly_sale,'yearly_sale'=>$yearly_sale,'latest_orders' =>$latest_orders,'latest_products'=>$latest_products,'product_type'=>$product_type,'quantity_array'=>$quantity_array,'variety_name'=>$variety_name]);
-
+        return view('admin/index',['installers'=>$installers,'customers'=>$customers,'orders'=>$orders ,'today_sale'=>$today_sale,'monthly_sale' =>$monthly_sale,'yearly_sale'=>$yearly_sale,'latest_orders' =>$latest_orders,'latest_products'=>$latest_products,'product_type'=>$product_type, 'sales'=>$sales_array]);
     }
     public function admin_logout(Request $request)
     {
