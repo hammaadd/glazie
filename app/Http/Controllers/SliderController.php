@@ -61,7 +61,7 @@ class SliderController extends Controller
             $updateslider = array(
                 'heading' => $request->input('heading'),
                 'description' => $request->input('description'),
-                
+                'updated_by' =>Auth::id()
             );
 
             SLider::where('id',$id)->update($updateslider);
