@@ -266,9 +266,9 @@
                                                                         <td>{{$glass->name}}</td>
                                                                         <td>{{$glass->frame_price}}</td>
                                                                         <td>{{$glass->quantity}}</td>
-                                                                        <td>{{$glass->wieght}}</td>
-                                                                        <td><img src="{{asset('admin-assets/addon/glass/'.$glass->image)}}" height="100px" width="100px"></td>
                                                                         
+                                                                        <td><img src="{{asset('admin-assets/addon/glass/'.$glass->image)}}" height="100px" width="100px"></td>
+                                                                        <td>{{$glass->wieght}}</td>
                                                                         
                                                                         <td>{{$glass->height}}</td>
                                                                         <td>{{$glass->width}}</td>

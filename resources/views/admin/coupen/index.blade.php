@@ -9,7 +9,7 @@
     <div class="main-content">
         <div class="page-header">
             <h2 class="header-title ">Coupun</h2>
-            <div class="header-sub-title">
+            <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
                     <a class="breadcrumb-item" href="#">Coupun</a>
@@ -78,15 +78,14 @@
                             <td>{{$loop->iteration}}</td>
                             <td>{{$coupen->coupen_name}}</td>
                             <td>{{$coupen->coupen_code}}</td>
+                            @php
+                                $date = date('Y-M-d');
+                            @endphp
 
                             <td>
-                                @if ($coupen->status=='used')
+                                @if (($coupen->limiteduser=='yes' && $coupen->no_of_user<=0)||($coupen->limited_time=='yes' && $coupen->limited_time<$date))
                                 <span class="text-danger">Used</span>
-                                @endif
-                                @if ($coupen->status=='remaining')
-                                <span class="text-warning">Paritialy Used</span>
-                                @endif
-                                @if ($coupen->status=='unuse')
+                               @else
                                 <span class="text-success">Unuse</span>
                                 @endif
                             </td>

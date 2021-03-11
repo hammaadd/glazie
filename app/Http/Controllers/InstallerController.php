@@ -47,6 +47,7 @@ class InstallerController extends Controller
         $installer->password = Hash::make($request->input('password'));
         $installer->contact_no = $request->input('contact_no');
         $installer->address = $request->input('address');
+        $installer->postcode = $request->input('postcode');
         $installer->type = 'installer';
         
         $installer->name = $request->input('first_name')."".$request->input('last_name');
@@ -110,7 +111,7 @@ class InstallerController extends Controller
             $installer_company->country_id = $counntry_id;
             $installer_company->state_id = $shipstate_id ;
             $installer_company->city_id = $city_id;
-            $installer_company->postcode = $request->input('postcode');
+            $installer_company->postcode = $request->input('installerpostcode');
             $installer_company->email  =$request->input('company_email');
             $installer_company->contact_no = $request->input('company_contactno');
             $installer_company->address = $request->input('address');
@@ -168,7 +169,7 @@ class InstallerController extends Controller
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
             'email' => $request->input('email'),
-           
+            'postcode' => $request->input('installerpostcode'),
             'contact_no' => $request->input('contact_no'),
             'address' => $request->input('address'),
             'type' => 'installer',
@@ -191,7 +192,7 @@ class InstallerController extends Controller
             User::where('id',$id)->update($userimage);
         }
             User::where('id',$id)->update($user_array);
-            echo 
+            
             $installerinfoid = $request->input('installinfoid');
             $types = $request->input('installation_type');
             $installation_type =  implode(",",$types);

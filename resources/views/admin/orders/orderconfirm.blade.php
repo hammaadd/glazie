@@ -52,9 +52,10 @@
 
                                         </td>
                                         <td>
-                                            <h5><b class="mr-2 m-2">Total Amount:</b>{{$order->total_amount}}</h5>
-                                            <h5><b class="mr-2 m-2">Discount:</b>{{$order->discount}}</h5>
-                                            <h5><b class="mr-2 m-2">Net Total:</b>{{$order->net_total}}</h5>
+                                            <h5><b class="mr-2 m-2">Total Amount:</b ><span class="float-right">{{$order->total_amount}}</span></h5>
+                                            <h5><b class="mr-2 m-2">Discount:</b><span class="float-right">{{$order->discount}}</span></h5>
+                                            <h5><b class="mr-2 m-2">Shipping Cost:</b><span class="float-right">{{$order->shipp_cost}}</span></h5><hr>
+                                            <h5><b class="mr-2 m-2">Net Total:</b><span class="float-right">{{$order->net_total}}</span></h5>
                                             
                                         </td>
                                         <td>@php

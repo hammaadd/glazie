@@ -41,7 +41,7 @@ class AdminController extends Controller
         // Customers data
         $customers = User::where('type','=','customer')->count();
         //  Today  total Quantity sale 
-        $today = Order::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "=", $ed)->where('status','=','completed')->get();
+        $today = Order::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "=", $ed)->get();
         //print_r($today);
         
         $today_sale = 0;
@@ -52,7 +52,7 @@ class AdminController extends Controller
         }
         
         // Total Quantity of this year
-        $month = Order::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), ">=", $msd)->where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "<=", $ed)->where('status','=','completed')->get();
+        $month = Order::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), ">=", $msd)->where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "<=", $ed)->get();
         $monthly_sale = 0;
         foreach($month as $months){
             foreach($months->details as $orderdetails){

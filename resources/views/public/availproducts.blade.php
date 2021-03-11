@@ -40,7 +40,7 @@
                             </a>
                             <div class="product_action_box">
                                 <ul class="list_none pr_action_btn">
-                                    <li class="add-to-cart"><a href="#"><i class="bx bx-cart"></i> Add To Cart</a></li>
+                                    <li class="add-to-cart"><a style="cursor: pointer" onclick="addtocart({{$product->id}})"><i class="bx bx-cart"></i> Add To Cart</a></li>
                                     <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li>
                                     <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>
                                     <li><a href="#"><i class="bx bx-heart"></i></a></li>
@@ -87,6 +87,33 @@
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
+}
+function addtocart(id)
+{
+    url = "{{url('prdaddtocart')}}";
+        $.ajax({
+       type:'POST',
+       url:url,
+       data:{
+           id:id
+       },
+       success:function(result){ 
+
+        toastr.success("Prodcut Add to cart Successfully");
+       
+       if(result>0)
+       {
+        $('#cart_items').html(result);
+        $('#cart_items').show();
+        
+       }
+       else{
+        $('#cart_items').hide();
+       }
+        
+        }	
+        });
+
 }
 </script>
 

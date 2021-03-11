@@ -46,7 +46,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="button" class="btn btn-success btn-xs float-right" id="addcolor"><i class="fa fa-plus-circle"></i> Add Frame Glass</button>
+                                    <button type="button" class="btn btn-success btn-xs float-right" id="addcolor"><i class="fa fa-plus-circle"></i> Add Furniture</button>
                                     
                                 </div>
                             </div>

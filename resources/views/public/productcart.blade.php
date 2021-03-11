@@ -82,7 +82,7 @@
                     <div class="col-lg-12">
                         <div class="cart-shiping-update-wrapper">
                             <div class="cart-shiping-update">
-                                <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0" href="{{url('availproducts')}}">Continue Shopping</a>
+                                <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0" href="{{url('availproducts')}}">{{}} Continue Shopping</a>
                             </div>
                             <div class="cart-clear">
                                 {{-- <button class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 mx-3">Update Shopping Cart</button> --}}
@@ -217,6 +217,7 @@
                 url:url,
                 success:function(result){
                      $("#abc").html(result);
+                     var removedqty = $('#no_of_qty'+id).val();
                      if (parseInt($('#quantity').val())!=0) {
                              $('#cart_items').show();
                              $('#cart_items').html($('#quantity').val());

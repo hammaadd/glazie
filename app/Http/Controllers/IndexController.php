@@ -54,8 +54,7 @@ class IndexController extends Controller
         return view('public/index',['brands'=>$brands,'categories'=>$categories,'sliders'=>$sliders]);
     }
     public function availproducts(){
-        $products = Products::all();
-        
+        $products = Products::where('publish','=','public')->get();
         return view('public/availproducts',['products'=>$products]);
     } 
     public function product_details($id){
@@ -114,6 +113,64 @@ class IndexController extends Controller
         } 
 
         return redirect('/')->with('info','The Product is add to cart successfully');
+
+
+    }
+    public function prdaddtocart(Request $request)
+    {
+        
+        
+        $product_id = $request->input('id');
+        $products  = Products::find($product_id);
+        $product_name = $products->product_name;
+        $price = $products->sale_price;
+        $quantity = 1;
+        $photo =  "";
+        $regular_price = $products->regular_price;
+        
+        $cart = [
+        
+                "product_id" =>  $product_id,
+                "product_name" =>  $product_name,
+                "price" =>$price,
+                'regular_price' => $regular_price,
+                "quantity" => $quantity,
+                "photo" => $photo
+        ];
+
+        $request->session()->push('cart', $cart);
+        $cartdata = Cart::where('session_id','=',session()->getId())->where('product_id','=',$product_id)->get();
+        //echo count($cartdata);
+        
+        if (count($cartdata)>0) {
+       
+            foreach ($cartdata as $key => $cart) {}
+            $update_cart = array(
+                "quantity"=>$quantity +$cart->quantity,
+              
+            );
+            Cart::where('id',$cart->id)->update($update_cart);
+        }
+        else{
+           
+        
+        $carts = $request->session()->get('cart');
+        $cart = new Cart;
+        $cart->session_id = session()->getId();
+        $cart->product_id = $product_id;
+        $cart->price = $price;
+        $cart->regular_price = $regular_price;
+        $cart->quantity = $quantity;
+        $cart->save();
+        
+        } 
+        $count = 0;
+        $session_id = session()->getId();
+        $carts = Cart::where('session_id','=',$session_id)->get();
+        foreach($carts as $cart){
+            $count = $cart->quantity+$count; 
+        }
+        echo json_encode($count);
 
 
     }

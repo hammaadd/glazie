@@ -38,15 +38,25 @@ class SocialController extends Controller
         return view('admin/social/edit',['social'=>$social]);
     }
     public function update($id,Request $request){
+        $social = SiteSetting::find($id);
         $validatedData = $request->validate([
             'key'=>'required',
             'value'=>'required'
             ]);
-            $update_site = array(
-            'key' => $request->input('key'),
-            'value' => $request->input('value'),
-            
-            );
+            if($site->deleteable == '0'){
+                $update_site = array(
+                    'key' => $request->input('key'),
+                    'value' => $request->input('value'),
+                    
+                    );
+            }
+            else{
+                $update_site = array(
+                    
+                    'value' => $request->input('value'),
+                    
+                    );
+            }
             SiteSetting::where('id',$id)->update($update_site); 
             return redirect('admin/social')->with('info','Social is updated');
     }

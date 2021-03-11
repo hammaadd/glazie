@@ -22,7 +22,7 @@ class AddonController extends Controller
     }
     public function index()
     {
-        $addons = AddOn::all();
+        $addons = AddOn::orderBy('id','desc')->get();
         return view('admin/addon/index',['addons'=>$addons]);
     } 
     public function create(){
@@ -38,7 +38,8 @@ class AddonController extends Controller
             'height'=>'required',
            'width'=>'required',
            'length'=>'required',
-           'weight'=>'required'
+           'weight'=>'required',
+           'model_name' =>'required|regex:/^[\pL\s\-]+$/u'
         ]);
         
 
@@ -111,7 +112,7 @@ class AddonController extends Controller
     {
         $validatedData = $request->validate([
             'product_id' =>'required',
-            'model_name' =>'required',
+            'model_name' =>'regex:/^[\pL\s\-]+$/u',
             'height'=>'required',
             'width'=>'required',
             'length'=>'required',

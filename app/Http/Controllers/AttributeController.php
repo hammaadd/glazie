@@ -17,7 +17,7 @@ class AttributeController extends Controller
        
     }
     public function index(){
-        $attributes = Attribute::all();
+        $attributes = Attribute::orderBy('id','desc')->get();
      
         return view('admin/attribute/index',['attributes' =>$attributes]);
     }
@@ -26,7 +26,7 @@ class AttributeController extends Controller
     }
     public function create(Request $request){
         $validatedData = $request->validate([
-            'attribute_name' => 'required',
+            'attribute_name' => 'required|regex:/^[\pL\s\-]+$/u',
             
             'image' => 'mimes:jpg,png,jpeg,gif,svg|max:5048',
         ]);
@@ -61,7 +61,7 @@ class AttributeController extends Controller
         $user = Auth::user();
         
         $validatedData = $request->validate([
-            'attribute_name' => 'required',
+            'attribute_name' => 'required|regex:/^[\pL\s\-]+$/u',
             
             'image' => 'mimes:jpg,png,jpeg,gif,svg|max:5048',
         ]);

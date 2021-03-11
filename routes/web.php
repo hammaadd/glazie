@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CategoriesController;
+
 use App\Models\Categories;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home','HomeController@index')->name('home');
 Route::get('/admin/dashboard', 'AdminController@index')->name('admin.dashboard');
 Route::get('admin/adminlogout' ,'AdminController@admin_logout');
 Route::get('availproducts','IndexController@availproducts');
@@ -39,7 +39,7 @@ Route::post('/admin/change/profile','AdminsController@profilechange');
 Route::get('admin/assignment', 'AssignmentController@index');
 Route::post('quoteforinstaller','IndexController@quoteforinstaller');
 Route::post('getmail','IndexController@getmail');
-
+Route::post('prdaddtocart','IndexController@prdaddtocart');
 
 // Door Builder Routes
 Route::get('door-build','DoorBuilderController@index');

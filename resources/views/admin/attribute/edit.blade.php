@@ -15,7 +15,7 @@
         </div>
         <div class="row">
          
-            <div class="col-md-12">
+            <div class="col-md-6 offset-md-3">
                 <div class="card">
                     <form action="{{ url('/admin/attributes/update/'.$attribute->id)}}"  method="post" enctype="multipart/form-data">
                     <div class="card-header">
@@ -25,7 +25,7 @@
                         <div class="row">
                         @if(count($errors)>0)
                                 @foreach($errors->all() as $error)
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="alert alert-danger text-light" style="background-color: #e2584c">
                                         {{$error}}
                                     </div>
@@ -34,7 +34,7 @@
                             @endif
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="">Attribute Name</label>
                                 <input type="text" class="form-control" name="attribute_name" placeholder="Attribute Name" autofocus value="{{$attribute->attribute_name}}">
                             </div>
@@ -43,21 +43,25 @@
                            
                     
                             
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="">Image</label>
                                 <input type="file" class="form-control" name="image">
                             </div>
                         </div>
                         <div class="row">
-                           <label for="">Description</label>
+                          <div class="col-md-12">
+                            <label for="">Description</label>
                            
-                           <textarea name="description" class="form-control" cols="30" rows="10" placeholder="Attribute Description">{{$attribute->description}}</textarea>
+                            <textarea name="description" class="form-control" cols="30" rows="10" placeholder="Attribute Description">{{$attribute->description}}</textarea>
+                          </div>
                         </div>
                         
                         <div class="row">
-                            <button type="submit" class="btn btn-success mt-3"><i class="fa fa-edit"></i> Update Attribute</button>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-success mt-3"><i class="fa fa-edit"></i> Update Attribute</button>
                             <a href="{{url('admin/attributes') }}" class="btn btn-danger mt-3 ml-3"> <i class="fa fa-times"></i> Cancel</a>
                        
+                            </div>
                         </div>
                     </div>
                     </form>
