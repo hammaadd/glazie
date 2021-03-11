@@ -35,17 +35,39 @@
                                 @endforeach
                             @endif
                         </div>
-                        
+                       
                         <div class="row">                          
                             @csrf                           
-                            @for ($i = 0; $i < $count; $i++)
+                           
                             <table class="table table-hover">
-                                 
-                            @if(count($dataarray)>1)
-                                
-                            @endif
+                               
+
+                                 <thead>
+                                    <tr>
+                                    @if(count($attrbute_array)>1)
+                                        
+                                            @for ($i = 0; $i < count($attrbute_array); $i++)
+                                            <th>{{$attrbute_array[$i]}}</th>
+                                            @endfor  
+                                            <th>Price</th>
+                                            <th>Remove</th>
+                                            @endif
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    @for ($i = 0; $i < $count; $i++)
+                                    <tr>
+                                      @for($j=0;$j<  )
+                                      @endfor
+                                        <td><input type="number" class="form-control" name="price" placeholder="Enter price "></td>
+                                        <td><button class="btn btn-danger"><i class="fa fa-times"></i></button></td>
+                                    </tr>
+                                    @endfor
+                                    
+                                </tbody>
                             </table>
-                            @endfor
+                            
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-success mt-3"><i class="fa fa-plus"></i> Add Product Variation</button>

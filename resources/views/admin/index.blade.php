@@ -7,7 +7,6 @@
         display: none;
     }
     </style>            
-
     <!-- Content Wrapper START -->
     <div class="main-content">
         <div class="row">
@@ -126,10 +125,9 @@
         </div>
      <div class="row">
          <div class="col-md-12">
-             
             <script>
-                var quantiy = <?php echo json_encode($quantity_array,JSON_PRETTY_PRINT)?>;
-                var name =  <?php echo json_encode($variety_name,JSON_PRETTY_PRINT)?>;
+                // var quantiy = <?php //echo json_encode($quantity_array,JSON_PRETTY_PRINT)?>;
+                // var name =  <?php //echo json_encode($variety_name,JSON_PRETTY_PRINT)?>;
                 
                 window.onload = function () {
                 
@@ -147,18 +145,7 @@
                         showInLegend: true, 
                         legendMarkerColor: "grey",
                         legendText: "",
-                        dataPoints: [      
-                             
-                                 {y:10, label:"abc"}
-                                    
-                                    
-                            
-                            
-                            
-                            
-                           
-                            
-                        ]
+                        dataPoints: <?php echo $sales; ?>
                     }]
                 });
                 chart.render();
@@ -237,7 +224,6 @@
                 </div>
             </div>
         </div>
-
     </div>
   
 </div>
