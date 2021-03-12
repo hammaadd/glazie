@@ -24,6 +24,11 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
+                                <li @if ($url=="admin/prdvariety"||$url=="admin/prdvariety/create")
+                                class="active"
+                            @endif>
+                                    <a href="{{url('admin/prdvariety')}}"> Product Variety</a>
+                                </li>
                                 <li @if ($url=="admin/products") class="active" @endif>
                                     <a href="{{url('admin/products')}}">Product List</a>
                                 </li>
@@ -45,6 +50,7 @@
                             @endif>
                                     <a href="{{url('admin/brands')}}"> Brands</a>
                                 </li>
+                               
                                 
                                
                                 {{-- <li @if ($url=="admin/productdetail") class="active" @endif>
