@@ -196,7 +196,9 @@ Route::prefix('admin')->group(function () {
 
 // Product Variation 
     Route::get('addproductvariation/{id}','ProductsController@addprdvariation');
-
+    Route::post('prdvariation/create/{id}','ProductsController@createvariation');
+    Route::get('variation/deletevariation/{id}','ProductsController@deletevariation');
+    Route::post('products/chceckvariation','ProductsController@checkversion');
     // Order Management Routes
     Route::get('orders','OrdersController@index');
     Route::post('checkorder','OrdersController@checkorder');

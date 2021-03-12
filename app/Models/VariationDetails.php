@@ -18,4 +18,9 @@ class VariationDetails extends Model
   {
       return $this->belongsTo(Variation::class, 'variation_id');
   }
+  
+  public function prd_term()
+  {
+      return $this->belongsTo(ProductTerm::class, 'prd_term_id',);
+  }
 }

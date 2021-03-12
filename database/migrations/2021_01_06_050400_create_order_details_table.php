@@ -20,7 +20,7 @@ class CreateOrderDetailsTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('quantity');
             $table->double('price',9,2);
-            $table->enum('type',['customer','installer']);
+     
             $table->softDeletes();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

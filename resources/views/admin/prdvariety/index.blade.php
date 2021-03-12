@@ -43,7 +43,6 @@
                                        <tr>
                                            <th>Sr #</th>
                                            <th>Name </th>
-                                          
                                            <th>Action</th>
                                        </tr>
                                    </thead>
@@ -52,12 +51,10 @@
                                            <tr>
                                                <td>{{$loop->iteration}}</td>
                                                <td>{{$variety->prd_name}}</td>
-                                              
                                                <td>
                                                 <a href="{{url('admin/prdvariety/edit/'.$variety->id)}}" class="btn btn-info btn-xs" > <i class="anticon anticon-edit"></i> Edit</a>
                                                    <a href="{{url('admin/prdvariety/delete/'.$variety->id)}}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to remove')"> <i class="anticon anticon-delete"></i> Delete</a>
-                                               </td>
-                                            
+                                               </td> 
                                            </tr>
                                        @endforeach
                                    </tbody>
@@ -68,12 +65,7 @@
                </div>
            </div>
        </div>
-        
-      
     </div>
-    <!-- Model Start Here-->
-    
-    
     <link href="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet">
 
 @endsection
@@ -83,7 +75,6 @@
 <script src="{{asset('admin-assets/vendors/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.js')}}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
 <script>
     toastr.options = {
     "closeButton": true,

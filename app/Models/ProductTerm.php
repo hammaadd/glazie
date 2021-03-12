@@ -19,4 +19,9 @@ class ProductTerm extends Model
         return $this->belongsTo(Term::class, 'term_id', 'id');
     }
     
+    public function variationdetails()
+    {
+        return $this->hasMany(VariationDetails::class, 'prd_term_id');
+    }
+    
 }

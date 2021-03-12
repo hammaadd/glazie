@@ -17,9 +17,9 @@
         </div>
         <div class="row">
             
-            <div class="col-md-12">
+            <div class="col-md-6 offset-md-3" >
                 <div class="card">
-                    <form action="{{ url('admin/productsize/create/')}}"  method="post" enctype="multipart/form-data" id="create_size">
+                    <form action="{{ url('admin/prdvariation/create/'.$id)}}"  method="post" enctype="multipart/form-data" id="create_size">
                     <div class="card-header">
                         <h4 class="card-title">Add Product Variation</h4>
                     </div>
@@ -35,39 +35,29 @@
                                 @endforeach
                             @endif
                         </div>
-                       
-                        <div class="row">                          
-                            @csrf                           
-                           
-                            <table class="table table-hover">
-                               
-
-                                 <thead>
-                                    <tr>
-                                    @if(count($attrbute_array)>1)
-                                        
-                                            @for ($i = 0; $i < count($attrbute_array); $i++)
-                                            <th>{{$attrbute_array[$i]}}</th>
-                                            @endfor  
-                                            <th>Price</th>
-                                            <th>Remove</th>
-                                            @endif
-                                        </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                    @for ($i = 0; $i < $count; $i++)
-                                    <tr>
-                                      @for($j=0;$j<  )
-                                      @endfor
-                                        <td><input type="number" class="form-control" name="price" placeholder="Enter price "></td>
-                                        <td><button class="btn btn-danger"><i class="fa fa-times"></i></button></td>
-                                    </tr>
-                                    @endfor
-                                    
-                                </tbody>
-                            </table>
-                            
+                        @csrf             
+                        @for($i=0;$i<$count;$i++)
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label for="">{{$attrbute_array[$i]}}</label>
+                                @php
+                                    $j=$i+1;
+                                @endphp
+                                <select name="terms[]" id="variation{{$j}}" class="form-control" onchange="checkvariation({{$j}})">
+                                    <option value="">Select {{$attrbute_array[$i]}}</option>
+                                    @foreach ($dataarray[$i] as $terms)
+                                        <option value="{{$terms->id}}">{{$terms->term->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>   
+                        @endfor   
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="">Price </label>
+                                <input type="number" class="form-control" name="price" placeholder="Price">
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-success mt-3"><i class="fa fa-plus"></i> Add Product Variation</button>
@@ -87,6 +77,38 @@
 @endsection
 @section('script')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-
-
+<script>
+    let abc = Array();
+    function checkvariation(i)
+    {
+        
+        var variation = $('#variation'+i).val();
+        var product_id = {{$id}};
+        var j = {{$j}};
+        abc.push(variation);
+        console.log(abc);
+        if(abc.length==j){
+            console.log("OK");    
+        }
+        
+        // console.log(variation);
+        // $.ajaxSetup({
+		// 		headers:{'X-CSRF-Token':'{{csrf_token()}}'}
+        //     });
+        //     url = "{{url('admin/products/chceckvariation')}}";
+        //     console.log(url);
+        //     $.ajax({
+        //    type:'POST',
+        //    url:url,
+        //     data:{
+        //         variation:variation,  
+        //         product_id:product_id
+        //    },
+        //    success:function(result){
+        
+        //    }
+        //     });
+    
+    }
+</script>
 @endsection
