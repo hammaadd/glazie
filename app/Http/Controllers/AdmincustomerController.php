@@ -23,8 +23,8 @@ class AdmincustomerController extends Controller
     public function create(Request $request)
     {
         $validatedData = $request->validate([
-            'first_name' => 'required|alpha',
-            'last_name' => 'required|alpha',
+            'first_name' => 'required|regex:/^[\pL\s\-]+$/u',
+            'last_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'email' => 'required',
             'password' => 'required',
             'contact_no' => 'required',
@@ -41,7 +41,7 @@ class AdmincustomerController extends Controller
         $customer->contact_no = $request->input('contact_no');
         $customer->address = $request->input('address');
         $customer->type = 'customer';
-        $customer->name = $request->input('first_name').''.$request->input('last_name');
+        $customer->name = $request->input('first_name').' '.$request->input('last_name');
         $customer->login_status = $request->input('login_status');
         if($request->file('image')){
             $file = $request->file('image');
@@ -66,8 +66,8 @@ class AdmincustomerController extends Controller
     public function update($id,Request $request)
     {
         $validatedData = $request->validate([
-            'first_name' => 'required|alpha',
-            'last_name' => 'required|alpha',
+            'first_name' => 'required|regex:/^[\pL\s\-]+$/u',
+            'last_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'email' => 'required',
             'contact_no' => 'required',
             'login_status' =>'required',
@@ -83,7 +83,7 @@ class AdmincustomerController extends Controller
         'contact_no' => $request->input('contact_no'),
         'address' => $request->input('address'),
         'type' => 'customer',
-        'name' => $request->input('first_name').''.$request->input('last_name'),
+        'name' => $request->input('first_name').' '.$request->input('last_name'),
         'login_status' => $request->input('login_status')
         );
         User::where('id',$id)->update($update_customer);

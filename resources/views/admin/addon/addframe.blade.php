@@ -45,12 +45,12 @@
                             <div class="row">
                                
                                 <div class="col-md-6">
-                                    <label for="">Frame  Name </label>
+                                    <label for="">Frame Name </label>
                                     <input type="text" class="form-control rounded-0" name="model_name" placeholder="Enter Model Name">
                                 </div>
                           
                                 <div class="col-md-6">
-                                    <label for="">Image</label>
+                                    <label for="">Image <small>(Svg Only)</small></label>
                                     <input type="file" class="form-control rounded-0" name="image">
                                 </div>
                             </div>

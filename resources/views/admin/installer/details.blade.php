@@ -243,7 +243,7 @@ crossorigin="anonymous"></script>
                                                                     <th>Sr #</th>
                                                                     <th>Image</th>
                                                                     <th>Rating</th>
-                                                                    <th>Feedback</th>
+                                                                    <th>Desctiption</th>
                                                                     <th>Action</th>
                                                                 </tr>
                                                             </thead>
@@ -257,12 +257,14 @@ crossorigin="anonymous"></script>
                                                                             @endif
                                                                         </td>
                                                                         <td><div class="jstars" data-value="{{$userstest->rating}}"></div></td>
-                                                                        <td>{{$userstest->description}}</td>
+                                                                        
+                                                                        <td>{{mb_strimwidth($userstest->description, 0, 20, ' ........')}}</td>
                                                                         <td>
                                                                             <a href="{{url('admin/edittestmonial/'.$userstest->id)}}" class="btn btn-info btn-xs"><i class="fa fa-edit"></i> Edit</a>
                                                                             <a href="{{url('admin/deletetestmonial/'.$userstest->id)}}" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delte</a>
                                                                         </td>
                                                                     </tr>
+                                                                    
                                                                 @endforeach
                                                             </tbody>
                                                        </table>

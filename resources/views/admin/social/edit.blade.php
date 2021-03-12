@@ -37,7 +37,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="">Key</label>
-                                <input type="text" class="form-control" name="key" placeholder="Enter Key" value="{{$social->key}}">
+                                <input type="text" class="form-control" name="key" placeholder="Enter Key" value="{{$social->key}}"
+                                @if($social->deleteable=='1')
+                                disabled
+                                @endif
+                                >
                             </div>
                             <div class="col-md-6">
                                 <label for="">Value</label>

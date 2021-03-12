@@ -5,7 +5,7 @@
 <div class="side-nav" style="background-color: #e3e3e3">
                 <div class="side-nav-inner">
                     <ul class="side-nav-menu scrollable">
-                        <li class="nav-item dropdown"  >
+                        <li  >
                             <a class="dropdown-toggle" href="{{url('admin/dashboard')}}">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-dashboard"></i>
@@ -24,6 +24,11 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
+                                <li @if ($url=="admin/prdvariety"||$url=="admin/prdvariety/create")
+                                class="active"
+                            @endif>
+                                    <a href="{{url('admin/prdvariety')}}"> Product Variety</a>
+                                </li>
                                 <li @if ($url=="admin/products") class="active" @endif>
                                     <a href="{{url('admin/products')}}">Product List</a>
                                 </li>
@@ -34,17 +39,18 @@
                                 {{-- <li @if ($url=="admin/products") class="active" @endif>
                                     <a href="{{url('admin/products')}}">Prodcuts</a>
                                 </li> --}}
-                                <li @if ($url=="admin/categories") class="active" @endif>
+                                <li @if ($url=="admin/categories" ||$url=="admin/categories/add") class="active" @endif>
                                     <a href="{{url('admin/categories')}}">Categories</a>
                                 </li>
-                                <li @if ($url=="admin/attributes") class="active" @endif>
+                                <li @if ($url=="admin/attributes"||$url=="admin/attributes/add") class="active" @endif>
                                     <a href="{{url('admin/attributes')}}">Attributes</a>
                                 </li>
-                                <li @if ($url=="admin/brands")
+                                <li @if ($url=="admin/brands"||$url=="admin/brands/add")
                                 class="active"
                             @endif>
-                                    <a href="{{url('admin/brands')}}">   Brands</a>
+                                    <a href="{{url('admin/brands')}}"> Brands</a>
                                 </li>
+                               
                                 
                                
                                 {{-- <li @if ($url=="admin/productdetail") class="active" @endif>
@@ -82,7 +88,7 @@
                                 @endif>
                                     <a href="{{url('admin/addons')}}">Model List</a>
                                 </li>
-                                <li @if ($url=="admin/colors")
+                                <li @if ($url=="admin/colors"|| $url=="admin/colors/create")
                                     class="active"
                                 @endif>
                                     <a href="{{url('admin/colors')}}">Available Colors</a>
@@ -129,7 +135,7 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li @if ($url=="admin/coupen")
+                                <li @if ($url=="admin/coupen"||$url=="admin/coupen/create")
                                     class="active"
                                 @endif>
                                     <a href="{{url('admin/coupen
@@ -196,6 +202,7 @@
                                 </li> -->
                             </ul>
                         </li>
+                       
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
@@ -211,6 +218,30 @@
                                     class="active"   
                                 @endif>
                                     <a href="{{url('admin/subscription')}}">Subscribers</a>
+                                </li >
+                                
+                               
+                                
+                                <!--<li>
+                                    <a href="index-projects.html">Projects</a>
+                                </li> -->
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="fas fa-newspaper"></i>
+                                </span>
+                                <span class="title">News And  BLogs </span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li @if ($url=='admin/blogs'||$url=='admin/blogs/create')
+                                    class="active"   
+                                @endif>
+                                    <a href="{{url('admin/blogs')}}">News And Blogs</a>
                                 </li >
                                 
                                
@@ -258,6 +289,11 @@
                                 @endif>
                                     <a href="{{url('admin/cms')}}">Manage Web Content</a>
                                 </li >
+                                <li @if ($url=="admin/cms/add")
+                                class="active"
+                            @endif>
+                                <a href="{{url('admin/cms/add')}}">Add Web Content</a>
+                            </li >
                                 
                                
                                 
@@ -306,6 +342,29 @@
                                 <li @if($url=="admin/social") class="active" @endif>
                                     <a href="{{url('admin/social
                                     ')}}">Site Settings</a>
+                                </li >
+                                
+                               
+                                
+                                <!--<li>
+                                    <a href="index-projects.html">Projects</a>
+                                </li> -->
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    <i class="fas fa-sliders-h"></i>
+                                </span>
+                                <span class="title">Home Page Sliders</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li @if($url=="admin/sliders") class="active" @endif>
+                                    <a href="{{url('admin/sliders
+                                    ')}}">Sliders</a>
                                 </li >
                                 
                                

@@ -85,7 +85,7 @@
                         </div>
                         
                         <div class="row mt-2">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <input type="hidden" name="installinfoid" value="{{$user->installinfo->id}}" >
                                 <label for="">Installer Type <small>(<span class="text-danger">Prss "," to add more than One</span> )</small></label>
                                 <select name="installation_type[]" id="installer_type" class="form-control" multiple>
@@ -97,6 +97,10 @@
                                         }
                                     @endphp
                                 </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">Post Code</label>
+                                <input type="text" class="form-control " name="installerpostcode" placeholder="Enter Postcode" value="{{$user->postcode}}"> 
                             </div>
                         </div>
                         <div class="row mt-2">

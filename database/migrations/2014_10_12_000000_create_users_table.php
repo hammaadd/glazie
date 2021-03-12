@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();
             $table->string('contact_no')->nullable();
             $table->string('address')->nullable();
+            $table->string('postcode')->nullable();
             $table->softDeletes();
             $table->enum('login_status',['activate','deactivate','suspend'])->default('activate');
             $table->enum('type',['customer','installer']);

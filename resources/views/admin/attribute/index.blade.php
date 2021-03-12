@@ -33,7 +33,7 @@
                         
         <div class="row">
             <div class="col-md-12">
-                <a  class="btn btn-primary  float-right mb-2" href="{{url('admin/attributes/add')}}"><i class="fa fa-plus"></i>Add New Attribute</a>
+                <a  class="btn btn-primary  float-right mb-2" href="{{url('admin/attributes/add')}}"><i class="fa fa-plus"></i> Add New Attribute</a>
             </div>
             <div class="col-md-12">
                 
@@ -47,30 +47,27 @@
                         <th>Action</th>
                     </thead>
                     <tbody>
-                        <?php
-                        $i=1;
-                        ?>
+                    
                         
 
                         @if(count($attributes)>0)
                         @foreach($attributes as $attribute)
 
                         <tr>
-                            <td><?php echo $i; ?></td>
-                            <td><?php echo $attribute->attribute_name; ?></td>
+                            <td>{{$loop->iteration}}</td>
+                            <td>{{ $attribute->attribute_name}}</td>
                             
-                            <td><?php 
-                            if ($attribute->image) {?>
+                            <td>
+                            @if($attribute->image)
                                  <a href="{{ asset($attribute->image) }}" target="_blank"><img src="{{ asset($attribute->image) }}" alt="" class="rounded-circle " width="50px" height="50px"> </a> 
-                            <?php }
-                            ?></td>
+                            @endif
+                            </td>
                             <td>
                                <a href="{{url('admin/attributes/edit/'.$attribute->id)}}" class="badge badge-primary"> <i class="fa fa-edit"></i> Edit</a>
                                 <a href="{{url('admin/attributes/delete/'.$attribute->id)}}" class="badge badge-danger" onclick="return confirm('Are You Sure to delete?')"> <i class="fa fa-trash"></i> Delete</a> 
                             </td>
                         </tr>
-                        <?php
-                        $i++; ?>
+                     
                         @endforeach
                         @endif
                     </tbody>

@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label for="">Installer Type </label>
                                 <select name="installation_type[]" id="installer_type" class="form-control" multiple required>
                                     <option value="" disabled>Select Types</option>
@@ -97,6 +97,10 @@
                                     <option value="door">Doors</option>
                                     <option value="lentern">Lentern</option>
                                 </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">Post Code</label>
+                                <input type="text" class="form-control" name="installerpostcode" placeholder="Enter Post Code">
                             </div>
                         </div>
                         <div class="row mt-2">

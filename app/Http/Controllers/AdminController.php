@@ -26,13 +26,10 @@ class AdminController extends Controller
      */
     public function index()
     {   
-        $wed = date('Y-m-d');
-        $month = date('d');
-        $ysd = date('Y')."-01-01";
         
-        
-        $abc = $month-1;
-        $msd = date('Y-m-d', strtotime('-'.$abc.' days'));
+        $month = date('m');
+        $year = date('Y');
+        $msd = date('Y').'-'.date('m').'-1';
         $ed = date('Y-m-d');
         //echo $msd;
         //echo $ed;
@@ -41,7 +38,7 @@ class AdminController extends Controller
         // Customers data
         $customers = User::where('type','=','customer')->count();
         //  Today  total Quantity sale 
-        $today = Order::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "=", $ed)->where('status','=','completed')->get();
+        $today = Order::whereDate('created_at',$ed)->get();
         //print_r($today);
         
         $today_sale = 0;
@@ -52,7 +49,7 @@ class AdminController extends Controller
         }
         
         // Total Quantity of this year
-        $month = Order::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), ">=", $msd)->where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "<=", $ed)->where('status','=','completed')->get();
+        $month = Order::whereMonth('created_at', $month)->get();
         $monthly_sale = 0;
         foreach($month as $months){
             foreach($months->details as $orderdetails){
@@ -61,7 +58,7 @@ class AdminController extends Controller
         }
         
         // Order of this year
-        $yearly = Order::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), ">=", $ysd)->where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "<=", $ed)->get();        // Order Counting
+        $yearly = Order::whereYear('created_at', $year)->get();        // Order Counting
         $yearly_sale = 0;
         foreach($yearly as $year){
             foreach($year->details as $yearorderdetails){
@@ -75,7 +72,7 @@ class AdminController extends Controller
         $latest_orders = Order::orderBy('id', 'desc')->limit(5)->get();
          // Latees  Products 
         $latest_products = Products::orderBy('id', 'desc')->limit(5)->get();
-        $product_type =   OrderDetails::where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), ">=", $msd)->where(DB::raw('DATE_FORMAT(created_at,"%Y-%m-%d")'), "<=", $ed)->get();
+        $product_type =   OrderDetails::whereMonth('created_at',  $month)->get();
         $prdvarieties = PrdVariety::all();
         $quantity = 0;
         //$quantity_array = array();

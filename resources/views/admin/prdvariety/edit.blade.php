@@ -24,6 +24,9 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Edit Product Variety</h4>
+                    </div>
                     <div class="card-body">
                         @if(count($errors)>0)
                         @foreach($errors->all() as $error)

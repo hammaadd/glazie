@@ -36,11 +36,13 @@
                     <div class="col-lg-8">
                         <div class="d-md-flex">
                             <div class="m-b-10 m-r-15">
-                                {{-- <select class="custom-select" style="min-width: 180px;">
-                                    <option selected>Catergory</option>
-                                    <option value="all">All</option>
+                                <select class="custom-select" style="min-width: 180px;" onchange="filterbrand()" id="brand">
+                                    <option selected value="">All Brands</option>
+                                    @foreach ($brands as $brand)
+                                        <option value="{{$brand->id}}">{{$brand->brand_name}}</option>
+                                    @endforeach
                                     
-                                </select> --}}
+                                </select>
                             </div>
                             <div class="m-b-10">
                                 <select class="custom-select" style="min-width: 180px;" id="status" onchange="filtertable()">
@@ -134,6 +136,25 @@ function filtertable()
             success:function(result){
                 $('#productstable').html(result);
             }
+         		  	
+               
+         		
+    });  
+}
+function filterbrand()
+{
+    var brand = $('#brand').val();
+    url = "{{url('admin/products/filterbrand')}}";
+            $.ajax({
+           type:'POST',
+           url:url,
+            data:{
+                brand:brand,
+               
+            },
+            success:function(result){
+                $('#productstable').html(result);
+           }
          		  	
                
          		

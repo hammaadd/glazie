@@ -13,7 +13,7 @@ class ColorController extends Controller
     } 
     public function index()
     {
-        $colors = Color::all();
+        $colors = Color::orderBy('id','desc')->get();
         return view('admin/colors/index',['colors'=>$colors]);
     }
     public function create()
@@ -25,7 +25,7 @@ class ColorController extends Controller
     {
         $validatedData = $request->validate([
             
-            'name'=>'required',
+            'name'=>'required|regex:/^[\pL\s\-]+$/u',
             'color_code'=>'required'       
         ]);
         $colors = new Color;
@@ -45,7 +45,7 @@ class ColorController extends Controller
     public function update($id,Request $request)
     {
         $validatedData = $request->validate([
-            'name'=>'required',
+            'name'=>'required|regex:/^[\pL\s\-]+$/u',
             'color_code'=>'required'       
         ]);
       $updatecolor = array(

@@ -33,8 +33,8 @@ class ProductsController extends Controller
         ->join('brands', 'brands.id', '=', 'products.brand_id')
         ->select('products.*', 'brands.brand_name')
         ->where('products.deleted_at','=',null)->orderBy('products.id','desc')->get();
-        
-        return view('admin/products/index',['products'=>$products]);
+        $brands = Brands::all();
+        return view('admin/products/index',['products'=>$products,'brands'=>$brands]);
     }
     public function add(){
         $brands = Brands::all();
@@ -467,6 +467,18 @@ class ProductsController extends Controller
             $products = Products::all();
         }
         return view('admin/products/filterproduct',['products'=>$products]);
+    }
+    public function filterbrand(Request $request)
+    {
+        $brand = $request->input('brand');
+       if($brand)
+       {
+        $products = Products::where('brand_id','=',$brand)->get();  
+       }
+       else{
+        $products = Products::all(); 
+       }
+       return view('admin/products/filterproduct',['products'=>$products]);
     }
     public function addprdvariation($id)
     {

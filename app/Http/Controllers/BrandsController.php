@@ -13,7 +13,7 @@ class BrandsController extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        $brands = Brands::all();
+        $brands = Brands::orderBy('id','desc')->get();
        
         return view('admin/brands/index',['brands'=>$brands]);
     }
@@ -24,7 +24,7 @@ class BrandsController extends Controller
         $user = Auth::user();
         
         $validatedData = $request->validate([
-            'brand_name' => 'required|alpha',
+            'brand_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'image' => 'mimes:jpg,png,jpeg,gif,svg|max:5048',
         ]);
         $new_brand =  new Brands;
@@ -56,7 +56,7 @@ class BrandsController extends Controller
     public function update($id,Request $request){
        
         $validatedData = $request->validate([
-            'brand_name' => 'required|alpha',
+            'brand_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'image' => 'mimes:jpg,png,jpeg,gif,svg|max:5048',
         ]);
         $update_brand =  array(

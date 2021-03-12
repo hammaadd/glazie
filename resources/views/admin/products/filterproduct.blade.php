@@ -5,7 +5,7 @@
         <th>Sr.#</th>
         <th>Produt Name </th>
         <th>Brand</th>
-        <th>Description</th>
+        
         <th>Available Quantity</th>
         <th>Action</th>
     </thead>
@@ -20,9 +20,7 @@
             <td>{{$product->product_name}}</td>
             <td>{{$product->brands->brand_name}}</td>
 
-            <td>@php
-                echo substr($product->short_description, 0, 30);
-            @endphp</td>
+         
             <td>
                 @if ($product->quantity==0)
                 <span class="text-danger">Out of stock</span>

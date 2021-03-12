@@ -15,7 +15,7 @@
         </div>
         <div class="row">
          
-            <div class="col-md-12">
+            <div class="col-md-6 offset-md-3">
                 <div class="card">
                     <form action="{{ url('/admin/attributes/create')}}"  method="post" enctype="multipart/form-data" id="attribute">
                     <div class="card-header">
@@ -34,7 +34,7 @@
                             @endif
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="">Attribute Name</label>
                                 <input type="text" class="form-control" name="attribute_name" placeholder="Attribute Name" autofocus value="{{old('attribute_name')}}">
                             </div>
@@ -43,7 +43,7 @@
                            
                        
                            
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="">Image</label>
                                 <input type="file" class="form-control" name="image">
                             </div>

@@ -124,7 +124,7 @@
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <button class="btn btn-success mr-1" type="submit"> <i class="fa fa-check"></i> Submit</button>
-                                    <a href="{{url('coupen')}}" class="btn btn-danger"> <i class="anticon anticon-close-circle"></i> Cancel</a>
+                                    <a href="{{url('admin/coupen')}}" class="btn btn-danger"> <i class="anticon anticon-close-circle"></i> Cancel</a>
                                 </div>
                             </div>
                         </form>

@@ -10,7 +10,7 @@ class CMSController extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        $contents = ContentManagementSystem::all();
+        $contents = ContentManagementSystem::orderBy('id','desc')->get();
         return view('admin/cms/index',['contents' =>$contents ]);
     }
     public function add(){

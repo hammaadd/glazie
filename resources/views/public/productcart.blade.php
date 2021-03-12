@@ -217,6 +217,7 @@
                 url:url,
                 success:function(result){
                      $("#abc").html(result);
+                     var removedqty = $('#no_of_qty'+id).val();
                      if (parseInt($('#quantity').val())!=0) {
                              $('#cart_items').show();
                              $('#cart_items').html($('#quantity').val());

@@ -91,7 +91,7 @@ class AdminsController extends Controller
             'last_name'=> $request->input('last_name'),
             'contact_no'=> $request->input('contact_no'),
             'address'=> $request->input('address'),
-            'name'=>$request->input('first_name').$request->input('last_name')
+            'name'=>$request->input('first_name').' '.$request->input('last_name')
         );
         Admin::where('id',$id)
         ->update($data);

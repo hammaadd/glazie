@@ -61,7 +61,7 @@
                             <td>{{$loop->iteration}}</td>
                             <td>{{$addon->model_name}}</td>
                             <td>
-                                <a href="{{url('admin-assets/addon/'.$addon->svgimage)}}"> <img src="{{asset('admin-assets/addon/'.$addon->svgimage)}}" width="30px"> </a>
+                                <a href="{{url('admin-assets/addon/'.$addon->svgimage)}}" target="_blank"> <img src="{{asset('admin-assets/addon/'.$addon->svgimage)}}" width="30px"> </a>
                             </td>
                             <td>
                                 <a href="{{url('admin/addon/view/'.$addon->id)}}" class="btn btn-xs btn-warning" ><i class="fa fa-eye"></i> View AddOn</a>
