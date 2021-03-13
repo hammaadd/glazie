@@ -71,6 +71,31 @@
                                 </li> -->
                             </ul>
                         </li>
+                        {{-- <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="javascript:void(0);">
+                                <span class="icon-holder">
+                                    
+                                    <i class="fas fa-puzzle-piece"></i>
+                                </span>
+                                <span class="title">Product Deal</span>
+                                <span class="arrow">
+                                    <i class="arrow-icon"></i>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li  @if ($url=="admin/productdeals")
+                                    class="active"
+                                @endif>
+                                    <a href="{{url('admin/productdeals')}}">Product Deals</a>
+                                </li>
+                                <li  @if ($url=="admin/productdeals/create")
+                                    class="active"
+                                @endif>
+                                    <a href="{{url('admin/productdeals/create')}}">Create Product Deals</a>
+                                </li>
+                                
+                            </ul>
+                        </li> --}}
                         <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">

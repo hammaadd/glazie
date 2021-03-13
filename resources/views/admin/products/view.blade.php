@@ -482,23 +482,31 @@
                                         <thead>
                                             <tr>
                                                 <th>Sr #</th>
-                                               <th>Varation</th>
+                                               <th>Variation</th>
                                                 <th>Price</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- @foreach ($products->variations as $variation) --}}
+                                            @foreach ($products->variations as $variation)
                                                 <tr>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>{{$loop->iteration}}</td>
                                                     <td>
-                                                        <a href="" class="btn btn-danger  btn-xs" ><i class="fa fa-trash"></i> Delete</a>
+                                                        @foreach ($variation->variationdetails as $details)
+                                                        @php
+                                                        $a = array('magenta','red','volcano','orange','gold','lime','green','cyan','blue','geekblue','purple');
+                                                        $randindex = array_rand($a);
+
+                                                    @endphp
+                                                            <span class="badge badge-pill badge-{{$a[$randindex]}}">{{$details->prd_term->term->name}}</span>
+                                                        @endforeach
+                                                    </td>
+                                                    <td>{{$variation->price}}</td>
+                                                    <td>
+                                                        <a href="{{url('admin/variation/deletevariation/'.$variation->id)}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure to remove?');"><i class="fa fa-trash"></i> Delete</a>
                                                     </td>
                                                 </tr>
-                                            {{-- @endforeach --}}
+                                             @endforeach
                                         </tbody>
                                 </table>
                                 </div>

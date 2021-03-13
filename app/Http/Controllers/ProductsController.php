@@ -15,6 +15,8 @@ use App\Models\ProductReviews;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PrdVariety;
 use DB;
+use App\Models\Variation;
+use App\Models\VariationDetails;
 
 use Illuminate\Http\Request;
 
@@ -495,58 +497,77 @@ class ProductsController extends Controller
 
             array_push($dataarray,$result);
             }
-            $count = 0;
-           for ($i=0;$i<count($dataarray) ;$i++) {
-            for ($j=$i+1;$j<count($dataarray) ;$j++) {
-                $count +=  count($dataarray[$i])* count($dataarray[$j]);
-            }
-           }
+         $count = count($prodcutattribute);
            
-           return view('admin/productsize/addprdvariat',['dataarray'=>$dataarray,'id'=>$id,'count'=>$count,'attrbute_array'=>$attrbute_array]);
+           return view('admin/productsize/addprdvariat',['dataarray'=>$dataarray,'id'=>$id,'count'=>$count,'attrbute_array'=>$attrbute_array,'id'=>$id]);
 
-        // $provided = [
-        //     'ad' => [
-        //         'color' => ['green', 'red'],
-        //         'size' => ['Small', 'Medium','large'],
-        //         'size2' => ['dummy1', 'dummy2'],
-        //     ],
-        // ]; // Reduced the provided data to reduce the output for sample purposes.
-        
-        // $result = [];
-        
-        // foreach ($provided as $type => $attributes) {
-        //     foreach ($attributes['color'] as $color) {
-        //         foreach ($attributes['size'] as $size) {
-        //             foreach ($attributes['size2'] as $size2) {
-        //                 $result[] = compact('color','size','size2');                                               
-        //             }
-        //         }
-        //     }
-        // }
-        // echo "<pre>";
-        // foreach($result as $res){
-        //     echo $res['color'];
-        //     echo $res['size'];
-        //     echo $res['size2']."<br>";
-        // }
-    //     $term_name = array();
-    //        $term_id = array();
-    //        $attrbute_id = $request->input('attr');
-    //        $product_id = $request->input('product_id');
-    //        $terms = DB::table('terms')
-    //        ->join('product_terms', 'terms.id', '=', 'product_terms.term_id')
-    //        ->select('terms.*', 'product_terms.term_id')
-    //        ->where('product_terms.attribute_id','=',$attrbute_id)
-    //     ->where('product_terms.product_id','=',$product_id)
-    //     ->where('product_terms.deleted_at','=',null)->get();
-           
-            
-    //         foreach ($terms as $key => $term) {
-    //             array_push($term_id,$term->id);
-    //             array_push($term_name,$term->name);
-    //         }
-    //         $obj = (object) array($term_id,$term_name);
-    //     $prodcutattribute = ProductAttribute::where('product_id','=',$id)->get();
-    //     
      }
+     public function createvariation($id,Request $request)
+     {
+        $validatedData = $request->validate([
+            'price'=>'required',
+            'terms'=>'required',
+            
+         ]);
+         $terms = $request->input('terms');
+         $price =$request->input('price');
+        $variation  = new Variation;
+        $variation->product_id = $id;
+        $variation->price = $price;
+        $variation->created_by = Auth::id();
+        $variation->save();
+        $variation_id =$variation->id;
+
+        foreach ($terms as $key => $term) {
+           $vairation_details = new VariationDetails; 
+           $vairation_details->variation_id = $variation_id;
+           $vairation_details->prd_term_id = $term;
+           $vairation_details->created_by = Auth::id();
+           $vairation_details->save();
+
+        }
+        return redirect('admin/products/view/'.$id)->with('info','Variantion  Created Successfully');
+     }
+     public function deletevariation($id)
+     {
+        Variation::where('id',$id)->delete();
+         
+        return redirect('admin/products/view/'.$id)->with('info','Variation Deleted Successfully');
+     }
+     public function checkvariation(Request $request)
+     {
+         $exist = array();
+        $variation = $request->input('variation');  
+        $product_id = $request->input('product_id');
+        $attribute_length  =$request->input('attribute_length');
+        $term_id_array = $request->input('term_id_array');
+        $variations = Variation::where('product_id','=',$product_id)->get();
+        $existed_variation = count($variations);
+        if(count($variations)>0)
+        {
+            foreach($variations as $variation)
+            {
+                $table_prdcats= VariationDetails::where('variation_id','=',$variation->id)
+                    ->whereNotIn('prd_term_id',$term_id_array)
+                    ->get();
+                    if(count($table_prdcats)>0){
+                        
+                    }
+                    else{
+                        array_push($exist, 1);
+                    }
+            }
+            if (count($exist)==$existed_variation) {
+                echo 0;
+            }
+            else{
+                echo 1;
+            }
+        }
+        else{
+            echo 1; 
+        }
+
+     }
+
 }

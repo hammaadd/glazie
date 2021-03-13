@@ -125,35 +125,13 @@
         </div>
      <div class="row">
          <div class="col-md-12">
-            <script>
-                // var quantiy = <?php //echo json_encode($quantity_array,JSON_PRETTY_PRINT)?>;
-                // var name =  <?php //echo json_encode($variety_name,JSON_PRETTY_PRINT)?>;
-                
-                window.onload = function () {
-                
-                var chart = new CanvasJS.Chart("chartContainer", {
-                    animationEnabled: true,
-                    theme: "light2", // "light1", "light2", "dark1", "dark2"
-                    title:{
-                        text: "Total Sales"
-                    },
-                    axisY: {
-                        title: "No of sales"
-                    },
-                    data: [{        
-                        type: "column",  
-                        showInLegend: true, 
-                        legendMarkerColor: "grey",
-                        legendText: "",
-                        dataPoints: <?php echo $sales; ?>
-                    }]
-                });
-                chart.render();
-                
-                }
-                </script>
+            
                
-                <div id="chartContainer" style="height: 300px; width: 100%; "></div>
+        <figure class="highcharts-figure">
+        <div id="container"></div>
+        <p class="highcharts-description">
+        </p>
+    </figure>
                 
          </div>
      </div>
@@ -229,7 +207,54 @@
 </div>
 @endsection
 @section('script')
-<script src="{{ asset('admin-assets/vendors/chartjs/Chart.min.js')}}"></script>
-<script src="{{ asset('admin-assets/js/pages/dashboard-default.js')}}"></script>
-<script src="{{asset('admin-assets/charts/canvasjs.min.js')}}"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script type="text/javascript">
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Total Monthly Sales'
+            },
+            subtitle: {
+                text: ''
+            },
+            credits: {
+    enabled: false
+},
+            xAxis: {
+                categories: [
+                    'Products',
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Number Of Sale Items'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: <?php echo $sales; ?>
+        });
+    </script>
 @endsection

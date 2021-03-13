@@ -17,9 +17,9 @@
         </div>
         <div class="row">
             
-            <div class="col-md-12">
+            <div class="col-md-6 offset-md-3" >
                 <div class="card">
-                    <form action="{{ url('admin/productsize/create/')}}"  method="post" enctype="multipart/form-data" id="create_size">
+                    <form action="{{ url('admin/prdvariation/create/'.$id)}}"  method="post" enctype="multipart/form-data" id="create_size">
                     <div class="card-header">
                         <h4 class="card-title">Add Product Variation</h4>
                     </div>
@@ -35,43 +35,38 @@
                                 @endforeach
                             @endif
                         </div>
-                       
-                        <div class="row">                          
-                            @csrf                           
-                           
-                            <table class="table table-hover">
-                               
-
-                                 <thead>
-                                    <tr>
-                                    @if(count($attrbute_array)>1)
-                                        
-                                            @for ($i = 0; $i < count($attrbute_array); $i++)
-                                            <th>{{$attrbute_array[$i]}}</th>
-                                            @endfor  
-                                            <th>Price</th>
-                                            <th>Remove</th>
-                                            @endif
-                                        </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                    @for ($i = 0; $i < $count; $i++)
-                                    <tr>
-                                      @for($j=0;$j<  )
-                                      @endfor
-                                        <td><input type="number" class="form-control" name="price" placeholder="Enter price "></td>
-                                        <td><button class="btn btn-danger"><i class="fa fa-times"></i></button></td>
-                                    </tr>
-                                    @endfor
-                                    
-                                </tbody>
-                            </table>
-                            
+                        @csrf             
+                        @for($i=0;$i<$count;$i++)
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label for="">{{$attrbute_array[$i]}}</label>
+                                @php
+                                    $j=$i+1;
+                                @endphp
+                                <select name="terms[]" required id="variation{{$j}}" class="form-control" onchange="checkvariation({{$j}})">
+                                    <option value="">Select {{$attrbute_array[$i]}}</option>
+                                    @foreach ($dataarray[$i] as $terms)
+                                        <option value="{{$terms->id}}">{{$terms->term->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>   
+                        @endfor   
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-success mt-3"><i class="fa fa-plus"></i> Add Product Variation</button>
-                            <a href="{{url('admin/productattribute') }}" class="btn btn-danger mt-3 ml-3"> <i class="fa fa-times"></i> Cancel</a>
+                                <label for="">Price </label>
+                                <input type="number" class="form-control" name="price" placeholder="Price">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="text-danger text-center mt-3" id="message"></span>
+                            </div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-success mt-3" id="submitbutton"><i class="fa fa-plus"></i> Add Product Variation</button>
+                            <a href="{{url('admin/products/view/'.$id) }}" class="btn btn-danger mt-3 ml-3"> <i class="fa fa-times"></i> Cancel</a>
                        
                             </div>
                         </div>
@@ -82,11 +77,67 @@
             
         </div>
       
-    </div>
+    </div> 
 
 @endsection
 @section('script')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script>
+    let term_id_array = Array();
+    let idarray = Array();
+    
+    function checkvariation(i)
+    {
+        let k=-1;   
+        var variation = $('#variation'+i).val();
+        var product_id = {{$id}};
+        var attribute_length = {{$j}};
+        for (let j = 0; j < idarray.length; j++) {
+            if(i==idarray[j])
+            {
+                k=j;
+            }
 
+            
+        }
+        if(k==-1){
+           idarray.push(i);
+           term_id_array.push(variation); 
+        }
+        else{
+            term_id_array[k] = variation;
+            idarray[k]= i;
+        }
 
+        console.log(term_id_array);
+        if(term_id_array.length==attribute_length){
+        $.ajaxSetup({
+				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
+            });
+            url = "{{url('admin/products/chceckvariation')}}";
+            console.log(url);
+            $.ajax({
+           type:'POST',
+           url:url,
+            data:{
+                variation:variation,  
+                product_id:product_id,
+                attribute_length:attribute_length,
+                term_id_array:term_id_array
+
+           },
+           success:function(result){
+            if(result=='0'){
+                $('#submitbutton').prop('disabled',true);
+                $('#message').html("<i class='fa fa-times-circle'></i><b> This variation is already exist</b>");
+            }
+            else{
+                $('#submitbutton').prop('disabled',false);
+                $('#message').html("");
+            }
+           }
+            });
+        }
+    }
+</script>
 @endsection

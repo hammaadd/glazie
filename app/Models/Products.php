@@ -69,6 +69,11 @@ class Products extends Model
     {
         return $this->hasMany(ProductSize::class, 'product_id');
     }
+   
+    public function variations()
+    {
+        return $this->hasMany(Variation::class, 'product_id');
+    }
 
     
   
