@@ -198,7 +198,7 @@ Route::prefix('admin')->group(function () {
     Route::get('addproductvariation/{id}','ProductsController@addprdvariation');
     Route::post('prdvariation/create/{id}','ProductsController@createvariation');
     Route::get('variation/deletevariation/{id}','ProductsController@deletevariation');
-    Route::post('products/chceckvariation','ProductsController@checkversion');
+    Route::post('products/chceckvariation','ProductsController@checkvariation');
     // Order Management Routes
     Route::get('orders','OrdersController@index');
     Route::post('checkorder','OrdersController@checkorder');
@@ -283,6 +283,14 @@ Route::prefix('admin')->group(function () {
     Route::post('addon/checkhinge','AddonController@checkhinge');
     Route::post('addon/createhinge','AddonController@createhinge');
     Route::get('addon/removehinge/{id}','AddonCOntroller@removehinge');
+    //Routes For Product Deals admin side
+    Route::get('productdeals','ProductDealController@index');
+    Route::get('productdeals/create','ProductDealController@create'); 
+    Route::post('productdeals/store','ProductDealController@store');
+    Route::get('productdeals/edit{id}','ProductDealController@edit');
+    Route::get('productdeals/update/{id}','ProductDealController@update');
+    Route::get('productdeals/delete/{id}','ProductDealController@delete');
+
 
     // Request Hiring Route For Admin Side 
     Route::get('requesthiring','RequestHiringController@index');

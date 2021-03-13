@@ -534,5 +534,40 @@ class ProductsController extends Controller
          
         return redirect('admin/products/view/'.$id)->with('info','Variation Deleted Successfully');
      }
+     public function checkvariation(Request $request)
+     {
+         $exist = array();
+        $variation = $request->input('variation');  
+        $product_id = $request->input('product_id');
+        $attribute_length  =$request->input('attribute_length');
+        $term_id_array = $request->input('term_id_array');
+        $variations = Variation::where('product_id','=',$product_id)->get();
+        $existed_variation = count($variations);
+        if(count($variations)>0)
+        {
+            foreach($variations as $variation)
+            {
+                $table_prdcats= VariationDetails::where('variation_id','=',$variation->id)
+                    ->whereNotIn('prd_term_id',$term_id_array)
+                    ->get();
+                    if(count($table_prdcats)>0){
+                        
+                    }
+                    else{
+                        array_push($exist, 1);
+                    }
+            }
+            if (count($exist)==$existed_variation) {
+                echo 0;
+            }
+            else{
+                echo 1;
+            }
+        }
+        else{
+            echo 1; 
+        }
+
+     }
 
 }
