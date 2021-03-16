@@ -36,7 +36,7 @@
                             <h5>{{$installer->address}}</h5>
                         </div>
                     </div>
-                    @if (count($installer->installerinfo)>0)
+                    @if ($installer->installerinfo)
                         <div class="row">
                             <div class="col-md-12">
                                 <table class="table table-hover">
@@ -92,6 +92,12 @@
                                 <input type="number" class="form-control" name="amount" placeholder="Enter Estimated amount"  min="1"  value="{{ old('amount') }}">
                             </div>
                             
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="">Post Code</label>
+                                <input type="text" class="form-control" name="postcode" placeholder="Enter Post Code">
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">

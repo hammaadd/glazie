@@ -22,7 +22,7 @@ class AddonController extends Controller
     }
     public function index()
     {
-        $addons = AddOn::all();
+        $addons = AddOn::orderBy('id','desc')->get();
         return view('admin/addon/index',['addons'=>$addons]);
     } 
     public function create(){
@@ -34,8 +34,14 @@ class AddonController extends Controller
         
         $validatedData = $request->validate([
             'product_id' =>'required',
-            'svgimage' => 'required|mimes:svg|max:5048'
+            'svgimage' => 'required|mimes:svg|max:5048',
+            'height'=>'required',
+           'width'=>'required',
+           'length'=>'required',
+           'weight'=>'required',
+           'model_name' =>'required|regex:/^[\pL\s\-]+$/u'
         ]);
+        
 
         $product_id = $request->input('product_id');
         $model_name = $request->input('model_name');
@@ -49,6 +55,11 @@ class AddonController extends Controller
         $addon = new AddOn;
         $addon->product_id = $product_id;
         $addon->model_name = $model_name;
+        $addon->wieght = $request->input('weight');
+        $addon->height = $request->input('height');
+        $addon->length = $request->input('length');
+        $addon->width = $request->input('width');
+        $addon->price = $request->input('price');
         $file = $request->file('svgimage');
         $filename = $file->getClientOriginalName();
         $extension = $file->getClientOriginalExtension();
@@ -57,6 +68,7 @@ class AddonController extends Controller
         $file->move($destinationPath, $imgname);
         $addon->svgimage= $imgname;
         $addon->created_by = Auth::id();
+        $addon->quantity = $request->input('quantity');
         $addon->save();
         $addon_id = $addon->id;
          
@@ -98,6 +110,16 @@ class AddonController extends Controller
     }
     public function update($id,Request $request)
     {
+        $validatedData = $request->validate([
+            'product_id' =>'required',
+            'model_name' =>'regex:/^[\pL\s\-]+$/u',
+            'height'=>'required',
+            'width'=>'required',
+            'length'=>'required',
+            'weight'=>'required',
+            'quantity'=>'required'
+        ]);
+        
         $product_id = $request->input('product_id');
         $model_name = $request->input('model_name');
 
@@ -115,7 +137,13 @@ class AddonController extends Controller
         }
         $updateaddon =  array(
             'product_id'=>$product_id,
-            'model_name'=>$model_name
+            'model_name'=>$model_name,
+            'width'=>$request->input('width'),
+            'height'=>$request->input('height'),
+            'wieght'=>$request->input('weight'),
+            'length'=>$request->input('length'),
+            'quantity'=>$request->input('quantity'),
+            
         );
         AddOn::where('id',$id)->update($updateaddon);
         return redirect('admin/addons')->with('info','Add On Updated  Successfully');
@@ -181,17 +209,39 @@ class AddonController extends Controller
     }
     public function addframe($id)
     {
+       
+
        $colors = Color::all();
        return view('admin/addon/addframe',['colors'=>$colors,'id'=>$id]);
 
     }
     public function createframe( Request $request)
     {
+        $validatedData = $request->validate([
+            'addon_id' =>'required',
+            'model_name' =>'required',
+            'price' =>'required',
+            'quantity' =>'required',
+            'image' => 'required|mimes:svg|max:5048',
+            'height'=>'required',
+            'width'=>'required',
+            'length'=>'required',
+            'weight'=>'required',
+            
+            'extercolor_code'=>'required',
+            'exterprice'=>'required',
+            'exterquantity'=>'required',
+            'intercolor_code'=>'required',
+            'interprice'=>'required',
+            'interquantity'=>'required',
+            
+        ]);
         $addon_id = $request->input('addon_id');
         $model_name = $request->input('model_name');
         $price = $request->input('price');
         $quantity = $request->input('quantity');
 
+        
         $file = $request->file('image');
         $filename = $file->getClientOriginalName();
         $extension = $file->getClientOriginalExtension();
@@ -200,6 +250,10 @@ class AddonController extends Controller
         $file->move($destinationPath, $imgname);
         $frame = new ModelFrame;
         $frame->addon_id = $addon_id;
+        $frame->wieght = $request->input('weight');
+        $frame->height = $request->input('height');
+        $frame->length = $request->input('length');
+        $frame->width = $request->input('width');
         $frame->name = $model_name;
         $frame->frame_price = $price;
         $frame->type="frame";
@@ -258,15 +312,14 @@ class AddonController extends Controller
         $model_name = $request->input('model_name');
         $price = $request->input('price');
         $quantity = $request->input('quantity');
-        
-       
-       
-        
         $updateframe = array(
             'name' => $model_name,
             'frame_price' => $price,
             'quantity' => $request->input('quantity'),
-           
+            'wieght' => $request->input('weight'),
+            'height' => $request->input('height'),
+            'length' => $request->input('length'),
+            'width' => $request->input('width'),
             'updated_by' => Auth::id()
         );
         ModelFrame::where('id',$id)->update($updateframe);
@@ -301,29 +354,49 @@ class AddonController extends Controller
     }
     public function createglass(Request $request)
     {
-        $addon_id = $request->input('addon_id');
-        $name = $request->input('name');
-        $price = $request->input('price');
-        $quantity = $request->input('quantity');
-        $images = $request->file('images');
-        for ($i=0; $i <count($name) ; $i++) { 
-            $modelframe = new ModelFrame;
-            $modelframe->name = $name[$i];
-            $modelframe->quantity = $quantity[$i];
-            $modelframe->frame_price = $price[$i];
-            $modelframe->addon_id = $addon_id;
-            $modelframe->type= "glass";
-            $file = $images[$i];
-            $filename = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension();
-            $imgname = uniqid() . $filename;
-            $destinationPath = public_path('/admin-assets/addon/glass');
-            $file->move($destinationPath, $imgname);
-            $modelframe->image = $imgname;
-            $modelframe->save();
-
-        }
-        return redirect('admin/addon/view/'.$addon_id)->with('info','Glass add Successfully');   
+        $validatedData = $request->validate([
+            'addon_id' =>'required',
+            'glass_name' =>'required',
+            'price' =>'required',
+            'quantity' =>'required',
+            //'image' => 'required|mimes:svg|max:5048',
+            'height'=>'required',
+            'width'=>'required',
+            'length'=>'required',
+            'weight'=>'required', 
+        ]);  
+            $addon_id =$request->input('addon_id');
+            $glass_name =$request->input('glass_name');
+            $price =$request->input('price');
+            $quantity =$request->input('quantity');
+            $files = $request->file('image');
+            $height=$request->input('height');
+            $price=$request->input('price');
+            $width=$request->input('width');
+            $length=$request->input('length');
+            $weight=$request->input('weight');
+            for ($i=0; $i <count($glass_name) ; $i++) { 
+                $glass = new ModelFrame;
+                $glass->addon_id = $addon_id;
+                $glass->wieght = $weight[$i];
+                $glass->height = $height[$i];
+                $glass->length = $length[$i];
+                $glass->width = $width[$i];
+                $glass->name = $glass_name[$i];
+                $file =$files[$i]; 
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $imgname = uniqid() . $filename;
+                $destinationPath = public_path('/admin-assets/addon/glass');
+                $file->move($destinationPath, $imgname);
+                $glass->frame_price = $price[$i];
+                $glass->type="glass";
+                $glass->quantity = $quantity[$i];
+                $glass->image = $imgname;
+                $glass->created_by = Auth::id();
+                $glass->save();  
+            }
+            return redirect('admin/addon/view/'.$addon_id)->with('info','Glass created Successfully');   
     }
     public function editglass($id)
     {
@@ -332,7 +405,19 @@ class AddonController extends Controller
     }
     public function updateglass($id,Request $request)
     {
-        
+        $validatedData = $request->validate([
+            'addon_id' =>'required',
+            'model_name' =>'required',
+            'price' =>'required',
+            'quantity' =>'required',
+            'height'=>'required',
+            'width'=>'required',
+            'length'=>'required',
+            'weight'=>'required',
+            
+          
+            
+        ]);
             $addon_id = $request->input('addon_id');
             $model_name = $request->input('model_name');
             $price = $request->input('price');
@@ -341,7 +426,10 @@ class AddonController extends Controller
                 'name' => $model_name,
                 'frame_price' => $price,
                 'quantity' => $request->input('quantity'),
-               
+                'wieght' => $request->input('weight'),
+                'height' => $request->input('height'),
+                'length' => $request->input('length'),
+                'width' => $request->input('width'),
                 'updated_by' => Auth::id()
             );
             ModelFrame::where('id',$id)->update($updateglass);
@@ -446,9 +534,13 @@ class AddonController extends Controller
     public function createframeglass(Request $request)
     {
         $frame_id = $request->input('frame_id');
+        $height = $request->input('height');
+        $width = $request->input('width');
+        $weight = $request->input('weight');
+        $length = $request->input('length');
         
-        $name = $request->input('name');
-        $images = $request->file('images');
+        $name = $request->input('glass_name');
+        $images = $request->file('image');
     
         $price = $request->input('price');
         $quantity = $request->input('quantity');
@@ -457,6 +549,10 @@ class AddonController extends Controller
             $frame_glass = new FrameGlass;
             $frame_glass->frame_id = $frame_id;
             $frame_glass->glass_name = $name[$i];
+            $frame_glass->wieght = $weight[$i];
+            $frame_glass->height = $height[$i];
+            $frame_glass->width = $width[$i];
+            $frame_glass->length = $length[$i];
             $frame_glass->price = $price[$i];
             $frame_glass->quantity =$quantity[$i];
             $file = $images[$i];
@@ -478,6 +574,17 @@ class AddonController extends Controller
     }
     public function updateframeglass($id, Request $request)
     {
+        $validatedData = $request->validate([
+            'name'=>'required',
+            'price'=>'required',
+            'quantity'=>'required',
+            'width'=>'required',
+            'height'=>'required',
+            'weight'=>'required',
+            'length'=>'required',
+            
+            
+        ]);
         $frame_id = FrameGlass::find($id)->frame_id;
         $name =  $request->input('name');
         $price =  $request->input('price');
@@ -486,7 +593,11 @@ class AddonController extends Controller
         $updateframeglass = array(
             'glass_name'=>$name,
             'price'=>$price,
-            'quantity'=>$quantity
+            'quantity'=>$quantity,
+            'height'=>$request->input('height'),
+            'wieght'=>$request->input('weight'),
+            'length'=>$request->input('length'),
+            'width'=>$request->input('width'),
         );
         FrameGlass::where('id',$id)->update($updateframeglass);
         if ($file) {
@@ -520,7 +631,11 @@ class AddonController extends Controller
        $type = $request->input('type');
        $price = $request->input('price');
        $quantity = $request->input('quantity');
-       $files = $request->file('images');
+       $files = $request->file('image');
+       $height = $request->input('height');
+        $width = $request->input('width');
+        $weight = $request->input('weight');
+        $length = $request->input('length');
        
        for ($i=0; $i <count($name) ; $i++) { 
            $addon = new AddonFurniture;
@@ -529,6 +644,10 @@ class AddonController extends Controller
            $addon->type = $type[$i];
            $addon->price = $price[$i];
            $addon->quantity = $quantity[$i];
+           $addon->height = $height[$i];
+           $addon->width = $width[$i];
+           $addon->length = $length[$i];
+           $addon->wieght = $weight[$i];
            $file = $files[$i];
             $filename = $file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension();

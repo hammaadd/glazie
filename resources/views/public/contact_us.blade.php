@@ -44,7 +44,7 @@
                     
                 <div class="form-group mt-4 mb-4">
                     <button class="btn btn-outline-success rounded-0" type="submit" > <i class="fa fa-check"></i> Submit</button>
-                    <a href="{{url('/')}}" class="btn btn-danger rounded-0"> <i class="fa fa-times"></i> Cancel</a>
+                    <button class="btn btn-outline-danger rounded-0" type="reset"><i class="fa fa-times"></i> Cancel</button>
                 </div>
             </form>
         </div>

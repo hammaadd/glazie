@@ -48,13 +48,58 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header bg-info">
+                                        <h2 class="mt-2">Model Details</h2>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <table class="table">
+                                                    <tr>
+                                                        <th>Price</th>
+                                                        <td>{{$addon->price}}</td>
+                                                    </tr> 
+                                                    <tr>
+                                                        <th>Weight</th>
+                                                        <td>{{$addon->wieght}}</td>
+                                                    </tr> 
+                                                    <tr>
+                                                        <th>Quantity</th>
+                                                        <td>{{$addon->quantity}}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <table class="table">
+                                                    <tr>
+                                                        <th>Height</th>
+                                                        <td>{{$addon->height}}</td>
+                                                    </tr> 
+                                                    <tr>
+                                                        <th>Width</th>
+                                                        <td>{{$addon->width}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Length</th>
+                                                        <td>{{$addon->length}}</td>
+                                                    </tr>  
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 <h2>AddOn </h2>
                                 <div class="accordion" id="accordion-default">
                                     <div class="card">
                                         <div class="card-header">
                                             <h5 class="card-title">
                                                 <a class="collapsed" data-toggle="collapse" href="#collapseTwoDefault">
-                                                    <span class="float-lef">Colors</span>
+                                                    <span class="float-lef">Available Colors</span>
                                                     
                                                 </a>
                                                 
@@ -141,6 +186,7 @@
                                                                     <th>Price</th>
                                                                     <th>Quantity</th>
                                                                     <th>Image</th>
+                                                                    
                                                                     <th>Action</th>
                                                                 </tr>
                                                                 @php
@@ -204,6 +250,10 @@
                                                                     <th>Price</th>
                                                                     <th>Quantity</th>
                                                                     <th>Image</th>
+                                                                    <th>Weight</th>
+                                                                    <th>Height</th>
+                                                                    <th>Width</th>
+                                                                    <th>Length</th>
                                                                     <th>Action</th>
                                                                 </tr>
                                                                 @php
@@ -216,13 +266,18 @@
                                                                         <td>{{$glass->name}}</td>
                                                                         <td>{{$glass->frame_price}}</td>
                                                                         <td>{{$glass->quantity}}</td>
-                                                                        <td><img src="{{asset('admin-assets/addon/glass/'.$glass->image)}}" height="100px" width="100px"></td>
                                                                         
+                                                                        <td><img src="{{asset('admin-assets/addon/glass/'.$glass->image)}}" height="100px" width="100px"></td>
+                                                                        <td>{{$glass->wieght}}</td>
+                                                                        
+                                                                        <td>{{$glass->height}}</td>
+                                                                        <td>{{$glass->width}}</td>
+                                                                        <td>{{$glass->length}}</td>
                                                                         <td>
                                                                           
                                                                             
-                                                                            <a href="{{url('admin/editglass/'.$glass->id)}}" class="btn btn-info btn-xs"> <i class="anticon anticon-edit"></i> Edit</a>
-                                                                            <a href="{{url('admin/deleteglass/'.$glass->id)}}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete')"> <i class="anticon anticon-delete"></i> Delete</a>
+                                                                            <a href="{{url('admin/editglass/'.$glass->id)}}" class="btn btn-info btn-xs" title="Edit"> <i class="anticon anticon-edit"></i> </a>
+                                                                            <a href="{{url('admin/deleteglass/'.$glass->id)}}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete')" title="Delete"> <i class="anticon anticon-delete"></i> </a>
                                                                         </td>
                                                                     </tr>
                                                                     @php
@@ -261,11 +316,15 @@
                                                         <table class="table table-re">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>Sr #</th>
+                                                                    <th>Sr#</th>
                                                                     <th>Name</th>
-                                                                    <th>Furniture Type</th>
+                                                                    <th title="Furiture Type"> Type</th>
                                                                     <th>Price</th>
                                                                     <th>Quantity</th>
+                                                                    <th>Weight<small>(Kg)</small> </th>
+                                                                    <th>Height<small>(cm)</small> </th>
+                                                                    <th>Width<small>(cm)</small> </th>
+                                                                    <th>Length<small>(cm)</small> </th>
                                                                     <th>Action</th>
                                                                 </tr>
                                                               
@@ -275,7 +334,11 @@
                                                                         <td>{{$loop->iteration}}</td>
                                                                         <td>{{$furniture->name}}</td>
                                                                         <td>{{$furniture->type}}</td>
-                                                                        <td>£ {{$furniture->price}}</td>
+                                                                        <td>£{{$furniture->price}}</td>
+                                                                        <td>{{$furniture->wieght}}</td>
+                                                                        <td>{{$furniture->height}}</td>
+                                                                        <td>{{$furniture->width}}</td>
+                                                                        <td>{{$furniture->length}}</td>
                                                                         <td><img src="{{asset('admin-assets/addon/furniture/'.$furniture->image)}}" height="100px"></td>
                                                                         
                                                                         <td>

@@ -21,7 +21,7 @@ class PrdVarietyController extends Controller
     }
     public function store(Request $request){
         $validateData = $request->validate([
-            'prd_name'=>'required|unique:prd_varieties'
+            'prd_name'=>'required|unique:prd_varieties|regex:/^[\pL\s\-]+$/u'
         ]);
         $createvariety = new PrdVariety;
         $createvariety->prd_name = $request->input('prd_name');
@@ -37,7 +37,7 @@ class PrdVarietyController extends Controller
     public function update($id,Request $request)
     {
         $validateData = $request->validate([
-            'prd_name'=>'required'
+            'prd_name'=>'required|regex:/^[\pL\s\-]+$/u'
         ]);
         $updatevariety = array(
         'prd_name' => $request->input('prd_name'),

@@ -1,5 +1,5 @@
 @extends('admin-layout.layouts')
-@section('title','Add New Attribute')
+@section('title','Add New Size ')
 @section('content')
 <div class="page-container">
     <div class="main-content">
@@ -17,7 +17,7 @@
             
             <div class="col-md-12">
                 <div class="card">
-                    <form action="{{ url('admin/productsize/create')}}"  method="post" enctype="multipart/form-data" id="create_size">
+                    <form action="{{ url('admin/productsize/create/'.$id)}}"  method="post" enctype="multipart/form-data" id="create_size">
                     <div class="card-header">
                         <h4 class="card-title">Add Product Size</h4>
                     </div>
@@ -34,37 +34,31 @@
                             @endif
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <label for="">Products</label>
-                                <select name="product_id" id="product_id" class="form-control">
-                                    <option value="">Select Product</option>
-                                    @foreach ($products as $prd)
-                                        <option value="{{$prd->id}}">{{$prd->product_name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                          
                             
                             @csrf
                             <div class="col-md-6">
                                 <label for="">Size name</label>
                                 <input type="text" class="form-control" name="name" placeholder="Size Name ">                                
                             </div>
-                        </div>
-                        <div class="row">
+                        
                             <div class="col-md-6">
                                 <label for="">Product Height</label>
                                 <input type="number" class="form-control" name="height" placeholder="Height">
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <label for="">Product Width</label>
                                 <input type="number" class="form-control" placeholder="Product width" name="width">
                             </div>
-                        </div>
-                        <div class="row">
+                        
                             <div class="col-md-6">
                                 <label for="">Product Thikness</label>
                                 <input type="number" class="form-control" placeholder="Product Thikness " name="thikness">
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <label for="">Price</label>
                                 <input type="number" class="form-control" placeholder="Product Price" name="price">

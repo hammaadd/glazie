@@ -22,7 +22,14 @@
                         <h3>Change Password</h3>
                     </div>
                     <div class="card-body">
-                        <form action="{{url('admin/chngeCustomerpwd/'.$id)}}" id="changepass" method="post">
+                        @if(count($errors)>0)
+                        @foreach($errors->all() as $error)
+                        <div class="col-md-12 alert alert-danger" style="background-color: #e2584c">
+                            <li class="text-light" style="list-style-type: none"><b>{{$error}}</b></li>
+                        </div>
+                        @endforeach
+                    @endif
+                        <form action="{{url('admin/chngecustomerpwd/'.$id)}}" id="changepass" method="post">
                         @csrf
                             <div class="row">
                                 <div class="col-md-12">

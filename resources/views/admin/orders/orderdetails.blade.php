@@ -1,6 +1,8 @@
 @extends('admin-layout.layouts')
 @section('title','All Orders ')
 @section('content')
+<link href="{{ asset('admin-assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin-assets/css/app.min.css') }}" rel="stylesheet">
 <link href="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
@@ -157,6 +159,15 @@
                                         <h6><span>&#163;</span> 0</h6>
                                         <h6> <span>&#163;</span> {{$total_price}}</h6>
                                         <hr>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-2">
+                                        <h5><b>Payment Method</b></h5>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <h5>Cash On Delivery </h5>
                                     </div>
                                 </div>
                                 <div class="row">

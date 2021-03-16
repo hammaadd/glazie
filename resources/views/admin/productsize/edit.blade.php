@@ -34,42 +34,32 @@
                             @endif
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <label for="">Products</label>
-                                <select name="product_id" id="product_id" class="form-control">
-                                    <option value="">Select Product</option>
-                                    @foreach ($products as $prd)
-                                        <option value="{{$prd->id}}"
-                                            @if ($productsize->product_id==$prd->id)
-                                                selected
-                                            @endif
-                                            
-                                            >{{$prd->product_name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                           
                             
                             @csrf
                             <div class="col-md-6">
                                 <label for="">Size name</label>
                                 <input type="text" class="form-control" name="name" placeholder="Size Name" value="{{$productsize->name}}">                                
+                                <input type="hidden" name="product_id" value="{{$productsize->product_id}}">
                             </div>
-                        </div>
-                        <div class="row">
+                        
                             <div class="col-md-6">
                                 <label for="">Product Height</label>
                                 <input type="number" class="form-control" name="height" placeholder="Height" value="{{$productsize->height}}">
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <label for="">Product Width</label>
                                 <input type="number" class="form-control" placeholder="Product width" name="width" value="{{$productsize->width}}">
                             </div>
-                        </div>
-                        <div class="row">
+                        
                             <div class="col-md-6">
                                 <label for="">Product Thikness</label>
                                 <input type="number" class="form-control" placeholder="Product Thikness " name="thikness" value="{{$productsize->thickness}}">
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <label for="">Price</label>
                                 <input type="number" class="form-control" placeholder="Product Price" name="price" value="{{$productsize->price}}">

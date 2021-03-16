@@ -25,11 +25,11 @@
         <script type="text/javascript">toastr.success("{{session('info')}}");</script>
         @endif  
         <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
+            
+            <div class="col-md-12">
                 <div class="card">
                     
-                    <div class="card-body">
+                    <div class="card-body ">
                         @if(count($errors)>0)
                         @foreach($errors->all() as $error)
                         <div class="alert alert-danger bg-danger text-light">
@@ -43,7 +43,7 @@
                         <form action="{{url('admin/addon/update/'.$addon->id)}}" method="post" enctype="multipart/form-data" id="addon">
                             @csrf
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                    
                                     <label for="">Products</label>
                                     <select name="product_id" class="form-control rounded-0">
@@ -58,16 +58,41 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label for="">Model Name </label>
                                     <input type="text" class="form-control rounded-0" name="model_name" placeholder="Enter Model Name" value="{{$addon->model_name}}">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label for="">Image</label>
                                     
                                     <input type="file" class="form-control rounded-0" name="svgimage">
+                                </div>
+                            
+                                <div class="col-md-6">
+                                    <label for="">Weight <small>(Kg)</small></label>
+                                    <input type="number" class="form-control rounded-0" name="weight" value="{{$addon->wieght}}" placeholder="Enter Weight in Kg">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Height <small>(cm)</small> </label>
+                                    <input type="number" name="height" class="form-control rounded-0" placeholder="Enter Height" value="{{$addon->height}}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Width <small>(cm)</small></label>
+                                    <input type="number" name="width" class="form-control rounded-0" placeholder="Enter Width" value="{{$addon->width}}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Length <small>(cm)</small></label>
+                                    <input type="number" class="form-control rounded-0" name="length" value="{{$addon->length}}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Quantity</label>
+                                    <input type="number" class="form-control rounded-0" name="quantity" placeholder="Enter No Of Quantity" value="{{$addon->quantity}}">
                                 </div>
                             </div>
                             <div class="row mt-3">

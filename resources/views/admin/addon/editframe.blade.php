@@ -64,7 +64,26 @@
                                     <input type="number" class="form-control rounded-0" placeholder="Quantity" name="quantity" value="{{$frame->quantity}}" min="1">
                                 </div>
                             </div>
-                           
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Weight <small class="text-danger">(KG)</small></label>
+                                    <input type="number" class="form-control rounded-0" name="weight" value="{{$frame->wieght}}" min="1">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Height <small class="text-danger">(cm)</small></label>
+                                    <input type="number" class="form-control rounded-0" name="height" value="{{$frame->height}}" min="1">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Width <small class="text-danger">(cm)</small></label>
+                                    <input type="number" class="form-control rounded-0" name="width" value="{{$frame->width}}" min="1">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Length <small class="text-danger">(cm)</small></label>
+                                    <input type="number" class="form-control rounded-0" name="length" value="{{$frame->length}}" min="1">
+                                </div>
+                            </div>
                             
                             <div class="row">
                                 <div class="col-md-12">
@@ -103,6 +122,18 @@
             required:true
         },
         color_code:{
+            required:true
+        },
+        weight:{
+            required:true
+        },
+        height:{
+            required:true
+        },
+        length:{
+            required:true
+        },
+        width:{
             required:true
         },
         

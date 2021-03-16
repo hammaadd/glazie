@@ -26,7 +26,7 @@ class ProductattributeController extends Controller
         return view('admin/productattribute/create',['products'=>$products]);
 
     }
-    public function create(request $request){
+    public function create(Request $request){
         $validatedData = $request->validate([
            'product_id' =>'required',
            'attirbute_id' =>'required'

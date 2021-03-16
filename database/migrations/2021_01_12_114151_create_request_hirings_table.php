@@ -15,8 +15,11 @@ class CreateRequestHiringsTable extends Migration
     {
         Schema::create('request_hirings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('customer_id');
-            $table->foreign('customer_id')->references('id')->on('users');
+            $table->string('name');
+            $table->string('email');
+            $table->string('address');
+            $table->string('contact_no');
+            $table->string('postcode');
             $table->longText('working_details');
             $table->string('estimated_time');
             $table->double('amount',9,2);

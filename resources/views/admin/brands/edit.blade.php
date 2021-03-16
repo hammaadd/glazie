@@ -110,7 +110,7 @@
                if(result=="1")
                {
                    $("#imagediv").remove();
-                   toastr.success("The image removed successfully");
+                   toastr.success("Image removed successfully");
 
                }
            }

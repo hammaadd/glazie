@@ -45,7 +45,7 @@
         
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td><?php echo $category->cat_name; ?></td>
+                                    <td>{{ $category->cat_name}}</td>
                                     <td>
                                         @php
                                         $i=0;
@@ -68,11 +68,12 @@
         
                                         @endphp
                                     </td>
-                                    <td><?php 
-                                    if ($category->image) {?>
+                                    <td>
+                                        @if($category->image) 
                                          <a href="{{ asset('/admin-assets/categories/'.$category->image) }}"><img src="{{ asset('/admin-assets/categories/'.$category->image) }}" alt="" class="rounded-circle " width="50px" height="50px"> </a> 
-                                    <?php }
-                                    ?></td>
+                                            @endif
+                    
+                                    </td>
                                     <td>
                                     {{-- <a href="{{url('admin/category/details/'.$category->id)}}" class="badge badge-info"> <i class="fa fa-eye"></i> Details</a> --}}
                                         <a href="{{url('admin/category/edit/'.$category->id)}}" class="badge badge-primary"> <i class="fa fa-eye"></i> edit</a>

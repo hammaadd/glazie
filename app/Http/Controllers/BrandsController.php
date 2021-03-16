@@ -6,6 +6,7 @@ use App\Models\Brands;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Categories;
+use App\Models\Attribute;
 
 class BrandsController extends Controller
 {
@@ -13,7 +14,7 @@ class BrandsController extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        $brands = Brands::all();
+        $brands = Brands::orderBy('id','desc')->get();
        
         return view('admin/brands/index',['brands'=>$brands]);
     }
@@ -24,7 +25,7 @@ class BrandsController extends Controller
         $user = Auth::user();
         
         $validatedData = $request->validate([
-            'brand_name' => 'required',
+            'brand_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'image' => 'mimes:jpg,png,jpeg,gif,svg|max:5048',
         ]);
         $new_brand =  new Brands;
@@ -56,7 +57,7 @@ class BrandsController extends Controller
     public function update($id,Request $request){
        
         $validatedData = $request->validate([
-            'brand_name' => 'required',
+            'brand_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'image' => 'mimes:jpg,png,jpeg,gif,svg|max:5048',
         ]);
         $update_brand =  array(
@@ -117,6 +118,15 @@ class BrandsController extends Controller
             );
             
             Categories::where('id',$id)
+            ->update($update_catgories);
+            echo json_encode(1);
+        }
+        if ($type=="attribute") {
+            $update_catgories =  array(
+                'image' =>null,
+            );
+            
+            Attribute::where('id',$id)
             ->update($update_catgories);
             echo json_encode(1);
         }

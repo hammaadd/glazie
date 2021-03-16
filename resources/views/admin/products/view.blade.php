@@ -57,6 +57,15 @@
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#product-images">Product Images</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#product-attribute">Product Attribute</a>
+                </li>
+                {{-- <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#product-size">Product Size</a>
+                </li> --}}
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#product-variation">Product Variation</a>
+                </li>
         @php
             $i=0;
             $net_feedback = 0
@@ -88,12 +97,13 @@
                                     <div class="media align-items-center">
                                         <i class="font-size-40 text-success anticon anticon-smile"></i>
                                         <div class="m-l-15">
+                                            <p class="m-b-0 text-muted">Rating</p>
                                         @if ($i>0)
                                             
                                         <p class="m-b-0 text-muted">{{$net_feedback/$i}} ratings</p>
                                         <div class="jstars" data-value="{{$net_feedback/$i}}"></div>
                                         @else 
-                                        <p class="m-b-0 text-muted">No rating Yet</p>
+                                        <div class="jstars" data-value="0.1"></div>
                                         @endif                                            
 
                                         </div>
@@ -108,7 +118,18 @@
                                         <i class="font-size-40 text-primary anticon anticon-shopping-cart"></i>
                                         <div class="m-l-15">
                                             <p class="m-b-0 text-muted">Sales</p>
-                                            <h3 class="m-b-0 ls-1">1,521</h3>
+                                            
+                                            <h3 class="m-b-0 ls-1">
+                                                @php
+                                                    $quantity = 0;
+                                                @endphp
+                                            @foreach ($products->orderdetails as $order)
+                                                @php
+                                                    $quantity  =  $quantity +$order->quantity;
+                                                @endphp
+                                            @endforeach 
+                                            {{$quantity}}   
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>
@@ -141,53 +162,99 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Basic Info</h4>
-                            <div class="table-responsive">
-                                <table class="product-info-table m-t-20">
-                                    <tbody>
-                                        <tr>
-                                            <td>Regular Price:</td>
-                                            <td class="text-dark font-weight-semibold">{{$products->regular_price}} </td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td>Sale Price:</td>
-                                            <td class="text-dark font-weight-semibold">{{$products->sale_price}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Categories</td>
-                                            <td>
-                                                @foreach ($products->categories as $prd_cat)
-                                                    @if ($prd_cat->catrecord->status=='1')
-                                                        <ul>
-                                                            <li style="list-style-type: none">{{$prd_cat->catrecord->cat_name}}</li>
-                                                        </ul>
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brand:</td>
-                                            <td>{{$products->brands->brand_name}}</td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td>Status:</td>
-                                            <td>
-                                               @if ($products->quantity>0)
-                                               <span class="badge badge-pill badge-cyan">In Stock</span>
-                                               @else
-                                               <span class="badge badge-pill badge-magenta bg-magenta">Out Of Stock</span>
-                                               @endif
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table> 
+                   <div class="row">
+                       <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Basic Info</h4>
+                                <div class="table-responsive">
+                                    <table class="product-info-table m-t-20">
+                                        <tbody>
+                                            <tr>
+                                                <td>Regular Price:</td>
+                                                <td class="text-dark font-weight-semibold">{{$products->regular_price}} </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>Sale Price:</td>
+                                                <td class="text-dark font-weight-semibold">{{$products->sale_price}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Categories</td>
+                                                <td>
+                                                    @foreach ($products->categories as $prd_cat)
+                                                       
+                                                            <ul>
+                                                                <li style="list-style-type: none">{{$prd_cat->catrecord->cat_name}}</li>
+                                                            </ul>
+                                                        
+                                                    @endforeach
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Brand:</td>
+                                                <td>{{$products->brands->brand_name}}</td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>Status:</td>
+                                                <td>
+                                                   @if ($products->quantity>0)
+                                                   <span class="badge badge-pill badge-cyan">In Stock</span>
+                                                   @else
+                                                   <span class="badge badge-pill badge-magenta bg-magenta">Out Of Stock</span>
+                                                   @endif
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table> 
+                                </div>
                             </div>
                         </div>
-                    </div>
+                       </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Weight & Volume</h4>
+                                </div>
+                                <div class="card-body">
+                                    <table class="product-info-table m-t-20">
+                                        <tbody>
+                                            <tr>
+                                                <td>Height</td>
+                                                <td class="text-dark font-weight-semibold">{{$products->height}} </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>Width:</td>
+                                                <td class="text-dark font-weight-semibold">{{$products->width}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Length</td>
+                                                <td class="text-dark font-weight-semibold">{{$products->length}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Wight</td>
+                                                <td class="text-dark font-weight-semibold">{{$products->weight}} <small>(Kg)</small></td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>Status:</td>
+                                                <td>
+                                                   @if ($products->quantity>0)
+                                                   <span class="badge badge-pill badge-cyan">In Stock</span>
+                                                   @else
+                                                   <span class="badge badge-pill badge-magenta bg-magenta">Out Of Stock</span>
+                                                   @endif
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table> 
+                                </div>
+                            </div>
+                        </div>
+                       
+                   </div>
                     {{-- <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Option Info</h4>
@@ -232,6 +299,7 @@
                             </div>
                         </div>
                     </div> --}}
+                    @if ($products->short_description)
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">Product Short Description</h4>
@@ -249,7 +317,8 @@
                                 <button id="short_btn" class="btn btn-success">Read more</button>
                             </div>
                         </div>
-                    
+                    @endif
+                   @if($products->description) 
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">
@@ -257,15 +326,7 @@
                             </h4>
                         </div>
                         <div class="card-body" >
-                            {{-- <div class="row">
-                                <div class="col-md-12" id="halflongdesc">
-                                   <p id="halflongdesc">
-                                       @php
-                                           echo substr($products->description,0,40);
-                                       @endphp
-                                   </p>
-                                </div>
-                            </div> --}}
+                        
                             <div class="row">
                                 <div class="col-md-12" style="display: none;" id="completedescription">
                                     <p class="text-justify">
@@ -276,6 +337,7 @@
                            <button class="btn btn-success" id="longdescbtn">Read</button>
                         </div>
                     </div>
+                    @endif
                 </div>
                 <div class="tab-pane fade" id="product-images">
                     <div class="card">
@@ -285,10 +347,57 @@
                                     
                                 
                                 <div class="col-md-3 d-flex">
-                                    <img class="img-fluid" src="{{asset($productimages->image)}}" alt="">
+                                    <img class="img-fluid" src="{{asset("productimages/".$productimages->image)}}" >
                                 </div>
                                 @endforeach
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="product-attribute">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2>Product Attribute List</h2>
+                                   @if ($number>count($products->attribute))
+                                        <a href="{{url('admin/product/addattr/'.$products->id)}}" class="btn btn-success float-right btn-xs"> <i class="fa fa-plus-circle"></i> Add Product Attribute</a>
+                                   @endif
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr #</th>
+                                                <th> Attribute Name</th>
+                                                <th> Attribute Option</th>
+                                                <th> Action</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+                                            
+                                            @foreach ($products->attribute as $attribute)
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$attribute->attribute->attribute_name}}</td>
+                                                <td>
+                                                    @foreach ($products->terms as $terms)
+                                                        @if($terms->attribute_id==$attribute->attribute->id)
+                                                            <span class="badge badge-pill  badge-{{$terms->term->name}}"> {{$terms->term->name}}</span>
+                                                        @endif  
+                                                    @endforeach
+                                                </td>
+                                                <td>
+                                                     <a href="{{url('admin/editprdattribute/'.$attribute->id)}}" class="btn btn-info btn-xs" ><i class="fa fa-edit"></i> Edit</a>
+                                                    <a href="{{url('admin/removeprdattribute/'.$attribute->id)}}" class="btn btn-danger btn-xs" ><i class="fa fa-times"></i> Remove</a> 
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -309,15 +418,15 @@
                                             </tr>
                                         </thead>
                                     @foreach ($products->feedback as $feedback)
-                                        @if ($feedback->status=="1")
+                                        
                                             <tr>
                                                 <td>{{$feedback->name}}</td>
                                                 <td>{{$feedback->email}}</td>
                                                 <td>{{$feedback->rating}}</td>
                                                 <td>{{$feedback->reviews}}</td>
-                                                <td><a href="{{url('admin/deletefeedback/'.$feedback->id)}}" class="btn btn-xs btn-success" onclick="return confirm('Are you sure ')">Delete</a></td>
+                                                <td><a href="{{url('admin/deletefeedback/'.$feedback->id)}}" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure ')">Delete</a></td>
                                             </tr>
-                                        @endif
+                                     
                                     @endforeach
                                 </table>
                                 </div>
@@ -326,6 +435,87 @@
                     </div>
                 </div>
                 @endif
+                {{-- <div class="tab-pane fade" id="product-size">
+                    <div class="card">
+                        <div class="card-body">
+                            <a  class="btn btn-success btn-xs" href="{{url('admin/productsize/add/'.$products->id)}}"><i class="fa fa-plus"></i>Add New Size </a>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr #</th>
+                                                <th>Name</th>
+                                                <th>Height</th>
+                                                <th>Width</th>
+                                                <th>thikness</th>
+                                                <th>Price </th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                    @foreach ($products->sizes as $size)
+                                        
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$size->name}}</td>
+                                                <td>{{$size->height}}</td>
+                                                <td>{{$size->width}}</td>
+                                                <td>{{$size->thickness}}</td>
+                                                <td>{{$size->price}}</td>
+                                                <td><a href="{{url('admin/productsize/edit/'.$size->id)}}" class="btn btn-xs btn-info" > <i class="fa fa-edit"></i> Edit</a>
+                                                    <a href="{{url('admin/deletesize/'.$size->id)}}" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure ')"> <i class="fa fa-times"></i> Delete</a></td>
+                                            </tr>
+                                     
+                                    @endforeach
+                                </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  --}}
+                <div class="tab-pane fade" id="product-variation">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="{{url('admin/addproductvariation/'.$products->id)}}" class="btn btn-success btn-success btn-xs float-right"><i class="fa fa-plus-circle"></i> Add Product Variation</a>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr #</th>
+                                               <th>Variation</th>
+                                                <th>Price</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($products->variations as $variation)
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>
+                                                        @foreach ($variation->variationdetails as $details)
+                                                        @php
+                                                        $a = array('magenta','red','volcano','orange','gold','lime','green','cyan','blue','geekblue','purple');
+                                                        $randindex = array_rand($a);
+
+                                                    @endphp
+                                                            <span class="badge badge-pill badge-{{$a[$randindex]}}">{{$details->prd_term->term->name}}</span>
+                                                        @endforeach
+                                                    </td>
+                                                    <td>{{$variation->price}}</td>
+                                                    <td>
+                                                        <a href="{{url('admin/variation/deletevariation/'.$variation->id)}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure to remove?');"><i class="fa fa-trash"></i> Delete</a>
+                                                    </td>
+                                                </tr>
+                                             @endforeach
+                                        </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- @endif --}}
             </div>
         </div>
     </div>

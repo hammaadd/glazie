@@ -2,10 +2,10 @@
 @section('title','Installer List')
 @section('content')
 
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+{{-- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-<link href="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+<link href="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet"> --}}
 
 <!-- page js -->
 <div class="container">
@@ -57,52 +57,52 @@
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
 }
-$(document).ready(function(){
-    $('#installer').change(function(){
-        var installer =  $('#installer').val();
-        $.ajaxSetup({
-				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
-            });
-            url = "{{url('get_installer')}}";
-            $.ajax({
-           type:'POST',
-           url:url,
-            data:{
-                installer:installer
+// $(document).ready(function(){
+//     $('#installer').change(function(){
+//         var installer =  $('#installer').val();
+//         $.ajaxSetup({
+// 				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
+//             });
+//             url = "{{url('get_installer')}}";
+//             $.ajax({
+//            type:'POST',
+//            url:url,
+//             data:{
+//                 installer:installer
                
-            },
-            success:function(result){
-                console.log(result);
-              $('#data_records').html(result);  
-            }
-            });
+//             },
+//             success:function(result){
+//                 console.log(result);
+//               $('#data_records').html(result);  
+//             }
+//             });
 
-    });
-});
-function fetchrecord(sortype){
-    $.ajaxSetup({
-				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
-            });
-    var installer =  $('#installer').val();
-        $.ajaxSetup({
-				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
-            });
-            url = "{{url('installerbyamount')}}";
-            $.ajax({
-           type:'POST',
-           url:url,
-            data:{
-                installer:installer,
-                sortype:sortype
+//     });
+// });
+// function fetchrecord(sortype){
+//     $.ajaxSetup({
+// 				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
+//             });
+//     var installer =  $('#installer').val();
+//         $.ajaxSetup({
+// 				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
+//             });
+//             url = "{{url('installerbyamount')}}";
+//             $.ajax({
+//            type:'POST',
+//            url:url,
+//             data:{
+//                 installer:installer,
+//                 sortype:sortype
                
-            },
-            success:function(result){
-                //console.log(result);
-              $('#data_records').html(result);  
-            }
-            });
+//             },
+//             success:function(result){
+//                 //console.log(result);
+//               $('#data_records').html(result);  
+//             }
+//             });
 
-}
+// }
 
 </script>
 @endsection

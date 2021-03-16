@@ -10,7 +10,11 @@ Use App\Models\Order;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\SendCode;
 use Mail;
+use App\Models\BlogComment;
+
 use Session;
+use App\Models\BlogLikes;
+use App\Models\BLog;
 class CustomerController extends Controller
 {
 
@@ -101,7 +105,7 @@ class CustomerController extends Controller
     
     }
     public function installerlist(){
-        $installer = User::where('type','=','installer')->where('status','=','1')->get();
+        $installer = User::where('type','=','installer')->get();
         return view('customer/installer/installerlist' ,['installers'=>$installer]);
     }
     public function installerdetails($id){
@@ -112,6 +116,7 @@ class CustomerController extends Controller
         $validatedData = $request->validate([
             'estimated_time' => 'required',
             'amount' =>'required',
+            'postcode'=>'required',
             'working_details'=>'required'
         ]);
         
@@ -121,7 +126,12 @@ class CustomerController extends Controller
         $requesthire->amount = $request->input('amount');
         $requesthire->installer_id = $request->input('installer_id');
         $requesthire->working_details = $request->input('working_details');
-        $requesthire->customer_id = Auth::user()->id;
+        $requesthire->name = Auth::user()->name;
+        $requesthire->email = Auth::user()->email;
+        $requesthire->address = Auth::user()->address;
+        $requesthire->contact_no = Auth::user()->contact_no;
+        $requesthire->postcode = $request->input('postcode');
+        
         $requesthire->created_by = Auth::user()->id;
         $requesthire->save();
         return redirect('customer/installer')->with('info', "The request is created Soon You will recieve mail");
@@ -189,5 +199,129 @@ class CustomerController extends Controller
             return redirect('customer/verify')->with('status','The code is not correct');
         }
     }
+    public function blogpost(){
+        $blogs = Blog::where('publish','public')->get();
+        return view('customer/blogpost',['blogs'=>$blogs]);
+    }
+    public function blogdetails($id)
+    {
+        $blogs = Blog::where('slug','=',$id)->get();
+        foreach ($blogs as  $blog) {
+            # code...
+        }
+        return view('customer/blogdetails',['blog'=>$blog]);
+    }
+    public function checklike(Request $request)
+    {   
+        $data =array();
+        $user_id = $request->input('user_id');
+        $blog = $request->input('blog');
+        $type = $request->input('type');
+        if ($type=="like") {
+            $bloglike = BlogLikes::where('user_id','=',$user_id)->where('blog_id','=',$blog)->get();
+            if (count($bloglike)>0) {
+                foreach($bloglike as $blogs){}
+               if ($blogs->liketype=="dislike" || $blogs->liketype==null) {
+                   $likearray = array(
+                       'liketype'=>'like'
+                   );
+                   BlogLikes::where('id',$blogs->id)->update($likearray);
+               }
+               else {
+                $likarray = array(
+                    'liketype'=>null
+                );
+                BlogLikes::where('id',$blogs->id)->update($likarray);
+               }
+            }
+            else{
+                $newlike = new BlogLikes;
+                $newlike->blog_id = $blog;
+                $newlike->user_id = $user_id;
+                $newlike->liketype = "like";
+                $newlike->save();
+            }
+        }
+        else{
+            $bloglike = BlogLikes::where('user_id','=',$user_id)->where('blog_id','=',$blog)->get();
+            if (count($bloglike)>0) {
+                foreach($bloglike as $blogs){}
+               if ($blogs->liketype=="like" || $blogs->liketype==null) {
+                   $likearray = array(
+                       'liketype'=>'dislike'
+                   );
+                   BlogLikes::where('id',$blogs->id)->update($likearray);
+               }
+               else{
+                $likearray = array(
+                    'liketype'=>null
+                );
+                BlogLikes::where('id',$blogs->id)->update($likearray);
+               }
+            }
+            else{
+                $newlike = new BlogLikes;
+                $newlike->blog_id = $blog;
+                $newlike->user_id = $user_id;
+                $newlike->liketype = "dislike";
+                $newlike->save();
+            }
+        }
+        $countlike = $countdislike = 0;
+        $blogsresult =Bloglikes::where('blog_id','=',$blog)->get();
+        foreach ($blogsresult as $key => $value) {
+            if ($value->liketype=="like") {
+                $countlike++;
+            }
+            if ($value->liketype=="dislike") {
+                $countdislike++;
+            }
+        }
+        array_push($data,$countlike);
+        array_push($data,$countdislike);
+        $checks = BlogLikes::where('user_id','=',$user_id)->where('blog_id','=',$blog)->get();
+        if (count($checks)>0) {
+            foreach($checks as $check){}
+           if ($check->liketype=="like" ) {
+            array_push($data,'like'); 
+           }
+           if ($check->liketype=="dislike" ) {
+            array_push($data,'dislike'); 
+           }
+           if ($check->liketype==null) {
+            array_push($data,null); 
+           }
+        }
+        else{
+            $checks = BlogLikes::where('user_id','=',$newlike->id)->where('blog_id','=',$blog)->get();
+            if (count($check)>0) {
+                foreach($checks as $check){}
+               if ($check->liketype=="like" ) {
+                array_push($data,'like'); 
+               }
+               if ($check->liketype=="dislike" ) {
+                array_push($data,'dislike'); 
+               }
+               if ($check->liketype==null) {
+                array_push($data,null); 
+               }
+            }
+        }
+        echo json_encode($data); 
+    }
+    public function comment(Request $request)
+    {
+        
+        $newcomment = new BlogComment;
+        $newcomment->blog_id = $request->input('blog_id');
+        $newcomment->user_id = Auth::id();
+        $newcomment->comment = $request->input('comment');
+        $newcomment->status = 'unapprove';
+        $newcomment->save();
+        return redirect('customer/blog/posts')->with('info','Comment post successfully');
+    }
+    // Submitting the Hire request Feedback 
+    public function hirefeedback(Request $request)
+    {}
 
 }

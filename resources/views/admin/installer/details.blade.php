@@ -1,6 +1,10 @@
 @extends('admin-layout.layouts')
 @section('title','installer details')
 @section('content')
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+crossorigin="anonymous"></script>
+<script src="{{asset('admin-assets/js/jstars.js')}}"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
@@ -38,7 +42,7 @@
                                     <h2 class="m-b-5">{{$user->name}}</h2>
                                     <p class="text-opacity font-size-13"></p>
                                     <p class="text-dark m-b-20"></p>
-                                    <button class="btn btn-primary btn-tone">Contact</button>
+                                    {{-- <button class="btn btn-primary btn-tone">Contact</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -70,7 +74,7 @@
                                         </li>
                                     </ul>
                                     <div class="d-flex font-size-22 m-t-15">
-                                        <a href="" class="text-gray p-r-20">
+                                        {{-- <a href="" class="text-gray p-r-20">
                                             <i class="anticon anticon-facebook"></i>
                                         </a>        
                                         <a href="" class="text-gray p-r-20">    
@@ -81,7 +85,7 @@
                                         </a> 
                                         <a href="" class="text-gray p-r-20">   
                                             <i class="anticon anticon-dribbble"></i>
-                                        </a>
+                                        </a> --}}
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +109,9 @@
                                                 <a class="nav-link" id="profile-tab-justified" data-toggle="tab" href="#profile-justified" role="tab" aria-controls="profile-justified" aria-selected="false">Company Info</a>
                                             </li>
                                             @endif
-                                            
+                                            <li class="nav-item">
+                                                <a class="nav-link " id="testmonial-tab-justified" data-toggle="tab" href="#testmonial-justified" role="tab" aria-controls="testmonial-justified" aria-selected="false">Testimonial</a>
+                                            </li>
                                             
                                         </ul>
                                         <div class="tab-content m-t-15" id="myTabContentJustified">
@@ -221,6 +227,51 @@
                                                 </div>
                                             </div>
                                             @endif
+                                            <div class="tab-pane fade" id="testmonial-justified" role="tabpanel" aria-labelledby="testmonial-tab-justified">
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <a href="{{url('admin/addtestmonial/'.$user->id)}}" class="btn btn-success btn-xs float-right"><i class="fa fa-plus-circle"></i> Add Testimonial </a>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                       @if ($user->testmonial)
+                                                       <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Sr #</th>
+                                                                    <th>Image</th>
+                                                                    <th>Rating</th>
+                                                                    <th>Desctiption</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($user->testmonial as $userstest)
+                                                                    <tr>
+                                                                        <td>{{$loop->iteration}}</td>
+                                                                        <td>
+                                                                            @if($userstest->image)
+                                                                            <a href="{{asset('admin-assets/testmonial/'.$userstest->image)}}"><img src="{{asset('admin-assets/testmonial/'.$userstest->image)}}" width="70px" height="70px"></a>
+                                                                            @endif
+                                                                        </td>
+                                                                        <td><div class="jstars" data-value="{{$userstest->rating}}"></div></td>
+                                                                        
+                                                                        <td>{{mb_strimwidth($userstest->description, 0, 20, ' ........')}}</td>
+                                                                        <td>
+                                                                            <a href="{{url('admin/edittestmonial/'.$userstest->id)}}" class="btn btn-info btn-xs"><i class="fa fa-edit"></i> Edit</a>
+                                                                            <a href="{{url('admin/deletetestmonial/'.$userstest->id)}}" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delte</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    
+                                                                @endforeach
+                                                            </tbody>
+                                                       </table>
+                                                       @endif
+                                                    </div>
+                                                </div>
+                                            </div>
                                             
                                         </div>
                                     </div>

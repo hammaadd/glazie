@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ProductReviews extends Model
 {
     use HasFactory,SoftDeletes;
+    
+    public function user()
+    {
+        return $this->belongsTo(Products::class, 'products_id');
+    }
 }

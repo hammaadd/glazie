@@ -69,7 +69,7 @@ class AdminsController extends Controller
         );
         Admin::where('id',$id)
            ->update($data);
-        return redirect('admin/avatar/update')->with('status', 'Image Has been uploaded');
+        return redirect('admin/profile/edit')->with('info', 'Image Has been uploaded');
     
     
     }
@@ -91,7 +91,7 @@ class AdminsController extends Controller
             'last_name'=> $request->input('last_name'),
             'contact_no'=> $request->input('contact_no'),
             'address'=> $request->input('address'),
-            'name'=>$request->input('first_name').$request->input('last_name')
+            'name'=>$request->input('first_name').' '.$request->input('last_name')
         );
         Admin::where('id',$id)
         ->update($data);

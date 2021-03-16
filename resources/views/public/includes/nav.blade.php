@@ -169,7 +169,7 @@
   </div>
 
   <!-- header bottom -->
-  <div class="header-bottom">
+  <div class="header-bottom" id="customheader">
     <nav class="navbar navbar-expand-xl">
       <div class="container">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -199,14 +199,14 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Our Guarantee</a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a class="nav-link" href="#">About Us</a>
-            </li>
+            </li> --}}
             <li class="nav-item">
               <a class="nav-link" href="{{url('contact-us')}}">Contact us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Shop</a>
+              <a class="nav-link" href="{{'blog-posts'}}">Blog Post</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link" href="#">Site Content</a>

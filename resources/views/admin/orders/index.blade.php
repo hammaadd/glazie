@@ -78,6 +78,7 @@
                                                 <select name="status" id="" class="form-control" required>
                                                     <option value="">Select Order </option>
                                                     <option value="canceled">Cancel</option>
+                                                    
                                                     <option value="shipped">shipped</option>
                                                     <option value="completed">Completed</option>
                                                 </select>

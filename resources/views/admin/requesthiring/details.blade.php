@@ -32,7 +32,7 @@
                             <h5 class=""><b>Name:</b></h5> 
                         </div>
                         <div class="col-md-5">
-                            <h5>{{$requesthire->customer->name}} </h5>
+                            <h5>{{$requesthire->name}} </h5>
                         </div>
                     </div>
                       <div class="row">
@@ -40,7 +40,7 @@
                             <h5 class=""><b>Address:</b></h5> 
                         </div>
                         <div class="col-md-5">
-                            <h5>{{$requesthire->customer->address}} </h5>
+                            <h5>{{$requesthire->address}} </h5>
                         </div>
                       </div>
                       <div class="row">
@@ -48,7 +48,7 @@
                             <h5 class=""><b>Contact No:</b></h5> 
                         </div>
                         <div class="col-md-5">
-                            <h5>{{$requesthire->customer->contact_no}} </h5>
+                            <h5>{{$requesthire->contact_no}} </h5>
                         </div>
                       </div>
                       <div class="row">
@@ -56,7 +56,7 @@
                             <h5 class=""><b>Email Address:</b></h5> 
                         </div>
                         <div class="col-md-5">
-                            <h5 class="text-info"><a href="mailto:{{$requesthire->customer->email}}">{{$requesthire->customer->email}}</a> </h5>
+                            <h5 class="text-info"><a href="mailto:{{$requesthire->email}}">{{$requesthire->email}}</a> </h5>
                         </div>
                       </div>
                       <div class="row mt-2">

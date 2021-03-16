@@ -8,8 +8,8 @@
     <div class="main-content">
         <div class="page-header">
             <h2 class="header-title">Update Profile</h2>
-            <div class="header-sub-title">
-                <nav class="breadcrumb breadcrumb-dash">
+            <div class="header-sub-title ">
+                <nav class="breadcrumb breadcrumb-dash ">
                     <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
                     <a class="breadcrumb-item" href="#">Update Profile</a>
                     
@@ -51,7 +51,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="contact_no">Phone No</label>
-                                    <input type="text" class="form-control" name="contact_no" placeholder="Phone Number" value="{{$user->contact_no}}">
+                                    <input type="text" class="form-control" name="contact_no" placeholder="Phone Number" value="{{$user->contact_no}}" id="contact_no">
                                 </div>
                                 <div class="col-md-6">
                                 <label for="address">Address</label>
@@ -77,11 +77,15 @@
 @endsection
 @section('script')
 <script src="{{url('admin-assets/js/pages/form-elements.js')}}"></script>
+<script src="{{ asset('admin-assets/js/jquery.inputmask.js')}}"></script>
+<script src="{{asset('admin-assets/js/inputmask.js')}}"></script>
 
 
    
     <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
-    <script>
+        <script>
+     $('#contact_no').inputmask('+99 9999 999999', { 'placeholder': '+44 ____ ______' });
+    
     $("#changeprofile").validate({
     ignore: ':hidden:not(:checkbox)',
     errorElement: 'label',

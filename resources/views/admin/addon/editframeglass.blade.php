@@ -28,34 +28,66 @@
         <script type="text/javascript">toastr.success("{{session('info')}}");</script>
         @endif  
         <div class="row">
-            <div class="col-md-3"></div>
-                <div class="col-md-6">
+            
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{url('admin/updateframeglass/'.$frame->id)}}" method="POST" enctype="multipart/form-data">
+                            <form action="{{url('admin/updateframeglass/'.$frame->id)}}" method="POST" enctype="multipart/form-data" id="addon">
                                 @csrf
-                                <div class="form-group">
-                                    <label for="">Glass Frame Name</label>
-                                    <input type="text" class="form-control routnded-0"n name="name" placeholder="Enter Glass Name" value="{{$frame->glass_name}}">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="">Glass Frame Name</label>
+                                        <input type="text" class="form-control rounded-0"n name="name" placeholder="Enter Glass Name" value="{{$frame->glass_name}}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="">Glass Frame Image</label>
+                                    <input type="file" class="form-control rounded-0" name="image" >
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="">Glass Frame Image</label>
-                                    <input type="file" class="form-control routnded-0"n name="image" placeholder="Enter Glass Name">
+                               
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Glass Frame Price</label>
+                                            <input type="number" class="form-control rounded-0"n name="price" placeholder="Enter Glass Name" value="{{$frame->price}}">
+                                        </div>
+                                    
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="">Glass Frame Quantity</label>
+                                        <input type="number" class="form-control rounded-0"n name="quantity" placeholder="Enter Glass Name" value="{{$frame->quantity}}" >
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="">Glass Frame Price</label>
-                                    <input type="number" class="form-control routnded-0"n name="price" placeholder="Enter Glass Name" value="{{$frame->price}}">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="">Weight <small class="text-danger">(KG)</small></label>
+                                        <input type="number" class="form-control rounded-0" name="weight" value="{{$frame->wieght}}" min="1">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="">Height <small class="text-danger">(cm)</small></label>
+                                        <input type="number" class="form-control rounded-0" name="height" value="{{$frame->height}}" min="1">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="">Width <small class="text-danger">(cm)</small></label>
+                                        <input type="number" class="form-control rounded-0" name="width" value="{{$frame->width}}" min="1">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="">Length <small class="text-danger">(cm)</small></label>
+                                        <input type="number" class="form-control rounded-0" name="length" value="{{$frame->length}}" min="1">
+                                    </div>
                                 </div>
                                 
-                                <div class="form-group">
-                                    <label for="">Glass Frame Quantity</label>
-                                    <input type="number" class="form-control routnded-0"n name="quantity" placeholder="Enter Glass Name" value="{{$frame->quantity}}">
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-success" type="submit"> <i class="fa fa-check"></i> Submit</button>
-                                    <a class="btn btn-danger" href="{{url('admin/frameglasses/'.$frame->frame_id)}}"> <i class="fa fa-times"></i> Cancel</a>
+                                    <div class="row mt-2">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-success" type="submit"> <i class="fa fa-check"></i> Submit</button>
+                                            <a class="btn btn-danger" href="{{url('admin/frameglasses/'.$frame->frame_id)}}"> <i class="fa fa-times"></i> Cancel</a>
+                                        </div>
+                                    </div>
                     
-                                </div>
+                              
                             </form>
                         </div>
                     </div>
@@ -73,7 +105,40 @@
 <!-- page js -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
-  
+  <script>
+      $("#addon").validate({
+    ignore: ':hidden:not(:checkbox)',
+    errorElement: 'label',
+    errorClass: 'is-invalid',
+    validClass: 'is-valid',
+    rules: {
+        name:{
+            required:true
+        },
+        price:{
+            required:true
+        },
+        quantity:{
+            required:true
+        },
+        weight:{
+            required:true
+        },
+        height:{
+            required:true
+        },
+        length:{
+            required:true
+        },
+        width:{
+            required:true
+        },
+        
+        
+        }
+});
+
+  </script>
 @endsection
 
 
