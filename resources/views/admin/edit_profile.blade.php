@@ -8,7 +8,7 @@
     <div class="main-content">
         <div class="page-header">
             <h2 class="header-title">Edit Profile</h2>
-            <div class="header-sub-title">
+            <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
                     <a class="breadcrumb-item" href="#">Edit Profile</a>
@@ -20,25 +20,18 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
             @if(session('info'))
-				<div class="row">
-                    
-                    <div class="col-md-12">
-                        <div class="alert alert-success" style="background-color: green;color:white;"><i class="fa fa-check"></i> {{session('info')}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: white"><span aria-hidden="true">&times;</span></button>
-                        </div>
-
-                    </div>
-                </div>
+				<script>toastr.success("{{session('info')}}")</script>
 				@endif
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Account Settings</h4>
                     </div>
                     <div class="card-body">
+                        
                         <div class="row">
                             <div class="col-md-4"><b>Name </b></div>
                             <div class="col-md-2"></div>
-                            <div class="col-md-6"><?php echo $user->name ?> </div>
+                            <div class="col-md-6">{{$user->first_name}} {{$user->last_name}}  </div>
                         </div>
                         <br>
                         <div class="row">
@@ -51,6 +44,11 @@
                             <div class="col-md-4"><b>Password</b></div>
                             <div class="col-md-2"></div>
                             <div class="col-md-6"> <a href="{{url('/admin/changepass')}}">Change Password</a> </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-4"><b>Change Email </b></div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-6"> <a href="{{url('admin/changeaccount')}}">Change Email</a> </div>
                         </div>
                         
                     </div>

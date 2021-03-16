@@ -35,6 +35,46 @@ class Products extends Model
     {
         return $this->belongsTo(PrdVariety::class, 'verity_id', 'id');
     }
+    public function orderdetails()
+    {
+        return $this->hasMany(OrderDetails::class, 'product_id', 'id');
+    }
+    
+    public function attribute()
+    {
+        return $this->hasMany(ProductAttribute::class, 'product_id', 'id');
+    }
+    
+    public function terms()
+    {
+        return $this->hasMany(ProductTerm::class, 'product_id', 'id');
+    }
+  
+    public function brand()
+    {
+        return $this->belongsTo(Brands::class, 'brand_id');
+    }
+   
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class, 'product_id');
+    }
+   
+    public function verities(): BelongsTo
+    {
+        return $this->belongsTo(PrdVariety::class, 'verity_id');
+    } 
+   
+    public function sizes()
+    {
+        return $this->hasMany(ProductSize::class, 'product_id');
+    }
+   
+    public function variations()
+    {
+        return $this->hasMany(Variation::class, 'product_id');
+    }
+
     
   
 }

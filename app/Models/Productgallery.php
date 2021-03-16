@@ -13,5 +13,10 @@ class Productgallery extends Model
         'image'
     ];
     
+    public function products()
+    {
+        return $this->belongsTo(Products::class, 'products_id');
+    }
+    
    
 }

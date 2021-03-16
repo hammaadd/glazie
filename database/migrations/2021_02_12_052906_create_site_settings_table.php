@@ -17,6 +17,7 @@ class CreateSiteSettingsTable extends Migration
             $table->id();
             $table->string('key');
             $table->string('value');
+            $table->enum('deleteable',['0','1']);
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->softDeletes();

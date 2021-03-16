@@ -69,7 +69,7 @@
                                 <h5 style="float: right">Email:</h5>
                             </div>
                             <div class="col-md-9">
-                                <h5 class="text-info">{{$order->customer->email}}</h5>
+                                <h5 class="text-info"><a href="mailto:{{$order->customer->email}}">{{$order->customer->email}}</a></h5>
                             </div>
                         </div>
                         <div class="row">
@@ -112,6 +112,7 @@
                                                 <th>Unit Price </th>
                                                 <th>Quantity</th>
                                                 <th>SubTotal</th>
+                                          
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -130,6 +131,7 @@
                                                     @php
                                                         $total_price +=$orders->price;
                                                     @endphp
+                                                    
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -143,12 +145,14 @@
                                         <h6>Sub Total</h6>
                                         <h6>Taxes</h6>
                                         <h6>Coupen</h6>
+                                        <h6>Shipping Cost</h6>
                                         <hr>
                                     </div>
                                     <div class="col-md-2">
                                         <h6><span>&#163;</span> {{$total_price}}</h6>
                                         <h6><span>&#163;</span> 0</h6>
                                         <h6> <span>&#163;</span> {{$total_price}}</h6>
+                                        <h6> <span>&#163;</span> {{$order->shipp_cost}}</h6>
                                         <hr>
                                     </div>
                                 </div>
@@ -158,7 +162,7 @@
                                         <h5><b>Total Amount</b></h5>
                                     </div>
                                     <div class="col-md-2">
-                                        <h5><span>&#163;</span> {{$total_price}}</h5>
+                                        <h5><span>&#163;</span> {{$total_price+$order->shipp_cost}}</h5>
                                         <hr>
                                     </div>
                                 </div>

@@ -19,6 +19,12 @@ class CreateAddOnsTable extends Migration
             $table->foreign('product_id')->references('id')->on('products');
             $table->string('model_name')->nullable();
             $table->string('svgimage');
+            $table->double('price');
+            $table->double('quantity');
+            $table->double('wieght');
+            $table->double('length');
+            $table->double('width');
+            $table->double('height');
             $table->softDeletes();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

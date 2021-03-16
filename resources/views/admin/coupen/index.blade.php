@@ -8,26 +8,18 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h2 class="header-title ">Coupen</h2>
-            <div class="header-sub-title">
+            <h2 class="header-title ">Coupun</h2>
+            <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="#">Coupen</a>
+                    <a class="breadcrumb-item" href="#">Coupun</a>
                     
                 </nav>
             </div>
         </div>
-        @if(session('info'))
-				<div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <div class="alert alert-success" style="background-color: green;color:white;"><i class="fa fa-check"></i> {{session('info')}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: white"><span aria-hidden="true">&times;</span></button>
-                        </div>
-
-                    </div>
-                </div>
-				@endif
+        @if (session('info'))
+        <script type="text/javascript">toastr.success("{{session('info')}}");</script>
+        @endif
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -54,7 +46,7 @@
                     <div class="col-lg-4 text-right">
                         <a class="btn btn-primary" href="{{url('admin/coupen/create')}}">
                             <i class="anticon anticon-plus-circle m-r-5"></i>
-                            <span>Add Coupen</span>
+                            <span>Add Coupun</span>
                         </a>
                     </div>
                 </div>
@@ -62,8 +54,8 @@
                 <table class="table table-hover" id="products">
                     <thead>
                         <th>Sr.#</th>
-                        <th>Coupen Name </th>
-                        <th>Coupen Code</th>
+                        <th>Coupun Name </th>
+                        <th>Coupun Code</th>
                         
                         <th>Status</th>
                         <th>Action</th>
@@ -78,15 +70,14 @@
                             <td>{{$loop->iteration}}</td>
                             <td>{{$coupen->coupen_name}}</td>
                             <td>{{$coupen->coupen_code}}</td>
+                            @php
+                                $date = date('Y-M-d');
+                            @endphp
 
                             <td>
-                                @if ($coupen->status=='used')
+                                @if (($coupen->limiteduser=='yes' && $coupen->no_of_user<=0)||($coupen->limited_time=='yes' && $coupen->limited_time<$date))
                                 <span class="text-danger">Used</span>
-                                @endif
-                                @if ($coupen->status=='remaining')
-                                <span class="text-warning">Paritialy Used</span>
-                                @endif
-                                @if ($coupen->status=='unuse')
+                               @else
                                 <span class="text-success">Unuse</span>
                                 @endif
                             </td>

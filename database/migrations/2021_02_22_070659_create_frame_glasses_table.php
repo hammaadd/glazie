@@ -22,6 +22,10 @@ class CreateFrameGlassesTable extends Migration
             $table->double('price');
             $table->unsignedBigInteger('quantity');
             $table->softDeletes();
+            $table->double('wieght');
+            $table->double('length');
+            $table->double('width');
+            $table->double('height');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();

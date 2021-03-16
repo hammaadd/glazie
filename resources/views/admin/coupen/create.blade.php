@@ -9,7 +9,7 @@
     <div class="main-content">
         <div class="page-header">
             <h2 class="header-title ">Coupen</h2>
-            <div class="header-sub-title">
+            <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
                     <a class="breadcrumb-item" href="#">Coupen</a>
@@ -36,11 +36,11 @@
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="">Coupen Name </label>
+                                    <label for="">Coupun Name </label>
                                     <input type="text" class="form-control" name="coupen_name" placeholder="Enter Coupen Name" id="coupen_name">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="">Coupen Code </label>
+                                    <label for="">Coupun Code </label>
                                     <input type="text" class="form-control" name="coupen_code" placeholder="Enter Coupen Name" id="coupencode">
                                 </div>
                             </div>
@@ -54,12 +54,12 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="">Discount </label>
-                                    <input type="number" class="form-control" name="discount_amount" placeholder="Enter Discount Amount" id="discount_amount">
+                                    <input type="number" class="form-control" name="discount_amount" placeholder="Enter Discount" id="discount_amount">
                                 </div>
                             </div>
                              <div class="row">
                                 <div class="col-md-6">
-                                    <label for="">Llimited User</label>
+                                    <label for="">Limited User</label>
                                     <select name="limited_user" id="limituser" class="form-control">
                                         <option value="yes">Yes</option>
                                         <option value="no">No</option>
@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="">No Of User</label>
-                                    <input type="number" class="form-control" name="no_of_user" placeholder="No Of User" id="no_of_user" >
+                                    <input type="number" class="form-control" name="no_of_user" placeholder="No Of User" id="no_of_user" min="1">
                                 </div> 
                             </div>
                             <div class="row">
@@ -87,7 +87,7 @@
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <button class="btn btn-success mr-1" type="submit"> <i class="fa fa-check"></i> Submit</button>
-                                    <a href="{{url('coupen')}}" class="btn btn-danger"> <i class="anticon anticon-close-circle"></i> Cancel</a>
+                                    <a href="{{url('admin/coupen')}}" class="btn btn-danger"> <i class="anticon anticon-close-circle"></i> Cancel</a>
                                 </div>
                             </div>
                         </form>

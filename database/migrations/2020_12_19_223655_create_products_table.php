@@ -26,8 +26,11 @@ class CreateProductsTable extends Migration
             $table->text('short_description')->nullable();
             $table->longText('description')->nullable();
             $table->unsignedBigInteger('quantity');
-            $table->string('weight')->nullable();
-            $table->enum('type',['simple','customize']);
+            $table->string('weight');
+            $table->enum('type',['simple','customize','variable']);
+            $table->double('length');
+            $table->double('width');
+            $table->double('height');
             $table->softDeletes();
             $table->unsignedBigInteger('crated_by');
             $table->unsignedBigInteger('updated_by')->nullable();

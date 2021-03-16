@@ -1,7 +1,7 @@
 @section('sidebar')
-@php
+{{-- @php
     $url = str_replace("/glazieltd/","", $_SERVER["REQUEST_URI"]);
-@endphp
+@endphp --}}
 <div class="side-nav" style="background-color: #e3e3e3">
                 <div class="side-nav-inner">
                     <ul class="side-nav-menu scrollable">
@@ -47,7 +47,7 @@
                                 
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
+                        {{-- <li class="nav-item dropdown">
                             <a class="dropdown-toggle" href="javascript:void(0);">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-hdd"></i>
@@ -63,7 +63,7 @@
                                 </li>
                                 
                             </ul>
-                        </li>
+                        </li> --}}
                     </ul>
                 </li>
                         

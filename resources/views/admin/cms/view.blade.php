@@ -59,9 +59,9 @@
                         <div class="col-md-9">
                             <p>
                                 @if ($cms->publish=="1")
-                                    <span class="text-success">This page is published</span>
+                                    <span class="text-success">This page is published publically</span>
                                 @else
-                                <span class="text-danger">This page is not published</span>
+                                <span class="text-danger">This page is private</span>
                                 @endif
                             </p>
                         </div>

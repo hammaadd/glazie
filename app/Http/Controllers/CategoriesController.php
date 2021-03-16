@@ -26,7 +26,7 @@ class CategoriesController extends Controller
     public function create(Request $request){
         $user = Auth::user();
         $validatedData = $request->validate([
-            'category_name' => 'required',
+            'category_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'image' => 'mimes:jpg,png,jpeg,gif,svg|max:5048',
         ]);
         $new_cat =  new Categories;
@@ -35,6 +35,7 @@ class CategoriesController extends Controller
             $new_cat->cat_name = $request->input('category_name');
             $new_cat->description = $request->input('description');
             $new_cat->created_by = $user->id;
+            $new_cat->image= "defaultimage.png";
             if ($request->file('image')) {
                 // Image code
             $file = $request->file('image');
@@ -64,7 +65,7 @@ class CategoriesController extends Controller
     public function update($id,Request $request){
         $user = Auth::user();
         $validatedData = $request->validate([
-            'category_name' => 'required',
+            'category_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'image' => 'mimes:jpg,png,jpeg,gif,svg|max:5048',
         ]);
         $update_cat =  array(

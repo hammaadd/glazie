@@ -1,6 +1,9 @@
 @extends('admin-layout.layouts')
 @section('title','Update Product')
 @section('content')
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <div class="page-container">
@@ -35,7 +38,9 @@
                             @endforeach
                         </div>
                         @endif
-                        
+                        @php
+                            $image_gallery = $products->gallery;
+                        @endphp
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="">Product Name</label>
@@ -85,36 +90,22 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="">Product Type</label>
-                                <select name="product_type"  class="form-control">
-                                    <option value="">--Select Product Type--</option>
-                                    <option value="door" 
-                                    @if ($products->product_type=="door")
-                                        selected
-                                    @endif
-                                    >Door</option>
-                                    <option value="handle"
-                                     @if ($products->product_type=="handle")
-                                        selected
-                                    @endif>Handle</option>
-                                    <option value="lentern" 
-                                    @if ($products->product_type=="lentern")
-                                        selected
-                                    @endif>Lentern</option>
-                                    <option value="frame" @if ($products->product_type=="frame")
-                                        selected
-                                    @endif>Frame</option>
-                                    <option value="window"
-                                     @if ($products->product_type=="window")
-                                        selected
-                                    @endif>Window</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
                                 <label for="">Products images</label>
                                 <input type="file" class="form-control" multiple name="image_gallery[]">
                             </div>
-                           
+                           <div class="col-md-6">
+                            <label for="">Product Variety </label>
+                            <select name="verity_id" class="form-control">
+                                <option value="">Select Variety</option>
+                                @foreach ($varieties as $variety)
+                                    <option value="{{$variety->id}}" 
+                                        @if ($variety->id==$products->verity_id)
+                                            selected
+                                        @endif
+                                        >{{$variety->prd_name}}</option>
+                                @endforeach
+                            </select>
+                           </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -131,40 +122,15 @@
                         </div>
                         <div class="row">
                             
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <label for="">Add new Attribute</label>
                                 <input type="text" class="form-control" placeholder="Add new attribute" id="new_attr">
                             </div>
                             <div class="col-md-2">
                                <button type="button" class="btn btn-success btn-xs btn-tone" style="margin-top:35px" id="addbtn"> <i class="fa fa-plus" ></i> Add Attribute</button>
-                            </div>
+                            </div> --}}
                         </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-
-                                <label for="">Attribute</label>
-                                <select name="attribute" id="attribute" class="form-control">
-                                    <option value="">Select Attribute</option>
-                                    @foreach ($attributes as $attribute)
-                                        <option value="{{$attribute->id}}"
-                                            @if ($product_attr->attribute_id==$attribute->id)
-                                                selected
-                                            @endif
-                                            >{{$attribute->attribute_name}}</option>                                        
-                                    @endforeach
-                                </select>
-                                <input type="hidden" name="product_attr_id" value="{{$product_attr->id}}">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="">Terms</label>
-                                <select name="terms[]" id="terms" multiple="multiple" class="form-control select2">
-                                    @foreach ($terms as $term)
-                                        <option value="{{$term->id}}" selected>{{$term->name}}</option>
-                                    @endforeach                                   
-                                </select>
-                            </div>
-                        </div>
+                       
                         <div class="row">
                             <div class="col-md-6">
                                 <label for=""><b>Categories</b></label>
@@ -182,10 +148,33 @@
                                      @endforeach 
                                  </select>
                              </div>  
-                             
+                             <div class="col-md-6">
+                                <label for="">Height <small>(cm)</small></label>
+                                <input type="number" class="form-control" name="height" placeholder="Enter Height of the Product" min="1" value="{{$products->height}}">
+                            </div>
                             
                          </div>
-                        
+                         <div class="row">
+                            <div class="col-md-6">
+                                <label for="">Length <small>(cm)</small></label>
+                                <input type="number" class="form-control" name="length" placeholder="Enter Length of Product" min="1" value="{{$products->length}}">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">Width <small>(cm)</small></label>
+                                <input type="number" class="form-control" name="width" placeholder="Enter Width of the products " min="1" value="{{$products->width}}">
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="">Product Search Tags</label>
+                                <select name="prdtags[]" multiple id="tags" class="form-control">
+                                    @foreach ($product_tag as $search_tag)
+                                       <option value="{{$search_tag->id}}" selected> {{$search_tag->tag_name}} </option> 
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="row">
                             <button type="submit" class="btn btn-success mt-3"><i class="fa fa-edit"></i>Update Product</button>
                             <a href="{{url('admin/products')}}" class="btn btn-danger ml-3 mt-3"><i class="fa fa-times"></i> Cancel</a>
@@ -199,14 +188,14 @@
         <div class="row">
             
             @foreach ($image_gallery as $images)
-                @if ($images->status=="1")
+                
                    
                      <div class="col-md-2" id="abc{{$images->id}}">
-                        <img src="{{ asset($images->image) }}" alt="" height="150px" width=100%>
+                        <img src="{{ asset('productimages/'.$images->image) }}" alt="" height="150px" width=100%>
                         <div class="row mt-2 mb-4">
                             
                             <div class="col-md-8" id="primary_div{{$images->id}}"> 
-                                <button class="btn btn-primary btn-xs btn-flat border-0 mt-1" data-id="{{$images->id}}" title="Make this image primary" onclick="makeprimary({{$images->id}})" id="primary" 
+                                <button class="btn btn-primary btn-xs btn-flat border-0 mt-1" id="primary{{$images->id}}" title="Make this image primary" onclick="makeprimary({{$images->id}})" 
                                     @if ($images->is_primary==1)
                                     disabled
                                     @endif
@@ -219,7 +208,7 @@
                             </div>
                         </div>
                     </div>
-                @endif
+               
             @endforeach
            
         </div>
@@ -233,7 +222,7 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
     $(document).ready(function() {
-    $('#terms').select2(
+    $('#terms,#tags').select2(
         {
             tags:true,
             tokenSeparators: [",", " "]
@@ -259,8 +248,8 @@ $(document).ready(function() {
            },
 
            success:function(result){
-                    alert("The image is selected for primary");
-
+            toastr.success("Iamge selected  successfully");
+            $('primary'+id).prop('disabled',true);
          		}
          		  	
            		
@@ -268,26 +257,36 @@ $(document).ready(function() {
         }
     }
     function remove(id){
+        //console.log({{$products->id}});
         confirmation = confirm("Are you sure to delete the image");
-if (confirmation==true) {
-    $.ajaxSetup({
-        headers:{'X-CSRF-Token':'{{csrf_token()}}'}
-    });
-    url = "{{url('admin/products/prdremove')}}";
-    $.ajax({
-   type:'POST',
-   url:url,
-    data:{id:id
-   },
+            if (confirmation==true) {
+                $.ajaxSetup({
+                    headers:{'X-CSRF-Token':'{{csrf_token()}}'}
+                });
+                url = "{{url('admin/products/prdremove')}}";
+                $.ajax({
+            type:'POST',
+            url:url,
+                data:{id:id,
+                    product_id:{{$products->id}}
+            },
 
-   success:function(result){
-            $("#abc"+id).css('display','none');
-          //  alert("The image is removed");
+            success:function(result){
+                console.log(result);
+                if(result==0)
+                {
+                    toastr.success("There should be only one image of product");
+                }
+                else{
+                    toastr.success("Iamge removed successfully");
+                    $('#abc'+id).remove();
+
+                }
+
+            }       
+                    
+                });
             }
-               
-           
-    });
-}
     }
     $(document).ready(function() {
         $('#summernote').summernote({
@@ -349,86 +348,27 @@ if (confirmation==true) {
     }
 });
 
-    </script>
+     </script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script>
-       
-    $(document).ready(function(){
-        $("#addbtn").click(function(){
-            var new_attr = $("#new_attr").val();
-            
-            //alert(product_id);
-            $.ajaxSetup({
-				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
-            });
-            url = "{{url('admin/attribute/creates')}}";
-            $.ajax({
-           type:'POST',
-           url:url,
-            data:{
-                new_attr:new_attr,
-               
-            },
-
-           success:function(result){
-               console.log(result);
-               var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-               
-               var len =jsonResult[0].length;
-               var option = "";
-                $('#attribute').empty();
-                var option = "<option >"+" Select Attribute"+"</option>";
-                for(var i=0; i<len; i++)
-                    {
-                    var attrId = jsonResult[0][i];
-                    var attrName = jsonResult[1][i];
-                    option += "<option value="+ attrId +" selected>"+attrName+"</option>";
-                    }
-                    $('#attribute').html(option);
-
-         		}
-         		  	
-           		
-            });
-        
-    
-    });
-    $("#attribute").change(function(){
-        $.ajaxSetup({
-				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
-            });
-       var attr = $("#attribute").val();
-       
-       url = "{{url('admin/attribute/get_terms')}}";
-            $.ajax({
-           type:'POST',
-           url:url,
-            data:{
-                attr:attr,
-               
-            },
-            success:function(result){
-                //console.log(result)
-                var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-               
-               var len =jsonResult[0].length;
-               var option = "";
-                $('#terms').empty();
-                var option = "<option disabled>"+" Select Terms"+"</option>";
-                for(var i=0; i<len; i++)
-                    {
-                    var attrId = jsonResult[0][i];
-                    var attrName = jsonResult[1][i];
-                    option += "<option value='"+ attrId +"' selected>"+attrName+"</option>";
-                    }
-                    $('#terms').html(option);
-                    //console.log(option);
-
-         		}
-         		  	
-               
-         		
-    });
-});
-    });
+        toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": true,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
     </script>
+
 @endsection

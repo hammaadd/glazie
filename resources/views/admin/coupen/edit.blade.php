@@ -8,11 +8,11 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h2 class="header-title ">Coupen</h2>
+            <h2 class="header-title ">Coupun</h2>
             <div class="header-sub-title">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="#">Coupen</a>
+                    <a class="breadcrumb-item" href="#">Coupun</a>
                     
                 </nav>
             </div>
@@ -62,12 +62,12 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="">Discount </label>
-                                    <input type="number" class="form-control" name="discount_amount" placeholder="Enter Discount Amount" id="discount_amount" value="{{$coupen->discount}}">
+                                    <input type="number" class="form-control" name="discount_amount" placeholder="Enter Discount" id="discount_amount" value="{{$coupen->discount}}">
                                 </div>
                             </div>
                              <div class="row">
                                 <div class="col-md-6">
-                                    <label for="">Llimited User</label>
+                                    <label for="">Limited User</label>
                                     <select name="limited_user" id="limituser" class="form-control">
                                         <option value="yes"
                                         @if ($coupen->limiteduser=="yes")
@@ -124,7 +124,7 @@
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <button class="btn btn-success mr-1" type="submit"> <i class="fa fa-check"></i> Submit</button>
-                                    <a href="{{url('coupen')}}" class="btn btn-danger"> <i class="anticon anticon-close-circle"></i> Cancel</a>
+                                    <a href="{{url('admin/coupen')}}" class="btn btn-danger"> <i class="anticon anticon-close-circle"></i> Cancel</a>
                                 </div>
                             </div>
                         </form>

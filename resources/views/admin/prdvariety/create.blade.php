@@ -12,7 +12,7 @@
     <div class="main-content">
         <div class="page-header">
             <h2 class="header-title">Add Procut Variety</h2>
-            <div class="header-sub-title">
+            <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash float-right">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
                     <a class="breadcrumb-item" href="#">Add Variety</a>
@@ -24,6 +24,9 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Add Product Variety</h4>
+                    </div>
                     <div class="card-body">
                         @if(count($errors)>0)
                         @foreach($errors->all() as $error)

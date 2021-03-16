@@ -7,6 +7,9 @@ use App\Models\InstallInfo;
 use App\Models\Countries;
 use App\Models\States;
 use App\Models\Cities;
+use App\Models\Testmonial;
+use Session;
+use App\Rules\NewMatchOldUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 class InstallerController extends Controller
@@ -27,8 +30,8 @@ class InstallerController extends Controller
     public function create(Request $request){
         
         $validatedData = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'first_name' => 'required|alpha',
+            'last_name' => 'required|alpha',
             'email' => 'required',
             'password' => 'required',
             'contact_no' => 'required',
@@ -44,6 +47,7 @@ class InstallerController extends Controller
         $installer->password = Hash::make($request->input('password'));
         $installer->contact_no = $request->input('contact_no');
         $installer->address = $request->input('address');
+        $installer->postcode = $request->input('postcode');
         $installer->type = 'installer';
         
         $installer->name = $request->input('first_name')."".$request->input('last_name');
@@ -107,7 +111,7 @@ class InstallerController extends Controller
             $installer_company->country_id = $counntry_id;
             $installer_company->state_id = $shipstate_id ;
             $installer_company->city_id = $city_id;
-            $installer_company->postcode = $request->input('postcode');
+            $installer_company->postcode = $request->input('installerpostcode');
             $installer_company->email  =$request->input('company_email');
             $installer_company->contact_no = $request->input('company_contactno');
             $installer_company->address = $request->input('address');
@@ -165,7 +169,7 @@ class InstallerController extends Controller
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
             'email' => $request->input('email'),
-           
+            'postcode' => $request->input('installerpostcode'),
             'contact_no' => $request->input('contact_no'),
             'address' => $request->input('address'),
             'type' => 'installer',
@@ -188,7 +192,7 @@ class InstallerController extends Controller
             User::where('id',$id)->update($userimage);
         }
             User::where('id',$id)->update($user_array);
-            echo 
+            
             $installerinfoid = $request->input('installinfoid');
             $types = $request->input('installation_type');
             $installation_type =  implode(",",$types);
@@ -429,10 +433,94 @@ class InstallerController extends Controller
     public function installerpassword($id){
         return view('admin/installer/changepassword' ,['id'=>$id]);
     }
-    public function changepassword($id)
+    public function changepassword($id,Request $request)
     {
+        $request->session()->put('id', $id);
         
-    }
+        $validatedData = $request->validate([
+            'oldpassword' => ['required',new NewMatchOldUser],
+            'password' => 'required',
+            'conf_pass' =>'required'
+        ]);
+        $changepasswored = array(
+            'password'=>Hash::make($request->input('password'))
+        );
+        User::where('id',$id)->update($changepasswored);
+        $request->session()->put('id',null);
+        return redirect('admin/installerdetails/'.$id)->with('info','Password Change successfully');
 
+     
+    }
+    public function addtestmonial($id)
+    {
+        return view('admin/installer/addtestmonial',['id'=>$id]);
+    }
+    public function storetestmonial(Request $request)
+    {
+        $validatedData = $request->validate([
+            'rating' => 'required',
+           
+            'image' => 'mimes:jpg,png,jpeg,gif,svg|max:5048',
+        ]);
+        $testmonial = new Testmonial;
+        $testmonial->installer_id = $request->input('installer_id');
+        $testmonial->rating = $request->input('rating');
+        $testmonial->description = $request->input('description');
+        if($request->file('image')){
+            $file = $request->file('image');
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $imgname = uniqid() . $filename;
+            $destinationPath = public_path('/admin-assets/testmonial');
+            $file->move($destinationPath, $imgname);
+            $testmonial->image= $imgname;
+            }
+        $testmonial->save();
+        return redirect('admin/installerdetails/'.$request->input('installer_id'))->with('info','Testmonial created Successfully');
+    }
+    public function edittestmonial($id)
+    {
+        $testmonial = Testmonial::find($id);
+        return view('admin/installer/edittestmonial',['testmonial'=>$testmonial]);
+    }
+    public function updatetestmonial($id,Request $request)
+    {
+        $validatedData = $request->validate([
+            'rating' => 'required',
+           
+            'image' => 'mimes:jpg,png,jpeg,gif,svg|max:5048',
+        ]);
+        $updatetest = array( 
+        'installer_id' => $request->input('installer_id'),
+        'rating' => $request->input('rating'),
+        'description' => $request->input('description'),
+        );
+        Testmonial::where('id',$id)->update($updatetest);
+        if($request->file('image')){
+            $file = $request->file('image');
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $imgname = uniqid() . $filename;
+            $destinationPath = public_path('/admin-assets/testmonial');
+            $file->move($destinationPath, $imgname);
+            
+            $testimage = array( 
+                'image'=> $imgname
+                
+                );
+                Testmonial::where('id',$id)->update($testimage);
+            }
+        
+        return redirect('admin/installerdetails/'.$request->input('installer_id'))->with('info','Testmonial created Successfully');
+    }
+    public function deletetestmonial($id)
+    {
+        $installer_id  =  Testmonial::find($id)->installer_id;
+        Testmonial::where('id',$id)->delete();
+    
+
+        return redirect('admin/installerdetails/'.$installer_id)->with('info','Testmonial created Successfully');
+
+    }
 
 }

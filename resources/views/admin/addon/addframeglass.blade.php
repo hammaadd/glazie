@@ -51,22 +51,8 @@
                                 </div>
                             </div>
                             <input type="hidden" name="frame_id" value="{{$id}}">
-                            <div class="row">
-                               <div class="col-md-12">
-                                   <div class="table-responsive" >
-                                    <table class="table" id="colortable" >
-                                        <thead>
-                                            <th>Frame Glass Name</th>
-                                            <th>Image</th>
-                                            <th>Price</th>
-                                            <th>Quantity</th>
-                                            <th>Remove</th>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                   </div>
-                               </div>
+                            <div class="row mt-3" id="datadiv" >
+
                             </div>
                             
                             <div class="row">
@@ -90,8 +76,7 @@
 
 <!-- page js -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
-  
+ 
 <script>
     toastr.options = {
     "closeButton": true,
@@ -113,50 +98,97 @@
 let j=1;
 $(document).ready(function(){
     $('#addcolor').click(function(){
-       
-        let row = '';
-        
-       
-        
-        row+='<tr>';
-            row+='<td>';
-            row+='<input type="text" class="form-control rounded-0" name="name[]" placeholder="Frame Glass Name" required>';
-            
-            row+='</td>';
-        row+='<td>';
-            row+='<input type="file" class="form-control rounded-0" name="images[]" placeholder="Frame Glass Name" required>'; 
-       
-        row+='</td>';
-        row+='<td>';
-        
-        row+='<input type="number" required min="1" class="form-control rounded-0 " placeholder="Color Price" name="price[]" required>';
-        row+='</td>';
-        row+='<td>';
-        row+='<input type="number" class="form-control rounded-0 " name="quantity[]" placeholder="Enter Quantity" required >';
-        row+='</td>';
-        row+='<td>';
-        row+='<button class="btn btn-danger btn-xs removecolor"  type="button"> <i class="fa fa-minus"></i> </button>';
-        row+='</td>';
-        row+='</tr>';
+
+       let row='<div class="card card-primary" id="card-data'+j+'">';
+         row+='<div class="card-header bg-primary ">';
+        row+='<h4 style="color:white;" class="mt-2">Frame Glass Details</h4>';
+        row+='</div>';
+        row+='<div class="card-body">';
+        row+='<div class="row" >';
+        row+='<div class="col-md-11">';
+        row+='<div class="row">';
+        row+='<div class="col-md-3">';
+        row+='<label for="">Frame Glass Name</label>';
+        row+='<input type="text" class="form-control rounded-0" name="glass_name[]" required placeholder="Enter Frame Glass Name">';
+        row+='</div>';
+        row+='<div class="col-md-3">';
+        row+='<label for="">Image <small class="text-danger">(Only Svg Image)</small>  </label>';
+        row+='<input type="file" class="form-control rounded-0" name="image[]" id="image'+j+'" onchange="abc('+j+')" required>';
+        row+='</div>';
+        row+='<div class="col-md-3">';
+        row+='<label for="">Price</label>';
+        row+='<input type="number" class="form-control rounded-0" name="price[]" required placeholder="Enter Price">';
+        row+='</div>';
+        row+='<div class="col-md-3">';
+        row+='<label for="">Quantity</label>';
+        row+='<input type="number" class="form-control rounded-0" name="quantity[]" required placeholder="Enter price">';
+        row+='</div>';
+        row+='<div class="col-md-3">';
+        row+='<label for="">Weight <small>(In Kg)</small></label>';
+        row+='<input type="number" class="form-control rounded-0" name="weight[]" required placeholder="Enter weight in Kg">';
+        row+='</div>';
+        row+='<div class="col-md-3">';
+        row+='<label for="">Length</label>';
+        row+='<input type="number" class="form-control rounded-0" name="length[]" required placeholder="Enter Length">';
+        row+='</div>';
+        row+='<div class="col-md-3">';
+        row+='<label for="">Height</label>';
+        row+='<input type="number" class="form-control rounded-0" name="height[]" required placeholder="Enter Frame Height">';
+        row+='</div>';
+        row+='<div class="col-md-3">';
+        row+='<label for="">Width</label>';
+        row+='<input type="number" class="form-control rounded-0" name="width[]" required placeholder="Enter Frame Width">';
+        row+='</div>';
+        row+='</div>';
+        row+='</div>';
+        row+='<div class="col-md-1">';
+        row+='<button class="btn btn-danger mt-5"type="button" onclick="removediv('+j+')" title="remove"><i class="fa fa-minus"></i></button>';
+        row+='</div>';
+        row+='</div>';
+        row+='</div>';
+        row+='</div>';
+        $('#datadiv').append(row);
         j++;
-        $('#colortable').append(row);
     });
     
     
 });
-$(document).on('click', '.removecolor', function(){
-     
-       
-        $(this).closest("tr").remove();
-        j--;
-         if(j==1){
-            $('#table').hide();
-         }  
-      
-        });
+function removediv(i){
+    $('#card-data'+i).remove();
+}
+function abc(v)
+{
+    var fuData = document.getElementById('image'+v);
+        var FileUploadPath = fuData.value;
+        if (FileUploadPath == '') {
+            alert("Please upload an image");
 
+        } else {
+            var Extension = FileUploadPath.substring(
+                    FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
+            
+if (Extension == "svg" ) {
 
+// To Display
+                if (fuData.files && fuData.files[0]) {
+                    var reader = new FileReader();
 
+                    reader.onload = function(e) {
+                        $('#blah').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(fuData.files[0]);
+                }
+
+            } 
+
+//The file upload is NOT an image
+else {
+                alert("Svg Photo only");
+                $('#image'+v).val("");
+            }
+        }
+    }
 
 
 

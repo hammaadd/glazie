@@ -1,6 +1,7 @@
 @extends('admin-layout.layouts')
 @section('title','Add New Attribute')
 @section('content')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
@@ -15,7 +16,7 @@
         </div>
         <div class="row">
          
-            <div class="col-md-12">
+            <div class="col-md-6 offset-md-3">
                 <div class="card">
                     <form action="{{ url('/admin/attributes/create')}}"  method="post" enctype="multipart/form-data" id="attribute">
                     <div class="card-header">
@@ -34,7 +35,7 @@
                             @endif
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="">Attribute Name</label>
                                 <input type="text" class="form-control" name="attribute_name" placeholder="Attribute Name" autofocus value="{{old('attribute_name')}}">
                             </div>
@@ -43,11 +44,19 @@
                            
                        
                            
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="">Image</label>
                                 <input type="file" class="form-control" name="image">
                             </div>
                             <div class=""></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="">Terms</label>
+                                <select name="terms[]" multiple="multiple" id="terms" class="form-control">
+                                    <option value="" disabled>Create Product Terms</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="row">
                            <div class="col-md-12">
@@ -76,11 +85,20 @@
 @endsection
 @section('script')
 <script src="{{url('admin-assets/js/pages/form-elements.js')}}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
     <script src="{{url('admin-assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
    <script>
+     $(document).ready(function() {
+    $('#terms').select2(
+        {
+            tags:true,
+            tokenSeparators: [",", " "]
+        });
+    
+});
+
     $("#attribute").validate({
     ignore: ':hidden:not(:checkbox)',
     errorElement: 'label',

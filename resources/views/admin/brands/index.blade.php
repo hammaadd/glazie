@@ -36,7 +36,7 @@
                         <div class="col-lg-4 text-right">
                             <a class="btn btn-primary" href="{{url('admin/brands/add')}}">
                                 <i class="anticon anticon-plus-circle m-r-5"></i>
-                                <span>Add New Brand</span>
+                                <span> Add New Brand</span>
                             </a>
                         </div>
                     </div> 
@@ -53,18 +53,16 @@
                         <th>Action</th>
                     </thead>
                     <tbody>
-                        <?php
-                        $i=1;
-                        ?>
+                     
                         
 
                         @if(count($brands)>0)
                         @foreach($brands as $brand)
 
                         <tr>
-                            <td><?php echo $i; ?></td>
-                            <td><?php echo $brand->brand_name; ?></td>
-                            <td><?php echo $brand->description; ?></td>
+                            <td>{{$loop->iteration}}</td>
+                            <td>{{ $brand->brand_name }}</td>
+                            <td>{{$brand->description}}</td>
                             <td><?php 
                             if ($brand->image) {?>
                                  <a href="{{ asset('/admin-assets/brands/'.$brand->image) }}"><img src="{{ asset('/admin-assets/brands/'.$brand->image) }}" alt="" class="rounded-circle " width="50px" height="50px"> </a> 
@@ -76,8 +74,7 @@
                                 <a href="{{url('admin/brands/delete/'.$brand->id)}}" class="badge badge-danger" onclick="return confirm('Are You Sure to delete?')"> <i class="fa fa-trash"></i> Delete</a> 
                             </td>
                         </tr>
-                        <?php
-                        $i++; ?>
+                       
                         @endforeach
                         @endif
                     </tbody>
@@ -103,27 +100,7 @@
 <script>
 $("#brands").DataTable();
 </script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-<script>
-    toastr.options = {
-    "closeButton": true,
-    "debug": false,
-    "newestOnTop": false,
-    "progressBar": true,
-    "positionClass": "toast-top-right",
-    "preventDuplicates": true,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "5000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-}
-</script>
 @endsection
 
 

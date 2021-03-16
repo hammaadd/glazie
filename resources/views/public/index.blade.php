@@ -16,28 +16,30 @@
             <div class="owl-slider owl-carousel owl-theme" data-autoplay="true">
 
                 <!--Slide item-->
-                <div class="item d-flex align-items-center" style="background-image:url(assets/media/slider/brick-conservatory-new.jpg)">
+                @foreach ($sliders as $slider)
+                <div class="item d-flex align-items-center" style="background-image:url(admin-assets/sliders/{{$slider->image}})">
                     <div class="container">
                         <div class="caption">
                             <div class="animated" data-start="fadeInUp">
                                 <div class="promo">
-                                    <div class="title title-sm p-0">UPVC Windows</div>
+                                    <div class="title title-sm p-0">{{$slider->heading}}</div>
                                 </div>
                             </div>
                             <div class="animated" data-start="fadeInUp">
-                                Double glaze windows and doors wide range of options choose from <br>different colours ,styles and glazing options.Energy saving <br>incredible 1.4W/m2K U-Value
+                                {{$slider->description}}
                             </div>
                             <div class="animated" data-start="fadeInUp">
                                 <div class="pt-3">
-                                    <a href="#" class="btn btn-fill-out rounded-0 px-4">Customize Your Window</a>
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                @endforeach
 
                 <!--Slide item-->
-                <div class="item d-flex align-items-center" style="background-image:url(assets/media/slider/slidingdoors4-image-data-scaled.jpg)">
+                {{-- <div class="item d-flex align-items-center" style="background-image:url(assets/media/slider/slidingdoors4-image-data-scaled.jpg)">
                     <div class="container">
                         <div class="caption">
                             <div class="animated" data-start="fadeInUp">
@@ -58,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
             </div> <!--/owl-slider-->
         </div>

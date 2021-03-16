@@ -17,17 +17,9 @@
                 </nav>
             </div>
         </div>
-        @if(session('info'))
-				<div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <div class="alert alert-success" style="background-color: green;color:white;"><i class="fa fa-check"></i> {{session('info')}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: white"><span aria-hidden="true">&times;</span></button>
-                        </div>
-
-                    </div>
-                </div>
-				@endif
+        @if (session('info'))
+        <script type="text/javascript">toastr.success("{{session('info')}}");</script>
+        @endif
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -58,7 +50,9 @@
                             <td>
                                
                                 <a href="{{url('admin/social/edit/'.$social->id)}}" class="badge badge-primary"> <i class="fa fa-edit"></i> Edit</a>
+                                @if ($social->deleteable=="0")
                                 <a href="{{url('admin/social/delete/'.$social->id)}}" class="badge badge-danger" onclick="return confirm('Are You Sure to delete?')"> <i class="fa fa-trash"></i> Delete</a> 
+                                @endif
                             </td>
                         </tr>
                         
@@ -110,6 +104,7 @@ function filtertable() {
   }
 }
 </script>
+
 @endsection
 
 

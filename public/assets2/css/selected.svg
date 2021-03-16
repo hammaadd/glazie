@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.21 42.21">
+	<defs>
+		<style>
+			.cls-1{fill:#00bcd5;stroke-miterlimit:10;stroke-width:1.94px;}
+			.cls-1,.cls-2{stroke:#fff;}
+			.cls-2{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.42px;}
+		</style>
+	</defs>
+	<title>selected</title>
+	<g id="Layer_2" data-name="Layer 2">
+		<g id="Layer_1-2" data-name="Layer 1">
+			<circle class="cls-1" cx="21.11" cy="21.11" r="20.14"/>
+			<polyline class="cls-2" points="29.56 17.72 19.35 27.93 14.25 22.82"/>
+		</g>
+	</g>
+</svg>

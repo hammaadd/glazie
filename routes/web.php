@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CategoriesController;
+
 use App\Models\Categories;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,13 +21,14 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home','HomeController@index')->name('home');
 Route::get('/admin/dashboard', 'AdminController@index')->name('admin.dashboard');
+//Route::get('/admin', 'AdminController@index');
 Route::get('admin/adminlogout' ,'AdminController@admin_logout');
 Route::get('availproducts','IndexController@availproducts');
 Route::post('subscribe','IndexController@subscribe');
 Route::post('checkcoupen','IndexController@checkcoupen');
-Route::get('/admin/login','Auth\AdminLoginController@showloginForm');
+Route::get('/admin/login','Auth\AdminLoginController@showloginForm')->name('admin/login');
 Route::post('/admin/login','Auth\AdminLoginController@login')->name('admin.login');
 Route::get('/admin/profile/edit','AdminsController@edit_profile');
 Route::get('/admin/changepass','AdminsController@changepass');
@@ -39,24 +40,16 @@ Route::post('/admin/change/profile','AdminsController@profilechange');
 Route::get('admin/assignment', 'AssignmentController@index');
 Route::post('quoteforinstaller','IndexController@quoteforinstaller');
 Route::post('getmail','IndexController@getmail');
+Route::post('prdaddtocart','IndexController@prdaddtocart');
+
+// Door Builder Routes
+Route::get('door-build','DoorBuilderController@index');
+Route::post('get_colors','DoorBuilderController@get_colors');
+
+
 
 Route::prefix('admin')->group(function () {
-    // Permisssion Routes
-    // Route::get('permission','PermissionController@index');
-    // Route::get('permission/add','PermissionController@add');
-    // Route::post('permission/create','PermissionController@create');
-    // Route::get('permission/edit/{id}','PermissionController@edit');
-    // Route::post('permission/update/{id}','PermissionController@update');
-    // Route::get('permission/delete/{id}','PermissionController@delete');
-
-    // // Role Route
-    // Route::get('roles','RoleController@index');
-    // Route::get('role/add','RoleController@add');
-    // Route::post('role/create','RoleController@create');
-    // Route::get('role/edit/{id}','RoleController@edit');
-    // Route::post('role/update/{id}','RoleController@update');
-    // Route::get('role/delete/{id}','RoleController@delete');
-
+    
     // User Route
     Route::get('user','UserController@index');
     Route::get('user/add','UserController@add');
@@ -70,7 +63,12 @@ Route::prefix('admin')->group(function () {
     Route::post('user/changepassword/{id}','UserController@changepassword');
     Route::get('/user/updateavat/{id}','UserController@avatarupdate');
     Route::post('user/avatupdate/{id}','UserController@update_user_avatar');
-
+    
+    // Routes to chagne the email of the user 
+    Route::get('changeaccount' ,'UserController@changeaccount');
+    Route::post('changeemail','UserController@changeemail');
+    Route::get('verify','UserController@verify');
+    Route::post('confirmcode','UserController@checkcode');
     // Customer Routes
     Route::get('customers','AdmincustomerController@index');
     Route::get('customers/add','AdmincustomerController@add');
@@ -82,7 +80,18 @@ Route::prefix('admin')->group(function () {
     Route::get('customers/deactivate/{id}','AdmincustomerController@deactivate');
     Route::get('customers/changepassword/{id}','AdmincustomerController@changepassword');
     Route::get('customerorder/details/{id}','AdmincustomerController@orderdetails');
+    Route::post('chngecustomerpwd/{id}','AdmincustomerController@changecustomerpwd');
+    // Delivery TIme Routes
+    Route::get('deliverytimes','DeliverTimeController@index');
+    Route::get('deliverytimes/create','DeliverTimeController@create');
+    Route::post('deliverytimes/store','DeliverTimeController@store');
+    Route::get('deliverytimes/edit/{id}','DeliverTimeController@edit');
+    Route::post('deliverytimes/update/{id}','DeliverTimeController@update');
+    Route::get('deliverytimes/delete/{id}','DeliverTimeController@delete');
+
+
     // CateGories Routes
+    
     Route::get('categories','CategoriesController@index');
     Route::get('categories/add','CategoriesController@add');
     Route::post('category/create','CategoriesController@create');
@@ -122,12 +131,14 @@ Route::prefix('admin')->group(function () {
 
     Route::post('products/get_attributess','ProductsController@get_attribute');
     Route::post('products/filter','ProductsController@filter');
+    Route::post('products/filterbrand','ProductsController@filterbrand'); 
     Route::get('orders/list','ProductsController@orderlist');
     Route::get('orders/installer','ProductsController@installer');
     Route::get('product/list','ProductsController@productslist');
     Route::get('productdetail','ProductsController@productdetail');
     
-  
+   
+
     Route::get('orderdetails','ProductsController@orderdetails');
    
     Route::get('requesthiring/details','ProductsController@hiredetails');
@@ -143,6 +154,14 @@ Route::prefix('admin')->group(function () {
     Route::get('attributes/edit/{id}','AttributeController@edit');
     Route::post('attributes/update/{id}','AttributeController@update');
     Route::get('attributes/delete/{id}','AttributeController@delete');
+    Route::get('removeprdattribute/{id}','AttributeController@removeproductattribute');
+    Route::get('product/addattr/{id}','AttributeController@addattr');
+    Route::post('prdattr/create/{id}','AttributeController@createprdattr');
+    Route::post('attribute/checkattr','AttributeController@checkattr');
+    Route::get('editprdattribute/{id}','AttributeController@editattr');
+    Route::post('updateterms','AttributeController@updateattr');
+    Route::post('get_prd_terms','AttributeController@get_prd_terms');
+    
     // Prodcut Attributes Routes
     Route::get('productattribute','ProductattributeController@index');
     Route::get('productattribute/add','ProductattributeController@add');
@@ -153,13 +172,18 @@ Route::prefix('admin')->group(function () {
     Route::get('productattribute/delete/{id}','ProductattributeController@delete');
     // Product Size Routes 
     Route::get('productsize','ProductsizeController@index');
-    Route::get('productsize/add','ProductsizeController@add');
-    Route::post('productsize/create','ProductsizeController@create');
+    Route::get('productsize/add/{id}','ProductsizeController@add');
+    Route::post('productsize/create/{id}','ProductsizeController@create');
     Route::get('productsize/edit/{id}','ProductsizeController@edit');
     Route::post('productsize/update/{id}','ProductsizeController@update');
     Route::get('productsize/delete/{id}','ProductsizeController@delete');
 
 
+// Product Variation 
+    Route::get('addproductvariation/{id}','ProductsController@addprdvariation');
+    Route::post('prdvariation/create/{id}','ProductsController@createvariation');
+    Route::get('variation/deletevariation/{id}','ProductsController@deletevariation');
+    Route::post('products/chceckvariation','ProductsController@checkvariation');
     // Order Management Routes
     Route::get('orders','OrdersController@index');
     Route::post('checkorder','OrdersController@checkorder');
@@ -201,6 +225,14 @@ Route::prefix('admin')->group(function () {
     Route::get('editframe/{id}','AddonController@editframe');
     Route::post('updateframe/{id}','AddonController@updateframe');
 
+    // weight slotes
+    Route::get('weights','WeightController@index');
+    Route::get('weights/create','WeightController@create');
+    Route::post('weights/store','WeightController@store');
+    Route::get('weights/edit/{id}','WeightController@edit');
+    Route::post('weights/update/{id}','WeightController@update');
+    Route::get('weights/delete/{id}','WeightController@delete');
+
     // Frame Colors
     Route::get('framecolors/{id}','AddonController@framecolors');
     Route::get('framecolor/create/{id}','AddonController@addframecolor');
@@ -236,12 +268,29 @@ Route::prefix('admin')->group(function () {
     Route::post('addon/checkhinge','AddonController@checkhinge');
     Route::post('addon/createhinge','AddonController@createhinge');
     Route::get('addon/removehinge/{id}','AddonCOntroller@removehinge');
+    //Routes For Product Deals admin side
+    Route::get('productdeals','ProductDealController@index');
+    Route::get('productdeals/create','ProductDealController@create'); 
+    Route::post('productdeals/store','ProductDealController@store');
+    Route::get('productdeals/edit/{id}','ProductDealController@edit');
+    Route::post('productdeals/update/{id}','ProductDealController@update');
+    Route::get('productdeals/delete/{id}','ProductDealController@delete');
+    Route::post('productdeals/removeprd','ProductDealController@removeprd');
+    Route::post('productdeals/prdouctqty','ProductDealController@updateprdqty');
+    Route::post('productdeals/removeimage','ProductDealController@removeimage');
 
     // Request Hiring Route For Admin Side 
     Route::get('requesthiring','RequestHiringController@index');
     Route::post('hirestatus','RequestHiringController@change_hirestatus');
     Route::get('hiringdetails/{id}','RequestHiringController@hiringdetails');
-
+    // Sliders Routes 
+    Route::get('sliders','SliderController@index');
+    Route::get('sliders/create','SliderController@create');
+    Route::post('sliders/store','SliderController@store');
+    Route::get('sliders/edit/{id}','SliderController@edit');
+    Route::post('sliders/update/{id}','SliderController@update');
+    Route::get('sliders/delete/{id}','SliderController@delete');
+    
 
     // Installers Route
     
@@ -260,6 +309,12 @@ Route::prefix('admin')->group(function () {
     Route::get('installerpassword/{id}','InstallerController@installerpassword');
     Route::post('chngeinstallerpwd/{id}','InstallerController@changepassword');
 
+    // Test monial 
+    Route::get('addtestmonial/{id}','InstallerController@addtestmonial');
+    Route::post('storetestmonial','InstallerController@storetestmonial');
+    Route::get('edittestmonial/{id}','InstallerController@edittestmonial');
+    Route::post('updatetestmonial/{id}','InstallerController@updatetestmonial');
+    Route::get('deletetestmonial/{id}','InstallerController@deletetestmonial');
     // NewsLetter And SubScription
 
 Route::get('subscription','SubscriptionController@index');
@@ -304,7 +359,15 @@ Route::get('deletefeedback/{feedback_id}','ProductsController@deletefeedback');
     Route::post('social/update/{id}','SocialController@update');
     Route::get('social/delete/{id}','SocialController@delete');
 
-
+    // 
+    Route::get('blogs','BlogController@index');
+    Route::get('blogs/create','BlogController@create');
+    Route::post('blogs/store','BlogController@store');
+    Route::get('blogs/view/{id}','BlogController@view');
+    Route::get('blogs/edit/{id}','BlogController@edit');
+    Route::post('blogs/update/{id}','BlogController@update');
+    Route::get('blogs/delete/{id}','BlogController@delete');
+    Route::post('blogs/removeimage','BlogController@removeimage');
 });
 
 // Public Routes
@@ -318,7 +381,10 @@ Route::post('updatecartproduct','IndexController@updatecartproduct');
 Route::get('checkout','IndexController@checkout');
 Route::get('checkout','IndexController@checkout');
 Route::post('checkoutsubmit','IndexController@checkoutsubmit');
-
+Route::get('clearcart','IndexController@clearcart');
+Route::post('checkservice','IndexController@checkservice');
+Route::post('searchproduct','IndexController@searchproduct');
+Route::post('sortproduct','IndexController@sortproduct');
 Route::get('installerlist','IndexController@installerlist');
 Route::get('installerdetails/{id}','IndexController@installerdetails');
 
@@ -329,12 +395,16 @@ Route::post('installerbyamount','IndexController@installerbyamount');
 Route::post('feedback','IndexController@feedback');
 // Getting nav item
 
-
+Route::get('customizer','IndexController@customizer');
 Route::post('getnavlinks','IndexController@navlink');
 // contact Us Routes
 Route::get('contact-us','IndexController@contactus');
 Route::post('contactsubmit','IndexController@contactsubmit');
 Route::get('{id}','IndexController@cmspage');
+
+// Blog Public Post 
+Route::get('blog/posts','IndexController@blogpost');
+Route::get('blog/details/{id}','IndexController@blogdetails');
 // Customr Routes are here
 Route::prefix('customer')->group(function () {
     Route::get('profile/edit','CustomerController@editprofile');
@@ -356,4 +426,12 @@ Route::prefix('customer')->group(function () {
     Route::get('verify','CustomerController@verify');
     Route::post('confirmcode','CustomerController@checkcode');
     Route::get('customerlogout','CustomerController@logout');
+    
+    Route::get('blog/posts','CustomerController@blogpost');
+    Route::get('blogs/details/{id}','CustomerController@blogdetails');
+    Route::post('checklike','CustomerController@checklike');
+    Route::post('comment','CustomerController@comment');
+    // Hire Reequest feedback 
+    Route::post('hirefeedback','CustomerController@hirefeedback');
+   
 });

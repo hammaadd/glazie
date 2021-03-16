@@ -45,12 +45,12 @@
                             <div class="row">
                                
                                 <div class="col-md-6">
-                                    <label for="">Frame  Name </label>
+                                    <label for="">Frame Name </label>
                                     <input type="text" class="form-control rounded-0" name="model_name" placeholder="Enter Model Name">
                                 </div>
                           
                                 <div class="col-md-6">
-                                    <label for="">Image</label>
+                                    <label for="">Image <small>(Svg Only)</small></label>
                                     <input type="file" class="form-control rounded-0" name="image">
                                 </div>
                             </div>
@@ -66,11 +66,31 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Weight <small class="text-danger">(KG)</small></label>
+                                    <input type="number" class="form-control rounded-0" name="weight" placeholder="Enter Weight in Kg" min="1">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Height <small class="text-danger">(cm)</small></label>
+                                    <input type="number" class="form-control rounded-0" name="height" placeholder="Enter Height " min="1">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Width <small class="text-danger">(cm)</small></label>
+                                    <input type="number" class="form-control rounded-0" name="width" placeholder="Enter Width" min="1">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Length <small class="text-danger">(cm)</small></label>
+                                    <input type="number" class="form-control rounded-0" name="length" placeholder="Enter Length" min="1">
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-12">
                                     <button type="button" class="btn btn-success btn-xs float-right m-3" id="addexternalcolor"><i class="fa fa-plus-circle"></i> Add External Color</button>
                                 </div>
                             </div>
-                            
+                           
                             <div class="row">
                                <div class="col-md-12">
                                    <div class="table-responsive" >

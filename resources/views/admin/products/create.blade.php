@@ -158,7 +158,7 @@
                             <div class="col-md-12">
                                 <input type="hidden" id="no_of_attribute" name="no_of_attribute">
                                 <input type="hidden" id="no_of_attributes" name="no_of_attribute">
-                                <button class="btn mt-1 btn-xs btn-success float-right" type="button" id="add"> <i class="fa fa-plus-circle"></i> Add</button>
+                                <button class="btn mt-1 btn-xs btn-success float-right mt-2" type="button" id="add"> <i class="fa fa-plus-circle"></i> Add Attribtue</button>
                             </div>
                         </div>
                         <div class="row">
@@ -202,6 +202,23 @@
                            </div>
                             
                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="">Length <small>(cm)</small></label>
+                                <input type="number" class="form-control" name="length" placeholder="Enter Length of Product" min="1">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">Width <small>(cm)</small></label>
+                                <input type="number" class="form-control" name="width" placeholder="Enter Width of the products " min="1">
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="">Height <small>(cm)</small></label>
+                                <input type="number" class="form-control" name="height" placeholder="Enter Height of the Product" min="1">
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -289,8 +306,15 @@ $(document).ready(function() {
             required: true,
             minlength: 1
         },
-      
-     
+        width:{
+            required:true,
+        },
+        length:{
+            required:true,
+        },
+        height:{
+            required:true,
+        },
         product_type: {
             required: true
            

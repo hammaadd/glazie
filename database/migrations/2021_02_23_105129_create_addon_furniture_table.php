@@ -22,6 +22,10 @@ class CreateAddonFurnitureTable extends Migration
             $table->string('image');
             $table->unsignedBigInteger('quantity');
             $table->double('price');
+            $table->double('wieght');
+            $table->double('length');
+            $table->double('width');
+            $table->double('height');
             $table->softDeletes();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

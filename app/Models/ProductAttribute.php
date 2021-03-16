@@ -10,6 +10,12 @@ class ProductAttribute extends Model
     use HasFactory,SoftDeletes;
     
     public function products(){
-        return $this->hasOne(Products::class);
+        return $this->hasOne(Products::class,'product_id' );
+    }
+    
+   
+    public function attribute()
+    {
+        return $this->belongsTo(Attribute::class, 'attribute_id', 'id');
     }
 }
