@@ -17,17 +17,11 @@
                 </nav>
             </div>
         </div>
-        @if(session('info'))
-				<div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <div class="alert alert-success" style="background-color: green;color:white;"><i class="fa fa-check"></i> {{session('info')}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: white"><span aria-hidden="true">&times;</span></button>
-                        </div>
-
-                    </div>
-                </div>
-				@endif
+      
+        @if (session('info'))
+        <script type="text/javascript">toastr.success("{{session('info')}}");</script>
+        @endif 
+			
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -36,7 +30,7 @@
                     <div class="col-lg-8">
                         <div class="d-md-flex">
                             <div class="m-b-10 m-r-15">
-                                <select class="custom-select" style="min-width: 180px;" onchange="filterbrand()" id="brand">
+                                <select class="custom-select" style="min-width: 180px;" onchange="filtertable()" id="brand">
                                     <option selected value="">All Brands</option>
                                     @foreach ($brands as $brand)
                                         <option value="{{$brand->id}}">{{$brand->brand_name}}</option>
@@ -124,6 +118,7 @@
 $("#products").DataTable();
 function filtertable()
 {
+    var brand = $('#brand').val();
     var status = $('#status').val();
     url = "{{url('admin/products/filter')}}";
             $.ajax({
@@ -131,7 +126,7 @@ function filtertable()
            url:url,
             data:{
                 status:status,
-               
+                brand:brand
             },
             success:function(result){
                 $('#productstable').html(result);
@@ -141,25 +136,7 @@ function filtertable()
          		
     });  
 }
-function filterbrand()
-{
-    var brand = $('#brand').val();
-    url = "{{url('admin/products/filterbrand')}}";
-            $.ajax({
-           type:'POST',
-           url:url,
-            data:{
-                brand:brand,
-               
-            },
-            success:function(result){
-                $('#productstable').html(result);
-           }
-         		  	
-               
-         		
-    });  
-}
+
 </script>
 @endsection
 

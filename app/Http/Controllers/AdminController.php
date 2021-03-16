@@ -77,30 +77,30 @@ class AdminController extends Controller
         $quantity = 0;
 //$quantity_array = array();
 //$variety_name = array();
-$data_array = array();
-$sales_array = array();
-foreach ($prdvarieties as $variety) {
-foreach($variety->products as $products){
+        $data_array = array();
+        $sales_array = array();
+        foreach ($prdvarieties as $variety) {
+            foreach($variety->products as $products){
 
-foreach($products->orderdetails as $order)
-{
-if($order->created_at>=$msd){
+                foreach($products->orderdetails as $order)
+                {
+                if($order->created_at>=$msd){
 
-$quantity = $quantity +$order->quantity;
-}
-}
-}
-$data_array = array('name' => $variety->prd_name, 'data' => [$quantity]);
-array_push($sales_array, $data_array);
-//array_push($quantity_array,$quantity);
-//array_push($variety_name,$variety->prd_name);
-$quantity =0;
+                    $quantity = $quantity +$order->quantity;
+                }
+            }
+        }
+        $data_array = array('name' => $variety->prd_name, 'data' => [$quantity]);
+        array_push($sales_array, $data_array);
+        //array_push($quantity_array,$quantity);
+        //array_push($variety_name,$variety->prd_name);
+        $quantity =0;
 
-}
+        }
 
-$sales_array = json_encode($sales_array);
-return view('admin/index',['installers'=>$installers,'customers'=>$customers,'orders'=>$orders ,'today_sale'=>$today_sale,'monthly_sale' =>$monthly_sale,'yearly_sale'=>$yearly_sale,'latest_orders' =>$latest_orders,'latest_products'=>$latest_products,'product_type'=>$product_type, 'sales'=>$sales_array]);
-}
+        $sales_array = json_encode($sales_array);
+        return view('admin/index',['installers'=>$installers,'customers'=>$customers,'orders'=>$orders ,'today_sale'=>$today_sale,'monthly_sale' =>$monthly_sale,'yearly_sale'=>$yearly_sale,'latest_orders' =>$latest_orders,'latest_products'=>$latest_products,'product_type'=>$product_type, 'sales'=>$sales_array]);
+    }
     public function admin_logout(Request $request)
     {
         Auth::logout();

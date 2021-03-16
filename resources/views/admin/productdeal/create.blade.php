@@ -1,5 +1,5 @@
 @extends('admin-layout.layouts')
-@section('title','Product Add On')
+@section('title','Create Product Deal')
 @section('content')
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
@@ -12,12 +12,12 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h1 class="header-title">Product Add On</h1>
+            <h1 class="header-title">Create Product Deal </h1>
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash ">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="{{url('admin/addon/view/')}}">Product</a>
-                    <a class="breadcrumb-item" href="#">Product Add On</a>
+                    <a class="breadcrumb-item" href="{{url('admin/addon/view/')}}">Product Deal </a>
+                    <a class="breadcrumb-item" href="#">Create Prodcut Deal </a>
                     
                 </nav>
             </div>
@@ -40,23 +40,45 @@
                         </div>
                         @endforeach
                         @endif
-                        <form action="{{url('admin/addon_color')}}" method="post" enctype="multipart/form-data" id="addon">
+                        <form action="{{url('admin/productdeals/store')}}" method="post" enctype="multipart/form-data" id="addon">
                             @csrf
-
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Product Deal Name</label>
+                                    <input type="text" class="form-control" name="deal_name" placeholder="Deal Name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Deal Image</label>
+                                    <input type="file" class="form-control" name="image" >
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Deal Start Date</label>
+                                    <input type="date" class="form-control" name="start_date" onchange="checkdate()" id="start_date" min="{{date('Y-m-d')}}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Deal End Date</label>
+                                    <input type="date" class="form-control" name="end_date"  id="end_date" onchange="checkdate()" min="{{date('Y-m-d')}}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 offset-md-3">
+                                    <span class="text-danger " id="message"></span>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="button" class="btn btn-success btn-xs float-right" id="addcolor"><i class="fa fa-plus-circle"></i> Add Color</button>
+                                    <button type="button" class="btn btn-success btn-xs float-right mt-3" id="addcolor"><i class="fa fa-plus-circle"></i> Add Product</button>
                                 </div>
                             </div>
                             
                             <div class="row">
                                <div class="col-md-12">
                                    <div class="table-responsive" >
-                                    <table class="table" id="colortable" >
+                                    <table class="table" id="colortable"  style="display: none">
                                         <thead>
-                                            
                                             <th>Product Name </th>
-                                            
                                             <th>Quantity</th>
                                             <th>Remove</th>
                                         </thead>
@@ -66,11 +88,23 @@
                                    </div>
                                </div>
                             </div>
-                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Deal Price</label>
+                                    <input type="number" class="form-control"  name="price">
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-success" ><i class="fa fa-check"> Submit</i></button>
-                                    <a href="{{url('admin/addon/view/')}}" class="btn btn-danger"> <i class="fa fa-times"></i> Cancel</a>
+                                    <label for="">Description</label>
+                                    <textarea name="description" id="" cols="30" rows="10" class="form-control" placeholder="Product Deal Description"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-success" id="button"><i class="fa fa-check"> Submit</i></button>
+                                    <a href="{{url('admin/productdeals')}}" class="btn btn-danger"> <i class="fa fa-times"></i> Cancel</a>
                                 </div>
                             </div>
                         </form>
@@ -108,10 +142,30 @@
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
 }
+function checkdate()
+{
+    var start_date = $('#start_date').val();
+    var end_date = $('#end_date').val();
+    
+
+    if(end_date===''||start_date==='')
+    {}
+    else{
+        if(end_date<start_date){
+           $('#message').html("<i class='fa fa-times-circle'></i> Start Date can not be greater than the Ending Date");
+            $('#button').prop('disabled',true);
+        }
+        else{
+            $('#message').html("");
+            $('#button').prop('disabled',false);
+        
+        }
+    }
+}
 let j=1;
 $(document).ready(function(){
     $('#addcolor').click(function(){
-       
+        $('#colortable').show(2000);
         let row = '';
         
         var document_array = <?php echo json_encode($products,JSON_PRETTY_PRINT)?>;
@@ -120,7 +174,7 @@ $(document).ready(function(){
            
         row+='<td>';
             
-        row+='<select name="intercolor_code[]" class="form-control rounded-0">';
+        row+='<select name="product_id[]" class="form-control rounded-0">';
             
             for (let i = 0; i < document_array.length; i++) {
                 row+='<option value="'+document_array[i]["id"]+'">'+document_array[i]["product_name"]+'</option>';
@@ -129,11 +183,9 @@ $(document).ready(function(){
         row+='</td>';
         row+='<td>';
         
-        row+='<input type="number" required min="1" class="form-control rounded-0 " placeholder="Color Price" name="interprice[]">';
+        row+='<input type="number" required min="1" class="form-control rounded-0 " placeholder="Quantity in Deal " name="quantity[]" value="1">';
         row+='</td>';
-        row+='<td>';
-        row+='<input type="number" class="form-control rounded-0 " name="interquantity[]" placeholder="Enter Quantity" required >';
-        row+='</td>';
+        
         row+='<td>';
         row+='<button class="btn btn-danger btn-xs removecolor"  type="button"> <i class="fa fa-minus"></i> </button>';
         row+='</td>';
@@ -144,13 +196,14 @@ $(document).ready(function(){
     
     
 });
+
 $(document).on('click', '.removecolor', function(){
      
        
         $(this).closest("tr").remove();
         j--;
          if(j==1){
-            $('#table').hide();
+            $('#colortable').hide();
          }  
       
         });

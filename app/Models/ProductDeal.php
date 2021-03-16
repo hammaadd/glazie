@@ -10,7 +10,7 @@ class ProductDeal extends Model
 {
     use HasFactory,SoftDeletes;
     
-    public function dealdetails(): HasMany
+    public function dealdetails()
     {
         return $this->hasMany(DealDetail::class, 'deal_id');
     }

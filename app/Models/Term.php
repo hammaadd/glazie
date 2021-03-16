@@ -13,4 +13,9 @@ class Term extends Model
     {
         return $this->hasMany(ProductTerm::class, 'term_id');
     }
+    
+    public function attribute()
+    {
+        return $this->belongsTo(Attribute::class, 'attribute_id');
+    }
 }

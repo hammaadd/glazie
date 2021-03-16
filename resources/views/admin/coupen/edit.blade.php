@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="">Discount </label>
-                                    <input type="number" class="form-control" name="discount_amount" placeholder="Enter Discount Amount" id="discount_amount" value="{{$coupen->discount}}">
+                                    <input type="number" class="form-control" name="discount_amount" placeholder="Enter Discount" id="discount_amount" value="{{$coupen->discount}}">
                                 </div>
                             </div>
                              <div class="row">

@@ -35,6 +35,7 @@
                                 @endforeach
                             @endif
                         </div>
+                        
                         @csrf             
                         @for($i=0;$i<$count;$i++)
                         <div class="row mt-3">
@@ -55,7 +56,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label for="">Price </label>
-                                <input type="number" class="form-control" name="price" placeholder="Price">
+                                <input type="number" class="form-control" name="price" placeholder="Price" value="0" min="0">
                             </div>
                         </div>
                         <div class="row">
@@ -115,19 +116,20 @@
 				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
             });
             url = "{{url('admin/products/chceckvariation')}}";
-            console.log(url);
+            //console.log(url);
             $.ajax({
            type:'POST',
            url:url,
             data:{
-                variation:variation,  
+                 
                 product_id:product_id,
                 attribute_length:attribute_length,
                 term_id_array:term_id_array
 
            },
            success:function(result){
-            if(result=='0'){
+               //console.log(result);
+            if(result==0){
                 $('#submitbutton').prop('disabled',true);
                 $('#message').html("<i class='fa fa-times-circle'></i><b> This variation is already exist</b>");
             }

@@ -57,6 +57,20 @@ class IndexController extends Controller
         $products = Products::where('publish','=','public')->get();
         return view('public/availproducts',['products'=>$products]);
     } 
+    public function searchproduct(Request $request)
+    {
+        $search = $request->input('search');
+        $products =Products::where('product_name','like', '%'.$search.'%')->where('publish','=','public')->get();
+        return view('public/searchproducts',['products'=>$products]);
+    }
+    public function sortproduct(Request $request)
+    {
+        $search = $request->input('search');
+        $sort_type = $request->input('sort_type');
+        $products =Products::where('product_name','like', '%'.$search.'%')->where('publish','=','public')->orderBy('sale_price',$sort_type)->get();
+        return view('public/searchproducts',['products'=>$products]); 
+    }
+
     public function product_details($id){
         abort_if(! $product = Products::find($id),403);
         $product_type = $product->verity_id;

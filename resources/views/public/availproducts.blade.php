@@ -10,9 +10,26 @@
         <div class="sec-title text-center pb-4">
             <div class="title-inner">
                 <h2><span class="theme_color">Proudct </span> in Seconds!</h2>
+                
             </div>
         </div>
         <div class="row mb-5">
+            
+            <div class="col-md-6 offset-md-3">
+                <div class="input-group mb-3">
+                    
+                    <input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" placeholder="Write Something" id="search">
+                    <div class="input-group-append" >
+                      <span class="input-group-text"><button class="btn btn-default btn-xs" onclick="searchresult()"><i class="fa fa-search"></i></button></span>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-outline-info" style="height:40px;" onclick="sort('asc')"> <i class="fas fa-sort-amount-down-alt"></i></button>
+                <button class="btn btn-outline-info ml-4 float-right" style="height:40px;" onclick="sort('desc')"> <i class="fas fa-sort-amount-up"></i></button>
+            </div>
+        </div>
+        <div class="row mb-5" id="srachresult">
             @foreach ($products as $product)
             <?php $product_gallery = $product->gallery;
             $i=0;
@@ -87,6 +104,44 @@
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
+}
+function sort(sort_type)
+{
+    var search = $('#search').val();
+    {
+    url = "{{url('sortproduct')}}";
+        $.ajax({
+       type:'POST',
+       url:url,
+       data:{
+           search:search,
+           sort_type:sort_type
+       },
+       success:function(result){ 
+        $('#srachresult').html(result);
+        }	
+        });
+
+}  
+}
+function searchresult()
+{
+    var search = $('#search').val();
+    {
+    url = "{{url('searchproduct')}}";
+        $.ajax({
+       type:'POST',
+       url:url,
+       data:{
+           search:search
+       },
+       success:function(result){ 
+        $('#srachresult').html(result);
+        }	
+        });
+
+}
+    
 }
 function addtocart(id)
 {

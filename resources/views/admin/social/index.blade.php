@@ -17,17 +17,9 @@
                 </nav>
             </div>
         </div>
-        @if(session('info'))
-				<div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <div class="alert alert-success" style="background-color: green;color:white;"><i class="fa fa-check"></i> {{session('info')}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: white"><span aria-hidden="true">&times;</span></button>
-                        </div>
-
-                    </div>
-                </div>
-				@endif
+        @if (session('info'))
+        <script type="text/javascript">toastr.success("{{session('info')}}");</script>
+        @endif
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -112,6 +104,7 @@ function filtertable() {
   }
 }
 </script>
+
 @endsection
 
 

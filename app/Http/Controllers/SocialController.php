@@ -40,10 +40,10 @@ class SocialController extends Controller
     public function update($id,Request $request){
         $social = SiteSetting::find($id);
         $validatedData = $request->validate([
-            'key'=>'required',
+            
             'value'=>'required'
             ]);
-            if($site->deleteable == '0'){
+            if($social->deleteable == '0'){
                 $update_site = array(
                     'key' => $request->input('key'),
                     'value' => $request->input('value'),

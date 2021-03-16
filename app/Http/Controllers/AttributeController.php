@@ -48,13 +48,22 @@ class AttributeController extends Controller
                 $attribute->image= $imgname;
                 }
         $attribute->save();
+        $terms = $request->input('terms');
+        foreach($terms as $term)
+        {
+            $new_term = new Term;
+            $new_term->attribute_id = $attribute->id;
+            $new_term->name = $term;
+            $new_term->created_by = Auth::id();
+            $new_term->save();
+        }
         
         return redirect('admin/attributes')->with('info','The Attribute is created Successfully');
     }
     public function edit($id){
         abort_if(!$attribute =Attribute::find($id),403);
-        
-            return view('admin/attribute/edit',['attribute' =>$attribute]);
+        $terms = Term::where('attribute_id',$id)->get();
+            return view('admin/attribute/edit',['attribute' =>$attribute,'terms'=>$terms]);
         
     }
     public function update($id,Request $request){
@@ -90,7 +99,24 @@ class AttributeController extends Controller
         }
         Attribute::where('id',$id)
             ->update($update_attribute);
-        
+        $termss = $request->input('terms');
+        $terms = Term::where('attribute_id',$id)->get();
+        $new_terms =  Term::where('attribute_id',$id)->whereNotIn('id',$termss)->get();
+        foreach($new_terms as $newterm)
+        {
+            Term::where('id',$newterm->id)->delete();
+        }
+        foreach($termss  as $terms)
+        {
+            if(!(int)$terms){
+                $add_term = new Term;
+                $add_term->name = $terms;
+                $add_term->attribute_id =$id;
+                $add_term->created_by = $user->id;
+                $add_term->save();
+            }
+        }
+      
         return redirect('admin/attributes')->with('info','The Attribute is Updated Successfully');
 
     }
@@ -241,7 +267,7 @@ class AttributeController extends Controller
         $product_id  = $productattrs->product_id;
         $table_prdcats= ProductTerm::where('product_id','=',$product_id)->where('attribute_id','=',$attr_id)
         ->whereNotIn('term_id',[$terms])->get();
-        echo "<pre>";
+        //echo "<pre>";
        foreach($table_prdcats as $tableterm)
        {
         ProductTerm::where('id',$tableterm->id)->delete();
@@ -279,11 +305,11 @@ class AttributeController extends Controller
            $attrbute_id = $request->input('attr');
            $product_id = $request->input('product_id');
            $terms = DB::table('terms')
-           ->join('product_terms', 'terms.id', '=', 'product_terms.term_id')
-           ->select('terms.*', 'product_terms.term_id')
-           ->where('product_terms.attribute_id','=',$attrbute_id)
-        ->where('product_terms.product_id','=',$product_id)
-        ->where('product_terms.deleted_at','=',null)->get();
+            ->join('product_terms', 'terms.id', '=', 'product_terms.term_id')
+            ->select('terms.*', 'product_terms.term_id')
+            ->where('product_terms.attribute_id','=',$attrbute_id)
+            ->where('product_terms.product_id','=',$product_id)
+            ->where('product_terms.deleted_at','=',null)->get();
            
             
             foreach ($terms as $key => $term) {

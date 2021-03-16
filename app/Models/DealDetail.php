@@ -13,4 +13,9 @@ class DealDetail extends Model
     {
         return $this->belongsTo(ProductDeal::class, 'deal_id');
     }
+   
+    public function products()
+    {
+        return $this->belongsTo(Products::class, 'product_id');
+    }
 }

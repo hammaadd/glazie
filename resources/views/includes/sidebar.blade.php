@@ -154,7 +154,7 @@
                                 <span class="icon-holder">
                                     <i class="far fa-money-bill-alt"></i>
                                 </span>
-                                <span class="title">Coupun </span>
+                                <span class="title">Copun </span>
                                 <span class="arrow">
                                     <i class="arrow-icon"></i>
                                 </span>
@@ -164,7 +164,7 @@
                                     class="active"
                                 @endif>
                                     <a href="{{url('admin/coupen
-                                    ')}}">Coupun</a>
+                                    ')}}">Copun</a>
                                 </li >
                                 
                                

@@ -14,4 +14,9 @@ class Attribute extends Model
     {
         return $this->hasMany(ProductAttribute::class, 'attribute_id', 'id');
     }
+   
+    public function terms()
+    {
+        return $this->hasMany(Term::class, 'attribute_id');
+    }
 }

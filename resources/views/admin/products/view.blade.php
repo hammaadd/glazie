@@ -97,6 +97,7 @@
                                     <div class="media align-items-center">
                                         <i class="font-size-40 text-success anticon anticon-smile"></i>
                                         <div class="m-l-15">
+                                            <p class="m-b-0 text-muted">Rating</p>
                                         @if ($i>0)
                                             
                                         <p class="m-b-0 text-muted">{{$net_feedback/$i}} ratings</p>

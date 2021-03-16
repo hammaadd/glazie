@@ -1,5 +1,5 @@
 @extends('admin-layout.layouts')
-@section('title','Brands List')
+@section('title','Deal List')
 @section('content')
 
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -12,11 +12,11 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h2 class="header-title ">Brands</h2>
+            <h2 class="header-title ">Product Deals</h2>
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="#">Brands</a>
+                    <a class="breadcrumb-item" href="#">Product Deals</a>
                     
                 </nav>
             </div>
@@ -34,9 +34,9 @@
                             
                         </div>
                         <div class="col-lg-4 text-right">
-                            <a class="btn btn-primary" href="{{url('admin/brands/add')}}">
+                            <a class="btn btn-primary" href="{{url('admin/productdeals/create')}}">
                                 <i class="anticon anticon-plus-circle m-r-5"></i>
-                                <span> Add New Brand</span>
+                                <span> Add Product Deal </span>
                             </a>
                         </div>
                     </div> 
@@ -47,8 +47,8 @@
                 <table class="table table-hover" id="brands">
                     <thead>
                         <th>Sr.#</th>
-                        <th>Brand Name</th>
-                        <th>Description</th>
+                        <th>Deal Name</th>
+                        <th>Price</th>
                         <th>Image</th>
                         <th>Action</th>
                     </thead>
@@ -56,22 +56,22 @@
                      
                         
 
-                        @if(count($brands)>0)
-                        @foreach($brands as $brand)
+                        @if(count($deals)>0)
+                        @foreach($deals as $deal)
 
                         <tr>
                             <td>{{$loop->iteration}}</td>
-                            <td>{{ $brand->brand_name }}</td>
-                            <td>{{$brand->description}}</td>
+                            <td>{{ $deal->deal_name }}</td>
+                            <td>{{$deal->price}}</td>
                             <td><?php 
-                            if ($brand->image) {?>
-                                 <a href="{{ asset('/admin-assets/brands/'.$brand->image) }}"><img src="{{ asset('/admin-assets/brands/'.$brand->image) }}" alt="" class="rounded-circle " width="50px" height="50px"> </a> 
+                            if ($deal->image) {?>
+                                 <a href="{{ asset('/admin-assets/productdeal/'.$deal->image) }}"><img src="{{ asset('/admin-assets/productdeal/'.$deal->image) }}" alt="" class="rounded-circle " width="50px" height="50px"> </a> 
                             <?php }
                             ?></td>
                             <td>
                         {{-- <a href="{{url('admin/brands/edit/'.$brand->id)}}" class="badge badge-warning"> <i class="fa fa-eye"></i> Details</a> --}}
-                                <a href="{{url('admin/brands/edit/'.$brand->id)}}" class="badge badge-primary"> <i class="fa fa-edit"></i> Edit</a>
-                                <a href="{{url('admin/brands/delete/'.$brand->id)}}" class="badge badge-danger" onclick="return confirm('Are You Sure to delete?')"> <i class="fa fa-trash"></i> Delete</a> 
+                                <a href="{{url('admin/productdeals/edit/'.$deal->id)}}" class="badge badge-primary"> <i class="fa fa-edit"></i> Edit</a>
+                                <a href="{{url('admin/productdeals/delete/'.$deal->id)}}" class="badge badge-danger" onclick="return confirm('Are You Sure to delete?')"> <i class="fa fa-trash"></i> Delete</a> 
                             </td>
                         </tr>
                        

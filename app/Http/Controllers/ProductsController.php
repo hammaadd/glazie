@@ -457,33 +457,50 @@ class ProductsController extends Controller
     public function filter(Request $request)
     {
         $status = $request->input('status');
-        if($status=='instock'){
-            $products = Products::where('quantity','>','0')->get();
-            
-        }
-        else if($status=='stockout'){
-            $products = Products::where('quantity','=','0')->get();
-           
+        $brand = $request->input('brand');
+        if($brand){
+            if($status=='instock'){
+                $products = Products::where('quantity','>','0')->where('brand_id',$brand)->get();
+                
+            }
+            else if($status=='stockout'){
+                $products = Products::where('quantity','=','0')->where('brand_id',$brand)->get();
+               
+            }
+            else{
+                $products = Products::where('brand_id',$brand)->get();
+            }
         }
         else{
-            $products = Products::all();
+            if($status=='instock'){
+                $products = Products::where('quantity','>','0')->get();
+                
+            }
+            else if($status=='stockout'){
+                $products = Products::where('quantity','=','0')->get();
+               
+            }
+            else{
+                $products = Products::all();
+            }
         }
+        
         return view('admin/products/filterproduct',['products'=>$products]);
     }
-    public function filterbrand(Request $request)
-    {
-        $brand = $request->input('brand');
-       if($brand)
-       {
-        $products = Products::where('brand_id','=',$brand)->get();  
-       }
-       else{
-        $products = Products::all(); 
-       }
-       return view('admin/products/filterproduct',['products'=>$products]);
-    }
+  
     public function addprdvariation($id)
     {
+        // $collection = collect([
+        //     ['product' => 'Desk', 'price' => 200],
+        //     ['product' => 'Chair', 'price' => 100],
+        //     ['product' => 'Bookcase', 'price' => 150],
+        //     ['product' => 'Door', 'price' => 100],
+        // ]);
+        // $abc = array(150,20);
+        // $filtered = $collection->whereNotIn('price', $abc);
+        // echo "<pre>";
+        // print_r($filtered->all());
+        //     die;
         $dataarray =array();
         $attrbute_array = array();
         $prodcutattribute = ProductAttribute::where('product_id','=',$id)->get();
@@ -530,44 +547,50 @@ class ProductsController extends Controller
      }
      public function deletevariation($id)
      {
+         $product_id = Variation::find($id)->product_id;
         Variation::where('id',$id)->delete();
          
-        return redirect('admin/products/view/'.$id)->with('info','Variation Deleted Successfully');
+        return redirect('admin/products/view/'.$product_id)->with('info','Variation Deleted Successfully');
      }
      public function checkvariation(Request $request)
      {
-         $exist = array();
-        $variation = $request->input('variation');  
-        $product_id = $request->input('product_id');
-        $attribute_length  =$request->input('attribute_length');
-        $term_id_array = $request->input('term_id_array');
-        $variations = Variation::where('product_id','=',$product_id)->get();
-        $existed_variation = count($variations);
-        if(count($variations)>0)
-        {
-            foreach($variations as $variation)
-            {
-                $table_prdcats= VariationDetails::where('variation_id','=',$variation->id)
-                    ->whereNotIn('prd_term_id',$term_id_array)
-                    ->get();
-                    if(count($table_prdcats)>0){
-                        
-                    }
-                    else{
-                        array_push($exist, 1);
-                    }
-            }
-            if (count($exist)==$existed_variation) {
-                echo 0;
-            }
-            else{
-                echo 1;
-            }
+            $id=0;
+            $exist = array();
+            $newarray = array();
+            $result = array();
+            $abc = array();
+           $variation = $request->input('variation');  
+           $product_id = $request->input('product_id');
+           $attribute_length  =$request->input('attribute_length');
+           $term_id_array = $request->input('term_id_array');
+           $variations = Variation::where('product_id','=',$product_id)->get();
+           // echo count($variations);
+           if(count($variations)>0)
+           {
+               foreach($variations as $variation)
+               {
+                $newarray = array();
+                  foreach($variation->variationdetails as $variationdetails){
+                    array_push($newarray,$variationdetails->prd_term_id);
+                  }     
+                  $result=array_diff($newarray,$term_id_array); 
+                  if(!$result){
+                    $id=1;
+                  }    
+                  
+                    
+               }
+               if($id==1)
+               {
+                  echo 0;
+               }
+               else{
+                   echo 1;
+               }
+               
+           }
+           else{
+            echo 1;
+           }
         }
-        else{
-            echo 1; 
-        }
-
-     }
-
 }
