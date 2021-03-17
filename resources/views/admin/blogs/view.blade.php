@@ -1,5 +1,5 @@
 @extends('admin-layout.layouts')
-@section('title','Product Details')
+@section('title','Blogs Details')
 @section('content')
 <link href="{{ asset('admin-assets/css/style.css') }}" rel="stylesheet">
 <link href="{{ asset('admin-assets/css/app.min.css') }}" rel="stylesheet">
@@ -37,33 +37,15 @@
                     </a>
                 </div>
             </div>
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#product-overview">Overview</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#blog-feedback">Blog Feedback</a>
-                </li>
-
-       
-            </ul>
+            
         </div>
         <div class="container-fluid">
-            <div class="tab-content m-t-15">
-                <div class="tab-pane fade show active" id="product-overview">
+            
                     <div class="card">  
                         <div class="card-body" >
-                             <div class="row">
-                                <div class="col-md-12" id="halflongdesc">
-                                   <p id="halflongdesc">
-                                       @php
-                                           echo substr($blog->description,0,40);
-                                       @endphp
-                                   </p>
-                                </div>
-                            </div> 
+                              
                             <div class="row">
-                                <div class="col-md-12" style="display: none;" id="completedescription">
+                                <div class="col-md-12"  id="completedescription">
                                     <p class="text-justify">
                                         {!!$blog->description!!}
                                     </p>
@@ -73,66 +55,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="blog-feedback">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                @php
-                                    $countlike = $countdislike = 0;
-                                @endphp
-                                @foreach ($blog->likes as $like)
-                                    @if ($like->liketype=="like")
-                                    @php
-                                        $countlike++;
-                                    @endphp
-
-                                    @endif
-                                    @if ($like->liketype=="dislike")
-                                    @php
-                                        $countdislike++;
-                                    @endphp
-                                    
-                                    @endif
-                                @endforeach
-                                <div class="col-md-6">
-                                    <h4>{{$countlike}} People like Your post <i class="fas fa-thumbs-up"></i></h4>
-                                    
-                                </div>
-                                <div class="col-md-6">
-                                    <h4>{{$countdislike}} People Dislike Your post <i class="fas fa-thumbs-down"></i></h4>
-                                    
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h3>Comments</h3>
-                                </div>
-                            </div>
-                            <div class="row">
-                                @foreach ($blog->comments as $comment)
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h4>{{$comment->user->name}}</h4>
-                                                    {{$comment->comment}}
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <small>{{date("d-M-Y", strtotime($comment->created_at))}}</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 
-            </div>
-        </div>
+                
+                
+           
     </div>
  
 

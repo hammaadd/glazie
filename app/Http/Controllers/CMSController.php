@@ -98,5 +98,10 @@ class CMSController extends Controller
         return view('admin/cms/view',['cms'=>$cms]);
      
     }
+    public function delete($id)
+    {
+        ContentManagementSystem::where('id',$id)->delete();
+        return redirect('admin/cms')->with('info','The Page Deleted Successfully');
+    }
 }
  

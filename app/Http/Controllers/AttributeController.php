@@ -7,6 +7,8 @@ use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Term;
 use App\Models\ProductTerm;
+use App\Models\Variation;
+use App\Models\VariationDetails;
 use DB;
 class AttributeController extends Controller
 {
@@ -171,6 +173,18 @@ class AttributeController extends Controller
         $product_terms = ProductTerm::where('product_id','=',$product_id)->where('attribute_id','=',$attribute_id)->get();
         foreach($product_terms as $product_term){
             ProductTerm::where('id',$product_term->id)->delete();
+            $variations  = Variation::where('product_id','=',$product_id)->get();
+            foreach($variations as $variation)
+            {
+               
+                foreach($variation->variationdetails as $variationdetails)
+                {
+                    if($variationdetails->prd_term_id ==$product_term->id)
+                    {
+                        VariationDetails::where('id',$variationdetails->id)->delete();
+                    }
+                }
+            }
         }
         
         ProductAttribute::where('id',$id)->delete();
@@ -267,16 +281,29 @@ class AttributeController extends Controller
         $product_id  = $productattrs->product_id;
         $table_prdcats= ProductTerm::where('product_id','=',$product_id)->where('attribute_id','=',$attr_id)
         ->whereNotIn('term_id',[$terms])->get();
-        //echo "<pre>";
+        
        foreach($table_prdcats as $tableterm)
        {
+           echo $tableterm->id;
         ProductTerm::where('id',$tableterm->id)->delete();
+        $variations = Variation::where('product_id',$product_id)->get();
+        foreach($variations as $variation)
+        {
+            foreach($variation->variationdetails as $variationdet)
+            {
+                if($variationdet->prd_term_id==$tableterm->id)
+                {
+                    VariationDetails::where('id',$variationdet->id)->delete();
+                }
+            }
+        }
        }
+      
        foreach($terms as $term)
        {
         if((int)$term){
             ProductTerm::updateOrCreate(
-                ['product_id' => $product_id, 'attribute_id' => $attr_id, 'term_id' => $term],
+                ['product_id' => $product_id, 'attribute_id' => $attr_id, 'term_id' => $term,],
                 ['product_id' => $product_id, 'attribute_id' => $attr_id, 'term_id' => $term,'created_by'=>Auth::id()],
             );
         }
@@ -295,6 +322,7 @@ class AttributeController extends Controller
             $prd_terms->save();
             }
         }
+       
         return redirect('admin/products/view/'.$product_id)->with('info','Product Terms updated Successfully');
        }
        public function get_prd_terms(Request $request)

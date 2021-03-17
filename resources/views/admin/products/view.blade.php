@@ -11,6 +11,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <div class="page-container">
+ 
    @php
         $i=0;
        foreach ($products->gallery as $value) {
@@ -43,6 +44,7 @@
                 @if (session('info'))
                 <script type="text/javascript">toastr.success("{{session('info')}}");</script>
                 @endif 
+                
                 <div class="m-b-15">
                     <a href="{{url('admin/products/edit/'.$products->id)}}" class="btn btn-primary">
                         <i class="anticon anticon-edit"></i>
@@ -52,19 +54,34 @@
             </div>
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#product-overview">Overview</a>
+                    @if (session('info'))
+                        
+                    <a class="nav-link" data-toggle="tab" href="#product-overview" id="overview">Overview</a>
+                    @else
+                    <a class="nav-link active" data-toggle="tab" href="#product-overview" id="overviewactive">Overview</a>   
+                    @endif
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#product-images">Product Images</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#product-attribute">Product Attribute</a>
+                    @if(session('info')=="Product Terms updated Successfully" ||session('info')=="Attribute delete Successfully" ||session('info')=="Attribute created Successfully")
+                    <a class="nav-link active" data-toggle="tab" href="#product-attribute" >Product Attribute</a>
+                    @else
+                    <a class="nav-link" data-toggle="tab" href="#product-attribute" id="prdattr">Product Attribute</a>
+                    @endif
+                   
                 </li>
                 {{-- <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#product-size">Product Size</a>
                 </li> --}}
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#product-variation">Product Variation</a>
+                    @if(session('info')=="Variantion Created Successfully" || session('info')=="Variation Deleted Successfully")
+                        <a class="nav-link active" data-toggle="tab" href="#product-variation" id="prdvariationactive">Product Variation</a>
+                    @else
+                    <a class="nav-link " data-toggle="tab" href="#product-variation" id="prdvariation">Product Variation</a> 
+                    @endif
+                   
                 </li>
         @php
             $i=0;
@@ -89,7 +106,11 @@
         </div>
         <div class="container-fluid">
             <div class="tab-content m-t-15">
+                @if (session('info'))
+                <div class="tab-pane fade " id="product-overview">
+                @else
                 <div class="tab-pane fade show active" id="product-overview">
+                @endif
                     <div class="row">
                         <div class="col-md-3">
                             <div class="card">
@@ -354,7 +375,12 @@
                         </div>
                     </div>
                 </div>
+                @if(session('info')=="Product Terms updated Successfully" ||session('info')=="Attribute delete Successfully" ||session('info')=="Attribute created Successfully")
+                <div class="tab-pane fade show active" id="product-attribute">
+                @else
                 <div class="tab-pane fade" id="product-attribute">
+                @endif
+                
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -388,7 +414,7 @@
                                                 </td>
                                                 <td>
                                                      <a href="{{url('admin/editprdattribute/'.$attribute->id)}}" class="btn btn-info btn-xs" ><i class="fa fa-edit"></i> Edit</a>
-                                                    <a href="{{url('admin/removeprdattribute/'.$attribute->id)}}" class="btn btn-danger btn-xs" ><i class="fa fa-times"></i> Remove</a> 
+                                                    <a href="{{url('admin/removeprdattribute/'.$attribute->id)}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure ?')"><i class="fa fa-times"></i> Remove</a> 
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -473,7 +499,12 @@
                         </div>
                     </div>
                 </div>  --}}
-                <div class="tab-pane fade" id="product-variation">
+                @if(session('info')=="Variation Deleted Successfully" ||session('info')=="Variantion Created Successfully")
+                    <div class="tab-pane fade show active" id="product-variation">
+                @else
+                    <div class="tab-pane fade" id="product-variation">
+                @endif
+                
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -560,6 +591,30 @@
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
 }
-
+$(document).ready(function(){
+        
+            var pageURL = $(location).attr("href");
+            var ret = pageURL.replace('http://localhost/glazieltd/admin/products/view/'+{{$products->id}}+"#",'');
+            if(ret=="product-variation")
+            {
+                $('#product-variation').addClass("show active");
+                $('#prdvariation').addClass('active');
+                $('#product-overview').removeClass("show active");
+                $('#overviewactive').removeClass("active");
+               
+                
+            }
+            if(ret=="product-attribute")
+            {
+                $('#product-attribute').addClass("show active");
+                
+                $('#prdattr').addClass('active');
+                $('#product-overview').removeClass("show active");
+                $('#overviewactive').removeClass("active");
+               
+                
+            }
+        
+    });
 </script>
 @endsection

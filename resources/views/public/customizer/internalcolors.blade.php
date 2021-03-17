@@ -5,7 +5,7 @@
           <!--Sec Title-->
           <div class="sec-title text-center">
               <div class="title-inner">
-                  <h2>Choose Your <span class="theme_color">External Color</span></h2>
+                  <h2>Choose Your <span class="theme_color">Internal Color</span></h2>
               </div>
           </div>
       </div>
@@ -16,14 +16,14 @@
           <div class="container">
               <div class="row">
                   <div class="col-12">
-                      <div id="owl-external-color" class="owl-builder owl-carousel owl-theme">
+                      <div id="owl-internal-color" class="owl-builder owl-carousel owl-theme">
                         @foreach ($colors as $color)
                             
                      
                         <li class="item list-unstyled text-center">
-                            <button type="button" class="button-door border-0 bg-transparent my-5 w-100" >
+                            <button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="fun({{$color->id}})">
                                 <div class="door">
-                                    <div class="door-image" style="background-color: {{$color->color_code}};height:100px;width:100px;"></div>
+                                    <div class="door-image" style="background-color: {{$color->color_code}};height:100px;width:100px; border-radius:50%;"></div>
                                     {{-- <img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-ffffff.svg" align=""> --}}
                                 </div>
                             </button>

@@ -80,7 +80,7 @@
                             <div class="col-md-12">
                                 <label for="" ></label>
                                 <button type="submit"  class="btn btn-success mt-3 " id="btncheck"><i class="fa fa-edit" ></i>Update Product Terms</button>
-                                <a href="{{url('admin/products/view/'.$product_id)}}" class="btn btn-danger mt-3 ml-3"> <i class="fa fa-times"> Cancel</i> </a>
+                                <a href="{{url('admin/products/view/'.$product_id."#product-attribute")}}" class="btn btn-danger mt-3 ml-3"> <i class="fa fa-times"> Cancel</i> </a>
                             </div>
                             
                         </div>
