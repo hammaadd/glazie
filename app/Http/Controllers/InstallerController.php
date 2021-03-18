@@ -32,7 +32,7 @@ class InstallerController extends Controller
         $validatedData = $request->validate([
             'first_name' => 'required|alpha',
             'last_name' => 'required|alpha',
-            'email' => 'required',
+            'email' => 'required|unique:users',
             'password' => 'required',
             'contact_no' => 'required',
             

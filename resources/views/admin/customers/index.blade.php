@@ -81,8 +81,8 @@
                             <td>
                                 <a href="{{url('admin/customers/details/'.$customer->id)}}" title="Details" class="badge badge-warning"> <i class="fa fa-eye"></i> </a>
                                 <a href="{{url('admin/customers/edit/'.$customer->id)}}" title="Edit" class="badge badge-primary"> <i class="fa fa-edit"></i> </a>
-                                <a href="{{url('admin/customers/delete/'.$customer->id)}}" title="Delete" class="badge badge-danger" onclick="return confirm('Are You Sure to delete?')"> <i class="fa fa-times"></i> </a> 
-                                <a href="{{url('admin/customers/deactivate/'.$customer->id)}}" title="De Activate Account" class="badge badge-danger" onclick="return confirm('Are You Sure to to de activate?')"> <i class="fa fa-trash"></i></a> 
+                                <a href="{{url('admin/customers/delete/'.$customer->id)}}" title="Delete" class="badge badge-danger" onclick="return confirm('Are You Sure to delete?')"><i class="fa fa-trash"></i></a> 
+                                <a href="{{url('admin/customers/deactivate/'.$customer->id)}}" title="De Activate Account" class="badge badge-danger" onclick="return confirm('Are You Sure to to de activate?')"><i class="fa fa-times"></i></a> 
                             </td>
                         </tr>
                        
