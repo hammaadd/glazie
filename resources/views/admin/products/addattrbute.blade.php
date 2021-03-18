@@ -127,7 +127,7 @@
                             <div class="col-md-12">
                                 <label for="" ></label>
                                 <button type="submit"  class="btn btn-success mt-3 " id="btncheck"><i class="fa fa-plus" ></i> Add Product Attribute</button>
-                                <a href="{{url('admin/products')}}" class="btn btn-danger mt-3 ml-3"> <i class="fa fa-times"> Cancel</i> </a>
+                                <a href="{{url('admin/products/view/'.$id."#product-attribute")}}" class="btn btn-danger mt-3 ml-3"> <i class="fa fa-times"> Cancel</i> </a>
                             </div>
                             
                         </div>

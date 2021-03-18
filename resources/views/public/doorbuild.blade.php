@@ -69,7 +69,8 @@
 													
 												
 											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="abc({{$addon->id}})">
+		
+											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="getexternalcolors({{$addon->id}})">
 											    		<div class="door">
 											    			<img class="door-image" src="{{asset('admin-assets/addon/'.$addon->svgimage)}}" align="">
 											    		</div>
@@ -291,242 +292,16 @@
 			      	
 			      </div>
 			      <div class="tab-pane fade" id="v-pills-internal-color" role="tabpanel" aria-labelledby="v-pills-internal-color-tab">
-			      	<section class="section product-section">
-			      		<div class="title-box">
-							<div class="container">
-								<!--Sec Title-->
-								<div class="sec-title text-center">
-									<div class="title-inner">
-										<h2>Choose Your <span class="theme_color">Internal Color</span></h2>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="lower-section pt-0" id="external">
-							<div class="lower-inner-section">
-								<div class="container">
-									<div class="row">
-										<div class="col-12">
-											<div id="owl-internal-color" class="owl-builder owl-carousel owl-theme">
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-ffffff.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-323232.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-2D654C.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-AE1216.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-bc4078.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-07756E.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-B41E20.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-3677C0.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-2D654C.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-DF8245.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-CDCD57.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											</div>
-											<div class="customNavigation">
-												<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnColor">Prev</a>
-											    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnGlass">Next</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>						
-
-			      	</section>
+			      
 			      	
 			      </div>
-{{--
+
 			      <div class="tab-pane fade" id="v-pills-glass" role="tabpanel" aria-labelledby="v-pills-glass-tab">
-			      	<section class="section product-section">
-			      		<div class="title-box">
-							<div class="container">
-								<!--Sec Title-->
-								<div class="sec-title text-center">
-									<div class="title-inner">
-										<h2>What type of <span class="theme_color">glass</span> would you like?</h2>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="lower-section pt-0">
-							<div class="lower-inner-section">
-								<div class="container">
-									<div class="row">
-										<div class="col-12">
-											<div id="owl-glass" class="owl-builder owl-carousel owl-theme">
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-RG18__m-ACDA2.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-BO500__m-ACDA2.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-BO508__m-ACDA2.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-BO510__m-ACDA2.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-RG18__m-ACDA2.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-BO550__m-ACDA2.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-BO556__m-ACDA2.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-BO560__m-ACDA2.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-FT14__m-ACDA2.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-FT21__m-ACDA2.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-FT38__m-ACDA2.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-											    		<div class="door">
-											    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-FT50__m-ACDA2.svg" align="">
-											    		</div>
-											    	</button>
-											    </li>
-											</div>
-											<div class="customNavigation">
-												<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btninternalColor">Prev</a>
-											    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnFrame">Next</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>						
-
-			      	</section>
+			      
 			      </div>
 
 			      <div class="tab-pane fade" id="v-pills-frame" role="tabpanel" aria-labelledby="v-pills-frame-tab">
-			      	<section class="section product-section">
+			      	{{-- <section class="section product-section">
 			      		<div class="title-box">
 							<div class="container">
 								<!--Sec Title-->
@@ -639,7 +414,7 @@
 							</div>
 						</div>						
 
-			      	</section>
+			      	</section> --}}
 			      </div>
 
 			      <div class="tab-pane fade" id="v-pills-frame-external-color" role="tabpanel" aria-labelledby="v-pills-frame-external-color-tab">
@@ -1155,7 +930,7 @@
 						</div>						
 
 			      	</section>
-			      </div> --}}
+			      </div> 
 
 			      <div class="tab-pane fade" id="v-pills-price" role="tabpanel" aria-labelledby="v-pills-price-tab">
 			      </div>
@@ -1328,7 +1103,7 @@
 		    $('li button.selected').removeClass('selected');
 		    $(this).addClass('selected');
 		});
-		function abc(id)
+		function getexternalcolors(id)
 
 			{
 				
@@ -1350,7 +1125,93 @@
 			});
            }
             });
+			get_internalcolors(id)
     }
+	function get_internalcolors(id)
+
+		{
+		url = "{{url('get_internal_color')}}";
+		console.log(url);
+		$.ajax({
+		type:'POST',
+		url:url,
+
+		data:{
+			id:id,  
+		
+		},
+		success:function(result){
+		$('#v-pills-internal-color').html(result);
+		$("#owl-internal-color").owlCarousel({
+			items : 6
+		});
+		}
+		});
+		get_glasses(id)
+		}
+	function  get_glasses(id)
+	{
+		url = "{{url('get_glasses')}}";
+		console.log(url);
+		$.ajax({
+		type:'POST',
+		url:url,
+
+		data:{
+			id:id,  
+		
+		},
+		success:function(result){
+		$('#v-pills-glass').html(result);
+		$("#owl-glass").owlCarousel({
+				items : 6
+			});
+		}
+		});
+		get_frame(id)
+	}
+	function get_frame(id)
+	{
+		url = "{{url('get_frames')}}";
+		console.log(url);
+		$.ajax({
+		type:'POST',
+		url:url,
+
+		data:{
+			id:id,  
+		
+		},
+		success:function(result){
+		$('#v-pills-frame').html(result);
+		$("#owl-frame").owlCarousel({
+				items : 6
+			});
+		}
+		});
+		get_hinge(id)
+	}
+	function get_hinge(id)
+	{
+		url = "{{url('get_hinge')}}";
+		console.log(url);
+		$.ajax({
+		type:'POST',
+		url:url,
+
+		data:{
+			id:id,  
+		
+		},
+		success:function(result){
+		$('#v-pills-frame').html(result);
+		$("#owl-frame").owlCarousel({
+				items : 2
+			});
+		}
+		});
+	}
+	
 		
 	</script>
 	@endsection

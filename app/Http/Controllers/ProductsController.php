@@ -490,17 +490,7 @@ class ProductsController extends Controller
   
     public function addprdvariation($id)
     {
-        // $collection = collect([
-        //     ['product' => 'Desk', 'price' => 200],
-        //     ['product' => 'Chair', 'price' => 100],
-        //     ['product' => 'Bookcase', 'price' => 150],
-        //     ['product' => 'Door', 'price' => 100],
-        // ]);
-        // $abc = array(150,20);
-        // $filtered = $collection->whereNotIn('price', $abc);
-        // echo "<pre>";
-        // print_r($filtered->all());
-        //     die;
+       
         $dataarray =array();
         $attrbute_array = array();
         $prodcutattribute = ProductAttribute::where('product_id','=',$id)->get();
@@ -543,7 +533,7 @@ class ProductsController extends Controller
            $vairation_details->save();
 
         }
-        return redirect('admin/products/view/'.$id)->with('info','Variantion  Created Successfully');
+        return redirect('admin/products/view/'.$id)->with('info','Variantion Created Successfully');
      }
      public function deletevariation($id)
      {
@@ -573,7 +563,7 @@ class ProductsController extends Controller
                   foreach($variation->variationdetails as $variationdetails){
                     array_push($newarray,$variationdetails->prd_term_id);
                   }     
-                  $result=array_diff($newarray,$term_id_array); 
+                  $result=array_diff($term_id_array,$newarray); 
                   if(!$result){
                     $id=1;
                   }    

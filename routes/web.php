@@ -45,8 +45,10 @@ Route::post('prdaddtocart','IndexController@prdaddtocart');
 // Door Builder Routes
 Route::get('door-build','DoorBuilderController@index');
 Route::post('get_colors','DoorBuilderController@get_colors');
-
-
+Route::post('get_internal_color','DoorBuilderController@get_internalcolors');
+Route::post('get_glasses','DoorBuilderController@get_glasses');
+Route::post('get_frames','DoorBuilderController@get_frames');
+Route::post('get_hinge','DoorBuilderController@get_hinge');
 
 Route::prefix('admin')->group(function () {
     
@@ -339,6 +341,7 @@ Route::get('deletefeedback/{feedback_id}','ProductsController@deletefeedback');
     Route::get('cms/edit/{id}','CMSController@edit');
     Route::get('cms/view/{id}','CMSController@view');
     Route::post('cms/update/{id}','CMSController@update');
+    Route::get('cms/delete/{id}','CMSController@delete');
     // New User Message 
     Route::get('usermessage','UserMessageController@index');
     Route::get('messagedetails/{id}','UserMessageController@messagedetails');

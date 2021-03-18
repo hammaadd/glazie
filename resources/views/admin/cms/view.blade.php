@@ -11,7 +11,7 @@
             <div class="header-sub-title">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a href="{{url('admin/product/list')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Products</a>
+                    
                     <a class="breadcrumb-item" href="#">Update Page</a>
                     
                 </nav>
