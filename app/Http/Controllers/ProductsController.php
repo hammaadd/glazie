@@ -345,8 +345,9 @@ class ProductsController extends Controller
     public function view($id){
         abort_if(!$products = Products::find($id), 403);
         $countattribute  =count(Attribute::all());
-      
-        return view('admin/products/view',['products'=>$products,'number'=>$countattribute]);
+        $count = ProductAttribute::where('product_id',$id)->first();
+
+        return view('admin/products/view',['products'=>$products, 'number'=>$countattribute, 'count_atts'=>$count]]);
     }
     public function makeprimary(Request $request){
         $id = $request->input('id');
