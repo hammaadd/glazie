@@ -45,26 +45,13 @@ Route::post('prdaddtocart','IndexController@prdaddtocart');
 // Door Builder Routes
 Route::get('door-build','DoorBuilderController@index');
 Route::post('get_colors','DoorBuilderController@get_colors');
-
-
+Route::post('get_internal_color','DoorBuilderController@get_internalcolors');
+Route::post('get_glasses','DoorBuilderController@get_glasses');
+Route::post('get_frames','DoorBuilderController@get_frames');
+Route::post('get_hinge','DoorBuilderController@get_hinge');
 
 Route::prefix('admin')->group(function () {
-    // Permisssion Routes
-    // Route::get('permission','PermissionController@index');
-    // Route::get('permission/add','PermissionController@add');
-    // Route::post('permission/create','PermissionController@create');
-    // Route::get('permission/edit/{id}','PermissionController@edit');
-    // Route::post('permission/update/{id}','PermissionController@update');
-    // Route::get('permission/delete/{id}','PermissionController@delete');
-
-    // // Role Route
-    // Route::get('roles','RoleController@index');
-    // Route::get('role/add','RoleController@add');
-    // Route::post('role/create','RoleController@create');
-    // Route::get('role/edit/{id}','RoleController@edit');
-    // Route::post('role/update/{id}','RoleController@update');
-    // Route::get('role/delete/{id}','RoleController@delete');
-
+    
     // User Route
     Route::get('user','UserController@index');
     Route::get('user/add','UserController@add');
@@ -287,10 +274,12 @@ Route::prefix('admin')->group(function () {
     Route::get('productdeals','ProductDealController@index');
     Route::get('productdeals/create','ProductDealController@create'); 
     Route::post('productdeals/store','ProductDealController@store');
-    Route::get('productdeals/edit{id}','ProductDealController@edit');
-    Route::get('productdeals/update/{id}','ProductDealController@update');
+    Route::get('productdeals/edit/{id}','ProductDealController@edit');
+    Route::post('productdeals/update/{id}','ProductDealController@update');
     Route::get('productdeals/delete/{id}','ProductDealController@delete');
-
+    Route::post('productdeals/removeprd','ProductDealController@removeprd');
+    Route::post('productdeals/prdouctqty','ProductDealController@updateprdqty');
+    Route::post('productdeals/removeimage','ProductDealController@removeimage');
 
     // Request Hiring Route For Admin Side 
     Route::get('requesthiring','RequestHiringController@index');
@@ -352,6 +341,7 @@ Route::get('deletefeedback/{feedback_id}','ProductsController@deletefeedback');
     Route::get('cms/edit/{id}','CMSController@edit');
     Route::get('cms/view/{id}','CMSController@view');
     Route::post('cms/update/{id}','CMSController@update');
+    Route::get('cms/delete/{id}','CMSController@delete');
     // New User Message 
     Route::get('usermessage','UserMessageController@index');
     Route::get('messagedetails/{id}','UserMessageController@messagedetails');
@@ -393,10 +383,12 @@ Route::post('removecartproduct','IndexController@removecartproduct');
 Route::post('updatecartproduct','IndexController@updatecartproduct');
 Route::get('checkout','IndexController@checkout');
 Route::get('checkout','IndexController@checkout');
+Route::post('submit-query','DoorBuilderController@forminput');
 Route::post('checkoutsubmit','IndexController@checkoutsubmit');
 Route::get('clearcart','IndexController@clearcart');
 Route::post('checkservice','IndexController@checkservice');
-
+Route::post('searchproduct','IndexController@searchproduct');
+Route::post('sortproduct','IndexController@sortproduct');
 Route::get('installerlist','IndexController@installerlist');
 Route::get('installerdetails/{id}','IndexController@installerdetails');
 
