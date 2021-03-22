@@ -102,7 +102,6 @@
 								</div>
 							</div>
 						</div>
-
 						<div class="lower-section pt-0">
 							<div class="lower-inner-section">
 								<div class="container">
@@ -217,7 +216,6 @@
 								</div>
 							</div>
 						</div>						
-
 			      	</section>
 			      </div>
 			      <div class="tab-pane fade show " id="v-size-model" role="tabpanel" aria-labelledby="v-pills-size-tab">
@@ -232,7 +230,6 @@
 								</div>
 							</div>
 						</div>
-
 						<div class="lower-section pt-0">
 							<div class="lower-inner-section">
 								<div class="container">
@@ -283,7 +280,6 @@
 								</div>
 							</div>
 						</div>						
-
 			      	</section>
 			      </div>--}}
 
@@ -312,7 +308,6 @@
 								</div>
 							</div>
 						</div>
-
 						<div class="lower-section pt-0">
 							<div class="lower-inner-section">
 								<div class="container">
@@ -413,7 +408,6 @@
 								</div>
 							</div>
 						</div>						
-
 			      	</section> --}}
 			      </div>
 
@@ -1104,7 +1098,6 @@
 		    $(this).addClass('selected');
 		});
 		function getexternalcolors(id)
-
 			{
 				
        
@@ -1113,7 +1106,6 @@
             $.ajax({
            type:'POST',
            url:url,
-
             data:{
                 id:id,  
               
@@ -1128,14 +1120,12 @@
 			get_internalcolors(id)
     }
 	function get_internalcolors(id)
-
 		{
 		url = "{{url('get_internal_color')}}";
 		console.log(url);
 		$.ajax({
 		type:'POST',
 		url:url,
-
 		data:{
 			id:id,  
 		
@@ -1156,7 +1146,6 @@
 		$.ajax({
 		type:'POST',
 		url:url,
-
 		data:{
 			id:id,  
 		
@@ -1177,7 +1166,6 @@
 		$.ajax({
 		type:'POST',
 		url:url,
-
 		data:{
 			id:id,  
 		
@@ -1198,7 +1186,6 @@
 		$.ajax({
 		type:'POST',
 		url:url,
-
 		data:{
 			id:id,  
 		
