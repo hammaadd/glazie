@@ -10,6 +10,7 @@ use App\Models\Attribute;
 use App\Models\ProductTag;
 use App\Models\Countries;
 use App\Models\Address;
+use App\models\Variation;
 use Validator;
 use App\Models\Coupen;
 use App\Models\Term;
@@ -26,6 +27,7 @@ use App\Models\RequestHiring;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ContentManagementSystem;
 use DB;
+use App\Models\ProductTerm;
 use App\Models\Slider;
 use App\Models\DeliveryTime;
 use Session;
@@ -74,9 +76,22 @@ class IndexController extends Controller
     public function product_details($id){
         abort_if(! $product = Products::find($id),403);
         $product_type = $product->verity_id;
-        //echo $product_type;
+        $dataarray =array();
+        $attrbute_array = array();
+        $prodcutattribute = ProductAttribute::where('product_id','=',$id)->get();
+        foreach ($prodcutattribute as $key => $prdattr) {
+            $attribute_id = $prdattr->attribute;
+            //print_r($prdattr->attribute->id);
+
+           array_push($attrbute_array,$attribute_id->attribute_name);
+            $result = ProductTerm::where('product_id','=',$id)->where('attribute_id','=',$attribute_id->id)->get();
+           
+
+            array_push($dataarray,$result);
+            }
+           
         $products = Products::where('verity_id','=',$product_type)->get();
-            return view('public/product_details',['product'=>$product,'related_products'=>$products]);
+            return view('public/product_details',['product'=>$product,'related_products'=>$products,'dataarray'=>$dataarray,'id'=>$id,'attrbute_array'=>$attrbute_array]);
         
     }
   
@@ -101,7 +116,7 @@ class IndexController extends Controller
 
         $request->session()->push('cart', $cart);
         $cartdata = Cart::where('session_id','=',session()->getId())->where('product_id','=',$product_id)->get();
-        echo count($cartdata);
+        //echo count($cartdata);
         
         if (count($cartdata)>0) {
        
@@ -509,7 +524,7 @@ class IndexController extends Controller
         $mail =  $datas->value;
        
 
-        Mail::to($mail)->send(new OrderMail($details));
+       // Mail::to($mail)->send(new OrderMail($details));
     
     return redirect('/')->with('info','Order Is created successfull Soon You Recived Email  ');
     
@@ -572,7 +587,7 @@ class IndexController extends Controller
             'address'=>$request->input('address'),
             'workingdetails'=>$request->input('working_details')
         );
-        Mail::to($installer_mail)->send(new HiringRequests($details));
+       // Mail::to($installer_mail)->send(new HiringRequests($details));
         return redirect('installerlist')->with('info','Your Request is created Soon you recieve mail Soon');
     }
     public function get_installer(Request $request)
@@ -633,7 +648,13 @@ class IndexController extends Controller
 
         {}
         if (isset($cms)) {
-            return view('public/cmspage',['cms'=>$cms]);     
+           if($cms->publish=="1")
+           {
+             return view('public/cmspage',['cms'=>$cms]);  
+           }   
+           else{
+            abort(404);
+           }
         }
         else{
             abort(403);
@@ -681,7 +702,7 @@ class IndexController extends Controller
         $mail =  $datas->value;
        
 
-        Mail::to($mail)->send(new InstallerQuote($details));
+        //Mail::to($mail)->send(new InstallerQuote($details));
 
         $notify =new Notification;
         $notify->name = "New User Message";
@@ -777,9 +798,64 @@ class IndexController extends Controller
         }
         return view('public/blogdetails',['blog'=>$blog]);
     }
-    public function customizer()
+    
+    public function chceckvariation(Request $request)
     {
-        $addons = AddOn::all();
-        return view('public/customizer',['addons'=>$addons]);
+        $id=0;
+        $exist = array();
+        $newarray = array();
+        $result = array();
+        $abc = array();
+       $variation = $request->input('variation');  
+       $product_id = $request->input('product_id');
+       $attribute_length  =$request->input('attribute_length');
+       $term_id_array = $request->input('term_id_array');
+       $variations = Variation::where('product_id','=',$product_id)->get();
+       // echo count($variations);
+       if(count($variations)>0)
+       {
+           foreach($variations as $variation)
+           {
+            $newarray = array();
+              foreach($variation->variationdetails as $variationdetails){
+                array_push($newarray,$variationdetails->prd_term_id);
+              }     
+              $result=array_diff($term_id_array,$newarray); 
+              if(!$result){
+                $id=1;
+                $price =  $variation->price;
+              }    
+              
+                
+           }
+           if($id==1)
+           {
+              echo $price;
+           }
+           else{
+               echo "notexist";
+           }    
+       }
+       else{
+        echo "notexist";
+       }
+    }
+    public function composite(Request $request)
+    {
+          $brands = Brands::all();
+        $categories = Categories::all();
+        $sliders = Slider::all();
+        $prdcatgories = Categories::where('cat_name','like', '%composite%')->get();
+        //return view('public/index',['brands'=>$brands,'categories'=>$categories,'sliders'=>$sliders]);
+    return view('public/composite_door',['brands'=>$brands,'categories'=>$categories,'sliders'=>$sliders,'prdcatgories'=>$prdcatgories]);
+    }
+    public function alumenium(Request $request)
+    {
+          $brands = Brands::all();
+        $categories = Categories::all();
+        $sliders = Slider::all();
+        $prdcatgories = Categories::where('cat_name','like', '%alumenium%')->get();
+       
+    return view('public/alumenium_door',['brands'=>$brands,'categories'=>$categories,'sliders'=>$sliders,'prdcatgories'=>$prdcatgories]);
     }
 }

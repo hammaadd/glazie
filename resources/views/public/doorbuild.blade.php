@@ -924,7 +924,7 @@
 						</div>						
 
 			      	</section>
-			      </div> 
+			      </div>
 
 			      <div class="tab-pane fade" id="v-pills-price" role="tabpanel" aria-labelledby="v-pills-price-tab">
 			      </div>
@@ -1147,7 +1147,8 @@
 		type:'POST',
 		url:url,
 		data:{
-			id:id,  
+			id:id, 
+			"_token": "{{ csrf_token() }}", 
 		
 		},
 		success:function(result){
@@ -1168,7 +1169,7 @@
 		url:url,
 		data:{
 			id:id,  
-		
+			"_token": "{{ csrf_token() }}",
 		},
 		success:function(result){
 		$('#v-pills-frame').html(result);
@@ -1188,12 +1189,13 @@
 		url:url,
 		data:{
 			id:id,  
+			"_token": "{{ csrf_token() }}",
 		
 		},
 		success:function(result){
 		$('#v-pills-frame').html(result);
 		$("#owl-frame").owlCarousel({
-				items : 2
+				items : 6
 			});
 		}
 		});

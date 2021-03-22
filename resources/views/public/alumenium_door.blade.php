@@ -38,29 +38,7 @@
                 </div>
                 @endforeach
 
-                <!--Slide item-->
-                {{-- <div class="item d-flex align-items-center" style="background-image:url(assets/media/slider/slidingdoors4-image-data-scaled.jpg)">
-                    <div class="container">
-                        <div class="caption">
-                            <div class="animated" data-start="fadeInUp">
-                                <div class="promo">
-                                    <div class="title title-sm p-0">Aluminium Bifold Doors</div>
-                                </div>
-                            </div>
-                            <div class="animated" data-start="fadeInUp">
-                                Superb quality aluminium bifold doors available 
-                                <br>in array of colours and opening options.
-                                <br>Get an instant online quote with our handy 
-                                <br>door builder tool.
-                            </div>
-                            <div class="animated" data-start="fadeInUp">
-                                <div class="pt-3">
-                                    <a href="#" class="btn btn-fill-out rounded-0 px-4">Customize Your Door</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
+            
 
             </div> <!--/owl-slider-->
         </div>
@@ -98,7 +76,7 @@
                                     <h2>PREMIUM QUALITY UPVC Windows</h2>
                                     <p>Over hundred product lines are just a few clicks away. All prices are transparent and instant: just select your frame, color and glasses into our online customizer.</p>
 
-                                    <a href="#" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-5">Customize Window</a>
+                                    <a href="{{url('door-build')}}" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-5">Customize Window</a>
                                 </div>
                             </div>
                         </div>
@@ -110,12 +88,67 @@
     <!-- /Customize Section -->
 
     <!-- Design & Quote Now -->
-    <section class="section quote-section theme_bgcolor2 bg_img" style="background-image:url({{asset('assets/media/roof-latern-dual.jpg')}})">
+    <section class="section categories-section " >
         <div class="container">
             <div class="row">
-                <div class="col-12 text-center">
-                    <a href="#" title="Design & Quote Now" class="btn btn-fill-out rounded-0 px-5 py-2"><i class='bx bx-wifi'></i> Design & Order Now</a>
+                @foreach ($prdcatgories as $prdcats)
+
+                @if (count($prdcats->prdcategories)>0)
+                @foreach ($prdcats->prdcategories as $prdcat)
+                   @php
+                       
+                   $product =  $prdcat->productcats;
+                  
+                     $product_gallery = $product->gallery;
+                     
+                    $i=0;
+                    if(count($product->gallery)>0){
+                    foreach ($product->gallery as $key => $value) {
+                    if ($value->is_primary=="1") {
+                        $image = $value->image;
+                        $i=1;
+                    }
+                    }
+                
+                }
+                if ($i==0) {
+                    $image = $value->image;
+                }
+                    @endphp
+                
+                
+                <div class="col-lg-3 col-md-4 col-6">
+                <div class="product">
+                    <span class="pr_flash">Sale</span>
+                    <div class="product_img">
+                        <a href="{{url('productdetails/'.$product->id)}}">
+                            <img src="{{asset('productimages/'.$image)}}"
+                        <?php $profile_image=""; ?>
+                           > 
+                        </a>
+                        <div class="product_action_box">
+                            <ul class="list_none pr_action_btn">
+                                <li class="add-to-cart"><a style="cursor: pointer" onclick="addtocart({{$product->id}})"><i class="bx bx-cart"></i> Add To Cart</a></li>
+                                {{-- <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li>
+                                <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>
+                                <li><a href="#"><i class="bx bx-heart"></i></a></li> --}}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="product_info">
+                        <h6 class="product_title text-center"><a href="{{url('productdetails/'.$product->id)}}">{{$product->product_name}}</a></h6>
+                        <div class="product_price text-center">
+                            <span class="price "><span class="currencySymbol">£</span>{{$product->sale_price}}</span>
+                            <del><span class="currencySymbol">£</span>{{$product->regular_price}}</del>
+                        </div>
+                    </div>
                 </div>
+                </div>
+                
+                @endforeach
+                @endif
+                @endforeach
+               
             </div>
         </div>
     </section>
@@ -161,25 +194,7 @@
     <!-- categories -->
 
     <!-- row-title-section -->
-    <section class="section row-title-section bg_img bg_img1">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-7">
-                    <div class="title-box">
-                        <!--Sec Title-->
-                        <div class="sec-title text-center">
-                            <div class="title-inner">
-                                <h2>UPVC Windows & Doors</h2>
-                                <p>KÖMMERLING C70 is a proven 70mm upvc double glaze windows and doors system with far better levels of energy efficiency than timber windows and first generation upvc windows.</p>
-
-                                <a href="#" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-5">Learn more</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
     <!-- /row-title-section -->
 
     <!-- services -->
@@ -198,7 +213,7 @@
                         <div class="text">
                             <p>At Glazie Ltd we offer a complete survey,supply and fitting service for all our aluminium,timber and uPvc products.We draw upon our years of experience and utilise our team of highly skilled installers to provide a top class fitting service with 10 years insurance backed guarantee.</p>
                         </div>
-                        <a href="{{url('installerlist')}}" class="btn btn-fill-out rounded-0 px-4 py-2">Find out more</a>
+                        <a href="#" class="btn btn-fill-out rounded-0 px-4 py-2">Find out more</a>
                     </div>
                 </div>
                 <div class="image-column col-md-6">
@@ -232,7 +247,7 @@
                     <div class="row justify-content-center">
                         <div class="col-sm-8 text-center">
                             <div class="guarantee-img mb-4">
-                                <img class="img-fluid" src="{{('assets/media/10-year-guatantee-badge.png')}}" alt="10 Year Guatantee">
+                                <img class="img-fluid" src="{{asset('assets/media/10-year-guatantee-badge.png')}}" alt="10 Year Guatantee">
                             </div>
 
                             <div class="text">We know the products we sell represent outstanding quality and value. In addition, to offer you total peace of mind, all our supply & fitted products come with 10-years insurance backed guarantee. Click to find out more</div>
@@ -316,7 +331,7 @@
                         <div class="inner-box">
                             <div class="image-outer">
                                 <div class="image">
-                                    <img src="{{asset('assets/media/testimonial/author-4.jpg')}}" alt="Susan Elkin" />
+                                    <img src="{{('assets/media/testimonial/author-4.jpg')}}" alt="Susan Elkin" />
                                 </div>
                                 <div class="quote-icon">
                                     <span class="icon icon-flaticon-quote-1"></span>
@@ -390,6 +405,33 @@
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
+}
+function addtocart(id)
+{
+    url = "{{url('prdaddtocart')}}";
+        $.ajax({
+       type:'POST',
+       url:url,
+       data:{
+           id:id
+       },
+       success:function(result){ 
+
+        toastr.success("Prodcut Add to cart Successfully");
+       
+       if(result>0)
+       {
+        $('#cart_items').html(result);
+        $('#cart_items').show();
+        
+       }
+       else{
+        $('#cart_items').hide();
+       }
+        
+        }	
+        });
+
 }
 </script>
 

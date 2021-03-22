@@ -184,6 +184,7 @@ class AttributeController extends Controller
                         VariationDetails::where('id',$variationdetails->id)->delete();
                     }
                 }
+                Variation::where('id','=',$variation->id)->delete();
             }
         }
         

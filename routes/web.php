@@ -408,6 +408,11 @@ Route::get('{id}','IndexController@cmspage');
 // Blog Public Post 
 Route::get('blog/posts','IndexController@blogpost');
 Route::get('blog/details/{id}','IndexController@blogdetails');
+// Checking variation when user will change the prouct variaion 
+Route::post('checkvariation','IndexController@chceckvariation');
+Route::get('composite/door','IndexController@composite');
+Route::get('alumenium/door','IndexController@alumenium');
+
 // Customr Routes are here
 Route::prefix('customer')->group(function () {
     Route::get('profile/edit','CustomerController@editprofile');

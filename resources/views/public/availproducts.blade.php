@@ -18,7 +18,7 @@
             <div class="col-md-6 offset-md-3">
                 <div class="input-group mb-3">
                     
-                    <input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" placeholder="Write Something" id="search">
+                    <input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" placeholder="Write Something....." id="search">
                     <div class="input-group-append" >
                       <span class="input-group-text"><button class="btn btn-default btn-xs" onclick="searchresult()"><i class="fa fa-search"></i></button></span>
                     </div>
@@ -58,9 +58,9 @@
                             <div class="product_action_box">
                                 <ul class="list_none pr_action_btn">
                                     <li class="add-to-cart"><a style="cursor: pointer" onclick="addtocart({{$product->id}})"><i class="bx bx-cart"></i> Add To Cart</a></li>
-                                    <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li>
+                                    {{-- <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li>
                                     <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>
-                                    <li><a href="#"><i class="bx bx-heart"></i></a></li>
+                                    <li><a href="#"><i class="bx bx-heart"></i></a></li> --}}
                                 </ul>
                             </div>
                         </div>

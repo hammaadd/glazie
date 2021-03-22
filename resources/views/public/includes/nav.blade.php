@@ -169,7 +169,7 @@
   </div>
 
   <!-- header bottom -->
-  <div class="header-bottom" id="customheader">
+  <div class="header-bottom">
     <nav class="navbar navbar-expand-xl">
       <div class="container">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -181,20 +181,20 @@
               <a class="nav-link" href="{{url('availproducts')}}">Products</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Composite Doors</a>
+              <a class="nav-link" href="{{url('composite/door')}}">Composite Doors</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link" href="#">Aluminium Bifold Doors</a>
-              <div class="dropdown-menu" >
+              <a class="nav-link" href="{{url('alumenium/door')}}">Aluminium Bifold Doors</a>
+              {{-- <div class="dropdown-menu" >
                 <ul>
                   <li>
                     <a class="dropdown-item nav-link nav_item" href="#">Bifold Door Designer</a>
                   </li>
-                </ul>
-              </div>
+                </ul> --}}
+              {{-- </div> --}}
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Fitting Service</a>
+              <a class="nav-link" href="{{url('installerlist')}}">Fitting Service</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Our Guarantee</a>
@@ -206,9 +206,9 @@
               <a class="nav-link" href="{{url('contact-us')}}">Contact us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{'blog-posts'}}">Blog Post</a>
+              <a class="nav-link" href="{{url('blog/posts')}}">Blog Post</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" id="sitecontent">
               <a class="nav-link" href="#">Site Content</a>
               <div class="dropdown-menu" >
                 <ul id="dropdownlink">

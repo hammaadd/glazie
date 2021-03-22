@@ -19,7 +19,7 @@ class InstallerController extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        $installers =  User::where('type','=','installer')->get();
+        $installers =  User::where('type','=','installer')->OrderBy('id','desc')->get();
         return view('admin/installer/index',['installers'=>$installers]);
     }
     public function add()

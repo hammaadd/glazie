@@ -11,7 +11,7 @@ class CoupenController extends Controller
         $this->middleware('auth:admin');
     }
     public function index(){
-        $coupens = Coupen::all();
+        $coupens = Coupen::OrderBy('id','desc')->get();
         return view('admin/coupen/index',['coupens'=>$coupens]);
     }
     public function add()
@@ -32,7 +32,8 @@ class CoupenController extends Controller
         $coupen->coupen_code = $request->input('coupen_code');
         $coupen->discount_type = $request->input('discount_type');
         $coupen->discount = $request->input('discount_amount');
-        
+        $coupen->no_of_user = $request->input('no_of_user');
+        $coupen->last_date = $request->input('timelimit');
         $coupen->created_by = Auth::id();
         $coupen->save();
         return redirect('admin/coupen')->with('info','The coupen is created');

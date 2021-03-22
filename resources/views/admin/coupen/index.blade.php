@@ -1,6 +1,9 @@
 @extends('admin-layout.layouts')
-@section('title','Coupen List')
+@section('title','Coupon List')
 @section('content')
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <link href="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet">
 
 <!-- page js -->
@@ -8,11 +11,11 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h2 class="header-title ">Coupun</h2>
+            <h2 class="header-title ">Coupon</h2>
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="#">Coupun</a>
+                    <a class="breadcrumb-item" href="#">Coupon</a>
                     
                 </nav>
             </div>
@@ -46,7 +49,7 @@
                     <div class="col-lg-4 text-right">
                         <a class="btn btn-primary" href="{{url('admin/coupen/create')}}">
                             <i class="anticon anticon-plus-circle m-r-5"></i>
-                            <span>Add Coupun</span>
+                            <span>Add Coupon</span>
                         </a>
                     </div>
                 </div>
@@ -54,10 +57,10 @@
                 <table class="table table-hover" id="products">
                     <thead>
                         <th>Sr.#</th>
-                        <th>Coupun Name </th>
-                        <th>Coupun Code</th>
+                        <th>Coupon Name </th>
+                        <th>Coupon Code</th>
                         
-                        <th>Status</th>
+                       <!--  <th>Status</th> -->
                         <th>Action</th>
                     </thead>
                     <tbody>
@@ -70,17 +73,17 @@
                             <td>{{$loop->iteration}}</td>
                             <td>{{$coupen->coupen_name}}</td>
                             <td>{{$coupen->coupen_code}}</td>
-                            @php
+                            <!-- @php
                                 $date = date('Y-M-d');
                             @endphp
-
-                            <td>
+ -->
+                           <!--  <td>
                                 @if (($coupen->limiteduser=='yes' && $coupen->no_of_user<=0)||($coupen->limited_time=='yes' && $coupen->limited_time<$date))
                                 <span class="text-danger">Used</span>
                                @else
                                 <span class="text-success">Unuse</span>
                                 @endif
-                            </td>
+                            </td> -->
                             <td>
                                
                                 <a href="{{url('admin/coupen/edit/'.$coupen->id)}}" class="badge badge-primary"> <i class="fa fa-edit"></i> Edit</a>

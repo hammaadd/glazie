@@ -12,7 +12,7 @@
 								<!--Sec Title-->
 								<div class="sec-title text-center">
 									<div class="title-inner">
-										<h2>What type of <span class="theme_color">glass</span> would you like?</h2>
+										<h2>What type of <span class="theme_color">Frame</span> would you like?</h2>
 									</div>
 								</div>
 							</div>
@@ -28,7 +28,7 @@
                                                     
                                                 
 											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
+											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="getframedata({{$frame->id}})">
 											    		<div class="door">
                                                            
 											    			<img class="door-image" src="{{asset('admin-assets/addon/frame/'.$frame->image)}}" align="">

@@ -347,7 +347,9 @@ class ProductsController extends Controller
         $countattribute  =count(Attribute::all());
         $count = ProductAttribute::where('product_id',$id)->first();
 
-        return view('admin/products/view',['products'=>$products, 'number'=>$countattribute, 'count_atts'=>$count]]);
+
+        return view('admin/products/view',['products'=>$products,'number'=>$countattribute, 'count_atts'=>$count]);
+
     }
     public function makeprimary(Request $request){
         $id = $request->input('id');
