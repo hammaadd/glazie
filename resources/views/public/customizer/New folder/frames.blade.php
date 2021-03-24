@@ -1,4 +1,3 @@
-@if(count($frames)>0)
 <link rel="stylesheet" href="{{asset('assets2/vendors/animate/animate.min.css')}}">
 	<link rel="stylesheet" href="{{asset('assets2/vendors/bootstrap/css/bootstrap.min.css')}}">
 	<link rel="stylesheet" href="{{asset('assets2/vendors/owlcarousel/css/owlcarousel.min.css')}}">
@@ -29,7 +28,7 @@
                                                     
                                                 
 											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="framedata({{$frame->id}});setprice({{$frame->id}},{{$frame->frame_price}},4)">
+											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="getframedata({{$frame->id}})">
 											    		<div class="door">
                                                            
 											    			<img class="door-image" src="{{asset('admin-assets/addon/frame/'.$frame->image)}}" align="">
@@ -52,11 +51,9 @@
 						</div>						
 
 			      	</section>
-    <script src="{{asset('assets2/js/jquery.min.js')}}"></script>
+                      <script src="{{asset('assets2/js/jquery.min.js')}}"></script>
 	<script src="{{asset('assets2/vendors/bootstrap/js/bootstrap.min.js')}}"></script>
 	<script src="{{asset('assets2/vendors/owlcarousel/js/owlcarousel.min.js')}}"></script>
 	<script src="{{asset('assets2/vendors/videopopup/js/videopopup.js')}}"></script>
 	<script src="{{asset('assets2/js/script.js')}}"></script>
-    @else
-	<h3 class="text-center">Selected Model has no frame</h3>
-	@endif
+    

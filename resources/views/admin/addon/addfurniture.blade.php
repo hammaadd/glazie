@@ -176,7 +176,7 @@ function abc(v)
             var Extension = FileUploadPath.substring(
                     FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
             
-if (Extension == "svg" ) {
+if (Extension == "svg"||Extension == "png"  ) {
 
 // To Display
                 if (fuData.files && fuData.files[0]) {
@@ -193,7 +193,7 @@ if (Extension == "svg" ) {
 
 //The file upload is NOT an image
 else {
-                alert("Svg Photo only");
+                alert("Svg, png  Photo only");
                 $('#image'+v).val("");
             }
         }
