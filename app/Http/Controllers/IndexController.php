@@ -823,7 +823,7 @@ class IndexController extends Controller
               $result=array_diff($term_id_array,$newarray); 
               if(!$result){
                 $id=1;
-                $price =  $variation->price;
+                $price =  $variation;
               }    
               
                 

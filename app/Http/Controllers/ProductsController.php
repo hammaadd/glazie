@@ -108,48 +108,44 @@ class ProductsController extends Controller
             $prodgallery->created_by = $user->id;
             $prodgallery->save();
         }
-        for($attr=1;$attr<=$no_of_attribute;$attr++)
-        {
-          $attri_id =  $request->input('attribute'.$attr);
-          $product_attribute = new ProductAttribute;
-          $product_attribute->product_id = $product_id;
-          $product_attribute->attribute_id = $attri_id;
-          $product_attribute->created_by = $user->id;
-          $product_attribute->save();
-          $attribute_id = $product_attribute->id;
-          $terms = $request->input('terms'.$attr);
-          
-          if (isset($terms)) {
-              foreach ($terms as $key => $term) {
-              
-                  if(!(int)$term){
-                  $add_term = new Term;
-                  $add_term->name = $term;
-                  $add_term->attribute_id =$attri_id;
-                  $add_term->created_by = $user->id;
-                  $add_term->save();
-
-                  $prd_terms = new ProductTerm;
-                  $prd_terms->product_id = $product_id;
-                  $prd_terms->attribute_id = $attri_id;
-                  $prd_terms->term_id = $add_term->id;
-                  
-                  $prd_terms->save();
-                  }
-                 else{
-                    $prd_terms = new ProductTerm;
-                    $prd_terms->product_id = $product_id;
-                    $prd_terms->attribute_id = $attri_id;
-                    $prd_terms->term_id = $term;
-                    
-                    $prd_terms->save();
-
-                 }
-                  
-              }
-          }
+        $type = $request->input('type');
+        if($type=='variable'){
+            for($attr=1;$attr<=$no_of_attribute;$attr++)
+            {
+                $attri_id =  $request->input('attribute'.$attr);
+                $product_attribute = new ProductAttribute;
+                $product_attribute->product_id = $product_id;
+                $product_attribute->attribute_id = $attri_id;
+                $product_attribute->created_by = $user->id;
+                $product_attribute->save();
+                $attribute_id = $product_attribute->id;
+                $terms = $request->input('terms'.$attr);
+                if (isset($terms)) {
+                    foreach ($terms as $key => $term) {
+                        if(!(int)$term){
+                            $add_term = new Term;
+                            $add_term->name = $term;
+                            $add_term->attribute_id =$attri_id;
+                            $add_term->created_by = $user->id;
+                            $add_term->save();
+                            $prd_terms = new ProductTerm;
+                            $prd_terms->product_id = $product_id;
+                            $prd_terms->attribute_id = $attri_id;
+                            $prd_terms->term_id = $add_term->id;
+                            $prd_terms->save();
+                        }
+                        else{
+                            $prd_terms = new ProductTerm;
+                            $prd_terms->product_id = $product_id;
+                            $prd_terms->attribute_id = $attri_id;
+                            $prd_terms->term_id = $term;
+                            $prd_terms->save();
+                        }
+                        
+                    }
+                }
+            }
         }
-    
         $prodcut_categories = $request->input('category_id');
         foreach ($prodcut_categories as  $prodcut_category) {
            $add_prdcat = new ProductCategory;
@@ -234,7 +230,7 @@ class ProductsController extends Controller
                 'sale_price' => $request->input('sale_price'),
                 'weight' => $request->input('weight'),
                 'quantity' => $request->input('quantity'),
-    
+                'type'=>$request->input('type'),
                 'short_description' =>$request->input('short_description'),
                 'description' =>$request->input('description'),
                 'length' =>$request->input('length'),

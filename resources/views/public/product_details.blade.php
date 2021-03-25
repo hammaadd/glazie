@@ -87,9 +87,13 @@
                 <input type="hidden" name="photo" value="{{$image}}">
                 
               </div>
+              
+                  
+              
               @php
               $j=0;
           @endphp
+          @if ($product->type=="variable")
               @if (count($attrbute_array)>0)
                
                 @for($i=0;$i<count($attrbute_array);$i++)
@@ -108,13 +112,14 @@
                     </div>
                 </div>   
             @endfor
-                  
+            @endif 
               @endif   
-                <div class="row">
+                <div class="row mt-3">
                     <div class="col-md-2">
                             <input type="number" name="quantity" class="text-center form-control-lg rounded-0" id="quantity" min="1" max="{{$product->quantity}}" value="1" onkeypress="return isNumberKey(event)" >
                     </div>
                 </div>
+                @if ($product->type=="variable")
                @if (count($attrbute_array)>0)
                <div class="row">
                 <div class="col-md-6">
@@ -123,11 +128,12 @@
                 </div>
             </div>
                @endif
-                <div class="row">
+                <div class="row mt-3">
                     <div class="col-md-12">
                         <span class="text-danger font-weight-bold" id="message"></span>
                     </div>
                 </div>
+                @endif
                 <div class="row">
                     <div class="col-md-6">
                     <button class="btn btn-info text-light mt-3 rounded-0 btn-block" id="submitcartbutton"> <i class="fas fa-shopping-cart"></i> Add to cart</button>
@@ -325,11 +331,13 @@
         });
     });
     $("#quantity").on('input',function(){
-        var quantity = parseInt($("#quantity").val());
-        if (quantity>{{$product->quantity}}) {
-            
-        }
+       var quantity = $('#quantity').val();
+       if(quantity==null || quantity=='')
+       {
+        $('#quantity').val(1);
+       }
     })
+
     function addtocart(id)
 {
     url = "{{url('prdaddtocart')}}";
@@ -355,7 +363,7 @@
         
         }	
         });
-
+    
 }
 let idarray = Array();
 let term_id_array = Array();
@@ -404,7 +412,7 @@ function checkvariation(i)
             if(result=="notexist"){
                 $('#variationprice').val("");
                 $('#submitcartbutton').prop('disabled',true);
-                $('#message').html("<i class='fa fa-times-circle'></i><b> The Compbination You selected does not available</b>");
+                $('#message').html("<i class='fa fa-times-circle'></i><b> The Combination You selected is not available</b>");
             }
             else{
                 var sale_price = {{$product->sale_price}};
