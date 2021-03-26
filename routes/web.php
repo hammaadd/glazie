@@ -49,6 +49,12 @@ Route::post('get_internal_color','DoorBuilderController@get_internalcolors');
 Route::post('get_glasses','DoorBuilderController@get_glasses');
 Route::post('get_frames','DoorBuilderController@get_frames');
 Route::post('get_hinge','DoorBuilderController@get_hinge');
+Route::post('frameexternalcolors','DoorBuilderController@frame_external_color');
+Route::post('frameinternalcolors','DoorBuilderController@frame_internal_colors');
+Route::post('frameglass','DoorBuilderController@frameglass');
+Route::post('get_handles','DoorBuilderController@get_handles');
+Route::post('get_knocker','DoorBuilderController@get_knocker');
+Route::post('get_letterbox','DoorBuilderController@get_letterbox');
 
 Route::prefix('admin')->group(function () {
     
@@ -408,6 +414,11 @@ Route::get('{id}','IndexController@cmspage');
 // Blog Public Post 
 Route::get('blog/posts','IndexController@blogpost');
 Route::get('blog/details/{id}','IndexController@blogdetails');
+// Checking variation when user will change the prouct variaion 
+Route::post('checkvariation','IndexController@chceckvariation');
+Route::get('composite/door','IndexController@composite');
+Route::get('alumenium/door','IndexController@alumenium');
+
 // Customr Routes are here
 Route::prefix('customer')->group(function () {
     Route::get('profile/edit','CustomerController@editprofile');

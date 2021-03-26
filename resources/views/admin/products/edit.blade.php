@@ -108,6 +108,22 @@
                            </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-6">
+                                <label for="">Product Type</label>
+                                <select name="type" class="form-control" >
+                                    <option value="simple" @if ($products->type=='simple')
+                                        selected
+                                    @endif>Simple Product</option>
+                                    <option value="customize" @if ($products->type=='customize')
+                                        selected
+                                    @endif>Customizable Product</option>
+                                    <option value="variable" @if ($products->type=='variable')
+                                        selected
+                                    @endif>Variable Product</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12">
                                 <label for="">Short Descrition </label>
                                 <textarea name="short_description" class="form-control"  rows="5">{{$products->short_description}}</textarea>

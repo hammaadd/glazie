@@ -144,7 +144,13 @@
            success:function(result){
             //console.log(result);
             $('#dropdownlink').html(result);
-       
+       		var no_of_link = parseInt($('#no_of_link').val());
+       		if (no_of_link>0) {
+       			$('#sitecontent').show();
+       		}
+       		else{
+       			$('#sitecontent').hide();
+       		}
             }	
             });
             url = "{{url('getmail')}}";

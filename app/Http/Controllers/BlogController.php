@@ -94,6 +94,7 @@ class BlogController extends Controller
     public function delete($id)
     {
         Blog::where('id',$id)->delete();
+        return redirect('admin/blogs')->with('info','Blog Post deleted successfully');
     } 
     public function removeimage(Request $request)
     {

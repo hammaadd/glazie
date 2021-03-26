@@ -1,5 +1,5 @@
 @extends('admin-layout.layouts')
-@section('title','Coupen List')
+@section('title','Edit Coupon')
 @section('content')
 <link href="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet">
 
@@ -8,11 +8,11 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h2 class="header-title ">Coupun</h2>
+            <h2 class="header-title ">Coupon</h2>
             <div class="header-sub-title">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
-                    <a class="breadcrumb-item" href="#">Coupun</a>
+                    <a class="breadcrumb-item" href="#">Coupon</a>
                     
                 </nav>
             </div>
@@ -36,12 +36,12 @@
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="">Coupen Name </label>
-                                    <input type="text" class="form-control" name="coupen_name" placeholder="Enter Coupen Name" id="coupen_name" value="{{$coupen->coupen_name}}">
+                                    <label for="">Coupon Name </label>
+                                    <input type="text" class="form-control" name="coupen_name" placeholder="Enter Coupon Name" id="coupen_name" value="{{$coupen->coupen_name}}">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="">Coupen Code </label>
-                                    <input type="text" class="form-control" name="coupen_code" placeholder="Enter Coupen Name" id="coupencode" value="{{$coupen->coupen_code}}">
+                                    <label for="">Coupon Code </label>
+                                    <input type="text" class="form-control" name="coupen_code" placeholder="Enter Coupon Name" id="coupencode" value="{{$coupen->coupen_code}}">
                                 </div>
                             </div>
                             <div class="row">
@@ -87,8 +87,9 @@
                                     @if ($coupen->limiteduser=="no")
                                             disabled
                                         @else
-                                        value="{{$coupen->no_of_user}}"
+                                        	 value="{{$coupen->no_of_user}}"
                                         @endif
+                                       
                                     >
                                 </div> 
                             </div>
@@ -113,8 +114,8 @@
                                     <input type="date" class="form-control" name="timelimit" placeholder="No Of User" id="limit" min="{{date('Y-m-d')}}" 
                                     
                                     @if ($coupen->limited_time=="no")
-                                        disabled
-                                        @else                                  value="{{$coupen->last_date}}"
+                                        	disabled
+                                        @else                                  				value="{{$coupen->last_date}}"
                                         @endif
 
                                 >

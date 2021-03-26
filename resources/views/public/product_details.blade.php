@@ -1,9 +1,10 @@
 @extends('public/layouts/layouts')
 @section('title',$product->product_name)
 @section('content')
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
 <script src="{{asset('admin-assets/js/rating.js')}}"></script>
 <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
 
@@ -72,7 +73,7 @@ crossorigin="anonymous"></script>
                     <span class="text-success">{{$net_feedback/$g}} Rating</span>
                     <div class="jstars" data-value="{{$net_feedback/$g}}"></div>
                     @else 
-                    <span class="text-danger">No Views Yet</span>
+                    <div class="jstars" data-value="0.1"></div>
                     @endif
                 </div>
             </div>
@@ -84,12 +85,62 @@ crossorigin="anonymous"></script>
                 <input type="hidden" name="price" value="{{$product->sale_price}}"> 
                 <input type="hidden" name="regular_price" value="{{$product->regular_price}}">       
                 <input type="hidden" name="photo" value="{{$image}}">
-                <button type="button" class="btn btn-danger" id="minus" disabled>-</button><input type="text" name="quantity" class="text-center" id="quantity" size="1" value="1" onkeypress="return isNumberKey(event)" readonly>
-                <button type="button" class="btn btn-success" id="plus" >+</button>
+                
               </div>
               
-              <br>
-              <button class="btn btn-info text-light mt-3 rounded-0" id="button"> <i class="fas fa-shopping-cart"></i> Add to cart</button>
+                  
+              
+              @php
+              $j=0;
+          @endphp
+          @if ($product->type=="variable")
+              @if (count($attrbute_array)>0)
+               
+                @for($i=0;$i<count($attrbute_array);$i++)
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label for="">{{$attrbute_array[$i]}}</label>
+                        @php
+                            $j=$i+1;
+                        @endphp
+                        <select name="terms[]" required id="variation{{$j}}" class="form-control" onchange="checkvariation({{$j}})">
+                            <option value="">Select {{$attrbute_array[$i]}}</option>
+                            @foreach ($dataarray[$i] as $terms)
+                                <option value="{{$terms->id}}">{{$terms->term->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>   
+               
+            @endfor
+            @endif 
+              @endif   
+                <div class="row mt-3">
+                    <div class="col-md-2">
+                            <input type="number" name="quantity" class="text-center form-control-lg rounded-0" id="quantity" min="1" max="{{$product->quantity}}" value="1" onkeypress="return isNumberKey(event)" >
+                    </div>
+                </div>
+                @if ($product->type=="variable")
+               @if (count($attrbute_array)>0)
+               <div class="row">
+                <div class="col-md-6">
+                    <label for="">Price</label>
+                    <input type="hidden" id="variant_id" name="variant_id">
+                    <input type="text" class="form-control rounded-0" id="variationprice" readonly>
+                </div>
+            </div>
+               @endif
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <span class="text-danger font-weight-bold" id="message"></span>
+                    </div>
+                </div>
+                @endif
+                <div class="row">
+                    <div class="col-md-6">
+                    <button class="btn btn-info text-light mt-3 rounded-0 btn-block" id="submitcartbutton"> <i class="fas fa-shopping-cart"></i> Add to cart</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -172,32 +223,32 @@ crossorigin="anonymous"></script>
                             }
                                 ?>
             
-            <div class="item">
-                <div class="product">
-                    <span class="pr_flash">Sale</span>
-                    <div class="product_img">
-                        <a href="shop-product-detail.html">
-                            <img src="{{asset('productimages/'.$image)}}" alt="Aluminium Front Door 1361 – Stainless Steel Applications in 9005 Matt with Stainless Steel hardware">
-                        </a>
-                        <div class="product_action_box">
-                            <ul class="list_none pr_action_btn">
-                                <li class="add-to-cart"><a href="#"><i class="bx bx-cart"></i> Add To Cart</a></li>
-                                <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li>
-                                <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>
-                                <li><a href="#"><i class="bx bx-heart"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="product_info">
-                        <h6 class="product_title text-center"><a href="{{url('productdetails/'.$related_product->id)}}">{{$related_product->product_name}}</a></h6>
-                        <div class="product_price text-center">
-                            <span class="price"><span class="currencySymbol">£</span>{{$related_product->sale_price}}</span>
-                            <del><span class="currencySymbol">£</span>{{$related_product->regular_price}}</del>
-                        </div>
-                    </div>
-                </div>
-        </div>
-            
+                                    <div class="item">
+                                        <div class="product">
+                                            <span class="pr_flash">Sale</span>
+                                            <div class="product_img">
+                                                <a href="shop-product-detail.html">
+                                                    <img src="{{asset('productimages/'.$image)}}" alt="Aluminium Front Door 1361 – Stainless Steel Applications in 9005 Matt with Stainless Steel hardware">
+                                                </a>
+                                                <div class="product_action_box">
+                                                    <ul class="list_none pr_action_btn">
+                                                        <li class="add-to-cart"><a style="cursor: pointer;" onclick="addtocart({{$related_product->id}})" title="Add to cart the prodcut"><i class="bx bx-cart"></i> Add To Cart</a></li>
+                                                        {{-- <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li>
+                                                        <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>
+                                                        <li><a href="#"><i class="bx bx-heart"></i></a></li> --}}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="product_info">
+                                                <h6 class="product_title text-center"><a href="{{url('productdetails/'.$related_product->id)}}">{{$related_product->product_name}}</a></h6>
+                                                <div class="product_price text-center">
+                                                    <span class="price"><span class="currencySymbol">£</span>{{$related_product->sale_price}}</span>
+                                                    <del><span class="currencySymbol">£</span>{{$related_product->regular_price}}</del>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                    
             
             
                                 
@@ -223,8 +274,27 @@ crossorigin="anonymous"></script>
 </script>
 @endsection
 @section('script')
-   
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 <script>
+    toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
+
      
     function isNumberKey(evt)
        {
@@ -263,11 +333,101 @@ crossorigin="anonymous"></script>
         });
     });
     $("#quantity").on('input',function(){
-        var quantity = parseInt($("#quantity").val());
-        if (quantity>{{$product->quantity}}) {
-            
-        }
+       var quantity = $('#quantity').val();
+       if(quantity==null || quantity=='')
+       {
+        $('#quantity').val(1);
+       }
     })
 
+    function addtocart(id)
+{
+    url = "{{url('prdaddtocart')}}";
+        $.ajax({
+       type:'POST',
+       url:url,
+       data:{
+           id:id
+       },
+       success:function(result){ 
+
+        toastr.success("Prodcut Add to cart Successfully");
+       
+       if(result>0)
+       {
+        $('#cart_items').html(result);
+        $('#cart_items').show();
+        
+       }
+       else{
+        $('#cart_items').hide();
+       }
+        
+        }	
+        });
+    
+}
+let idarray = Array();
+let term_id_array = Array();
+function checkvariation(i)
+    {
+        let k=-1; 
+        var variation = $('#variation'+i).val();
+        var product_id = {{$id}};
+        var attribute_length = {{$j}};
+        for (let j = 0; j < idarray.length; j++) {
+            if(i==idarray[j])
+            {
+                k=j;
+            }
+
+            
+        }
+        if(k==-1){
+           idarray.push(i);
+           term_id_array.push(variation); 
+        }
+        else{
+            term_id_array[k] = variation;
+            idarray[k]= i;
+        }
+
+        //console.log(term_id_array);
+        if(term_id_array.length==attribute_length){
+        $.ajaxSetup({
+				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
+            });
+            url = "{{url('checkvariation')}}";
+            //console.log(url);
+            $.ajax({
+           type:'POST',
+           url:url,
+            data:{
+                 
+                product_id:product_id,
+                attribute_length:attribute_length,
+                term_id_array:term_id_array
+
+           },
+           success:function(result){
+               console.log(result);
+            if(result=="notexist"){
+                $('#variationprice').val("");
+                $('#submitcartbutton').prop('disabled',true);
+                $('#message').html("<i class='fa fa-times-circle'></i><b> The Combination You selected is not available</b>");
+            }
+            else{
+                var result = JSON.parse(result);
+                $('#variant_id').val(result[0]);
+                var sale_price = {{$product->sale_price}};
+                var net_sale_price = sale_price + parseInt(result[1]);
+                $('#variationprice').val(net_sale_price);
+                $('#submitcartbutton').prop('disabled',false);
+                $('#message').html("");
+            }
+           }
+            });
+        }
+    }
 </script>
 @endsection

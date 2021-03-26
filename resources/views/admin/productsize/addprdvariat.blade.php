@@ -1,6 +1,9 @@
 @extends('admin-layout.layouts')
 @section('title','Add Product Variation ')
 @section('content')
+<?php
+$j = 0;
+?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
 <div class="page-container">
@@ -66,7 +69,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-success mt-3" id="submitbutton"><i class="fa fa-plus"></i> Add Product Variation</button>
+                                <button type="submit" class="btn btn-success mt-3 bg-success text-light" id="submitbutton" disabled ><i class="fa fa-plus"></i> Add Product Variation</button>
                             <a href="{{url('admin/products/view/'.$id."#product-variation") }}" class="btn btn-danger mt-3 ml-3"> <i class="fa fa-times"></i> Cancel</a>
                        
                             </div>
@@ -89,7 +92,7 @@
     
     function checkvariation(i)
     {
-        let k=-1;   
+        let k=-1; 
         var variation = $('#variation'+i).val();
         var product_id = {{$id}};
         var attribute_length = {{$j}};

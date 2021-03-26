@@ -116,9 +116,10 @@
                             </div>
                             <div class="col-md-6">
                                 <label for=""> Product Type</label>
-                                <select name="type" id="" class="form-control">
+                                <select name="type" id="product_type" class="form-control">
                                     <option value="simple">Simple Product</option>
                                     <option value="customize">Customizable Product</option>
+                                    <option value="variable">Variable Product</option>
                                 </select>
                             </div>
                         </div>
@@ -154,25 +155,27 @@
                                 </select>
                             </div>
                         </div> --}}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <input type="hidden" id="no_of_attribute" name="no_of_attribute">
-                                <input type="hidden" id="no_of_attributes" name="no_of_attribute">
-                                <button class="btn mt-1 btn-xs btn-success float-right mt-2" type="button" id="add"> <i class="fa fa-plus-circle"></i> Add Attribtue</button>
+                        <div id="variableproductdiv" style="display:none;">
+                            <div class="row" >
+                                <div class="col-md-12">
+                                    <input type="hidden" id="no_of_attribute" name="no_of_attribute">
+                                    <input type="hidden" id="no_of_attributes" name="no_of_attribute">
+                                    <button class="btn mt-1 btn-xs btn-success float-right mt-2" type="button" id="add"> <i class="fa fa-plus-circle"></i> Add Attribtue</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table" id="tableattr" style="display: none">
-                                    <thead>
-                                        <th>Attribute</th>
-                                        <th>Attribute Options</th>
-                                        <th>Action</th>
-                                    </thead>
-                                    <tbody >
-                                    
-                                    </tbody>
-                                </table>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table" id="tableattr" style="display: none">
+                                        <thead>
+                                            <th>Attribute</th>
+                                            <th>Attribute Options</th>
+                                            <th>Action</th>
+                                        </thead>
+                                        <tbody >
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -277,6 +280,18 @@
 $(document).ready(function() {
     $('#category,#terms1').select2();
 });
+$(document).ready(function(){
+    $('#product_type').change(function(){
+        var product_type = $('#product_type').val();
+        if(product_type=='variable')
+        {
+            $('#variableproductdiv').show();
+        }
+        else{
+            $('#variableproductdiv').hide(); 
+        }
+    })
+})
 
  
     

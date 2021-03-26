@@ -64,6 +64,7 @@
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#product-images">Product Images</a>
                 </li>
+                @if($products->type=='variable')
                 <li class="nav-item">
                     @if(session('info')=="Product Terms updated Successfully" ||session('info')=="Attribute delete Successfully" ||session('info')=="Attribute created Successfully")
                     <a class="nav-link active" data-toggle="tab" href="#product-attribute" >Product Attribute</a>
@@ -75,8 +76,9 @@
                 {{-- <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#product-size">Product Size</a>
                 </li> --}}
-                @if($count_atts){
-                <li class="nav-item">
+                <?php if($count_atts){
+                    ?>
+                    <li class="nav-item">
                     @if(session('info')=="Variantion Created Successfully" || session('info')=="Variation Deleted Successfully")
                         <a class="nav-link active" data-toggle="tab" href="#product-variation" id="prdvariationactive">Product Variation</a>
                     @else
@@ -84,7 +86,11 @@
                     @endif
                    
                 </li>
-                @endif
+              
+                    <?php
+                }
+                ?>
+                  @endif
         @php
             $i=0;
             $net_feedback = 0
