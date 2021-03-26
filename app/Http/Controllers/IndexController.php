@@ -16,6 +16,7 @@ use App\Models\Coupen;
 use App\Models\Term;
 use App\Models\ProductReviews;
 use App\Models\Cart;
+use App\Models\CartDetails;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderDetails;
@@ -96,14 +97,14 @@ class IndexController extends Controller
     }
   
     public function addtocart(Request $request,$id){
-        
+        $variant_id = $request->input('variant_id');
         $product_id = $request->input('product_id');
         $product_name = $request->input('product_name');
         $price = $request->input('price');
         $quantity =  $request->input('quantity');
         $photo =  $request->input('photo');
         $regular_price = $request->input('regular_price');
-        
+        $product_data = Products::find($product_id);
         $cart = [
         
                 "product_id" =>  $product_id,
@@ -113,37 +114,73 @@ class IndexController extends Controller
                 "quantity" => $quantity,
                 "photo" => $photo
         ];
-
         $request->session()->push('cart', $cart);
         $cartdata = Cart::where('session_id','=',session()->getId())->where('product_id','=',$product_id)->get();
-        //echo count($cartdata);
-        
-        if (count($cartdata)>0) {
-       
-            foreach ($cartdata as $key => $cart) {}
-            $update_cart = array(
-                "quantity"=>$quantity +$cart->quantity,
-              
-            );
-            Cart::where('id',$cart->id)->update($update_cart);
+        if(count($cartdata)>0)
+        {
+            foreach($cartdata as $cart){}
+            
+            if($product_data->type=='variable')
+            {
+                if($cart->cartdetails)
+                {
+                   $cartdetails =  $cart->cartdetails;
+                   if($cartdetails->type_id==$variant_id)
+                   {
+                    $update_cart = array(
+                        "quantity"=>$quantity +$cart->quantity,
+                      
+                    );
+                    Cart::where('id',$cart->id)->update($update_cart);
+                   }
+                   else{
+                    $carts = $request->session()->get('cart');
+                    $cart = new Cart;
+                    $cart->session_id = session()->getId();
+                    $cart->product_id = $product_id;
+                    $cart->price = $price;
+                    $cart->regular_price = $regular_price;
+                    $cart->quantity = $quantity;
+                    $cart->save();
+                    $cartdetails = new CartDetails;
+                    $cartdetails->cart_id = $cart->id;
+                    $cartdetails->type_id =$variant_id;
+                    $variant_data = Variation::find($variant_id);
+                    $cartdetails->price = $variant_data->price;
+                    $cartdetails->save(); 
+                   }
+                }
+            }
+            else{
+                $update_cart = array(
+                    "quantity"=>$quantity +$cart->quantity,
+                  
+                );
+                Cart::where('id',$cart->id)->update($update_cart);
+            }
         }
         else{
+            $carts = $request->session()->get('cart');
+            $cart = new Cart;
+            $cart->session_id = session()->getId();
+            $cart->product_id = $product_id;
+            $cart->price = $price;
+            $cart->regular_price = $regular_price;
+            $cart->quantity = $quantity;
+            $cart->save();
+            $cart->id;
            
-        
-        $carts = $request->session()->get('cart');
-        $cart = new Cart;
-        $cart->session_id = session()->getId();
-        $cart->product_id = $product_id;
-        $cart->price = $price;
-        $cart->regular_price = $regular_price;
-        $cart->quantity = $quantity;
-        $cart->save();
-        $cart->id;
-        } 
-
-        return redirect('/')->with('info','The Product is add to cart successfully');
-
-
+            if($product_data->type=='variable'){
+                $cartdetails = new CartDetails;
+                $cartdetails->cart_id = $cart->id;
+                $cartdetails->type_id =$variant_id;
+                $variant_data = Variation::find($variant_id);
+                $cartdetails->price = $variant_data->price;
+                $cartdetails->save();
+                }
+            }
+       
+            return redirect('/availproducts')->with('info','The Product is add to cart successfully');
     }
     public function prdaddtocart(Request $request)
     {
@@ -250,6 +287,13 @@ class IndexController extends Controller
             $regular_price  += $cart->regular_price*$cart->quantity;
             $quantity += $cart->quantity;
             
+        }
+        foreach($carts as $key => $cart)
+        {
+            if($cart->product->type=='variable')
+            {
+                $price += $cart->cartdetails->price*$cart->quantity;
+            }
         }
         $obj = (object) array($price,$quantity,$regular_price);
 		echo json_encode($obj);
@@ -823,14 +867,18 @@ class IndexController extends Controller
               $result=array_diff($term_id_array,$newarray); 
               if(!$result){
                 $id=1;
-                $price =  $variation;
+                $price =  $variation->price;
+                $variant_id =  $variation->id;
+                $data = array();
+                array_push($data,$variant_id);
+                array_push($data,$price);
               }    
               
                 
            }
            if($id==1)
            {
-              echo $price;
+              echo json_encode($data);
            }
            else{
                echo "notexist";

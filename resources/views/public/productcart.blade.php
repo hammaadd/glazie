@@ -23,7 +23,9 @@
                             <tr>
                                 <th>Image</th>
                                 <th>Product Name</th>
-                                <th>Unit Price</th>
+                                {{-- <th>Unit Price</th> --}}
+                                <th title="Variation /Custom products">Variation/Custom</th>
+                                {{-- <th title="Variation / Custom Price">Price</th> --}}
                                 <th>Qty</th>
                                 <th>Subtotal</th>
                                 <th>Action</th>
@@ -49,7 +51,7 @@
                             $image = $prdimg->image;
                         }
                         $quantity+= $cart->quantity;
-                        $price += $cart->price*$cart->quantity;
+                       
                         $net_regular_price += $cart->regular_price*$cart->quantity;
                     @endphp
                             <tr>
@@ -59,19 +61,48 @@
                                     <a href="#"><img src="{{asset('productimages/'.$image)}}" alt=""></a>
                                 </td>
                                 <td class="product-name text-center"><a href="#">{{$products->product_name}}</a></td>
-                                <td class="product-price-cart"><span class="amount">&#163;{{$cart->price}}</span></td>
+                                {{-- <td class="product-price-cart"><span class="amount">&#163;{{$cart->price}}</span></td> --}}
+                                <td>
+                                   @if($cart->product->type=='variable')
+                                        @php
+                                            $cart_details = $cart->cartdetails;
+                                            $variation_data = $cart_details->variation;
+                                            $variation_price = $variation_data->price;
+                                            $variation_details = $variation_data->variationdetails
+                                        @endphp
+                                        <input type="hidden" id="variation_price{{$cart->id}}" value="{{$variation_price}}">
+                                       
+                                        @foreach ($variation_details as $details)
+                                        @php
+                                        $a = array('primary','secondary','success','danger','warning text-dark','info text-dark','light text-dark','dark');
+                                        $randindex = array_rand($a);
+
+                                    @endphp
+                                            <span class="badge  bg-{{$a[$randindex]}}">{{$details->prd_term->term->name}}</span>
+                                        @endforeach
+                                       
+                                   @endif
+                                </td> 
+                                
                                 <td class="product-quantity">
+                                    
                                     <div class="cart-plus-minus">
                                         <div class="dec qtybutton" onclick="removeqty({{$cart->id}})">-</div>
                                         <input class="cart-plus-minus-box" type="text" name="qtybutton" value="{{$cart->quantity}}"  oninput="update_qty({{$cart->id}})" id="no_of_qty{{$cart->id}}" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)">
                                         <div class="inc qtybutton" onclick="addqty({{$cart->id}})">+</div>
                                     </div>
                                 </td>
-                                <td class="product-subtotal" id="item_total_price{{$cart->id}}" >&#163; {{$cart->price*$cart->quantity}}</td>
+                                <td class="product-subtotal" id="item_total_price{{$cart->id}}" >&#163; {{$cart->price*$cart->quantity + $variation_price*$cart->quantity}}</td>
                                 <td class="product-remove">
+                                    @php
+                                         $price = $price + $cart->price*$cart->quantity + $variation_price*$cart->quantity
+                                    @endphp
                                     {{-- <a href="#"><i class="fa fa-pencil"></i></a> --}}
                                     <a style="cursor: pointer;" onclick="remove({{$cart->id}})"><i class="fa fa-times"></i></a>
                                </td>
+                               @php
+                               $variation_price=0;
+                           @endphp
                             </tr>
                            @endforeach
                            
@@ -109,7 +140,7 @@
                             
                         </div>
                     </div>
-                    <input type="hidden" id="net_total" value="{{$price}}">
+                    <input type="text" id="net_total" value="{{$price}}">
                 </div>
                 {{-- <div class="col-lg-4 col-md-6">
                     <div class="cart-tax">
@@ -164,7 +195,7 @@
                         <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 float-end w-100" href="{{url('checkout')}}">Proceed to Checkout</a>
                     </div>
                 </div>
-                <input type="hidden" id="paidamount" value="{{$price}}">
+                <input type="text" id="paidamount" value="{{$price}}">
             </div>
         </div>
     </div>
@@ -233,7 +264,7 @@
          }
          function update_qty(cart_id){
              var no_of_qty = $('#no_of_qty'+cart_id).val();
-             console.log(cart_id);
+             //console.log(cart_id);
              $.ajaxSetup({
                      headers:{'X-CSRF-Token':'{{csrf_token()}}'}
                  });
@@ -247,10 +278,17 @@
                 },
                 url:url,
                 success:function(result){
+                    console.log(result);
                  var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-                         var item_result = parseInt($('#itemquantity'+cart_id).val())*parseInt(no_of_qty);
-                         $('#item_total_price'+cart_id).html("&#163;"+item_result);
-                         
+                        var variation_data = 0;
+                        variation_data = $('#variation_price'+cart_id).val();
+                        if(variation_data == null || variation_data=="")
+                        {
+                            variation_data=0; 
+                        }
+                        console.log(variation_data);
+                         var item_result = parseInt($('#itemquantity'+cart_id).val())*parseInt(no_of_qty)+ parseInt(variation_data)*parseInt(no_of_qty);
+                         $('#item_total_price'+cart_id).html("&#163;"+item_result); 
                          $('#total_qty').html(jsonResult[1]);
                          $('#total_price').html("&#163;"+jsonResult[0]);
                          $('#grand_total').html("&#163;"+jsonResult[0]);
@@ -323,7 +361,8 @@
                     $('#disrow').show();
                     $('#grand_total').html("&#163;"+paidamount);
                     $('#paidamount').val(paidamount);
-                    
+                    console.log(paidamount);
+                    $('#net_total').val(paidamount);
                     
 
                 }
@@ -341,7 +380,7 @@
                     $('#discountt').val(discount);
                     $('#paidrow').show();
                     $('#grand_total').html("&#163;"+paidamount);
-
+                    $('#net_total').val(paidamount);
                 }
             }
             //$('#dropdownlink').html(result);

@@ -111,6 +111,7 @@
                         </select>
                     </div>
                 </div>   
+               
             @endfor
             @endif 
               @endif   
@@ -124,6 +125,7 @@
                <div class="row">
                 <div class="col-md-6">
                     <label for="">Price</label>
+                    <input type="hidden" id="variant_id" name="variant_id">
                     <input type="text" class="form-control rounded-0" id="variationprice" readonly>
                 </div>
             </div>
@@ -390,7 +392,7 @@ function checkvariation(i)
             idarray[k]= i;
         }
 
-        console.log(term_id_array);
+        //console.log(term_id_array);
         if(term_id_array.length==attribute_length){
         $.ajaxSetup({
 				headers:{'X-CSRF-Token':'{{csrf_token()}}'}
@@ -408,15 +410,17 @@ function checkvariation(i)
 
            },
            success:function(result){
-               //console.log(result);
+               console.log(result);
             if(result=="notexist"){
                 $('#variationprice').val("");
                 $('#submitcartbutton').prop('disabled',true);
                 $('#message').html("<i class='fa fa-times-circle'></i><b> The Combination You selected is not available</b>");
             }
             else{
+                var result = JSON.parse(result);
+                $('#variant_id').val(result[0]);
                 var sale_price = {{$product->sale_price}};
-                var net_sale_price = sale_price + parseInt(result);
+                var net_sale_price = sale_price + parseInt(result[1]);
                 $('#variationprice').val(net_sale_price);
                 $('#submitcartbutton').prop('disabled',false);
                 $('#message').html("");
