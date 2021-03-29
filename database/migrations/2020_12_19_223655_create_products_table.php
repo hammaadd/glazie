@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->foreign('verity_id')->references('id')->on('prd_varieties');
             $table->string('product_name');
             $table->double('regular_price',9,2);
-            $table->double('sale_price',9,2);
+            $table->double('sale_price',9,2)->nullable();
             $table->enum('publish',['private','public']);
             $table->text('short_description')->nullable();
             $table->longText('description')->nullable();

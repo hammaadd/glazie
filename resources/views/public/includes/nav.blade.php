@@ -38,7 +38,10 @@
       </div>
     </div>
   </div>
-
+  @php
+      $url = str_replace("/glazieltd/","", $_SERVER["REQUEST_URI"]);
+  @endphp
+  
   <!-- header middle -->
   <div class="header-middle">
     <div class="container">
@@ -82,9 +85,19 @@
             <div class="col-lg-3 col-sm-12">
               <ul class="navbar-nav attr-nav align-items-center justify-content-sm-end">
                 <li>
-                  <a href="#" title="Wishlist" class="nav-link wishlist-link">
+                  <a class="nav-link cart_trigger" href="{{url('product/wishlist')}}" data-toggle="dropdown">
                     <i class='bx bx-heart'></i>
+                    @php
+                    $count = 0;
+                    if(Session::get('wish')){
+                        $count = count(Session::get('wish'));
+                    }
+                    @endphp
+                    
+                    <span class="cart_count" id="wishitem" @if($count==0)  style="display:none;" @endif>{{$count}}</span>
+                    
                   </a>
+                  
                 </li>
                 <li class="dropdown login_dropdown">
                   <a href="{{url('login')}}" class="nav-link open-login">
@@ -110,7 +123,7 @@
                     </form>
                   </div> --}}
                 </li>
-                <li>
+                {{-- <li>
                   <a href="javascript:void(0);" class="nav-link search_trigger">
                     <i class='bx bx-search'></i>
                   </a>
@@ -120,40 +133,20 @@
                     </span>
                     <form>
                       <input type="text" placeholder="Search" class="form-control" id="search_input">
-                      <button type="submit" class="search_icon">
+                      {{-- <button type="submit" class="search_icon">
                         <i class='bx bx-search'></i>
-                      </button>
+                      </button> --}}
                     </form>
-                  </div>
+                  {{-- </div>
                   <div class="search_overlay"></div>
                   <div class="search_overlay"></div>
-                </li>
+                </li>  --}}
                 <li class="dropdown cart_dropdown">
                   <a class="nav-link cart_trigger" href="{{url('productcart')}}" data-toggle="dropdown">
                     <i class='bx bx-cart-alt'></i>
                     <span class="cart_count" id="cart_items"></span>
                   </a>
-                  {{-- <div class="cart_box dropdown-menu dropdown-menu-right">
-                    <ul class="cart_list">
-                      <li>
-                        <a href="#" class="item_remove"><i class="bx bx-x"></i></a>
-                        <a href="#"><img src="assets/media/products/39DF4F02.png" alt="cart_thumb1">Variable product 001</a>
-                        <span class="cart_quantity"> 1 x <span class="cart_amount"> <span class="price_symbole">$</span></span>78.00</span>
-                      </li>
-                      <li>
-                        <a href="#" class="item_remove"><i class="bx bx-x"></i></a>
-                        <a href="#"><img src="assets/media/products/C4F1D0F6.png" alt="cart_thumb2">Ornare sed consequat</a>
-                        <span class="cart_quantity"> 1 x <span class="cart_amount"> <span class="price_symbole">$</span></span>81.00</span>
-                      </li>
-                    </ul>
-                    <div class="cart_footer">
-                      <p class="cart_total"><strong>Subtotal:</strong> <span class="cart_price"> <span class="price_symbole">$</span></span>159.00</p>
-                      <p class="cart_buttons">
-                        <a href="#" class="btn btn-fill-line rounded-0 view-cart">View Cart</a>
-                        <a href="#" class="btn btn-fill-out rounded-0 checkout ms-2">Checkout</a>
-                      </p>
-                    </div>
-                  </div> --}}
+                  
                 </li>
                 <li class="d-xl-none">
                   <button class="nav-link menu-trigger navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -174,16 +167,16 @@
       <div class="container">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto">
-            <li class="nav-item active">
+            <li class="nav-item @if($url=='') active @endif">
               <a class="nav-link" href="{{url('/')}}">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{url('availproducts')}}">Products</a>
+            <li class="nav-item @if($url=='products') active @endif">
+              <a class="nav-link" href="{{url('products')}}">Products</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{url('composite/door')}}">Composite Doors</a>
+            <li class="nav-item @if($url=='composite/door') active @endif">
+              <a class="nav-link " href="{{url('composite/door')}}">Composite Doors</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item  @if($url=='alumenium/door') active @endif">
               <a class="nav-link" href="{{url('alumenium/door')}}">Aluminium Bifold Doors</a>
               {{-- <div class="dropdown-menu" >
                 <ul>
@@ -193,7 +186,7 @@
                 </ul> --}}
               {{-- </div> --}}
             </li>
-            <li class="nav-item">
+            <li class="nav-item @if($url=='installerlist') active @endif ">
               <a class="nav-link" href="{{url('installerlist')}}">Fitting Service</a>
             </li>
             <li class="nav-item">
@@ -202,13 +195,13 @@
             {{-- <li class="nav-item">
               <a class="nav-link" href="#">About Us</a>
             </li> --}}
-            <li class="nav-item">
+            <li class="nav-item @if($url=='contact-us') active @endif">
               <a class="nav-link" href="{{url('contact-us')}}">Contact us</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item @if($url=='blog/posts') active @endif">
               <a class="nav-link" href="{{url('blog/posts')}}">Blog Post</a>
             </li>
-            <li class="nav-item dropdown" id="sitecontent">
+            <li class="nav-item dropdown " id="sitecontent" >
               <a class="nav-link" href="#">Site Content</a>
               <div class="dropdown-menu" >
                 <ul id="dropdownlink">

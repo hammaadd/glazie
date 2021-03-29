@@ -1,15 +1,7 @@
 @extends('public/layouts/layouts')
 @section('title','Check Out')
 @section('content')
-<link rel="stylesheet" href="{{asset('assets2/vendors/animate/animate.min.css')}}">
-	<link rel="stylesheet" href="{{asset('assets2/vendors/bootstrap/css/bootstrap.min.css')}}">
-	<link rel="stylesheet" href="{{asset('assets2/vendors/owlcarousel/css/owlcarousel.min.css')}}">
-	<!-- <link rel="stylesheet" href="{{asset('assets2/vendors/fontawesome/css/all.min.css')}}-->
-	<link rel="stylesheet" href="{{asset('assets2/vendors/boxicons/css/boxicons.min.css')}}">
-	<link rel="preconnect" href="{{asset('https://fonts.gstatic.com')}}">
-	<link rel="stylesheet" href="{{asset('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap')}}">
-	<link rel="stylesheet" href="{{asset('assets2/css/style.css')}}">
-	<script src="https://kit.fontawesome.com/94dd3c1954.js" crossorigin="anonymous"></script>
+
     <div class="main_content">
         <div class="checkout-area py-5">
             <div class="container">

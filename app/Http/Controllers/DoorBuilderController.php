@@ -9,6 +9,8 @@ use App\Models\AddonHinge;
 use App\Models\FrameDetails;
 use App\Models\FrameGlass;
 use App\Models\AddonFurniture;
+use App\Models\Cart;
+use App\Models\CartDetails;
 
 class DoorBuilderController extends Controller
 {
@@ -99,5 +101,39 @@ class DoorBuilderController extends Controller
         //echo $letterboxs;
         
         return view('public/customizer/letterbox',['letterboxs'=>$letterboxs]);
+    }
+    public function customizeaddtocart(Request $request)
+    {
+        $amountarray = $request->input('amountarray');
+        $idarray = $request->input('idarray');
+        $typearray = $request->input('typearray');
+        $addon = AddOn::find($idarray[0]);
+
+        $product_id = $addon->product_id;
+        $price = $addon->product->sale_price;
+    // print_r($addon->product);
+        $quantity =  1;
+        $cart  = new Cart;
+        $cart->session_id = session()->getId();
+        $cart->product_id = $product_id;
+        $cart->price = $addon->product->sale_price;
+        $cart->regular_price =$addon->product->regular_price;
+        $cart->quantity = $quantity;
+        $cart->save();
+        echo $cart->id;
+        for($i=0;$i<count($idarray);$i++)
+        {
+            if($idarray[$i]!=0)
+            {         
+            $cartdetails = new CartDetails;
+            $cartdetails->cart_id= $cart->id;
+            $cartdetails->addon_type = $typearray[$i];
+            $cartdetails->type_id = $idarray[$i];
+            $cartdetails->price = $amountarray[$i];
+            $cartdetails->quantity = 1;
+            $cartdetails->save();
+            }
+        }
+        
     }
 }

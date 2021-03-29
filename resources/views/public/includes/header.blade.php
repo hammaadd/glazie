@@ -15,9 +15,14 @@
 	<link rel="stylesheet" href="{{asset('assets/vendors/owlcarousel/css/owlcarousel.min.css')}}">
 	 <link rel="stylesheet" href="{{asset('assets/vendors/fontawesome/css/all.min.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/vendors/boxicons/css/boxicons.min.css')}}">
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
+	{{-- <link rel="preconnect" href="https://fonts.gstatic.com">--}}
+	<link rel="stylesheet" href="{{asset('assets2/css2.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+	
+	
+
+
+	{{-- <script src="{{asset('assets2/font.js')}}" crossorigin="anonymous"></script> --}}
 </head>
 <body>
 

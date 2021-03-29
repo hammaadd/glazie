@@ -6,17 +6,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Customize Your Item</title>
 	<meta name="description" content="Bespoke Double glazing supplier and Installer over 25 years experience.Transform your home with premium quality windows and doors contact us.">
-	<link rel="icon" href="assets2/media/logo.png">
-
+	<link rel="icon" href="{{asset('assets2/media/logo.png')}}">
+	<link rel="stylesheet" href="{{asset('assets2/vendors/animate/animate.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets2/vendors/bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets2/vendors/owlcarousel/css/owlcarousel.min.css')}}">
+	 <link rel="stylesheet" href="{{asset('assets2/vendors/fontawesome/css/all.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets2/vendors/boxicons/css/boxicons.min.css')}}">
+	{{-- <link rel="preconnect" href="https://fonts.gstatic.com">--}}
+	<link rel="stylesheet" href="{{asset('assets2/css2.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 	<!-- Style Libraries -->
-	<link rel="stylesheet" href="assets2/vendors/animate/animate.min.css">
-	<link rel="stylesheet" href="assets2/vendors/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="assets2/vendors/owlcarousel/css/owlcarousel.min.css">
-	<!-- <link rel="stylesheet" href="assets2/vendors/fontawesome/css/all.min.css"> -->
-	<link rel="stylesheet" href="assets2/vendors/boxicons/css/boxicons.min.css">
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
-	<link rel="stylesheet" href="assets2/css/style.css">
+
 	<style type="text/css">
 		
 .colorsubchild,.framecolorsubchild,.sizesubchild,.furnituresubchild{
@@ -92,7 +92,7 @@
 					<div class="row align-items-center">
 						<div class="col-xl-3 col-md-2 col-sm-6">
 							<div class="logo">
-								<a href="index.html">
+								<a href="{{url('/')}}">
 									<img src="assets2/media/glazie-logo.png" alt="Double Glaze Windows and Doors">
 								</a>
 							</div>
@@ -228,7 +228,7 @@
 			  <div class="col-md-3 text-center border-start pt-4">
 				  	<img src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/APA2__c-ffffff.svg" width="138px">
 				  	<h4 class="custom-price pt-4"><span class="theme_color">Price:</span> &#163;<i id="p_price">0</i></h4>
-				  	<a href="cart.html" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-4">Add To Cart</a>
+				  	<button type="button" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-4" onclick="addtocart()">Add To Cart</button>
 			  </div>
 			</div>
 		</div>
@@ -260,13 +260,33 @@
 
 	</div>
 	<!-- JS Libraries -->
-	<script src="assets2/js/jquery.min.js"></script>
-	<script src="assets2/vendors/bootstrap/js/bootstrap.min.js"></script>
-	<script src="assets2/vendors/owlcarousel/js/owlcarousel.min.js"></script>
-	<script src="assets2/vendors/videopopup/js/videopopup.js"></script>
-	<script src="assets2/js/script.js"></script>
+	<script src="{{asset('assets2/js/jquery.min.js')}}"></script>
+	<script src="{{asset('assets2/vendors/bootstrap/js/bootstrap.min.js')}}"></script>
+	<script src="{{asset('assets2/vendors/owlcarousel/js/owlcarousel.min.js')}}"></script>
+	<script src="{{asset('assets2/vendors/videopopup/js/videopopup.js')}}"></script>
+	<script src="{{asset('assets2/js/script.js')}}"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 	<script type="text/javascript">
+	    toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
 	let idarray = Array(0,0,0,0,0,0,0,0,0,0,0,0);
+	let typearray = Array(0,0,0,0,0,0,0,0,0,0,0,0);
+	
 	let amountarray  = Array(0,0,0,0,0,0,0,0,0,0,0,0);
 		function showdoortoggle(){
 			$('.colorsubchild').toggle(150);
@@ -657,13 +677,15 @@
 		{
 			for (let i = 0; i < amountarray.length; i++) {
 				amountarray[i] = 0;
-			
+				idarray[i] = 0;
 			}
 		
 		}
 		if(index==4)
 		{
-	
+			idarray[5] = 0;
+			idarray[6] = 0;
+			idarray[7] = 0;
 			amountarray[5] = 0;
 			amountarray[6] = 0;
 			amountarray[7] = 0;
@@ -678,7 +700,39 @@
 		$('#p_price').html(net_total);
 		//console.log(amountarray);
 	}
+	function addtocart()
+	{
+		typearray[0] = 'model';
+		typearray[1] = 'exteranal_color';
+		typearray[2] = 'interanal_color';
+		typearray[3] = 'glass';
+		typearray[4] = 'frame';
+		typearray[5] = 'frameexcolor';
+		typearray[6] = 'frameinternalcolor';
+		typearray[7] = 'frame_glass';
+		typearray[8] = 'handle';
+		typearray[9] = 'knocker';
+		typearray[10] = 'letterbox';
+		typearray[11] = 'hinge';
+		url = "{{url('customizeaddtocart')}}";
+		
+		$.ajax({
+		type:'POST',
+		url:url,
 
+		data:{
+			"_token": "{{ csrf_token()}}",
+			typearray:typearray,
+			idarray:idarray,
+			amountarray:amountarray
+		
+		},
+		success:function(result){
+			alert('Product is add to cart successfully');
+			window.location="{{url('/availproducts')}}";
+		}
+		});
+	}
 	</script>
 
 </body>

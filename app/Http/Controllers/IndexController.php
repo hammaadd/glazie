@@ -57,20 +57,20 @@ class IndexController extends Controller
         return view('public/index',['brands'=>$brands,'categories'=>$categories,'sliders'=>$sliders]);
     }
     public function availproducts(){
-        $products = Products::where('publish','=','public')->get();
+        $products = Products::where('publish','=','public')->where('type','!=','customize')->paginate(12);
         return view('public/availproducts',['products'=>$products]);
     } 
     public function searchproduct(Request $request)
     {
         $search = $request->input('search');
-        $products =Products::where('product_name','like', '%'.$search.'%')->where('publish','=','public')->get();
+        $products =Products::where('product_name','like', '%'.$search.'%')->where('publish','=','public')->where('type','!=','customize')->paginate(1);
         return view('public/searchproducts',['products'=>$products]);
     }
     public function sortproduct(Request $request)
     {
         $search = $request->input('search');
         $sort_type = $request->input('sort_type');
-        $products =Products::where('product_name','like', '%'.$search.'%')->where('publish','=','public')->orderBy('sale_price',$sort_type)->get();
+        $products =Products::where('product_name','like', '%'.$search.'%')->where('publish','=','public')->where('type','!=','customize')->orderBy('sale_price',$sort_type)->paginate(12);
         return view('public/searchproducts',['products'=>$products]); 
     }
 
@@ -125,7 +125,8 @@ class IndexController extends Controller
                 if($cart->cartdetails)
                 {
                    $cartdetails =  $cart->cartdetails;
-                   if($cartdetails->type_id==$variant_id)
+                   foreach($cartdetails as $cartdetail){}
+                   if($cartdetail->type_id==$variant_id)
                    {
                     $update_cart = array(
                         "quantity"=>$quantity +$cart->quantity,
@@ -180,7 +181,7 @@ class IndexController extends Controller
                 }
             }
        
-            return redirect('/availproducts')->with('info','The Product is add to cart successfully');
+            return redirect('/products')->with('info','The Product is add to cart successfully');
     }
     public function prdaddtocart(Request $request)
     {
@@ -292,7 +293,8 @@ class IndexController extends Controller
         {
             if($cart->product->type=='variable')
             {
-                $price += $cart->cartdetails->price*$cart->quantity;
+                foreach($cart->cartdetails as $cartdetail){}
+                $price += $cartdetail->price*$cart->quantity;
             }
         }
         $obj = (object) array($price,$quantity,$regular_price);
@@ -301,7 +303,7 @@ class IndexController extends Controller
     public function clearcart(Request $request)
     {
         $request->session()->regenerate();
-        return redirect('/availproducts')->with('info','Your Cart is empty');
+        return redirect('/products')->with('info','Your Cart is empty');
     }
     public function checkout(Request $request){
         $session_id = session()->getId();
@@ -892,18 +894,74 @@ class IndexController extends Controller
     {
           $brands = Brands::all();
         $categories = Categories::all();
-        $sliders = Slider::all();
+        
         $prdcatgories = Categories::where('cat_name','like', '%composite%')->get();
         //return view('public/index',['brands'=>$brands,'categories'=>$categories,'sliders'=>$sliders]);
-    return view('public/composite_door',['brands'=>$brands,'categories'=>$categories,'sliders'=>$sliders,'prdcatgories'=>$prdcatgories]);
+    return view('public/composite_door',['brands'=>$brands,'categories'=>$categories,'prdcatgories'=>$prdcatgories]);
     }
     public function alumenium(Request $request)
     {
-          $brands = Brands::all();
+        $brands = Brands::all();
         $categories = Categories::all();
-        $sliders = Slider::all();
         $prdcatgories = Categories::where('cat_name','like', '%alumenium%')->get();
        
-    return view('public/alumenium_door',['brands'=>$brands,'categories'=>$categories,'sliders'=>$sliders,'prdcatgories'=>$prdcatgories]);
+        return view('public/alumenium_door',['brands'=>$brands,'categories'=>$categories,'prdcatgories'=>$prdcatgories]);
     }
+    public function addtowishlist(Request $request)
+    {
+        $i=1;
+        $message = array();
+        $product_id  = $request->input('id');
+        $image = $request->input('image');
+        $product = Products::find($product_id);
+        $product_name = $product->product_name;
+        $price = $product->regular_price;
+        $items = Session::get('wish');
+        if($items)
+        {
+            foreach($items as $item)
+            {
+                if($item['id']==$product_id)
+                {
+                 $i=0;
+                }
+               
+            }
+        
+        }
+        if($i==1)
+        {
+            $item = [
+                'id' => $product_id,
+                'prd_name'=>$product_name,
+                'image' =>$image,
+                'price' => $price
+              ];
+              
+              Session::push('wish', $item);
+              $count = count(Session::get('wish'));
+              array_push($message,$count);
+              array_push($message,"Product is added to wishlist");
+              
+        }
+        else{
+            $count = count(Session::get('wish'));
+            array_push($message,$count);
+            array_push($message,"Product is already in wishlist");
+        }
+        
+    echo json_encode($message);
+        
+    } 
+          
+    public function wishlist()
+    {
+        return view('public/wishlist');
+    }
+    public function removewishprd(Request $request){
+        $index = $request->input('index');
+        $wishlist = Session::get('wish');
+        $wishlist[$index] = null;
+    }
+
 }

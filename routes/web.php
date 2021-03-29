@@ -25,7 +25,7 @@ Route::get('/home','HomeController@index')->name('home');
 Route::get('/admin/dashboard', 'AdminController@index')->name('admin.dashboard');
 //Route::get('/admin', 'AdminController@index');
 Route::get('admin/adminlogout' ,'AdminController@admin_logout');
-Route::get('availproducts','IndexController@availproducts');
+Route::get('products','IndexController@availproducts');
 Route::post('subscribe','IndexController@subscribe');
 Route::post('checkcoupen','IndexController@checkcoupen');
 Route::get('/admin/login','Auth\AdminLoginController@showloginForm')->name('admin/login');
@@ -41,6 +41,7 @@ Route::get('admin/assignment', 'AssignmentController@index');
 Route::post('quoteforinstaller','IndexController@quoteforinstaller');
 Route::post('getmail','IndexController@getmail');
 Route::post('prdaddtocart','IndexController@prdaddtocart');
+Route::post('customizeaddtocart','DoorBuilderController@customizeaddtocart');
 
 // Door Builder Routes
 Route::get('door-build','DoorBuilderController@index');
@@ -392,7 +393,7 @@ Route::get('checkout','IndexController@checkout');
 Route::post('checkoutsubmit','IndexController@checkoutsubmit');
 Route::get('clearcart','IndexController@clearcart');
 Route::post('checkservice','IndexController@checkservice');
-Route::post('searchproduct','IndexController@searchproduct');
+Route::get('searchproduct','IndexController@searchproduct');
 Route::post('sortproduct','IndexController@sortproduct');
 Route::get('installerlist','IndexController@installerlist');
 Route::get('installerdetails/{id}','IndexController@installerdetails');
@@ -418,6 +419,10 @@ Route::get('blog/details/{id}','IndexController@blogdetails');
 Route::post('checkvariation','IndexController@chceckvariation');
 Route::get('composite/door','IndexController@composite');
 Route::get('alumenium/door','IndexController@alumenium');
+
+Route::post('addtowishlist','IndexController@addtowishlist');
+Route::get('product/wishlist','IndexController@wishlist');
+Route::post('removewishprd','IndexController@removewishprd');
 
 // Customr Routes are here
 Route::prefix('customer')->group(function () {

@@ -10,8 +10,13 @@
             <div class="col-md-8">
                 <h1>{{$blog->title}}<h1>
             </div>
-            <div class="col-md-4">
-               <a href="{{asset('admin-assets/blogs/'.$blog->image)}}"> <img src="{{asset('admin-assets/blogs/'.$blog->image)}}" alt="" width="100px" height="100px" style="text-align: center"></a>
+            
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+               
+                    <a href="{{asset('admin-assets/blogs/'.$blog->image)}}"> <img src="{{asset('admin-assets/blogs/'.$blog->image)}}" alt="" width="200px" height="200px" style="text-align: center"></a>
+                 
             </div>
         </div>
         <div class="row">
