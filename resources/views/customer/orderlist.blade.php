@@ -32,16 +32,22 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($orders as $order)
+                                            @if(count($orders) > 0)
+                                                @foreach ($orders as $order)
+                                                    <tr>
+                                                        <td>{{$loop->iteration}}</td>
+                                                        <td>{{$order->total_amount}}</td>
+                                                        <td>{{$order->discount}}</td>
+                                                        <td>{{$order->net_total}}</td>
+                                                        <td>{{$order->created_at}}</td>
+                                                        <td><a href="{{url('customer/orderdetails/'.$order->id)}}" class="btn btn-info"> <i class="anticon anticon-eye"></i> View</a></td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
                                                 <tr>
-                                                    <td>{{$loop->iteration}}</td>
-                                                    <td>{{$order->total_amount}}</td>
-                                                    <td>{{$order->discount}}</td>
-                                                    <td>{{$order->net_total}}</td>
-                                                    <td>{{$order->created_at}}</td>
-                                                    <td><a href="{{url('customer/orderdetails/'.$order->id)}}" class="btn btn-info"> <i class="anticon anticon-eye"></i> View</a></td>
+                                                    <td colspan="6" style="text-align: center;">No Record Found</td>
                                                 </tr>
-                                            @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>

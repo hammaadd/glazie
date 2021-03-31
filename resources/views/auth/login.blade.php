@@ -104,23 +104,22 @@
                                                 @endif --}}
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <!-- <div class="row">
                                             <div class="col-md-12">
                                                 <p class="text-center m-t-20">Or sign up With </p>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </form>
-                                        <div class="row">
-                                            <div class="col-md-2"></div>
-                                            <div class="col-md-10 text-center">
-                                                <button class="btn btn-icon btn-danger btn-rounded btn-tone ml-2" title="Sign Up with Google"> <i class="anticon anticon-google"></i>  </button>
-                                                <button class="btn btn-icon btn-primary btn-rounded btn-tone ml-2" title="Sign Up with facebook"> <i class="anticon anticon-facebook"></i>  </button>
-                                                <button class="btn btn-icon btn-success btn-rounded ml-2" title="Sign Up with Twitter">
-                                                    <i class="anticon anticon-twitter"></i>
-                                                </button>
-                                            </div>
+                                    <!-- <div class="row">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-10 text-center">
+                                            <button class="btn btn-icon btn-danger btn-rounded btn-tone ml-2" title="Sign Up with Google"> <i class="anticon anticon-google"></i>  </button>
+                                            <button class="btn btn-icon btn-primary btn-rounded btn-tone ml-2" title="Sign Up with facebook"> <i class="anticon anticon-facebook"></i>  </button>
+                                            <button class="btn btn-icon btn-success btn-rounded ml-2" title="Sign Up with Twitter">
+                                                <i class="anticon anticon-twitter"></i>
+                                            </button>
                                         </div>
-                                    
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

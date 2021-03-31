@@ -1,6 +1,8 @@
 @extends('customer.layouts.layouts')
 @section('title','All Posts')
 @section('content')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 <?php 
     
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +21,9 @@ $user = Auth::user();
                 </nav>
             </div>
         </div>
+        @if (session('info'))
+            <script type="text/javascript">toastr.success("{{session('info')}}");</script>
+        @endif
         <div class="row">
           <div class="col-md-12">
               <div class="card">

@@ -8,15 +8,15 @@
 ?>
     
                 <div class="logo logo-dark">
-                    <a href="index.html">
+                    <a href="#" class="ml-3">
                         <img src="{{ asset('admin-assets/images/logo/logo.png')}}" alt="Logo">
-                        <img class="logo-fold" src="{{asset('admin-assets/images/logo/logo-fold.png')}}" alt="Logo">
+                        <img class="logo-fold" src="{{asset('foldlogo.PNG')}}" width="80%"  alt="Logo">
                     </a>
                 </div>
                 <div class="logo logo-white">
-                    <a href="index.html">
+                    <a href="#">
                         <img src="{{ asset('admin-assets/images/logo/logo.png')}}" alt="Logo">
-                        <img class="logo-fold" src="{{ asset('admin-assets/images/logo/logo-fold-white.png')}}" alt="Logo">
+                        <img class="logo-fold" src="{{asset('foldlogo.png')}}" width="80%" alt="Logo">
                     </a>
                     
                 </div>
@@ -32,14 +32,14 @@
                                 <i class="anticon"></i>
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="javascript:void(0);" data-toggle="modal" data-target="#search-drawer">
                                 <i class="anticon anticon-search"></i>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                     <ul class="nav-right">
-                        <li class="dropdown dropdown-animated scale-left">
+                        <!-- <li class="dropdown dropdown-animated scale-left">
                             <a href="javascript:void(0);" data-toggle="dropdown">
                                 <i class="anticon anticon-bell notification-badge"></i>
                             </a>
@@ -102,18 +102,26 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
+                        </li> -->
                         <li class="dropdown dropdown-animated scale-left">
                             <div class="pointer" data-toggle="dropdown">
                                 <div class="avatar avatar-image  m-h-10 m-r-15">
-                                    <img src="{{ asset('customer-image/profile/'.$user->avatar)}}"  alt="">
+                                    @if(empty($user->avatar))
+                                        <img src="{{ asset('customer-image/profile/dummy.png')}}" alt="">
+                                    @else
+                                        <img src="{{ asset('customer-image/profile/'.$user->avatar)}}" alt="">
+                                    @endif
                                 </div>
                             </div>
                             <div class="p-b-15 p-t-20 dropdown-menu pop-profile">
                                 <div class="p-h-20 p-b-15 m-b-10 border-bottom">
                                     <div class="d-flex m-r-50">
                                         <div class="avatar avatar-lg avatar-image">
-                                            <img src="{{ asset('customer-image/profile/'.$user->avatar)}}" alt="">
+                                            @if(empty($user->avatar))
+                                                <img src="{{ asset('customer-image/profile/dummy.png')}}" alt="">
+                                            @else
+                                                <img src="{{ asset('customer-image/profile/'.$user->avatar)}}" alt="">
+                                            @endif
                                         </div>
                                         <div class="m-l-10">
                                       
@@ -130,7 +138,7 @@
                                         <i class="anticon font-size-10 anticon-right"></i>
                                     </div>
                                 </a>
-                                <a href="{{url('admin/changepass')}}" class="dropdown-item d-block p-h-15 p-v-10">
+                                <a href="{{url('customer/changepass')}}" class="dropdown-item d-block p-h-15 p-v-10">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
                                             <i class="anticon opacity-04 font-size-16 anticon-lock"></i>
@@ -139,7 +147,7 @@
                                         <i class="anticon font-size-10 anticon-right"></i>
                                     </div>
                                 </a>
-                                <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
+                                <!-- <a href="javascript:void(0);" class="dropdown-item d-block p-h-15 p-v-10">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
                                             <i class="anticon opacity-04 font-size-16 anticon-project"></i>
@@ -147,7 +155,7 @@
                                         </div>
                                         <i class="anticon font-size-10 anticon-right"></i>
                                     </div>
-                                </a>
+                                </a> -->
                                 <a href="{{url('customer/customerlogout')}}" class="dropdown-item d-block p-h-15 p-v-10">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
@@ -158,11 +166,6 @@
                                     </div>
                                 </a>
                             </div>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" data-toggle="modal" data-target="#quick-view">
-                                <i class="anticon anticon-appstore"></i>
-                            </a>
                         </li>
                     </ul>
                 </div>

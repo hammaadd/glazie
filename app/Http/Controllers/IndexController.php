@@ -13,6 +13,7 @@ use App\Models\Address;
 use App\models\Variation;
 use Validator;
 use App\Models\Coupen;
+use App\Models\Wishlist;
 use App\Models\Term;
 use App\Models\ProductReviews;
 use App\Models\Cart;
@@ -916,8 +917,9 @@ class IndexController extends Controller
         $product = Products::find($product_id);
         $product_name = $product->product_name;
         $price = $product->regular_price;
-        $items = Session::get('wish');
-        if($items)
+        $response = Wishlist::find($product_id);
+        //$items = Session::get('wish');
+        if(!empty($items))
         {
             foreach($items as $item)
             {
@@ -937,31 +939,46 @@ class IndexController extends Controller
                 'image' =>$image,
                 'price' => $price
               ];
-              
-              Session::push('wish', $item);
-              $count = count(Session::get('wish'));
-              array_push($message,$count);
-              array_push($message,"Product is added to wishlist");
+              $wishlist = new Wishlist;
+              $wishlist->customer_id = Auth::id();
+              $wishlist->product_id = $product_id;
+              $wishlist->status = 'active';
+              $wishlist->prd_name = $product_name;
+              $wishlist->image = $image;
+              $wishlist->price = $price;
+              $wishlist->save();
+              // Session::push('wish', $item);
+              // $count = count(Session::get('wish'));
+              // array_push($message,$count);
+              // array_push($message,"Product is added to wishlist");
+              echo 'saved';
               
         }
         else{
-            $count = count(Session::get('wish'));
-            array_push($message,$count);
+            echo 'Product is already in wishlist';
             array_push($message,"Product is already in wishlist");
         }
         
-    echo json_encode($message);
+    //echo json_encode($message);
         
     } 
           
     public function wishlist()
     {
-        return view('public/wishlist');
+        $customer_id = Auth::id();
+        $data = Wishlist::where('customer_id', $customer_id)->where('status','active')->get();
+        return view('public/wishlist', ['data'=>$data]);
     }
     public function removewishprd(Request $request){
-        $index = $request->input('index');
-        $wishlist = Session::get('wish');
-        $wishlist[$index] = null;
+        $index = $request->input('wish_id');
+        $response = DB::delete('delete from wishlists where id = '.$index);
+        if($response){
+            session()->flash('s_msg' , 'Porduct discarded successfully.');
+            return redirect('product/wishlist');
+        }else{
+            session()->flash('s_error' , 'Unable to remove product. Please try again later.');
+            return redirect('product/wishlist');
+        }
     }
 
 }
