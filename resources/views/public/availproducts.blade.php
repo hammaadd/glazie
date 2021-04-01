@@ -14,9 +14,7 @@
                 
             </div>
         </div>
-         @if (session('info'))
-            <script type="text/javascript">toastr.success("{{session('info')}}");</script>
-        @endif  
+          
         <div class="row mb-5 " id="">
             
             <div class="col-md-6 offset-md-3">

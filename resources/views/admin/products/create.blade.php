@@ -2,7 +2,7 @@
 @section('title','Add New Product')
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<link href="{{asset('assets/toaster/select2.min.css')}}" rel="stylesheet" />
 
 
 
@@ -246,10 +246,10 @@
 
     <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
    
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="{{asset('assets/toaster/select2.min.js')}}"></script>
 <!-- page js -->
 
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="{{asset('assets/toaster/summernote.min.js')}}"></script>
     <script>
       
         $(document).ready(function() {

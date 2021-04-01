@@ -459,6 +459,7 @@ class IndexController extends Controller
     }
     public function checkoutsubmit(Request $request)
     {   
+        
         $user = Auth::user();
         $first_name = $request->input('first_name');
         $last_name = $request->input('last_name');
@@ -627,9 +628,10 @@ class IndexController extends Controller
        
         
         
+       $service = Session::get('servicedata');
         
         $order = new Order;
-        $order->delivery_id = 1;
+        $order->delivery_id = $service->id;
         $order->customer_id =$user_id;
         $order->total_amount =Session::get('total_amount');
         $order->shipp_cost = Session::get('shipping_cost');
@@ -644,8 +646,16 @@ class IndexController extends Controller
        $orderdetails = new OrderDetails;
        $orderdetails->order_id = $order->id;
        $orderdetails->product_id = $cart->product_id;
+       $product = Products::find($cart->product_id);
+       if($product->sale_price==null || $product->sale_price=='')
+       {
+           $price = $product->regular_price;
+       }
+       else{
+        $price= $product->sale_price;
+       }
        $orderdetails->quantity = $cart->quantity;
-       $orderdetails->price = $cart->quantity*$cart->product->sale_price;
+       $orderdetails->price = $price;
        $orderdetails->created_by = $user_id;
        $orderdetails->save();
        $order_details_id =$orderdetails->id;

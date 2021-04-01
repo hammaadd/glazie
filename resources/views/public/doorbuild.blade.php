@@ -121,7 +121,7 @@
 			      		</li>
 			       		<li class="list-unstyled nav-item "><a class="nav-link rounded-0 text-white" data-bs-toggle="pill" onclick="showdoortoggle()"  role="tab" aria-controls="v-pills-external-color" aria-selected="true"><img src="assets2/media/svg/color.svg" class="pe-3">Door Color</a></li>
 			       		<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-external-color-tab" data-bs-toggle="pill" href="#v-pills-external-color" role="tab" aria-controls="v-pills-external-color" aria-selected="true"> External Color</a></li>
-			        	<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-internal-color-tab" data-bs-toggle="pill" href="#v-pills-internal-color" role="tab" aria-controls="v-pills-internal-color" aria-selected="true">Internal Color</a></li>
+			        	<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-internal-color-tab" data-bs-toggle="pill" href="#v-pills-internal-color" role="tab" aria-controls="v-pills-internal-color" aria-selected="true" onclick="get_internalcolors()">Internal Color</a></li>
 			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-glass-tab" data-bs-toggle="pill" href="#v-pills-glass" role="tab" aria-controls="v-pills-glass" aria-selected="true"><img src="assets2/media/svg/glass.svg" class="pe-3">Glass</a></li>
 			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-tab" data-bs-toggle="pill" href="#v-pills-frame" role="tab" aria-controls="v-pills-frame" aria-selected="true"><img src="assets2/media/svg/frame.svg" class="pe-3">Frame</a></li>
 			      		<li class="list-unstyled nav-item parent-child"><a class="nav-link rounded-0 text-white" onclick="showframetoggle()"  data-bs-toggle="pill"  role="tab"  aria-selected="true"><img src="assets2/media/svg/frame-color.svg" class="pe-3"> Frame Color </a></li>
@@ -184,10 +184,15 @@
 			      			</div>
 
 			      			<div class="tab-pane fade" id="v-pills-external-color" role="tabpanel" aria-labelledby="v-pills-external-color-tab">
-						      	<h3 class="text-center">Please Select the Model</h3>
+						      	<img src="{{asset('loader/giphy.gif')}}" alt="">
 			      			</div>
 			      			<div class="tab-pane fade" id="v-pills-internal-color" role="tabpanel" aria-labelledby="v-pills-internal-color-tab">
-								<h3 class="text-center"> Please Select the Model</h3>
+								<h3 id="internalcolor">Please Selecte the Model </h3>
+								<div class="row">
+									<div class="col-md-6 offset-md-3">
+										<img src="{{asset('loader/giphy.gif')}}" alt="" id="img" style="display:none;" width="100%">
+									</div>
+								</div>	
 			      			</div>
 			      			<div class="tab-pane fade" id="v-pills-glass" role="tabpanel" aria-labelledby="v-pills-glass-tab">
 								<h3 class="text-center">Please Select the Model</h3>
@@ -286,7 +291,7 @@
 }
 	let idarray = Array(0,0,0,0,0,0,0,0,0,0,0,0);
 	let typearray = Array(0,0,0,0,0,0,0,0,0,0,0,0);
-	
+	let id = 0;
 	let amountarray  = Array(0,0,0,0,0,0,0,0,0,0,0,0);
 		function showdoortoggle(){
 			$('.colorsubchild').toggle(150);
@@ -418,10 +423,10 @@
 		    $('li button.selected').removeClass('selected');
 		    $(this).addClass('selected');
 		});
-		function getexternalcolors(id)
-
-			{
+		function getexternalcolors(i)
 				
+			{
+				id=i;
        
             url = "{{url('get_colors')}}";
             //console.log(url);
@@ -441,20 +446,23 @@
 				});
            	}
             });
-			get_internalcolors(id)
+			get_glasses(id);
     }
-	function get_internalcolors(id)
+	function get_internalcolors()
 
 		{
+		$('#img').show();
+		$('#internalcolor').hide();
 		url = "{{url('get_internal_color')}}";
 		//console.log(url);
+		//alert(id);
 		$.ajax({
 		type:'POST',
 		url:url,
 
 		data:{
 			"_token": "{{ csrf_token() }}",
-			"id":id,  
+			id:id,  
 		
 		},
 		success:function(result){
@@ -464,7 +472,7 @@
 		});
 		}
 		});
-		get_glasses(id)
+		
 		}
 	function  get_glasses(id)
 	{
