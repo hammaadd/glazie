@@ -55,11 +55,19 @@ class AddonController extends Controller
         $addon = new AddOn;
         $addon->product_id = $product_id;
         $addon->model_name = $model_name;
-        $addon->wieght = $request->input('weight');
-        $addon->height = $request->input('height');
-        $addon->length = $request->input('length');
-        $addon->width = $request->input('width');
-        $addon->price = $request->input('price');
+        $product = Products::find($product_id);
+        $addon->wieght = $product->weight;
+        $addon->height = $product->height;
+        $addon->length = $product->length;
+        $addon->width = $product->width;
+        if($product->sale_price!=null)
+        {
+            $addon->price = $product->sale_price;
+        }
+        else{
+            $addon->price = $product->regular_price;
+        }
+        
         $file = $request->file('svgimage');
         $filename = $file->getClientOriginalName();
         $extension = $file->getClientOriginalExtension();

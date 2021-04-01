@@ -1,7 +1,11 @@
 @extends('public/layouts/layouts')
 @section('title','Check Out')
 @section('content')
-
+<style>
+    ul{
+        list-style-type: none;
+    }
+</style>
     <div class="main_content">
         <div class="checkout-area py-5">
             <div class="container">
@@ -11,26 +15,29 @@
                         @php
                         
                             $price=$quantity=$regular_price =$discount=$price1 = 0;
-                            foreach ($carts as $key => $cart) {
-                                $quantity+=$cart->quantity;
-                                $regular_price +=$cart->quantity*$cart->regular_price;
-                                $price +=$cart->quantity*$cart->price; 
-                                $price1 +=$cart->quantity*$cart->price; 
-                                
-                            }
-                        
+                            $totalamount= array_sum($prd_price_array);
+                            Session::put('total_amount',$totalamount);
+                            //echo $totalamount;
+                            $shippingcost = array_sum($net_weight_price);
+                            $shipservice =  count($net_weight_price);
+                            //echo $shipservice*$service->price;
+                            $total_shippingcost = $shipservice*$service->price +$shippingcost;
+                            Session::put('shipping_cost',$total_shippingcost);
                             if($coupendata){
                             if($coupendata->discount_type=="amount")
                             {
-                                $price1 = $price-$coupendata->discount;
+                                
                                 $discount = $coupendata->discount;
                             }
                             else{
-                                $price1 = $price-$price*$coupendata->discount/100;
+                                
                                 $discount = $price*$coupendata->discount/100;
                             }
-                            
+                           
                         }
+                        $totalamount = $total_shippingcost +$totalamount -$discount;
+                            
+                            
                             
                         @endphp
                         
@@ -156,36 +163,36 @@
                                 <div class="your-order-wrap gray-bg-4">
                                     <div class="your-order-product-info">
                                         <div class="your-order-top">
-                                            <ul>
-                                                <li>Product</li>
-                                                <li>Total</li>
+                                            <ul style="list-style-type: none">
+                                                <li><b>Product</b></li>
+                                               
                                             </ul>
                                         </div>
                                         <div class="your-order-middle">
                                             <ul>
-                                                @foreach ($carts as $cart)
+                                                @foreach ($carts as $key => $cart)
                                                     
                                                
-                                                <li><span class="order-middle-left">{{$cart->product->product_name}}  X  {{$cart->quantity}}</span> <span class="order-price">&#163;{{$cart->price*$cart->quantity}} </span></li>
+                                                <li style="list-style-type: none"><span class="order-middle-left">{{$cart->product->product_name}}  X  {{$cart->quantity}}</span> <span class="order-price">&#163;{{$prd_price_array[$key]}} </span></li>
                                                 @endforeach 
                                             </ul>
                                         </div>
                                         <div class="your-order-bottom">
                                             <ul>
-                                                <li class="your-order-shipping">Shipping Cost</li>
-                                                <li>&#163;{{$shipprice+$service->price}}</li>
+                                                <li class="your-order-shipping"><b>Shipping Cost</b></li>
+                                                <li>&#163;{{$total_shippingcost}}</li>
                                             </ul>
                                         </div>
                                         <div class="your-order-bottom mt-3">
                                             <ul>    
-                                                <li class="your-order-shipping">Discount</li>
+                                                <li class="your-order-shipping"><b>Discount</b></li>
                                                 <li>&#163;{{$discount}}</li>
                                             </ul>
                                         </div>
                                         <div class="your-order-total">
                                             <ul>
-                                                <li class="order-total">Total</li>
-                                                <li>&#163;{{$price1 + $shipprice+$service->price}}</li>
+                                                <li class="order-total"><b>Total</b></li>
+                                                <li>&#163;{{$totalamount}}</li>
                                             </ul>
                                         </div>
                                     </div>

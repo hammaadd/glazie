@@ -8,6 +8,7 @@ use DB;
 class Installer extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public $name;
     public $order;
     public function ascending(){
@@ -25,7 +26,7 @@ class Installer extends Component
         else{
             if($this->order){
                 return view('livewire.installer',
-                ['installers' => $installers  = DB::table('users')
+                ['installers' =>  DB::table('users')
                 ->join('install_infos', 'install_infos.installer_id', '=', 'users.id')
                 ->select('users.*')
                 ->where('users.name','like', '%'.$this->name.'%')->orWhere('users.postcode','like', '%'.$this->name.'%')->where('type','=','installer')->orWhere('users.postcode','like', '%'.$this->name.'%')
@@ -33,7 +34,7 @@ class Installer extends Component
             }
             else{
                 return view('livewire.installer',
-                ['installers' => $installers  = DB::table('users')
+                ['installers' =>  DB::table('users')
                 ->join('install_infos', 'install_infos.installer_id', '=', 'users.id')
                 ->select('users.*')
                 ->where('users.name','like', '%'.$this->name.'%')->orWhere('users.postcode','like', '%'.$this->name.'%')->where('type','=','installer')

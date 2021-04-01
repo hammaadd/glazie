@@ -394,9 +394,11 @@ Route::post('checkoutsubmit','IndexController@checkoutsubmit');
 Route::get('clearcart','IndexController@clearcart');
 Route::post('checkservice','IndexController@checkservice');
 Route::get('searchproduct','IndexController@searchproduct');
-Route::post('sortproduct','IndexController@sortproduct');
+Route::get('sortproduct','IndexController@sortproduct');
 Route::get('installerlist','IndexController@installerlist');
 Route::get('installerdetails/{id}','IndexController@installerdetails');
+Route::get('searchinstaller','IndexController@searchinstaller');
+Route::get('sortinstaller','IndexController@sortinstaller');
 
 Route::post('hirerequest','IndexController@hirerequest');
 Route::post('get_installer','IndexController@get_installer');

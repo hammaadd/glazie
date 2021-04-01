@@ -27,6 +27,7 @@ use App\Models\Categories;
 use App\Models\RequestHiring;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ContentManagementSystem;
+use App\Models\ProductOrderDetails;
 use DB;
 use App\Models\ProductTerm;
 use App\Models\Slider;
@@ -63,15 +64,15 @@ class IndexController extends Controller
     public function searchproduct(Request $request)
     {
         $search = $request->input('search');
-        $products =Products::where('product_name','like', '%'.$search.'%')->where('publish','=','public')->where('type','!=','customize')->paginate(1);
-        return view('public/searchproducts',['products'=>$products]);
+        $products =Products::where('product_name','like', '%'.$search.'%')->where('publish','=','public')->where('type','!=','customize')->paginate(1)->withQueryString();
+        return view('public/searchproducts',['products'=>$products ,'search'=>$search]);
     }
     public function sortproduct(Request $request)
     {
         $search = $request->input('search');
         $sort_type = $request->input('sort_type');
-        $products =Products::where('product_name','like', '%'.$search.'%')->where('publish','=','public')->where('type','!=','customize')->orderBy('sale_price',$sort_type)->paginate(12);
-        return view('public/searchproducts',['products'=>$products]); 
+        $products =Products::where('product_name','like', '%'.$search.'%')->where('publish','=','public')->where('type','!=','customize')->orderBy('regular_price',$sort_type)->paginate(1);
+        return view('public/searchproducts',['products'=>$products,'search'=>$search]); 
     }
 
     public function product_details($id){
@@ -86,9 +87,7 @@ class IndexController extends Controller
 
            array_push($attrbute_array,$attribute_id->attribute_name);
             $result = ProductTerm::where('product_id','=',$id)->where('attribute_id','=',$attribute_id->id)->get();
-           
-
-            array_push($dataarray,$result);
+        array_push($dataarray,$result);
             }
            
         $products = Products::where('verity_id','=',$product_type)->get();
@@ -139,7 +138,14 @@ class IndexController extends Controller
                     $cart = new Cart;
                     $cart->session_id = session()->getId();
                     $cart->product_id = $product_id;
-                    $cart->price = $price;
+                    if($product_data->price!=null || $product_data->price!='')
+                    {
+                        $cart->price = $price;
+                    }
+                    else{
+                        $cart->price = $regular_price;
+                    }
+                   
                     $cart->regular_price = $regular_price;
                     $cart->quantity = $quantity;
                     $cart->save();
@@ -165,7 +171,13 @@ class IndexController extends Controller
             $cart = new Cart;
             $cart->session_id = session()->getId();
             $cart->product_id = $product_id;
-            $cart->price = $price;
+            if($product_data->price!=null || $product_data->price!='')
+            {
+                $cart->price = $price;
+            }
+            else{
+                $cart->price = $regular_price;
+            }
             $cart->regular_price = $regular_price;
             $cart->quantity = $quantity;
             $cart->save();
@@ -259,9 +271,7 @@ class IndexController extends Controller
     public function removecartproduct(Request $request)
     {
         $id = $request->input('id');
-        
-        
-            Cart::where('id',$id)->delete();
+        Cart::where('id',$id)->delete();
         $session_id = session()->getId();
         $carts = Cart::where('session_id','=',$session_id)->get();
         $times = DeliveryTime::all();
@@ -275,30 +285,16 @@ class IndexController extends Controller
     public function updatecartproduct(Request $request)
     {
         $session_id = session()->getId();
-        $quantity = $price= $regular_price = 0;
-        $no_of_qty =$request->input('no_of_qty');
+        $no_of_qty = $request->input('no_of_qty');
         $cart_id = $request->input('cart_id');
         $update_prd_cart =  array(
             'quantity'=>$no_of_qty
         );
          Cart::where('id',$cart_id)->update($update_prd_cart);
         $carts = Cart::where('session_id','=',$session_id)->get();
-        foreach ($carts as $key => $cart) {
-            $price  += $cart->price*$cart->quantity;
-            $regular_price  += $cart->regular_price*$cart->quantity;
-            $quantity += $cart->quantity;
-            
-        }
-        foreach($carts as $key => $cart)
-        {
-            if($cart->product->type=='variable')
-            {
-                foreach($cart->cartdetails as $cartdetail){}
-                $price += $cartdetail->price*$cart->quantity;
-            }
-        }
-        $obj = (object) array($price,$quantity,$regular_price);
-		echo json_encode($obj);
+        $times = DeliveryTime::all();
+        return view('public/updatecart',['carts'=>$carts,'times'=>$times]);
+        
     }
     public function clearcart(Request $request)
     {
@@ -306,41 +302,162 @@ class IndexController extends Controller
         return redirect('/products')->with('info','Your Cart is empty');
     }
     public function checkout(Request $request){
+       
+        $sum_price = 0;
+        $net_weight_price = array();
+       $pricearray = array();
+       $prd_price_array = array();
+       $weight_array = array();
         $session_id = session()->getId();
         $carts = Cart::where('session_id','=',$session_id)->get();
         $countries = Countries::all();
         $shipprice = 0;
         $service = Session::get('service');
-        
-        
-      
         $servicedata = DeliveryTime::find($service);
-       // print_r($servicedata);
+
         
         $coupenid =  Session::get('coupunid');
        
        
        foreach($carts as $cart)
        {
+        
+        if($cart->product->type=='customize')
+        {
+            
+            $weight = $cart->product->weight;
+            $sum_price =$sum_price + $cart->price; 
+            $prices = WeightSlot::where('min_weight','<=',$weight)->where('max_weight','>=',$weight)->get();
+            foreach($prices as $price)
+            {
+               $weight_price =  $price->price; 
+            }
+            array_push($net_weight_price,$weight_price);
+        foreach($cart->cartdetails as $cartdetails)
+        {
+
+            if($cartdetails->addon_type=='exteranal_color'){
+            //    echo $cartdetails->price."<br>";
+                array_push($pricearray,$cartdetails->price);
+            }
+            if($cartdetails->addon_type=='interanal_color'){
+            //    echo $cartdetails->price."<br>";
+                array_push($pricearray,$cartdetails->price);
+            }
+            if($cartdetails->addon_type=='glass'){
+            //    echo $cartdetails->price."<br>";
+                array_push($weight_array,$cartdetails->frame->wieght);
+                array_push($pricearray,$cartdetails->price);
+            }
+
+            if($cartdetails->addon_type=='frame'){
+            //    echo $cartdetails->price."<br>";
+                array_push($pricearray,$cartdetails->price);
+                array_push($weight_array,$cartdetails->frame->wieght);
+            }
+            if($cartdetails->addon_type=='frameexcolor'){
+            //    echo $cartdetails->price."<br>";
+                array_push($pricearray,$cartdetails->price);
+            }
+            if($cartdetails->addon_type=='frameinternalcolor'){
+            //    echo $cartdetails->price."<br>";
+                array_push($pricearray,$cartdetails->price);
+            
+            }
+            if($cartdetails->addon_type=='frame_glass'){
+            //    echo $cartdetails->price."<br>";
+                array_push($weight_array,$cartdetails->frameglass->wieght);
+            }
+            if($cartdetails->addon_type=='handle'){
+            //    echo $cartdetails->price."<br>";
+                array_push($pricearray,$cartdetails->price);
+                array_push($weight_array, $cartdetails->furniture->wieght);
+            }
+            if($cartdetails->addon_type=='knocker'){
+            //    echo $cartdetails->price."<br>";
+                array_push($pricearray,$cartdetails->price);
+                array_push($weight_array, $cartdetails->furniture->wieght);
+            }
+            if($cartdetails->addon_type=='letterbox'){
+            //    echo $cartdetails->price."<br>";
+                array_push($pricearray,$cartdetails->price);
+                array_push($weight_array, $cartdetails->furniture->wieght);
+            }
+            
+        }
+    
+        // echo"<pre>";
+        // print_r($pricearray);
+        // echo "array sum";
+        $sum_price += array_sum($pricearray);
+        $sum_price = $sum_price *$cart->quantity;
+        array_push($prd_price_array,$sum_price);
+
+        $sum_price = 0;
+       $pricearray =array();
+     
+        for ($i=0; $i < count($weight_array); $i++) { 
+            $weight_prices = WeightSlot::where('min_weight','<=',$weight_array[$i])->where('max_weight','>=',$weight_array[$i])->get(); 
+            foreach($weight_prices as $weight_price){}
+            array_push($net_weight_price,$weight_price->price); 
+        }
+        //print_r($net_weight_price);
+        
+    }
+    if($cart->product->type=='variable'){
         $weight = $cart->product->weight;
+            $sum_price =$sum_price + $cart->price; 
+            $prices = WeightSlot::where('min_weight','<=',$weight)->where('max_weight','>=',$weight)->get();
+            foreach($prices as $price)
+            {
+               $weight_price =  $price->price; 
+            }
+            array_push($net_weight_price,$weight_price);
+           foreach($cart->cartdetails as $cart_details)
+           {
+               if($cart_details->addon_type==null)
+               {
+                    $variation_price = $cart_details->price;
+                    $sum_price += $variation_price;
+                    $sum_price = $sum_price *$cart->quantity;
+                    array_push($prd_price_array,$sum_price);
+                    $sum_price = 0;
+               }
+           } 
+        
+    }
+    if($cart->product->type=='simple')
+    {
+        $weight = $cart->product->weight;
+        $sum_price =$sum_price + $cart->price; 
         $prices = WeightSlot::where('min_weight','<=',$weight)->where('max_weight','>=',$weight)->get();
         foreach($prices as $price)
         {
            $weight_price =  $price->price; 
         }
-        $totalprice = $weight_price*$cart->quantity;
-        $shipprice+=$totalprice;
-        $totalprice=0;
-       }
+        array_push($net_weight_price,$weight_price);
+        $sum_price = $sum_price *$cart->quantity;
+        array_push($prd_price_array,$sum_price);
+        $sum_price = 0;
+    }
+    
+
+     }
+    
+    
+       
        $request->session()->put('shipprice',$shipprice);
        $request->session()->put('servicedata',$servicedata);
+       $totalamount= array_sum($prd_price_array);
+        //echo $totalamount;
+       
        
         $coupendata = Coupen::find($coupenid);
-        return view('public/checkout',['carts'=>$carts,'countries'=>$countries,'coupendata'=>$coupendata,'service'=>$servicedata,'shipprice'=>$shipprice]);
+       
+        return view('public/checkout',['carts'=>$carts,'countries'=>$countries,'coupendata'=>$coupendata,'service'=>$servicedata,'shipprice'=>$shipprice,'prd_price_array'=>$prd_price_array,'net_weight_price'=>$net_weight_price]);
     }
     public function checkoutsubmit(Request $request)
     {   
-        
         $user = Auth::user();
         $first_name = $request->input('first_name');
         $last_name = $request->input('last_name');
@@ -476,21 +593,17 @@ class IndexController extends Controller
             $shipaddress->created_by = $user_id;
             $shipaddress->save();  
         }
-        $net_total=0;
-        $discount = 0;
-        $total_amount=0;
-        $net_total1 = 0;
+        
         $session_id = session()->getId();
         $carts = Cart::where('session_id','=',$session_id)->get();
         foreach ($carts as $key => $cart) {
-            
-            $total_amount += $cart->quantity*$cart->product->sale_price;
+
         }
         $coupenid =  Session::get('coupunid');
         
       Session::get('servicedata');
         Session::get('shipprice');
-       
+       $discount = 0;
         
        if (isset($coupenid)) {
         $coupendata = Coupen::find($coupenid);
@@ -517,10 +630,10 @@ class IndexController extends Controller
         $order = new Order;
         $order->delivery_id = 1;
         $order->customer_id =$user_id;
-        $order->total_amount =$total_amount;
-        $order->shipp_cost = Session::get('shipprice')+Session::get('servicedata')->price;
+        $order->total_amount =Session::get('total_amount');
+        $order->shipp_cost = Session::get('shipping_cost');
         $order->discount =$discount;
-        $order->net_total =$total_amount+Session::get('shipprice')+Session::get('servicedata')->price-$discount;
+        $order->net_total =Session::get('total_amount')+Session::get('shipping_cost')-$discount;
         $order->status = 'pending';        
         $order->created_by = $user_id;
         $order->save();
@@ -534,6 +647,42 @@ class IndexController extends Controller
        $orderdetails->price = $cart->quantity*$cart->product->sale_price;
        $orderdetails->created_by = $user_id;
        $orderdetails->save();
+       $order_details_id =$orderdetails->id;
+       if($cart->product->type=='variable')
+       {
+           foreach($cart->cartdetails as $cartdetails)
+           {
+            $prdorderdetails = new ProductOrderDetails;
+            $prdorderdetails->orderdetail_id = $orderdetails->id;
+            $prdorderdetails->type_id=$cartdetails->type_id;
+            $prdorderdetails->price=$cartdetails->price;
+            $prdorderdetails->quantity=$cartdetails->quantity;
+            $prdorderdetails->created_by=$user_id;
+            $prdorderdetails->save();
+            
+            
+           }
+       }
+       if($cart->product->type=='customize')
+       {
+        foreach($cart->cartdetails as $cartdetails)
+        {
+        
+            $prdorderdetails = new ProductOrderDetails;
+            $prdorderdetails->orderdetail_id = $orderdetails->id;
+            $prdorderdetails->addon_type=$cartdetails->addon_type;
+            $prdorderdetails->type_id=$cartdetails->type_id;
+            $prdorderdetails->price=$cartdetails->price;
+            $prdorderdetails->quantity=$cartdetails->quantity;
+            $prdorderdetails->created_by=$user_id;
+            $prdorderdetails->save();
+        
+         
+         
+        
+    }
+       }
+       
        $products = Products::find($cart->product_id);
        $prdquantity = $products->quantity-$cart->quantity;
        
@@ -576,8 +725,28 @@ class IndexController extends Controller
     
     }
     public function installerlist(){
-        $installers = User::where('type','=','installer')->inRandomOrder()->limit(6)->get();
+        $installers = User::where('type','=','installer')->paginate(8)->withQueryString();
         return view('public/installerlist',['installers'=>$installers]);
+    }
+    public function searchinstaller(Request $request)
+    {
+        $q = $request->input('q');
+        $installers =  DB::table('users')
+        ->join('install_infos', 'install_infos.installer_id', '=', 'users.id')
+        ->select('users.*')
+        ->where('users.name','like', '%'.$q.'%')->orWhere('users.postcode','like', '%'.$q.'%')->where('type','=','installer')
+        ->paginate(8)->withQueryString();
+        return view('public/get_installer',['installers'=>$installers,'search'=>$q]);
+    }
+    public function sortinstaller(Request $request)
+    {
+        $q = $request->input('q');
+        $installers =  DB::table('users')
+        ->join('install_infos', 'install_infos.installer_id', '=', 'users.id')
+        ->select('users.*')
+        ->where('users.name','like', '%'.$q.'%')->orWhere('users.postcode','like', '%'.$q.'%')->where('type','=','installer')
+        ->paginate(1)->withQueryString();
+        return view('public/get_installer',['installers'=>$installers,'search'=>$q]);
     }
     public function installerdetails($id)
     {

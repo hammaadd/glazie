@@ -61,11 +61,18 @@
             <div class="row">
                 <div class="col-md-2">
                     <p><b>Quantity:</b></p>
-                    <p><strike><b>{{$product->regular_price}}</b></strike></p>
+                   @if ($product->sale_price)
+                   <p><strike><b>{{$product->regular_price}}</b></strike></p>
+                    @else
+                    <p><b>{{$product->regular_price}}</b></p>
+                    <input type="hidden" id="sale_price" value="{{$product->sale_price}}">
+                   @endif
                 </div>
                 <div class="col-md-4">
                     <p>{{$product->quantity}}</p>
+                    @if ($product->sale_price)
                     <p>{{$product->sale_price}}</p>
+                    @endif
                 </div>
             </div>
             <div class="row mt-3 mb-4">
@@ -85,13 +92,9 @@
                 <input type="hidden" name="product_name" value="{{$product->product_name}}">
                 <input type="hidden" name="price" value="{{$product->sale_price}}"> 
                 <input type="hidden" name="regular_price" value="{{$product->regular_price}}">       
-                <input type="hidden" name="photo" value="{{$image}}">
-                
-              </div>
-              
-                  
-              
-              @php
+                <input type="hidden" name="photo" value="{{$image}}">    
+            </div>
+            @php
               $j=0;
           @endphp
           @if ($product->type=="variable")
@@ -243,8 +246,14 @@
                                             <div class="product_info">
                                                 <h6 class="product_title text-center"><a href="{{url('productdetails/'.$related_product->id)}}">{{$related_product->product_name}}</a></h6>
                                                 <div class="product_price text-center">
-                                                    <span class="price"><span class="currencySymbol">£</span>{{$related_product->sale_price}}</span>
+                                                    
+                                                    @if($related_product->sale_price)
+                                                    <span class="price "><span class="currencySymbol">£</span>{{$related_product->sale_price}}</span>
                                                     <del><span class="currencySymbol">£</span>{{$related_product->regular_price}}</del>
+                                                    @else
+                                                    <span class="price "><span class="currencySymbol">£</span>{{$related_product->regular_price}}</span>
+                                                    
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -420,8 +429,13 @@ function checkvariation(i)
             else{
                 var result = JSON.parse(result);
                 $('#variant_id').val(result[0]);
-                var sale_price = {{$product->sale_price}};
-                var net_sale_price = sale_price + parseInt(result[1]);
+                var sale_price = $('#sale_price').val();
+                if(sale_price==null || sale_price==''){
+                  var sale_price ={{$product->regular_price}};
+                }
+                console.log(parseInt(result[1]));
+                var net_sale_price = parseInt(sale_price) + parseInt(result[1]);
+                console.log(sale_price);
                 $('#variationprice').val(net_sale_price);
                 $('#submitcartbutton').prop('disabled',false);
                 $('#message').html("");

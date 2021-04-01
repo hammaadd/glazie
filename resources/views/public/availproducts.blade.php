@@ -17,21 +17,21 @@
         <div class="row mb-5 " id="">
             
             <div class="col-md-6 offset-md-3">
+                <form action="{{url('searchproduct')}}" method="GET">
                 <div class="input-group mb-3">
-                    
-                    <input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" placeholder="Write Something....." id="search">
+                  
+                    <input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" placeholder="Write Something....." name="search">
                     <div class="input-group-append" >
-                      <span class="input-group-text"><button class="btn btn-default btn-xs" onclick="searchresult()"><i class="fa fa-search"></i></button></span>
+                      <span class="input-group-text"><button class="btn btn-default btn-xs" ><i class="fa fa-search"></i></button></span>
                     </div>
+                
                   </div>
+                </form>
             </div>
-            <div class="col-md-2">
-                <button class="btn btn-outline-info" style="height:40px;" onclick="sort('asc')"> <i class="fas fa-sort-amount-down-alt"></i></button>
-                <button class="btn btn-outline-info ml-4 float-right" style="height:40px;" onclick="sort('desc')"> <i class="fas fa-sort-amount-up"></i></button>
-            </div>
+          
         </div>
         <div id="section">
-        <div class="row mb-5" id="srachresult">
+        <div class="row mb-5" id="">
             @foreach ($products as $product)
             <?php $product_gallery = $product->gallery;
             $i=0;

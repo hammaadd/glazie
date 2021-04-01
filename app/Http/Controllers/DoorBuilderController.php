@@ -110,13 +110,19 @@ class DoorBuilderController extends Controller
         $addon = AddOn::find($idarray[0]);
 
         $product_id = $addon->product_id;
-        $price = $addon->product->sale_price;
+        if($addon->product->sale_price)
+        {
+            $price = $addon->product->sale_price;
+        }
+        else{
+            $price = $addon->product->regular_price;
+        }
     // print_r($addon->product);
         $quantity =  1;
         $cart  = new Cart;
         $cart->session_id = session()->getId();
         $cart->product_id = $product_id;
-        $cart->price = $addon->product->sale_price;
+        $cart->price = $price;
         $cart->regular_price =$addon->product->regular_price;
         $cart->quantity = $quantity;
         $cart->save();

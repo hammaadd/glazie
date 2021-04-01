@@ -714,6 +714,7 @@
 		typearray[9] = 'knocker';
 		typearray[10] = 'letterbox';
 		typearray[11] = 'hinge';
+		amountarray[0] = 0;
 		url = "{{url('customizeaddtocart')}}";
 		
 		$.ajax({
@@ -729,7 +730,7 @@
 		},
 		success:function(result){
 			alert('Product is add to cart successfully');
-			window.location="{{url('/availproducts')}}";
+			window.location="{{url('/products')}}";
 		}
 		});
 	}

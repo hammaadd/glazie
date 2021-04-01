@@ -63,13 +63,24 @@
                                 <td class="product-thumbnail cart-list">
                                     <input type="hidden" id="regular_price{{$cart->id}}" value="{{$products->regular_price}}">
                                     <input type="hidden" id="itemquantity{{$cart->id}}" value="{{$cart->price}}">
-                                    <a href="#"><img src="{{asset('productimages/'.$image)}}" alt=""></a>
+                                    <a href="#">
+                                        @if($cart->product->type=='customize')
+                                            @foreach($cart->cartdetails as $cartdetails)
+                                                @if($cartdetails->addon_type=='model')
+                                                   <img src="{{asset('admin-assets/addon/'.$cartdetails->model->svgimage)}}" alt="" height="100px"> 
+                                                @endif
+                                            @endforeach
+                                        @else
+
+                                        <img src="{{asset('productimages/'.$image)}}" alt="">
+                                        @endif
+                                    </a>
                                 </td>
                                 <td class="product-name text-center">
                                     <a href="#" class="mb-2">{{$products->product_name}}</a>
                                 </td>
                                 {{-- <td class="product-price-cart"><span class="amount">&#163;{{$cart->price}}</span></td> --}}
-                            <td>{{$cart->price}}</td>
+                                <td>{{$cart->price}}</td>
                                  
                                  
                                 @php
@@ -99,6 +110,7 @@
                                $variation_price=0;
                            @endphp
                             </tr>
+                            @if($cart->product->type=='variable'|| $cart->product->type=='customize')
                             <tr>
                                
                                 <td colspan="6">  @if($cart->product->type=='variable')
@@ -114,11 +126,7 @@
                                     <input type="hidden" id="variation_price{{$cart->id}}" value="{{$variation_price}}">
                                    
                                     @foreach ($variation_details as $details)
-                                    @php
-                                    $a = array('primary','secondary','success','danger','warning text-dark','info text-dark','light text-dark','dark');
-                                    $randindex = array_rand($a);
-
-                                @endphp
+            
                                         <span class="badge  bg-light text-dark">{{$details->prd_term->term->name}}</span>
                                     @endforeach
                                    
@@ -172,6 +180,7 @@
                                    @endforeach
                                @endif</td>
                             </tr>
+                            @endif
                            @endforeach
                            
                         </tbody>
@@ -208,7 +217,7 @@
                             
                         </div>
                     </div>
-                    <input type="text" id="net_total" value="{{$price}}">
+                    <input type="hidden" id="net_total" value="{{$price}}">
                 </div>
                 {{-- <div class="col-lg-4 col-md-6">
                     <div class="cart-tax">
@@ -263,7 +272,7 @@
                         <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 float-end w-100" href="{{url('checkout')}}">Proceed to Checkout</a>
                     </div>
                 </div>
-                <input type="text" id="paidamount" value="{{$price}}">
+                <input type="hidden" id="paidamount" value="{{$price}}">
             </div>
         </div>
     </div>
@@ -346,30 +355,8 @@
                 },
                 url:url,
                 success:function(result){
-                    console.log(result);
-                 var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-                        var variation_data = 0;
-                        variation_data = $('#variation_price'+cart_id).val();
-                        if(variation_data == null || variation_data=="")
-                        {
-                            variation_data=0; 
-                        }
-                        console.log(variation_data);
-                         var item_result = parseInt($('#itemquantity'+cart_id).val())*parseInt(no_of_qty)+ parseInt(variation_data)*parseInt(no_of_qty);
-                         $('#item_total_price'+cart_id).html("&#163;"+item_result); 
-                         $('#total_qty').html(jsonResult[1]);
-                         $('#total_price').html("&#163;"+jsonResult[0]);
-                         $('#grand_total').html("&#163;"+jsonResult[0]);
-                         $('#paidamount').val(jsonResult[0]);
-                         $('#cart_items').html(jsonResult[1]);
-                         $("#net_total").val(jsonResult[0]);
-                         $('#net_regular_price').html(jsonResult[2]);
-                         var regular_price = parseInt($('#regular_price'+cart_id).val())*parseInt(no_of_qty);
-                         $('#regular_prices'+cart_id).html(regular_price);
-                         discount = regular_price -item_result; 
-                         $('#discounts'+cart_id).html(discount);
-                         var net_discount = parseInt(jsonResult[2])-parseInt(jsonResult[0])
-                         $('#net_discounts').html(net_discount);
+                    $("#abc").html(result);  
+                
                      }
                         
                  });
@@ -429,8 +416,8 @@
                     $('#disrow').show();
                     $('#grand_total').html("&#163;"+paidamount);
                     $('#paidamount').val(paidamount);
-                    console.log(paidamount);
-                    $('#net_total').val(paidamount);
+                    get_total();
+                    
                     
 
                 }
@@ -448,11 +435,10 @@
                     $('#discountt').val(discount);
                     $('#paidrow').show();
                     $('#grand_total').html("&#163;"+paidamount);
-                    $('#net_total').val(paidamount);
+                    get_total();
                 }
             }
-            //$('#dropdownlink').html(result);
-       
+        
             }	
             });
     }
@@ -470,7 +456,9 @@ function checkprice(i,j)
            success:function(result){ 
              var grand =  parseInt($('#paidamount').val())+ parseInt(j)-$('#discountt').val(); 
              console.log($('#paidamount').val());
-             $('#grand_total').html("&#163;"+grand);
+             $('#pricevalue').val(j);
+            get_total();
+             
            }
     });
 }
@@ -491,7 +479,13 @@ $(document).ready(function(){
              $('#grand_total').html("&#163;"+grand);
            }
     });
+
 })
+function get_total()
+{
+    net_total = parseInt($('#net_total').val()) - parseInt($('#discountt').val()) + parseInt($('#pricevalue').val());
+    $('#grand_total').html("&#163;"+net_total);
+}
      </script>
   
 @endsection
