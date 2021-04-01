@@ -16,8 +16,20 @@
         }
     </style>
 <div class="container" id="abc">
-    <h3 class="cart-page-title">Shopping Cart</h3>
-    @if ((Session::get('wish')))
+    <h1 class="cart-page-title text-center">Wishlist</h1>
+    @if(\Session::has('s_msg'))
+            <div class="alert alert-success alert-dismissible" id="mainAlertMessage1" style="display: inline-block;width: 100%;">
+                <span>{{ \Session::get('s_msg')}}</span>
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+        @endif
+        @if(\Session::has('s_error'))
+            <div class="alert alert-danger alert-dismissible" id="mainAlertMessage" style="display: inline-block;width: 100%;">
+                <span>{{ \Session::get('s_error')}}</span>
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+        @endif
+    @if (count($data) > 0)
     
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -37,21 +49,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                   @php
-                        $wishlist =    Session::get('wish');
-                   @endphp
-                        @foreach ($wishlist as $key => $wish)
-                            <tr>
+                        @foreach ($data as $wish)
+                            <?php
+                            $id = $wish->id;
+                            $product_id = $wish->product_id;
+                            $image = $wish->image;
+                            $price = $wish->price;
+                            $name = $wish->prd_name;
+                            ?>
                                 <td class="product-thumbnail cart-list">{{$loop->iteration}}</td>
-                                <td class="product-thumbnail cart-list"><img src="{{asset('productimages/'.$wish['image'])}}" alt=""></td>
+                                <td class="product-thumbnail cart-list"><img src="{{asset('productimages/'.$image)}}" alt=""></td>
                                    
-                                <td>{{$wish['prd_name']}}</td>
-                                <td>£ {{$wish['price']}}</td>
+                                <td>{{$name}}</td>
+                                <td>£ {{$price}}</td>
                                 <td>
-                                    <a href="{{url('productdetails/'.$wish['id'])}}" class="btn btn-fill-out btn-xs px-4 py-2 rounded-0"> <i class="fa fa-eye "></i> Details</a>
-                                    {{-- <button class="btn btn-fill-out rounded-0 px-4 py-2" onclick="removeprd({{$key}})"> Remove</button></td> --}}
+                                    <a href="{{url('productdetails/'.$product_id)}}" class="btn btn-fill-out btn-xs px-4 py-2 rounded-0"> <i class="fa fa-eye "></i> Details</a>
+                                    <form style="display:inline;" action="{{ route('removewishprd') }}" method="POST" >
+                                        @CSRF
+                                        <input type="hidden" value="<?php echo $id; ?>" name="wish_id">
+                                        <button type="submit" class="btn btn-fill-out rounded-0 px-4 py-2">Remove</button>
+                                    </form></td>
                             </tr>
-                           @endforeach
+                        @endforeach
                            
                         </tbody>
                     </table>
@@ -60,7 +79,12 @@
         </div>
     </div>
     @else 
-    <h3 class="mb-3">Your Cart is empty <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 " href="{{url('availproducts')}}"><i class="fa fa-backward"></i> Go Back </a></h3>
+    <p class="mb-3 text-center" style="margin-top: 5%;">Wishlist is empty. </p>
+    <div class="text-center">
+        <a style="margin-top: 5%;margin-bottom: 3px;" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 text" href="{{url('products')}}"><i class="fa fa-backward"></i> Go Back </a>
+    </div>
+    
+
     @endif
 </div>
 @endsection
@@ -71,6 +95,14 @@
 	<script src="{{asset('assets2/vendors/videopopup/js/videopopup.js')}}"></script>
 	<script src="{{asset('assets2/js/script.js')}}"></script>
     <script>
+        window.onload = function() {
+            var duration = 2000; //2 seconds
+            setTimeout(function () { $('#mainAlertMessage1').hide(); }, duration);
+        };
+        window.onload = function() {
+            var duration = 2000; //2 seconds
+            setTimeout(function () { $('#mainAlertMessage').hide(); }, duration);
+        };
         let paidamount;
         function removeqty(id)
         {
@@ -293,9 +325,8 @@ function removeprd(index)
            data:{
               index:index
            },
-           success:function(result){ 
-            
-           }
+            success:function(result){
+            }
     });
 }
      </script>

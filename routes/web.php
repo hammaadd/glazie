@@ -424,7 +424,7 @@ Route::get('alumenium/door','IndexController@alumenium');
 
 Route::post('addtowishlist','IndexController@addtowishlist');
 Route::get('product/wishlist','IndexController@wishlist');
-Route::post('removewishprd','IndexController@removewishprd');
+Route::post('removewishprd','IndexController@removewishprd')->name('removewishprd');
 
 // Customr Routes are here
 Route::prefix('customer')->group(function () {
@@ -451,7 +451,7 @@ Route::prefix('customer')->group(function () {
     Route::get('blog/posts','CustomerController@blogpost');
     Route::get('blogs/details/{id}','CustomerController@blogdetails');
     Route::post('checklike','CustomerController@checklike');
-    Route::post('comment','CustomerController@comment');
+    Route::post('comment','CustomerController@comment')->name('comment');
     // Hire Reequest feedback 
     Route::post('hirefeedback','CustomerController@hirefeedback');
    

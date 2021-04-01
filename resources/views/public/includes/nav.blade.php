@@ -84,6 +84,7 @@
 
             <div class="col-lg-3 col-sm-12">
               <ul class="navbar-nav attr-nav align-items-center justify-content-sm-end">
+                @if(!empty(Auth::id()))
                 <li>
                   <a class="nav-link cart_trigger" href="{{url('product/wishlist')}}" data-toggle="dropdown">
                     <i class='bx bx-heart'></i>
@@ -99,6 +100,7 @@
                   </a>
                   
                 </li>
+                @endif
                 <li class="dropdown login_dropdown">
                   <a href="{{url('login')}}" class="nav-link open-login">
                     <i class='bx bx-user'></i>
