@@ -67,8 +67,9 @@ class DoorBuilderController extends Controller
     public function frame_internal_colors(Request $request)
     {
         $frame_id = $request->input('frame_id');
+        $frame = ModelFrame::find($frame_id);
         $internalcolors = FrameDetails::where('side','=','internal')->where('frame_id','=',$frame_id)->get();
-        return view("public/customizer/frameinternalcolor",['internalcolors'=>$internalcolors]);
+        return view("public/customizer/frameinternalcolor",['internalcolors'=>$internalcolors,'frame'=>$frame]);
     }
     public function frameglass(Request $request)
     {

@@ -311,6 +311,7 @@ class IndexController extends Controller
        $weight_array = array();
         $session_id = session()->getId();
         $carts = Cart::where('session_id','=',$session_id)->get();
+      if(count($carts)>0){
         $countries = Countries::all();
         $shipprice = 0;
         $service = Session::get('service');
@@ -402,6 +403,7 @@ class IndexController extends Controller
             foreach($weight_prices as $weight_price){}
             array_push($net_weight_price,$weight_price->price); 
         }
+        
         //print_r($net_weight_price);
         
     }
@@ -457,6 +459,10 @@ class IndexController extends Controller
        
         return view('public/checkout',['carts'=>$carts,'countries'=>$countries,'coupendata'=>$coupendata,'service'=>$servicedata,'shipprice'=>$shipprice,'prd_price_array'=>$prd_price_array,'net_weight_price'=>$net_weight_price]);
     }
+    else{
+        return redirect('products');
+    }
+}
     public function checkoutsubmit(Request $request)
     {   
         
@@ -756,7 +762,7 @@ class IndexController extends Controller
         ->join('install_infos', 'install_infos.installer_id', '=', 'users.id')
         ->select('users.*')
         ->where('users.name','like', '%'.$q.'%')->orWhere('users.postcode','like', '%'.$q.'%')->where('type','=','installer')
-        ->paginate(1)->withQueryString();
+        ->paginate(8)->withQueryString();
         return view('public/get_installer',['installers'=>$installers,'search'=>$q]);
     }
     public function installerdetails($id)
@@ -1090,28 +1096,20 @@ class IndexController extends Controller
     public function addtowishlist(Request $request)
     {
         $i=1;
-        $message = array();
+        $message = array("","");
         $product_id  = $request->input('id');
         $image = $request->input('image');
         $product = Products::find($product_id);
         $product_name = $product->product_name;
         $price = $product->regular_price;
         $response = Wishlist::find($product_id);
-        //$items = Session::get('wish');
+        $items = Wishlist::where('customer_id','=',Auth::id())->where('product_id', $product_id)->first();
         if(!empty($items))
-        {
-            foreach($items as $item)
-            {
-                if($item['id']==$product_id)
-                {
-                 $i=0;
-                }
-               
-            }
-        
+        { 
+            $message[0] = 'Product is already in wishlist';
         }
-        if($i==1)
-        {
+        else{
+        
             $item = [
                 'id' => $product_id,
                 'prd_name'=>$product_name,
@@ -1130,13 +1128,13 @@ class IndexController extends Controller
               // $count = count(Session::get('wish'));
               // array_push($message,$count);
               // array_push($message,"Product is added to wishlist");
-              echo 'saved';
+              $message[0] = 'Prodcut add to wish list successfully';
               
         }
-        else{
-            echo 'Product is already in wishlist';
-            array_push($message,"Product is already in wishlist");
-        }
+      
+        $data = Wishlist::where('customer_id',  Auth::id())->where('status','active')->count();
+        $message[1] =  $data;
+        echo json_encode($message);
         
     //echo json_encode($message);
         

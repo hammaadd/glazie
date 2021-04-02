@@ -1,9 +1,10 @@
 @extends('public/layouts/layouts')
 @section('title','Welcome')
 @section('content')
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+<script src="{{asset('assets/toaster/jquery-1.9.1.min.js')}}"></script>
+<link href="{{asset('assets/toaster/toastr.css')}}" rel="stylesheet"/>
+<script src="{{asset('assets/toaster/toastr.js')}}"></script>
 <section class="section">
     <div class="container">
         <div class="row">
@@ -12,6 +13,9 @@
             </div>
             
         </div>
+        @if (session('info'))
+        <script type="text/javascript">toastr.success("{{session('info')}}");</script>
+        @endif   
         <div class="row">
             <div class="col-md-3">
                
@@ -106,5 +110,24 @@
 </section>
 @endsection
 @section('script')
-    
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+    toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
 @endsection

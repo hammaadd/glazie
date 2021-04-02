@@ -126,7 +126,7 @@
 			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-tab" data-bs-toggle="pill" href="#v-pills-frame" role="tab" aria-controls="v-pills-frame" aria-selected="true"><img src="assets2/media/svg/frame.svg" class="pe-3">Frame</a></li>
 			      		<li class="list-unstyled nav-item parent-child"><a class="nav-link rounded-0 text-white" onclick="showframetoggle()"  data-bs-toggle="pill"  role="tab"  aria-selected="true"><img src="assets2/media/svg/frame-color.svg" class="pe-3"> Frame Color </a></li>
 			       		<li class="list-unstyled nav-item text-center framecolorsubchild"><a class="nav-link rounded-0 text-white float-right" id="v-pills-frame-external-color-tab" data-bs-toggle="pill" href="#v-pills-frame-external-color" role="tab" aria-controls="v-pills-frame-external-color" aria-selected="true"> External Color</a></li>
-			      		<li class="list-unstyled nav-item framecolorsubchild"><a class="text-center nav-link rounded-0 text-white" id="v-pills-frame-internal-color-tab" data-bs-toggle="pill" href="#v-pills-frame-internal-color" role="tab" aria-controls="v-pills-frame-color" aria-selected="true"> Internal Color</a></li>
+			      		<li class="list-unstyled nav-item framecolorsubchild"><a class="text-center nav-link rounded-0 text-white" id="v-pills-frame-internal-color-tab" data-bs-toggle="pill" href="#v-pills-frame-internal-color" role="tab" aria-controls="v-pills-frame-color" aria-selected="true" onclick="internalframecolors()"> Internal Color</a></li>
 			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-glass-tab" data-bs-toggle="pill" href="#v-pills-frame-glass" role="tab" aria-controls="v-pills-frame-glass" aria-selected="true"><img src="assets2/media/svg/frame-glass.svg" class="pe-3">Frame Glass</a></li>
 			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-furniture-tab" data-bs-toggle="pill"  role="tab" onclick="showfurnituretoggle()" aria-controls="v-pills-furniture" aria-selected="true"><img src="assets2/media/svg/furniture.svg" class="pe-3">Furniture</a></li>
 						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-handels-tab" data-bs-toggle="pill" href="#v-pills-handels" role="tab" aria-controls="v-pills-external-color" aria-selected="true">Handel</a></li>
@@ -161,10 +161,8 @@
 														<div id="owl-model" class="owl-builder owl-carousel owl-theme">
 														    @foreach ($addons as $addon)
 															    <li class="item list-unstyled text-center" >
-															    	<!-- <input type="hidden" id="" value="model" name="type">
-															    	<input type="hidden" id="modal_id" value="{{$addon->id}}" name="modal_id">
-														    		<input type="hidden" id="modal_price" value="{{$addon->price}}" name="modal_price"> -->
-															    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="getexternalcolors({{$addon->id}});setprice({{$addon->id}},{{$addon->price}},0)">
+															    	
+															    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="getexternalcolors({{$addon->id}});setprice({{$addon->id}},{{$addon->price}},0);setimage('{{asset('admin-assets/addon/'.$addon->svgimage)}}')">
 															    		<div class="door">
 															    			<img class="door-image" src="{{asset('admin-assets/addon/'.$addon->svgimage)}}" align="">
 															    		</div>
@@ -204,7 +202,12 @@
 								<h3 class="text-center">Please Select the Model and Frame</h3>
 						    </div>
 						    <div class="tab-pane fade" id="v-pills-frame-internal-color" role="tabpanel" aria-labelledby="v-pills-frame-internal-color-tab">
-								<h3 class="text-center">Please Select the Model and Frame</h3>
+								<h3 class="text-center" id="frameinternalcolorheading">Please Select the Model and Frame</h3>
+								<div class="row">
+									<div class="col-md-6 offset-md-3">
+										<img src="{{asset('loader/giphy.gif')}}" alt="" id="imgframeinter" style="display:none;" width="100%">
+									</div>
+								</div>	
 						    </div>
 						    <div class="tab-pane fade" id="v-pills-frame-glass" role="tabpanel" aria-labelledby="v-pills-frame-glass-tab">
 								<h3 class="text-center">Please Select the Model and Frame</h3>
@@ -231,7 +234,7 @@
 			    </div>
 			  </div>
 			  <div class="col-md-3 text-center border-start pt-4">
-				  	<img src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/APA2__c-ffffff.svg" width="138px">
+				  <div id="doorimage"> 	</div>
 				  	<h4 class="custom-price pt-4"><span class="theme_color">Price:</span> &#163;<i id="p_price">0</i></h4>
 				  	<button type="button" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-4" onclick="addtocart()">Add To Cart</button>
 			  </div>
@@ -292,6 +295,7 @@
 	let idarray = Array(0,0,0,0,0,0,0,0,0,0,0,0);
 	let typearray = Array(0,0,0,0,0,0,0,0,0,0,0,0);
 	let id = 0;
+	let frame_id = 0;
 	let amountarray  = Array(0,0,0,0,0,0,0,0,0,0,0,0);
 		function showdoortoggle(){
 			$('.colorsubchild').toggle(150);
@@ -423,6 +427,11 @@
 		    $('li button.selected').removeClass('selected');
 		    $(this).addClass('selected');
 		});
+		function setimage(imagename)
+		{
+			image = "<img src="+imagename+" width='138px'>";
+			$('#doorimage').html(image);
+		}
 		function getexternalcolors(i)
 				
 			{
@@ -607,8 +616,11 @@
 		}
 		});
 	}
-	function framedata(frame_id)
+	function framedata(frame)
 	{
+		
+		frame_id = frame;
+		console.log(frame_id);
 		url = "{{url('frameexternalcolors')}}";
 		//console.log(url);
 		$.ajax({
@@ -617,7 +629,7 @@
 
 		data:{
 			"_token": "{{ csrf_token()}}",
-			"frame_id":frame_id,  
+			frame_id:frame_id,  
 		
 		},
 		success:function(result){
@@ -629,19 +641,22 @@
 			
 		}
 		});
-		internalframecolors(frame_id);
+		
 	}
-	function internalframecolors(frame_id)
+	function internalframecolors()
 	{
+		$('#frameinternalcolorheading').hide();
+		$('#imgframeinter').show();
 		url = "{{url('frameinternalcolors')}}";
 		//console.log(url);
+		console.log(frame_id);
 		$.ajax({
 		type:'POST',
 		url:url,
 
 		data:{
 			"_token": "{{ csrf_token()}}",
-			"frame_id":frame_id,  
+			frame_id:frame_id,  
 		
 		},
 		success:function(result){
@@ -706,7 +721,8 @@
 			
 		}
 		$('#p_price').html(net_total);
-		//console.log(amountarray);
+		// console.log(amountarray);
+		// console.log(idarray);
 	}
 	function addtocart()
 	{
@@ -714,7 +730,7 @@
 		typearray[1] = 'exteranal_color';
 		typearray[2] = 'interanal_color';
 		typearray[3] = 'glass';
-		typearray[4] = 'frame';
+		typearray[4] = 'frame';        
 		typearray[5] = 'frameexcolor';
 		typearray[6] = 'frameinternalcolor';
 		typearray[7] = 'frame_glass';

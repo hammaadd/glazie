@@ -10,6 +10,10 @@
 	<link rel="stylesheet" href="{{asset('assets2/css2.css')}}">
 	<link rel="stylesheet" href="{{asset('assets2/css/style.css')}}">
 	<script src="{{asset('assets2/font.js')}}" crossorigin="anonymous"></script>
+    <script src="{{asset('assets/toaster/jquery-1.9.1.min.js')}}"></script>
+    <link href="{{asset('assets/toaster/toastr.css')}}" rel="stylesheet"/>
+    <script src="{{asset('assets/toaster/toastr.js')}}"></script>
+
     <style>
         li{
             list-style-type:none;
@@ -17,18 +21,9 @@
     </style>
 <div class="container" id="abc">
     <h1 class="cart-page-title text-center">Wishlist</h1>
-    @if(\Session::has('s_msg'))
-            <div class="alert alert-success alert-dismissible" id="mainAlertMessage1" style="display: inline-block;width: 100%;">
-                <span>{{ \Session::get('s_msg')}}</span>
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            </div>
-        @endif
-        @if(\Session::has('s_error'))
-            <div class="alert alert-danger alert-dismissible" id="mainAlertMessage" style="display: inline-block;width: 100%;">
-                <span>{{ \Session::get('s_error')}}</span>
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            </div>
-        @endif
+    @if (session('s_msg'))
+        <script type="text/javascript">toastr.success("{{session('s_msg')}}");</script>
+        @endif  
     @if (count($data) > 0)
     
     <div class="row">
@@ -89,246 +84,25 @@
 </div>
 @endsection
 @section('script')
-<script src="{{asset('assets2/js/jquery.min.js')}}"></script>
-	<script src="{{asset('assets2/vendors/bootstrap/js/bootstrap.min.js')}}"></script>
-	<script src="{{asset('assets2/vendors/owlcarousel/js/owlcarousel.min.js')}}"></script>
-	<script src="{{asset('assets2/vendors/videopopup/js/videopopup.js')}}"></script>
-	<script src="{{asset('assets2/js/script.js')}}"></script>
-    <script>
-        window.onload = function() {
-            var duration = 2000; //2 seconds
-            setTimeout(function () { $('#mainAlertMessage1').hide(); }, duration);
-        };
-        window.onload = function() {
-            var duration = 2000; //2 seconds
-            setTimeout(function () { $('#mainAlertMessage').hide(); }, duration);
-        };
-        let paidamount;
-        function removeqty(id)
-        {
-            var qty = $('#no_of_qty'+id).val();
-            if(qty==1){
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-            }
-            else{
-                qty = parseInt(qty)-1;
-                $('#no_of_qty'+id).val(qty);
-                update_qty(id);
-            }
-        }
-        function addqty(id)
-        {
-            var qty = $('#no_of_qty'+id).val();
-            
-                qty = parseInt(qty)+1;
-                $('#no_of_qty'+id).val(qty);
-                update_qty(id);
-            
-        }
-        function remove(id)
-         {
-             if (confirm('Are you sure ?')==true) {
-                 $.ajaxSetup({
-                     headers:{'X-CSRF-Token':'{{csrf_token()}}'}
-                 });
-                 url = "{{url('removecartproduct')}}";
-                 $.ajax({
-                type:'POST',
-                data:{
-                    id:id
-                },
-                url:url,
-                success:function(result){
-                     $("#abc").html(result);
-                     var removedqty = $('#no_of_qty'+id).val();
-                     if (parseInt($('#quantity').val())!=0) {
-                             $('#cart_items').show();
-                             $('#cart_items').html($('#quantity').val());
-                         }
-                         else{
-                             $('#cart_items').hide();
-                         }
-                     }
-                            
-                        
-                 });
-             }
-         }
-         function update_qty(cart_id){
-             var no_of_qty = $('#no_of_qty'+cart_id).val();
-             //console.log(cart_id);
-             $.ajaxSetup({
-                     headers:{'X-CSRF-Token':'{{csrf_token()}}'}
-                 });
-                 url = "{{url('updatecartproduct')}}";
-                 $.ajax({
-                type:'POST',
-                data:{
-                 no_of_qty:no_of_qty,
-                 cart_id:cart_id
-                 
-                },
-                url:url,
-                success:function(result){
-                    console.log(result);
-                 var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-                        var variation_data = 0;
-                        variation_data = $('#variation_price'+cart_id).val();
-                        if(variation_data == null || variation_data=="")
-                        {
-                            variation_data=0; 
-                        }
-                        console.log(variation_data);
-                         var item_result = parseInt($('#itemquantity'+cart_id).val())*parseInt(no_of_qty)+ parseInt(variation_data)*parseInt(no_of_qty);
-                         $('#item_total_price'+cart_id).html("&#163;"+item_result); 
-                         $('#total_qty').html(jsonResult[1]);
-                         $('#total_price').html("&#163;"+jsonResult[0]);
-                         $('#grand_total').html("&#163;"+jsonResult[0]);
-                         $('#paidamount').val(jsonResult[0]);
-                         $('#cart_items').html(jsonResult[1]);
-                         $("#net_total").val(jsonResult[0]);
-                         $('#net_regular_price').html(jsonResult[2]);
-                         var regular_price = parseInt($('#regular_price'+cart_id).val())*parseInt(no_of_qty);
-                         $('#regular_prices'+cart_id).html(regular_price);
-                         discount = regular_price -item_result; 
-                         $('#discounts'+cart_id).html(discount);
-                         var net_discount = parseInt(jsonResult[2])-parseInt(jsonResult[0])
-                         $('#net_discounts').html(net_discount);
-                     }
-                        
-                 });
-             
-         }
-     
-         function checkcoupen()
-{
-
-    var coupen = $('#coupen').val();
-    if(coupen){
-        url = "{{url('checkcoupen')}}";
-            $.ajax({
-           type:'POST',
-           url:url,
-           data:{
-               coupen:coupen
-           },
-           success:function(result){ 
-
-               console.log(result);
-            if(result=='invalid Copun'){
-                $('#coupenmessage').html("Invalid Coupen");
-                $('#grand_total').html("&#163;"+$("#net_total").val());
-                $('#coupenmessage').show();
-                $('#discountmessage').hide();
-                $('#paidrow').hide();
-                $('#disrow').hide();
-                $('#discountt').val(0)
-            }
-            else if(result=="limit Cros"){
-                $('#coupenmessage').html('The Token is expired');
-                $('#coupenmessage').show();
-                $('#discountmessage').hide();
-                $('#paidrow').hide();
-                $('#disrow').hide();
-            }
-            else if(result=="date expire"){
-                $('#coupenmessage').html('The Token is expired');
-                $('#coupenmessage').show();
-                $('#discountmessage').hide();
-                $('#paidrow').hide();
-                $('#disrow').hide();
-            }
-            else{
-                var res = result.split(",");
-                if(res[1]=='a'){
-                    $('#coupenmessage').hide();
-                    $('#discountmessage').show();
-                    $('#discountmessage').html("You got the discount of "+res[0]);
-                    net_total = parseInt($('#net_total').val());
-                    console.log(net_total);
-                    paidamount = net_total-res[0];
-                    $('#paidrow').show();
-                    $('#discount').html("&#163;"+res[0]);
-                    $('#discountt').val(res[0]);
-                    $('#disrow').show();
-                    $('#grand_total').html("&#163;"+paidamount);
-                    $('#paidamount').val(paidamount);
-                    console.log(paidamount);
-                    $('#net_total').val(paidamount);
-                    
-
-                }
-                else{
-                    $('#coupenmessage').hide();
-                    $('#discountmessage').show();
-                    $('#discountmessage').html("You got the discount of "+res[0]+"%");
-                    var net_total = $('#net_total').val();
-                    net_total = parseInt(net_total);
-                    paidamount = net_total-net_total*res[0]/100;
-                    discount = net_total*res[0]/100;
-                    
-                    $('#disrow').show();
-                    $('#discount').html("&#163;"+discount);
-                    $('#discountt').val(discount);
-                    $('#paidrow').show();
-                    $('#grand_total').html("&#163;"+paidamount);
-                    $('#net_total').val(paidamount);
-                }
-            }
-            //$('#dropdownlink').html(result);
-       
-            }	
-            });
-    }
+<script>
+    toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
 }
-function checkprice(i,j)
-{
-    
-    url = "{{url('checkservice')}}";
-    $.ajax({
-           type:'POST',
-           url:url,
-           data:{
-               i:i
-           },
-           success:function(result){ 
-             var grand =  parseInt($('#paidamount').val())+ parseInt(j)-$('#discountt').val(); 
-             console.log($('#paidamount').val());
-             $('#grand_total').html("&#163;"+grand);
-           }
-    });
-}
-$(document).ready(function(){
-    var i = $('#checkprice').val();
-    var j = $('#pricevalue').val();
-    url = "{{url('checkservice')}}";
-    $.ajax({
-           type:'POST',
-           url:url,
-           data:{
-               i:i
-           },
-           success:function(result){ 
-             var grand =  parseInt($('#paidamount').val()) +  parseInt(j); 
-                 
-             
-             $('#grand_total').html("&#163;"+grand);
-           }
-    });
-})
-function removeprd(index)
-{
-    url = "{{url('removewishprd')}}";
-    $.ajax({
-           type:'POST',
-           url:url,
-           data:{
-              index:index
-           },
-            success:function(result){
-            }
-    });
-}
-     </script>
-  
+</script>
 @endsection

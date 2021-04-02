@@ -50,8 +50,8 @@
                                         Posted On:{{date("d-M-Y", strtotime($blog->created_at))}}
                                     </div>
                                     <div class="col-md-6">
-                                       <a href="javascript:void()" style="padding:10px;background-color:white;margin-right:20px;border-radius:10px;" title="Like"><i class="far fa-thumbs-up" style="font-size:20px "></i><b> {{$countlike}}</b></a>
-                                       <a href="javascript:void()" style="padding:10px;background-color:white;margin-right:20px;border-radius:10px;" title="Dislike"><i class="far fa-thumbs-down" style="font-size:20px "></i></i><b>{{$countdislike}}</b></a>
+                                       <a style="padding:10px;background-color:white;margin-right:20px;border-radius:10px; " title="Like"><i class="far fa-thumbs-up" style="font-size:20px;cursor:pointer;"></i><b> {{$countlike}}</b></a>
+                                       <a  style="padding:10px;background-color:white;margin-right:20px;border-radius:10px;" title="Dislike"><i class="far fa-thumbs-down" style="font-size:20px "></i></i><b>{{$countdislike}}</b></a>
                                        
                                        
                                     </div>

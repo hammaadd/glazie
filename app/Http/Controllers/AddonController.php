@@ -33,12 +33,9 @@ class AddonController extends Controller
     public function store(Request $request){
         
         $validatedData = $request->validate([
-            'product_id' =>'required',
+            'product_id' =>'required|unique:add_ons',
             'svgimage' => 'required|mimes:svg|max:5048',
-            'height'=>'required',
-           'width'=>'required',
-           'length'=>'required',
-           'weight'=>'required',
+            
            'model_name' =>'required|regex:/^[\pL\s\-]+$/u'
         ]);
         
@@ -121,16 +118,23 @@ class AddonController extends Controller
         $validatedData = $request->validate([
             'product_id' =>'required',
             'model_name' =>'regex:/^[\pL\s\-]+$/u',
-            'height'=>'required',
-            'width'=>'required',
-            'length'=>'required',
-            'weight'=>'required',
+            
             'quantity'=>'required'
         ]);
         
         $product_id = $request->input('product_id');
         $model_name = $request->input('model_name');
-
+        $product = Products::find($product_id);
+        
+       
+      
+        if($product->sale_price!=null)
+        {
+            $price = $product->sale_price;
+        }
+        else{
+            $price = $product->regular_price;
+        }
         if ($request->file('svgimage')) {
             $file = $request->file('svgimage');
             $filename = $file->getClientOriginalName();
@@ -143,13 +147,15 @@ class AddonController extends Controller
             );
             AddOn::where('id',$id)->update($updateaddonimage);
         }
+        
         $updateaddon =  array(
             'product_id'=>$product_id,
             'model_name'=>$model_name,
-            'width'=>$request->input('width'),
-            'height'=>$request->input('height'),
-            'wieght'=>$request->input('weight'),
-            'length'=>$request->input('length'),
+            'width' => $product->width,
+            'height' => $product->height,
+            'wieght' => $product->weight,
+            'length' => $product->length,
+            'price' => $price,
             'quantity'=>$request->input('quantity'),
             
         );

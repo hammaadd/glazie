@@ -2,9 +2,10 @@
 @section('title','Welcome')
 @section('content')
 
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+<script src="{{asset('assets/toaster/jquery-1.9.1.min.js')}}"></script>
+<link href="{{asset('assets/toaster/toastr.css')}}" rel="stylesheet"/>
+<script src="{{asset('assets/toaster/toastr.js')}}"></script>
 <section class="section" id="section">
     <div class="container">
         <!--Sec Title-->
@@ -204,11 +205,12 @@ function addtowishlist(id,image)
        },
        success:function(result){ 
         console.log(result);
-       var result = JSON.parse(result);
-       toastr.success(result[1]);
-       if(result[0]>0)
+      var result = JSON.parse(result);
+
+       toastr.success(result[0]);
+       if(result[1]>0)
        {
-        $('#wishitem').html(result[0]);
+        $('#wishitem').html(result[1]);
         $('#wishitem').show();
         
        }
