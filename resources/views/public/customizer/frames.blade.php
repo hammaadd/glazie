@@ -29,7 +29,7 @@
                                                     
                                                 
 											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="framedata({{$frame->id}});setprice({{$frame->id}},{{$frame->frame_price}},4)">
+											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="getframedata({{$frame->id}});setprice({{$frame->id}},{{$frame->frame_price}},4)">
 											    		<div class="door">
                                                            
 											    			<img class="door-image" src="{{asset('admin-assets/addon/frame/'.$frame->image)}}" align="">
@@ -42,8 +42,8 @@
 											    
 											</div>
 											<div class="customNavigation">
-												<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btninternalColor">Prev</a>
-											    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnFrame">Next</a>
+												<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 " onclick="openglass()">Prev</a>
+											    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end " onclick="frame_ex_color();framedata()">Next</a>
 											</div>
 										</div>
 									</div>

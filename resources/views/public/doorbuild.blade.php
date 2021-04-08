@@ -100,7 +100,7 @@
 						<div class="col-xl-9 col-md-10 col-sm-6">
 							<ul class="navbar-nav text-end">
 								<li class="nav-item active">
-									<a class="nav-link" href="index.html">Back To Home</a>
+									<a class="nav-link" href="{{url('/')}}">Back To Home</a>
 								</li>
 							</ul>
 						</div>
@@ -119,23 +119,23 @@
 			      				<img src="assets2/media/svg/modal.svg" class="pe-3">Model
 			      			</a>
 			      		</li>
-			       		<li class="list-unstyled nav-item "><a class="nav-link rounded-0 text-white" data-bs-toggle="pill" onclick="showdoortoggle()"  role="tab" aria-controls="v-pills-external-color" aria-selected="true"><img src="assets2/media/svg/color.svg" class="pe-3">Door Color</a></li>
-			       		<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-external-color-tab" data-bs-toggle="pill" href="#v-pills-external-color" role="tab" aria-controls="v-pills-external-color" aria-selected="true"> External Color</a></li>
+			       		<li class="list-unstyled nav-item parent-child"><a class="nav-link rounded-0 text-white"  onclick="showdoortoggle()"   data-bs-toggle="pill"  role="tab"  aria-selected="true"><img src="assets2/media/svg/color.svg" class="pe-3">Door Color</a></li>
+			       		<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-external-color-tab" data-bs-toggle="pill" href="#v-pills-external-color" role="tab" aria-controls="v-pills-external-color" aria-selected="true" onclick="getexternalcolors()"> External Color</a></li>
 			        	<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-internal-color-tab" data-bs-toggle="pill" href="#v-pills-internal-color" role="tab" aria-controls="v-pills-internal-color" aria-selected="true" onclick="get_internalcolors()">Internal Color</a></li>
 			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-glass-tab" data-bs-toggle="pill" href="#v-pills-glass" role="tab" aria-controls="v-pills-glass" aria-selected="true"><img src="assets2/media/svg/glass.svg" class="pe-3">Glass</a></li>
 			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-tab" data-bs-toggle="pill" href="#v-pills-frame" role="tab" aria-controls="v-pills-frame" aria-selected="true"><img src="assets2/media/svg/frame.svg" class="pe-3">Frame</a></li>
 			      		<li class="list-unstyled nav-item parent-child"><a class="nav-link rounded-0 text-white" onclick="showframetoggle()"  data-bs-toggle="pill"  role="tab"  aria-selected="true"><img src="assets2/media/svg/frame-color.svg" class="pe-3"> Frame Color </a></li>
-			       		<li class="list-unstyled nav-item text-center framecolorsubchild"><a class="nav-link rounded-0 text-white float-right" id="v-pills-frame-external-color-tab" data-bs-toggle="pill" href="#v-pills-frame-external-color" role="tab" aria-controls="v-pills-frame-external-color" aria-selected="true"> External Color</a></li>
+			       		<li class="list-unstyled nav-item text-center framecolorsubchild"><a class="nav-link rounded-0 text-white float-right" id="v-pills-frame-external-color-tab" data-bs-toggle="pill" href="#v-pills-frame-external-color" role="tab" aria-controls="v-pills-frame-external-color" aria-selected="true" onclick="framedata()"> External Color</a></li>
 			      		<li class="list-unstyled nav-item framecolorsubchild"><a class="text-center nav-link rounded-0 text-white" id="v-pills-frame-internal-color-tab" data-bs-toggle="pill" href="#v-pills-frame-internal-color" role="tab" aria-controls="v-pills-frame-color" aria-selected="true" onclick="internalframecolors()"> Internal Color</a></li>
-			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-glass-tab" data-bs-toggle="pill" href="#v-pills-frame-glass" role="tab" aria-controls="v-pills-frame-glass" aria-selected="true"><img src="assets2/media/svg/frame-glass.svg" class="pe-3">Frame Glass</a></li>
-			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-furniture-tab" data-bs-toggle="pill"  role="tab" onclick="showfurnituretoggle()" aria-controls="v-pills-furniture" aria-selected="true"><img src="assets2/media/svg/furniture.svg" class="pe-3">Furniture</a></li>
+			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-glass-tab" data-bs-toggle="pill" href="#v-pills-frame-glass" role="tab" aria-controls="v-pills-frame-glass" aria-selected="true" onclick="frameglasses()"><img src="assets2/media/svg/frame-glass.svg" class="pe-3" >Frame Glass</a></li>
+			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white"  data-bs-toggle="pill"  onclick="showfurnituretoggle()" aria-controls="v-pills-furniture" aria-selected="true"><img src="assets2/media/svg/furniture.svg" class="pe-3">Furniture</a></li>
 						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-handels-tab" data-bs-toggle="pill" href="#v-pills-handels" role="tab" aria-controls="v-pills-external-color" aria-selected="true">Handel</a></li>
 						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-knocker-tab" data-bs-toggle="pill" href="#v-pills-knocker" role="tab" aria-controls="v-pills-internal-color" aria-selected="true">Knocker</a></li>
 						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-letterbox-tab" data-bs-toggle="pill" href="#v-pills-letter-box" role="tab" aria-controls="v-pills-external-color" aria-selected="true"> Letter Box</a></li>
 						  
 			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-hing-tab" data-bs-toggle="pill" href="#v-pills-hing" role="tab" aria-controls="v-pills-hing" aria-selected="true"><img src="assets2/media/svg/frame-glass.svg" class="pe-3">Hinge</a></li>
 			      		<li class="list-unstyled nav-item d-none"><a class="nav-link rounded-0 text-white" id="v-pills-price-tab" data-bs-toggle="pill" href="#v-pills-price" role="tab" aria-controls="v-pills-price" aria-selected="true"><img src="assets2/media/svg/price.svg" class="pe-3">Price</a></li>
-			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white text-center pt-4" id="v-pills-refresh-tab" data-bs-toggle="pill" href="#v-pills-refresh" role="tab" aria-controls="v-pills-refresh" aria-selected="true"><img src="assets2/media/svg/refresh.svg" width="30px" height="30px"></a></li>
+			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white text-center pt-4" href="{{url('door-build')}}"><img src="assets2/media/svg/refresh.svg" width="30px" height="30px"></a></li>
 			    	</ul>
 			  	</div>
 			  	<div class="col-md-7 px-4">
@@ -162,7 +162,7 @@
 														    @foreach ($addons as $addon)
 															    <li class="item list-unstyled text-center" >
 															    	
-															    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="getexternalcolors({{$addon->id}});setprice({{$addon->id}},{{$addon->price}},0);setimage('{{asset('admin-assets/addon/'.$addon->svgimage)}}')">
+															    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="get_glasses({{$addon->id}});setprice({{$addon->id}},{{$addon->price}},0);setimage('{{asset('admin-assets/addon/'.$addon->svgimage)}}')">
 															    		<div class="door">
 															    			<img class="door-image" src="{{asset('admin-assets/addon/'.$addon->svgimage)}}" align="">
 															    		</div>
@@ -171,7 +171,7 @@
 														    @endforeach
 														</div>
 														<div class="customNavigation">
-														    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnDefaultSize mb-3">Next</a>
+														    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end  mb-3" onclick="get_colors()">Next</a>
 														</div>
 													</div>
 												</div>
@@ -182,7 +182,11 @@
 			      			</div>
 
 			      			<div class="tab-pane fade" id="v-pills-external-color" role="tabpanel" aria-labelledby="v-pills-external-color-tab">
-						      	<img src="{{asset('loader/giphy.gif')}}" alt="">
+						      	<div class="row">
+									  <div class="col-md-6 offset-md-3">
+										<img src="{{asset('loader/giphy.gif')}}" alt="">
+									  </div>
+								  </div>
 			      			</div>
 			      			<div class="tab-pane fade" id="v-pills-internal-color" role="tabpanel" aria-labelledby="v-pills-internal-color-tab">
 								<h3 id="internalcolor">Please Selecte the Model </h3>
@@ -234,7 +238,9 @@
 			    </div>
 			  </div>
 			  <div class="col-md-3 text-center border-start pt-4">
-				  <div id="doorimage"> 	</div>
+				  <div id="doorimage" >
+					<object type="image/svg+xml" id="main_image" data="{{asset('admin-assets/addon/'.$addon->svgimage)}}" class="door-image" style="width: 138px;text-align:center;"></object>
+				  </div>
 				  	<h4 class="custom-price pt-4"><span class="theme_color">Price:</span> &#163;<i id="p_price">0</i></h4>
 				  	<button type="button" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-4" onclick="addtocart()">Add To Cart</button>
 			  </div>
@@ -298,6 +304,8 @@
 	let frame_id = 0;
 	let amountarray  = Array(0,0,0,0,0,0,0,0,0,0,0,0);
 		function showdoortoggle(){
+			
+
 			$('.colorsubchild').toggle(150);
 		}
 		function showframetoggle(){
@@ -314,129 +322,97 @@
 				items : 6
 			});
 		});
-		$(document).ready(function() {
-			$("#owl-default-size").owlCarousel({
-				items : 6
-			});
-		});
-		$(document).ready(function() {
-			$("#owl-external-color,#owl-internal-color").owlCarousel({
-				items : 6
-			});
-		});
-		$(document).ready(function() {
-			$("#owl-glass").owlCarousel({
-				items : 6
-			});
-		});
-		$(document).ready(function() {
-			$("#owl-frame").owlCarousel({
-				items : 6
-			});
-		});
-		$(document).ready(function() {
-			$("#owl-frame-color,#owl-frame-internal-color").owlCarousel({
-				items : 6
-			});
-		});
-		$(document).ready(function() {
-			$("#owl-frame-glass").owlCarousel({
-				items : 6
-			});
-		});
-		$(document).ready(function() {
-			$("#owl-furniture").owlCarousel({
-				items : 6
-			});
-		});
-		$(document).ready(function() {
-			$("#owl-hing-glass").owlCarousel({
-				items : 6
-			});
-		});
-		
-		$('.btnSize').click(function(e){
-	        e.preventDefault();
-	        $('.sizesubchild').show();
-	        $('#v-pills-tab a[href="#v-pills-model"]').tab('show');
-	    });
-	    $('.btnDefaultSize').click(function(e){
-	        e.preventDefault();
-	        $('.sizesubchild').show();
-	        $('#v-pills-tab a[href="#v-pills-external-color"]').tab('show');
-	    });
-		$('.btnModel').click(function(e){
-	        e.preventDefault();
-	        $('.sizesubchild').hide();
-	        $('#v-pills-tab a[href="#v-pills-model"]').tab('show');
-	    });
-	    $('.btnColor').click(function(e){
-	        e.preventDefault();
-	        $('.colorsubchild').show();
-	        $('.sizesubchild').hide();
-	        $('#v-pills-tab a[href="#v-pills-external-color"]').tab('show');
-	    });
-	    $('.btninternalColor').click(function(e){
-	        e.preventDefault();
-	        $('.colorsubchild').show();
-	        $('#v-pills-tab a[href="#v-pills-internal-color"]').tab('show');
-	    });
-	    $('.btnGlass').click(function(e){
-	        e.preventDefault();
-	        $('.colorsubchild').hide();
-	        $('#v-pills-tab a[href="#v-pills-glass"]').tab('show');
-	    });
-	    $('.btnFrame').click(function(e){
-	        e.preventDefault();
-	        $('.framecolorsubchild').hide();
-	        $('#v-pills-tab a[href="#v-pills-frame"]').tab('show');
-	    });
-	    $('.btnHinge').click(function(e){
-	        e.preventDefault();
-	        $('#v-pills-tab a[href="#v-pills-hing"]').tab('show');
-	    });
-		
-
-	    // $('.colortab').click(function(e){
-	    //     e.preventDefault();
-	    //      $('#v-pills-tab a[href="#v-pills-external-color"]').tab('show');
-	    //      $('colortab').removeClass('active');
-	    //      $('.btnColor').addClass('active');
-	    // });
-	    $('.btnFrameGlass').click(function(e){
-	        e.preventDefault();
-	        $('.framecolorsubchild').hide();
-	        $('#v-pills-tab a[href="#v-pills-frame-glass"]').tab('show');
-	    });
-	    $('.btnFrameexternalColor').click(function(e){
-	        e.preventDefault();
-	        $('.framecolorsubchild').show();
-	        $('#v-pills-tab a[href="#v-pills-frame-external-color"]').tab('show');
-	    });
-	    $('.btninternalframecolor').click(function(e){
-	        e.preventDefault();
-	        $('.framecolorsubchild').show()
-	        $('#v-pills-tab a[href="#v-pills-frame-internal-color"]').tab('show');
-	    });
-	    
-	    $('.btnFurniture').click(function(e){
-	        e.preventDefault();
-	        $('#v-pills-tab a[href="#v-pills-furniture"]').tab('show');
-	    });
+		function gotomodel()
+		{
+			
+			$('.sizesubchild').hide();
+			$('#v-pills-tab a[href="#v-pills-model"]').tab('show');
+		}
+		function get_colors(){
+			
+			$('.colorsubchild').show();
+			getexternalcolors();
+			$('#v-pills-tab a[href="#v-pills-external-color"]').tab('show');
+		}
+		function get_internal()
+		{
+			
+			$('.colorsubchild').show();
+    		$('#v-pills-tab a[href="#v-pills-internal-color"]').tab('show');
+			get_internalcolors();
+		}
+		function openglass()
+		{
+			
+			$('.colorsubchild').hide();
+    		$('#v-pills-tab a[href="#v-pills-glass"]').tab('show');
+		}
+		function openframe()
+		{
+			
+			$('.framecolorsubchild').hide();
+    		$('#v-pills-tab a[href="#v-pills-frame"]').tab('show');
+			framedata();
+		}
+		function frame_ex_color()
+		{
+			
+			$('.framecolorsubchild').show();
+    		$('#v-pills-tab a[href="#v-pills-frame-external-color"]').tab('show');
+		}
+		function framglass()
+		{
+			
+			$('.framecolorsubchild').hide();
+    		$('#v-pills-tab a[href="#v-pills-frame-glass"]').tab('show');
+			frameglasses();
+		}
+		function framinternal()
+		{
+			
+			$('.framecolorsubchild').show()
+    		$('#v-pills-tab a[href="#v-pills-frame-internal-color"]').tab('show');
+		}
+		function get_handels()
+		{
+			
+			$('.furnituresubchild').show()
+    		$('#v-pills-tab a[href="#v-pills-handels"]').tab('show');
+		}
+		function getknocker()
+		{
+			
+			$('.furnituresubchild').show()
+    		$('#v-pills-tab a[href="#v-pills-knocker"]').tab('show');
+		}
+		function getletterbox()
+		{
+			
+			$('.furnituresubchild').show()
+    		$('#v-pills-tab a[href="#v-pills-letter-box"]').tab('show');
+		}
+		function hingedata()
+		{
+			
+			$('.furnituresubchild').hide()
+    		$('#v-pills-tab a[href="#v-pills-hing"]').tab('show');
+		}
 	    $('.owl-builder li button').on('click', function(){
 		    $('li button.selected').removeClass('selected');
 		    $(this).addClass('selected');
 		});
 		function setimage(imagename)
 		{
-			image = "<img src="+imagename+" width='138px'>";
-			$('#doorimage').html(image);
+			$('#main_image').attr('data', imagename);
 		}
-		function getexternalcolors(i)
+
+		
+		function getexternalcolors()
 				
 			{
-				id=i;
-       
+			
+				
+				
             url = "{{url('get_colors')}}";
             //console.log(url);
             $.ajax({
@@ -460,6 +436,7 @@
 	function get_internalcolors()
 
 		{
+			
 		$('#img').show();
 		$('#internalcolor').hide();
 		url = "{{url('get_internal_color')}}";
@@ -483,8 +460,10 @@
 		});
 		
 		}
-	function  get_glasses(id)
+	function  get_glasses(i)
 	{
+		
+		id = i;
 		url = "{{url('get_glasses')}}";
 		//console.log(url);
 		$.ajax({
@@ -507,6 +486,8 @@
 	}
 	function get_frame(id)
 	{
+		//$('#v-pills-model').removeClass("");
+		
 		url = "{{url('get_frames')}}";
 		//console.log(url);
 		$.ajax({
@@ -529,6 +510,8 @@
 	}
 	function get_handles(id)
 	{
+	
+		
 		url = "{{url('get_handles')}}";
 		//console.log(url);
 		$.ajax({
@@ -551,6 +534,7 @@
 	}
 	function get_knocker(id)
 	{
+		
 		url = "{{url('get_knocker')}}";
 		//console.log(url);
 		$.ajax({
@@ -574,6 +558,7 @@
 	}
 	
 	function get_letter_box(id){
+		
 		url = "{{url('get_letterbox')}}";
 		//console.log(url);
 		$.ajax({
@@ -597,6 +582,7 @@
 	}
 	function get_hinge(id)
 	{
+		
 		url = "{{url('get_hinge')}}";
 		//console.log(url);
 		$.ajax({
@@ -616,11 +602,14 @@
 		}
 		});
 	}
-	function framedata(frame)
+	function getframedata(frame)
 	{
-		
 		frame_id = frame;
-		console.log(frame_id);
+		
+	}
+	function framedata()
+	{
+	
 		url = "{{url('frameexternalcolors')}}";
 		//console.log(url);
 		$.ajax({
@@ -643,6 +632,7 @@
 		});
 		
 	}
+	
 	function internalframecolors()
 	{
 		$('#frameinternalcolorheading').hide();
@@ -668,10 +658,11 @@
 			
 		}
 		});
-		frameglass(frame_id);
+		
 	}
-	function frameglass(frame_id)
+	function frameglasses()
 	{
+		
 		url = "{{url('frameglass')}}";
 		//console.log(url);
 		$.ajax({
@@ -680,7 +671,7 @@
 
 		data:{
 			"_token": "{{ csrf_token()}}",
-			"frame_id":frame_id,  
+			frame_id:frame_id,  
 		
 		},
 		success:function(result){
@@ -722,7 +713,7 @@
 		}
 		$('#p_price').html(net_total);
 		// console.log(amountarray);
-		// console.log(idarray);
+		 console.log(idarray);
 	}
 	function addtocart()
 	{
@@ -757,6 +748,42 @@
 			window.location="{{url('/products')}}";
 		}
 		});
+	}
+	function remove()
+	{
+		$('#v-pills-model').removeClass("active");
+			$('#v-pills-external-color').removeClass("active");
+			$('#v-pills-internal-color').removeClass("active");
+			$('#v-pills-glass').removeClass("active");
+			$('#v-pills-frame').removeClass("active");
+			$('#v-pills-frame-external-color').removeClass("active");
+			$('#v-pills-frame-internal-color').removeClass("active");
+			$('#v-pills-frame-glass').removeClass("active");
+			$('#v-pills-handels').removeClass("active");
+			$('#v-pills-knocker').removeClass("active");
+			$('#v-pills-letter-box').removeClass("active");
+			$('#v-pills-hing').removeClass("active");
+
+			$('#v-pills-model').removeClass("show");
+			$('#v-pills-external-color').removeClass("show");
+			$('#v-pills-internal-color').removeClass("show");
+			$('#v-pills-glass').removeClass("show");
+			$('#v-pills-frame').removeClass("show");
+			$('#v-pills-frame-external-color').removeClass("show");
+			$('#v-pills-frame-internal-color').removeClass("show");
+			$('#v-pills-frame-glass').removeClass("show");
+			$('#v-pills-handels').removeClass("show");
+			$('#v-pills-knocker').removeClass("show");
+			$('#v-pills-letter-box').removeClass("show");
+			$('#v-pills-hing').removeClass("show");
+	}
+	function setcolorimage(colors)
+	{
+		alert(colors);
+		var a = document.getElementById("main_image");
+		var mainsvgDoc = a.contentDocument;
+		var svgItems = mainsvgDoc.getElementById("base_x5F_colour");
+		svgItem = svgItems.childNodes[1].style.fill = colors;
 	}
 	</script>
 

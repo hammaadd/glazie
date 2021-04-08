@@ -36,9 +36,8 @@
                            
                         }
                         $totalamount = $total_shippingcost +$totalamount -$discount;
-                            
-                            
-                            
+                        $vat = $totalamount * 20/100;    
+                        Session::put('vat',$vat);
                         @endphp
                         
                         <div class="col-lg-7">
@@ -53,7 +52,7 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6">
                                         <div class="billing-info mb-20">
-                                            <label for="">Last Name</label>
+                                            <label for="">Last Name </label>
                                             <input type="text" class="form-control" name="last_name" placeholder="Last Name">
                                         </div>
                                     </div>
@@ -179,6 +178,12 @@
                                         </div>
                                         <div class="your-order-bottom">
                                             <ul>
+                                                <li class="your-order-shipping"><b>Vat</b></li>
+                                                <li>&#163;{{$vat}}</li>
+                                            </ul>
+                                        </div>
+                                        <div class="your-order-bottom">
+                                            <ul>
                                                 <li class="your-order-shipping"><b>Shipping Cost</b></li>
                                                 <li>&#163;{{$total_shippingcost}}</li>
                                             </ul>
@@ -192,7 +197,7 @@
                                         <div class="your-order-total">
                                             <ul>
                                                 <li class="order-total"><b>Total</b></li>
-                                                <li>&#163;{{$totalamount}}</li>
+                                                <li>&#163;{{$totalamount+$vat}}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -241,7 +246,7 @@
 @section('script')
 @section('script')
 
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script src="{{asset('assets/toaster/select2.min.js')}}"></script>
 
 <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
     <script>

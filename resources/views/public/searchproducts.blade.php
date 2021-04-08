@@ -28,16 +28,14 @@
                   </div>
                 </form>
             </div>
-            <div class="col-md-1">
-                <form action="{{url('sortproduct')}}" method="GET">
+            <div class="col-md-2">
+                <form class="d-inline-block mx-2" action="{{url('sortproduct')}}" method="GET">
                     <input type="hidden" name="sort_type" value="asc">
                     <input type="hidden" name="search" value="{{$search}}">
                     <button class="btn btn-outline-info" style="height:40px;" title="Price Low to high "> <i class="fas fa-sort-amount-down-alt"></i></button>
                 </form>
                
-            </div>
-            <div class="col-md-1">
-                <form action="{{url('sortproduct')}}">
+                <form action="{{url('sortproduct')}}" class="d-inline-block mx-2">
                     <input type="hidden" name="sort_type" value="desc">
                     <input type="hidden" name="search" value="{{$search}}">
                     

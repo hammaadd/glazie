@@ -130,7 +130,10 @@
                                     @endif --}}
                                     {{-- <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li>
                                     <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>--}}
+                                     
+                                    @if(!empty(Auth::id()))
                                     <li><a  title="Add to wish list" onclick="addtowishlist({{$product->id}},'{{$image}}')"><i class="bx bx-heart" ></i></a></li> 
+                                    @endif 
                                 </ul>
                             </div>
                         </div>
@@ -449,9 +452,16 @@ function addtowishlist(id,image)
 
        },
        success:function(result){ 
-        console.log(result);
+        //console.log(result);
        var result = JSON.parse(result);
-       toastr.success(result[1]);
+       if(result[0]=='Product is already in wishlist')
+      {
+      	 toastr.error(result[0]);
+      }
+       else
+       {
+       	toastr.success(result[0]);
+       }
        if(result[0]>0)
        {
         $('#wishitem').html(result[0]);

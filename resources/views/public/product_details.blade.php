@@ -75,6 +75,9 @@
                     @endif
                 </div>
             </div>
+            @php
+                $j=0;
+            @endphp
             <div class="row mt-3 mb-4">
                 <div class="col-md-12">
                     @if ($g>0)
@@ -84,18 +87,28 @@
                     <div class="jstars" data-value="0.1"></div>
                     @endif
                 </div>
+                @if($product->sale_price)
+                @php
+                    $price = $product->sale_price;
+                @endphp
+                @else
+                @php
+                    $price = $product->regular_price;
+                @endphp
+                @endif
             </div>
+           @if($product->quantity>0)
             <form action="{{url('addtocart/'.$product->id)}}" method="post">
                 @csrf
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <input type="hidden" name="product_id" value="{{$product->id}}">
-                <input type="hidden" name="product_name" value="{{$product->product_name}}">
-                <input type="hidden" name="price" value="{{$product->sale_price}}"> 
-                <input type="hidden" name="regular_price" value="{{$product->regular_price}}">       
-                <input type="hidden" name="photo" value="{{$image}}">    
-            </div>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <input type="hidden" name="product_id" value="{{$product->id}}">
+                    <input type="hidden" name="product_name" value="{{$product->product_name}}">
+                    <input type="hidden" name="price" value="{{$price}}"> 
+                    <input type="hidden" name="regular_price" value="{{$product->regular_price}}">       
+                    <input type="hidden" name="photo" value="{{$image}}">    
+                </div>
             @php
-              $j=0;
+              
           @endphp
           @if ($product->type=="variable")
               @if (count($attrbute_array)>0)
@@ -146,11 +159,14 @@
                     </div>
                 </div>
             </form>
+            @else
+            <span class="text-danger font-weight-bold" >Out Of Stock</span>
+            @endif
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-md-6">
-            <h3>Product Reviews</h3>
+           
             @if(count($errors)>0)
             @foreach($errors->all() as $error)
             <li class="text-danger">
@@ -158,7 +174,23 @@
             </li>
             @endforeach
         @endif
+        @php
+            $id = Auth::user();
+           $i=1; 
+        @endphp
+        @if($id)
+            @foreach ($id->orders as $order)
+                @foreach ($order->details as $orderdetails)
+                @if($product->id == $orderdetails->product_id)
+                @php
+                    $i=2;
+                @endphp
+                @endif
+                @endforeach
+            @endforeach
+            @if($i==2)
             <form action="{{url('feedback')}}" method="POST">
+                <h3>Product Reviews</h3>
                 @csrf
                 <div class="row">
                     <div class="col-md-12">
@@ -192,6 +224,8 @@
                     </div>
                 </div> 
             </form>
+            @endif
+            @endif
         </div>
     </div>
     <section class="section product-section">
@@ -229,17 +263,21 @@
             
                                     <div class="item">
                                         <div class="product">
+                                            @if($related_product->sale_price)
                                             <span class="pr_flash">Sale</span>
+                                            @endif
                                             <div class="product_img">
                                                 <a href="shop-product-detail.html">
                                                     <img src="{{asset('productimages/'.$image)}}" alt="Aluminium Front Door 1361 – Stainless Steel Applications in 9005 Matt with Stainless Steel hardware">
                                                 </a>
                                                 <div class="product_action_box">
                                                     <ul class="list_none pr_action_btn">
-                                                        <li class="add-to-cart"><a style="cursor: pointer;" onclick="addtocart({{$related_product->id}})" title="Add to cart the prodcut"><i class="bx bx-cart"></i> Add To Cart</a></li>
+                                                        {{-- <li class="add-to-cart"><a style="cursor: pointer;" onclick="addtocart({{$related_product->id}})" title="Add to cart the prodcut"><i class="bx bx-cart"></i> Add To Cart</a></li> --}}
                                                         {{-- <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li>
-                                                        <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>
-                                                        <li><a href="#"><i class="bx bx-heart"></i></a></li> --}}
+                                                        <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>--}}
+                                                        @if(!empty(Auth::id()))
+                                                            <li><a  title="Add to wish list" onclick="addtowishlist({{$product->id}},'{{$image}}')"><i class="bx bx-heart" ></i></a></li> 
+                                                        @endif
                                                     </ul>
                                                 </div>
                                             </div>
@@ -247,12 +285,11 @@
                                                 <h6 class="product_title text-center"><a href="{{url('productdetails/'.$related_product->id)}}">{{$related_product->product_name}}</a></h6>
                                                 <div class="product_price text-center">
                                                     
-                                                    @if($related_product->sale_price)
+                                                  @if($related_product->sale_price)
                                                     <span class="price "><span class="currencySymbol">£</span>{{$related_product->sale_price}}</span>
                                                     <del><span class="currencySymbol">£</span>{{$related_product->regular_price}}</del>
                                                     @else
-                                                    <span class="price "><span class="currencySymbol">£</span>{{$related_product->regular_price}}</span>
-                                                    
+                                                    <span class="currencySymbol">£ {{$related_product->regular_price}} </span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -383,7 +420,7 @@ function checkvariation(i)
     {
         let k=-1; 
         var variation = $('#variation'+i).val();
-        var product_id = {{$id}};
+        var product_id = {{$product->id}};
         var attribute_length = {{$j}};
         for (let j = 0; j < idarray.length; j++) {
             if(i==idarray[j])

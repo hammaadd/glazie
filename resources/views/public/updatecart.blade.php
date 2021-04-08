@@ -44,6 +44,7 @@
                     @endphp
                             <tr>
                                 <td class="product-thumbnail cart-list">
+                                    <input type="hidden" value="{{$products->quantity}}" id="prdqty{{$cart->id}}">
                                     <input type="hidden" id="regular_price{{$cart->id}}" value="{{$products->regular_price}}">
                                     <input type="hidden" id="itemquantity{{$cart->id}}" value="{{$cart->price}}">
                                     <a href="#"><img src="{{asset('productimages/'.$image)}}" alt=""></a>
@@ -253,5 +254,5 @@
         </div>
     </div>
     @else 
-    <h3 class="mb-3">Your Cart is empty <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 " href="{{url('availproducts')}}"><i class="fa fa-backward"></i> Go Back </a></h3>
+    <h3 class="mb-3">Your Cart is empty <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 " href="{{url('products')}}"><i class="fa fa-backward"></i> Go Back </a></h3>
     @endif

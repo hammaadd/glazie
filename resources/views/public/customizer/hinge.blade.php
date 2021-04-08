@@ -40,7 +40,7 @@
                        
                       </div>
                       <div class="customNavigation">
-                          <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnFurniture">Prev</a>
+                          <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 " onclick="getletterbox()">Prev</a>
                           <!-- <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnFurniture">Next</a> -->
                       </div>
                   </div>

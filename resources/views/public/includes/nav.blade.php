@@ -48,7 +48,7 @@
       <div class="row align-items-center">
         <div class="col-xl-3 col-md-2 col-sm-6">
           <div class="logo">
-            <a href="index.html">
+            <a href="{{url('')}}">
               <img src="{{asset('assets/media/logo.png')}}" alt="Double Glaze Windows and Doors">
             </a>
           </div>

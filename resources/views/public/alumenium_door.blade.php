@@ -104,7 +104,7 @@
                 }
                     @endphp
                 
-                
+                @if($product->publish=='public' && $product->type!='customize')
                 <div class="col-lg-3 col-md-4 col-6">
                 <div class="product">
                     @if($product->sale_price)
@@ -118,13 +118,16 @@
                         </a>
                         <div class="product_action_box">
                             <ul class="list_none pr_action_btn">
-                                @if ($product->type=='simple')
+                                {{-- @if ($product->type=='simple')
                                     <li class="add-to-cart"><a style="cursor: pointer" onclick="addtocart({{$product->id}})"><i class="bx bx-cart"></i> Add To Cart</a></li>
                                 @endif
-                                {{-- <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li>
+                                 <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li> 
                                 <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>
                                 <li><a href="#"><i class="bx bx-heart"></i></a></li> --}}
+                               
+                                @if(!empty(Auth::id()))
                                 <li><a  title="Add to wish list" onclick="addtowishlist({{$product->id}},'{{$image}}')"><i class="bx bx-heart" ></i></a></li> 
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -142,7 +145,7 @@
                     </div>
                 </div>
                 </div>
-                
+                @endif
                 @endforeach
                 @endif
                 @endforeach
@@ -446,9 +449,16 @@ function addtowishlist(id,image)
 
        },
        success:function(result){ 
-        console.log(result);
+        //console.log(result);
        var result = JSON.parse(result);
-       toastr.success(result[0]);
+       if(result[0]=='Product is already in wishlist')
+      {
+      	 toastr.error(result[0]);
+      }
+       else
+       {
+       	toastr.success(result[0]);
+       }
        if(result[1]>0)
        {
         $('#wishitem').html(result[1]);

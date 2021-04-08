@@ -22,7 +22,7 @@
                 <form action="{{url('searchproduct')}}" method="GET">
                 <div class="input-group mb-3">
                   
-                    <input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" placeholder="Write Something....." name="search">
+                    <input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" placeholder="Write Something....." name="search" autocomplete="off">
                     <div class="input-group-append" >
                       <span class="input-group-text"><button class="btn btn-default btn-xs" ><i class="fa fa-search"></i></button></span>
                     </div>
@@ -67,7 +67,10 @@
                                     {{-- <li class="add-to-cart"><a style="cursor: pointer" onclick="addtocart({{$product->id}})"><i class="bx bx-cart"></i> Add To Cart</a></li> --}}
                                     {{-- @endif <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li> --}}
                                     {{-- <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>--}}
+                                  
+                                    @if(!empty(Auth::id()))
                                     <li><a  title="Add to wish list" onclick="addtowishlist({{$product->id}},'{{$image}}')"><i class="bx bx-heart" ></i></a></li> 
+                                    @endif
                                 </ul>
                             </div>
                         </div>
@@ -204,10 +207,17 @@ function addtowishlist(id,image)
 
        },
        success:function(result){ 
-        console.log(result);
+        
       var result = JSON.parse(result);
 
-       toastr.success(result[0]);
+      if(result[0]=='Product is already in wishlist')
+      {
+      	 toastr.error(result[0]);
+      }
+       else
+       {
+       	toastr.success(result[0]);
+       }
        if(result[1]>0)
        {
         $('#wishitem').html(result[1]);

@@ -30,8 +30,8 @@
                             @endforeach
                         </div>
                         <div class="customNavigation">
-                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnSize">Prev</a>
-                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btninternalColor">Next</a>
+                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2" onclick="get_handels()">Prev</a>
+                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end " onclick="getletterbox()">Next</a>
                         </div>
                     </div>
                 </div>

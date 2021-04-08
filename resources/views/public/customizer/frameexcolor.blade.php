@@ -18,23 +18,23 @@
                 <div class="row">
                     <div class="col-12">
                         <div id="owl-frame-color" class="owl-builder owl-carousel owl-theme">
-                            <?php $j=1; ?>
-                            @foreach ($externalcolors as $color)
+                           
+                            @foreach ($externalcolors as $key => $color)
                               
-                            <li class="item list-unstyled text-center selectable_ext">
-                                <button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="setprice({{$color->id}},{{$color->price}},5)">
+                            <li class="item list-unstyled text-center selectable_ext" onclick="setprice({{$color->id}},{{$color->price}},5)">
+                                <button type="button" class="button-door border-0 bg-transparent my-5 w-100"  >
                                     <div class="door">
-                                    	<object type="image/svg+xml" id="frameex<?php echo $j; ?>"  data="{{asset('admin-assets/addon/frame/'.$frame->image)}}" class="door-image" onload="setColor('{{$color->value}}')"></object>
+                                    	<object type="image/svg+xml" id="frameex<?php echo $key; ?>"  data="{{asset('admin-assets/addon/frame/'.$frame->image)}}" class="door-image" onload="setColor('{{$color->value}}',{{$key}})"></object>
                                     	
                                     </div>
                                 </button>
                             </li>
-                            <?php $j++; ?>
+                            
                             @endforeach
                         </div>
                         <div class="customNavigation">
-                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnSize">Prev</a>
-                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btninternalColor">Next</a>
+                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 " onclick="openframe()">Prev</a>
+                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end " onclick="framinternal();internalframecolors()">Next</a>
                         </div>
                     </div>
                 </div>
@@ -57,26 +57,21 @@
         });
   </script>
   	<script type="text/javascript">
-  		var i = 1;
-  		function setColor(color){
-		    colors(color);
+  		
+  		function setColor(color,id){
+		    colors(color,id);
 		}
-		function colors(color){
+		function colors(color,id){
             console.log(color);
-			var a = document.getElementById("frameex"+i);
+			var a = document.getElementById("frameex"+id);
 		    var svgDoc = a.contentDocument;
 		    
             var svgItem = svgDoc.getElementById("frame_x5F_colour");
 
             svgItem = svgItem.childNodes[1].style.fill = color;
           
-			//svgItem.style.fill = "red";
-			
-			i++;
 		}
-  // 		window.onload=function() {
-  // 			setColor(color);
-		// };
+
 		
   	</script>
   @else

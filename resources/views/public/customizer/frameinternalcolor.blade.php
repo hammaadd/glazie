@@ -19,22 +19,22 @@
                     <div class="col-12">
                         <div id="owl-frame-intcolor" class="owl-builder owl-carousel owl-theme">
                             <?php $j=1; ?>
-                            @foreach ($internalcolors as $color)
+                            @foreach ($internalcolors as $key=> $color)
                               
                             <li class="item list-unstyled text-center selectable_ext">
                                 <button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="setprice({{$color->id}},{{$color->price}},6)">
                                     <div class="door">
-                                    	<object type="image/svg+xml" id="frameinternal<?php echo $j; ?>"  data="{{asset('admin-assets/addon/frame/'.$frame->image)}}" class="door-image" onload="setColor('{{$color->value}}')"></object>
+                                    	<object type="image/svg+xml" id="frameinternal{{$key}}"  data="{{asset('admin-assets/addon/frame/'.$frame->image)}}" class="door-image" onload="setColor('{{$color->value}}',{{$key}})"></object>
                                     	
                                     </div>
                                 </button>
                             </li>
-                            <?php $j++; ?>
+                         
                             @endforeach
                         </div>
                         <div class="customNavigation">
-                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnSize">Prev</a>
-                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btninternalColor">Next</a>
+                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 " onclick="frame_ex_color();framedata()">Prev</a>
+                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end " onclick="framglass();">Next</a>
                         </div>
                     </div>
                 </div>
@@ -57,26 +57,21 @@
         });
   </script>
   	<script type="text/javascript">
-  		var i = 1;
-  		function setColor(color){
-		    colors(color);
+  		
+  		function setColor(color,id){
+		    colors(color,id);
 		}
-		function colors(color){
+		function colors(color,id){
          
-			var a = document.getElementById("frameinternal"+i);
+			var a = document.getElementById("frameinternal"+id);
 		    var svgDoc = a.contentDocument;
 		    
             var svgItem = svgDoc.getElementById("frame_x5F_colour");
 
             svgItem = svgItem.childNodes[1].style.fill = color;
           
-			//svgItem.style.fill = "red";
-			
-			i++;
 		}
-  // 		window.onload=function() {
-  // 			setColor(color);
-		// };
+
 		
   	</script>
   @else

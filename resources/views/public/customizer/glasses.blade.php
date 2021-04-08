@@ -27,8 +27,8 @@
                             @endforeach
 						</div>
 						<div class="customNavigation">
-							<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btninternalColor">Prev</a>
-						    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnFrame">Next</a>
+							<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 " onclick="get_internal()">Prev</a>
+						    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end " onclick="openframe()">Next</a>
 						</div>
 					</div>
 				</div>

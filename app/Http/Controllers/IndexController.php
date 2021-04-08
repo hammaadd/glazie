@@ -10,7 +10,7 @@ use App\Models\Attribute;
 use App\Models\ProductTag;
 use App\Models\Countries;
 use App\Models\Address;
-use App\models\Variation;
+use App\Models\Variation;
 use Validator;
 use App\Models\Coupen;
 use App\Models\Wishlist;
@@ -311,12 +311,44 @@ class IndexController extends Controller
        $weight_array = array();
         $session_id = session()->getId();
         $carts = Cart::where('session_id','=',$session_id)->get();
+        if(count($carts)>0)
+        {
+            foreach($carts as $cart)
+            {
+                $i=1;
+                $cart_prd_id = $cart->product_id;
+                $product_qty = Products::find($cart_prd_id)->quantity;
+                //echo $cart->quantity;
+                if($cart->quantity>$product_qty)
+                {
+                    $i=2;
+                    $cartarray =array(
+                        'quantity'=>$product_qty
+                    );
+                    Cart::where('id',$cart->id)->update($cartarray);
+                    if($product_qty==0)
+                    {
+                        Cart::where('id',$cart->id)->delete();
+                    }
+                   
+                }
+
+                
+            }
+            if($i==2){
+                return redirect('productcart')->with('info','The product is sold just now');
+                }
+        }
+    
       if(count($carts)>0){
         $countries = Countries::all();
         $shipprice = 0;
         $service = Session::get('service');
         $servicedata = DeliveryTime::find($service);
-
+        if(empty($service))
+        {
+            return redirect('productcart');
+        }
         
         $coupenid =  Session::get('coupunid');
        
@@ -465,7 +497,36 @@ class IndexController extends Controller
 }
     public function checkoutsubmit(Request $request)
     {   
-        
+        $session_id = session()->getId();
+        $carts = Cart::where('session_id','=',$session_id)->get();
+        if(count($carts)>0)
+        {
+            foreach($carts as $cart)
+            {
+                $i=1;
+                $cart_prd_id = $cart->product_id;
+                $product_qty = Products::find($cart_prd_id)->quantity;
+                echo $cart->quantity;
+                if($cart->quantity>$product_qty)
+                {
+                    $i=2;
+                    $cartarray =array(
+                        'quantity'=>$product_qty
+                    );
+                    Cart::where('id',$cart->id)->update($cartarray);
+                    if($product_qty==0)
+                    {
+                        Cart::where('id',$cart->id)->delete();
+                    }
+                   
+                }
+
+                
+            }
+            if($i==2){
+            return redirect('productcart')->with('info','The product is sold just now');
+            }
+        }
         $user = Auth::user();
         $first_name = $request->input('first_name');
         $last_name = $request->input('last_name');
@@ -640,9 +701,10 @@ class IndexController extends Controller
         $order->delivery_id = $service->id;
         $order->customer_id =$user_id;
         $order->total_amount =Session::get('total_amount');
+        $order->vat =Session::get('vat');
         $order->shipp_cost = Session::get('shipping_cost');
         $order->discount =$discount;
-        $order->net_total =Session::get('total_amount')+Session::get('shipping_cost')-$discount;
+        $order->net_total =Session::get('total_amount')+Session::get('shipping_cost')-$discount +Session::get('vat');
         $order->status = 'pending';        
         $order->created_by = $user_id;
         $order->save();

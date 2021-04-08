@@ -2,7 +2,7 @@
 <section class="section product-section">
     <div class="title-box">
         <div class="container">
-            <!--Sec Title-->
+          
             <div class="sec-title text-center">
                 <div class="title-inner">
                     <h2>Choose Your <span class="theme_color">External Color</span></h2>
@@ -16,27 +16,25 @@
                 <div class="row">
                     <div class="col-12">
                         <div id="owl-external-color" class="owl-builder owl-carousel owl-theme">
-                            <?php $j=1; ?>
-                            @foreach ($colors as $color)
+                            
+                            @foreach ($colors as $key => $color)
                             
                             <li class="item list-unstyled text-center selectable_ext" >
                                 
-                                <button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="setprice({{$color->id}},{{$color->price}},1)">
+                                <button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="setprice({{$color->id}},{{$color->price}},1);setcolorimage('{{$color->color_code}}')">
 
-                                    <div class="door">
-                                    	<object type="image/svg+xml" id="img_svg<?php echo $j; ?>" data="{{asset('admin-assets/addon/'.$addon->svgimage)}}" class="door-image" onload="setColor('{{$color->color_code}}')"></object>
-                                    	<!-- <img class="door-image" src="{{asset('admin-assets/addon/'.$addon->svgimage)}}" align="" onload="SVGInject(this);setColor('{{$color->color_code}}')"> -->
-                                        <!-- <div class="door-image" style="background-color: {{$color->color_code}};height:100px;width:100px; border-radius:50%;"></div> -->
-                                        {{-- <img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-ffffff.svg" align=""> --}}
+                                    <div class="door" >
+                                    	<object type="image/svg+xml" id="img_svg<?php echo $key ?>" data="{{asset('admin-assets/addon/'.$addon->svgimage)}}" class="door-image" onload="setColor('{{$color->color_code}}',{{$key}})" ></object>
+                                    	
                                     </div>
                                 </button>
                             </li>
-                            <?php $j++; ?>
+                            
                             @endforeach
                         </div>
                         <div class="customNavigation">
-                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnSize">Prev</a>
-                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btninternalColor">Next</a>
+                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 " onclick="gotomodel()">Prev</a>
+                            <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end" onclick="get_internal()">Next</a>
                         </div>
                     </div>
                 </div>
@@ -59,21 +57,27 @@
         });
   </script>
   	<script type="text/javascript">
-  		var i = 1;
-  		function setColor(color){
-		    colors(color);
+      function setcolorimage(colors)
+        {
+           
+            var a = document.getElementById("main_image");
+            var mainsvgDoc = a.contentDocument;
+            var svgItems = mainsvgDoc.getElementById("base_x5F_colour");
+            svgItem = svgItems.childNodes[1].style.fill = colors;
+        }
+  		
+  		function setColor(color,id){
+		    colors(color,id);
 		}
-		function colors(color){
-			var a = document.getElementById("img_svg"+i);
+		function colors(color,id){
+			var a = document.getElementById("img_svg"+id);
 		    var svgDoc = a.contentDocument;
 		    var svgItem = svgDoc.getElementById("base_x5F_colour");
 			svgItem = svgItem.childNodes[1].style.fill = color;
 			console.log(svgItem);
-			i++;
+			
 		}
-  // 		window.onload=function() {
-  // 			setColor(color);
-		// };
+
 		
   	</script>
   @else

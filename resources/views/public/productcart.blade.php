@@ -6,6 +6,9 @@
 	<link rel="stylesheet" href="{{asset('assets2/vendors/owlcarousel/css/owlcarousel.min.css')}}">
 	<!-- <link rel="stylesheet" href="{{asset('assets2/vendors/fontawesome/css/all.min.css')}}-->
 	<link rel="stylesheet" href="{{asset('assets2/vendors/boxicons/css/boxicons.min.css')}}">
+    <script src="{{asset('assets/toaster/jquery-1.9.1.min.js')}}"></script>
+<link href="{{asset('assets/toaster/toastr.css')}}" rel="stylesheet"/>
+<script src="{{asset('assets/toaster/toastr.js')}}"></script>
 	{{-- <link rel="preconnect" href="{{asset('https://fonts.gstatic.com')}}"> --}}
 	<link rel="stylesheet" href="{{asset('assets2/css2.css')}}">
 	<link rel="stylesheet" href="{{asset('assets2/css/style.css')}}">
@@ -15,8 +18,12 @@
             list-style-type:none;
         }
     </style>
+     @if (session('info'))
+     <script type="text/javascript">toastr.error("{{session('info')}}");</script>
+     @endif  
 <div class="container" id="abc">
     <h3 class="cart-page-title">Shopping Cart</h3>
+    
     @if (count($carts))
     
     <div class="row">
@@ -61,6 +68,7 @@
                     @endphp
                             <tr>
                                 <td class="product-thumbnail cart-list">
+                                    <input type="hidden" value="{{$products->quantity}}" id="prdqty{{$cart->id}}">
                                     <input type="hidden" id="regular_price{{$cart->id}}" value="{{$products->regular_price}}">
                                     <input type="hidden" id="itemquantity{{$cart->id}}" value="{{$cart->price}}">
                                     <a href="#">
@@ -190,7 +198,7 @@
                     <div class="col-lg-12">
                         <div class="cart-shiping-update-wrapper">
                             <div class="cart-shiping-update">
-                                <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0" href="{{url('availproducts')}}">Continue Shopping</a>
+                                <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0" href="{{url('products')}}">Continue Shopping</a>
                             </div>
                             <div class="cart-clear">
                                 {{-- <button class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 mx-3">Update Shopping Cart</button> --}}
@@ -287,7 +295,27 @@
 	<script src="{{asset('assets2/vendors/owlcarousel/js/owlcarousel.min.js')}}"></script>
 	<script src="{{asset('assets2/vendors/videopopup/js/videopopup.js')}}"></script>
 	<script src="{{asset('assets2/js/script.js')}}"></script>
-    <script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+    toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
+ 
         let paidamount;
         function removeqty(id)
         {
@@ -304,11 +332,13 @@
         function addqty(id)
         {
             var qty = $('#no_of_qty'+id).val();
-            
+            prdqty = $('#prdqty'+id).val();
+                if(qty>=prdqty){}
+                else{
                 qty = parseInt(qty)+1;
                 $('#no_of_qty'+id).val(qty);
                 update_qty(id);
-            
+                }
         }
         function remove(id)
          {
@@ -320,6 +350,7 @@
                  $.ajax({
                 type:'POST',
                 data:{
+                    "_token": "{{ csrf_token() }}",
                     id:id
                 },
                 url:url,
@@ -349,6 +380,7 @@
                  $.ajax({
                 type:'POST',
                 data:{
+                    "_token": "{{ csrf_token() }}",
                  no_of_qty:no_of_qty,
                  cart_id:cart_id
                  
@@ -373,6 +405,7 @@
            type:'POST',
            url:url,
            data:{
+            "_token": "{{ csrf_token() }}",
                coupen:coupen
            },
            success:function(result){ 
