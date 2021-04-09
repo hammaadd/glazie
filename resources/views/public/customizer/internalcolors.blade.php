@@ -65,8 +65,9 @@
 		function colors(color,id){
 			var a = document.getElementById("img"+id);
 		    var svgDoc = a.contentDocument;
-		    var svgItem = svgDoc.getElementById("base_x5F_colour");
-			svgItem = svgItem.childNodes[1].style.fill = color;
+		    var svgItem = svgDoc.getElementById("main_color");
+            var  innertag= svgItem.querySelector('polyline');
+			svgItem = innertag.style.fill = color;
 			console.log(svgItem);
 			
 		}

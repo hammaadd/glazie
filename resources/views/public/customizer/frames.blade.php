@@ -29,7 +29,7 @@
                                                     
                                                 
 											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="getframedata({{$frame->id}});setprice({{$frame->id}},{{$frame->frame_price}},4)">
+											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="getframedata({{$frame->id}});setprice({{$frame->id}},{{$frame->frame_price}},4);abc('{{url('admin-assets/addon/frame/'.$frame->image)}}')">
 											    		<div class="door">
                                                            
 											    			<img class="door-image" src="{{asset('admin-assets/addon/frame/'.$frame->image)}}" align="">
@@ -57,6 +57,13 @@
 	<script src="{{asset('assets2/vendors/owlcarousel/js/owlcarousel.min.js')}}"></script>
 	<script src="{{asset('assets2/vendors/videopopup/js/videopopup.js')}}"></script>
 	<script src="{{asset('assets2/js/script.js')}}"></script>
+	<script>
+		function abc(imagedata)
+		{
+			
+			setimage(imagedata);
+		}
+	</script>
     @else
 	<h3 class="text-center">Selected Model has no frame</h3>
 	@endif

@@ -302,6 +302,7 @@
 	let typearray = Array(0,0,0,0,0,0,0,0,0,0,0,0);
 	let id = 0;
 	let frame_id = 0;
+	let colorfulldoor = '';
 	let amountarray  = Array(0,0,0,0,0,0,0,0,0,0,0,0);
 		function showdoortoggle(){
 			
@@ -401,9 +402,28 @@
 		    $('li button.selected').removeClass('selected');
 		    $(this).addClass('selected');
 		});
+		function getsvg()
+		{
+			alert();
+			var ads= document.getElementById('main_image');
+			colorfulldoor = ads.contentDocument;
+			console.log(colorfulldoor);
+			
+		}
 		function setimage(imagename)
 		{
+			
 			$('#main_image').attr('data', imagename);
+			var frame = document.getElementById("main_image");
+			console.log(imagename);
+			var svgframeDoc = frame.contentDocument;
+		    var svgframeItem = svgframeDoc.getElementById("door");
+			console.log(svgframeDoc);
+			//svgframeItem.innerHTML = svgframeItem.innerHTML + colorfulldoor;
+			 
+			
+		
+			
 		}
 
 		
@@ -713,7 +733,7 @@
 		}
 		$('#p_price').html(net_total);
 		// console.log(amountarray);
-		 console.log(idarray);
+		// console.log(idarray);
 	}
 	function addtocart()
 	{

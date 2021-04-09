@@ -21,7 +21,7 @@
                            
                             @foreach ($externalcolors as $key => $color)
                               
-                            <li class="item list-unstyled text-center selectable_ext" onclick="setprice({{$color->id}},{{$color->price}},5)">
+                            <li class="item list-unstyled text-center selectable_ext" onclick="setprice({{$color->id}},{{$color->price}},5);setmaincolor('{{$color->value}}')">
                                 <button type="button" class="button-door border-0 bg-transparent my-5 w-100"  >
                                     <div class="door">
                                     	<object type="image/svg+xml" id="frameex<?php echo $key; ?>"  data="{{asset('admin-assets/addon/frame/'.$frame->image)}}" class="door-image" onload="setColor('{{$color->value}}',{{$key}})"></object>
@@ -66,11 +66,21 @@
 			var a = document.getElementById("frameex"+id);
 		    var svgDoc = a.contentDocument;
 		    
-            var svgItem = svgDoc.getElementById("frame_x5F_colour");
+            var svgItem = svgDoc.getElementById("frame");
+            var  innertag= svgItem.querySelector('polygon');
+			svgItem = innertag.style.fill = color;
 
-            svgItem = svgItem.childNodes[1].style.fill = color;
-          
+            
 		}
+        function setmaincolor(color)
+        {
+            var a = document.getElementById("main_image");
+		    var svgDoc = a.contentDocument;
+		    
+            var svgItem = svgDoc.getElementById("frame_colour");
+            var  innertag= svgItem.querySelector('polygon');
+			svgItem = innertag.style.fill = color;
+        }
 
 		
   	</script>

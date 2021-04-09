@@ -66,9 +66,9 @@
 			var a = document.getElementById("frameinternal"+id);
 		    var svgDoc = a.contentDocument;
 		    
-            var svgItem = svgDoc.getElementById("frame_x5F_colour");
-
-            svgItem = svgItem.childNodes[1].style.fill = color;
+            var svgItem = svgDoc.getElementById("frame_colour");
+            var  innertag= svgItem.querySelector('polygon');
+			svgItem = innertag.style.fill = color;
           
 		}
 
