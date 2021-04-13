@@ -119,16 +119,16 @@
 			      				<img src="assets2/media/svg/modal.svg" class="pe-3">Model
 			      			</a>
 			      		</li>
-			       		<li class="list-unstyled nav-item parent-child"><a class="nav-link rounded-0 text-white"  onclick="showdoortoggle()"   data-bs-toggle="pill"  role="tab"  aria-selected="true" style="cursor:pointer;"><img src="assets2/media/svg/color.svg" class="pe-3">Door Color</a></li>
+			       		<li class="list-unstyled nav-item parent-child"><a class="nav-link rounded-0 text-white"  onclick="showdoortoggle()"   data-bs-toggle="pill"  role="tab"  aria-selected="true"><img src="assets2/media/svg/color.svg" class="pe-3">Door Color</a></li>
 			       		<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-external-color-tab" data-bs-toggle="pill" href="#v-pills-external-color" role="tab" aria-controls="v-pills-external-color" aria-selected="true" onclick="getexternalcolors()"> External Color</a></li>
 			        	<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-internal-color-tab" data-bs-toggle="pill" href="#v-pills-internal-color" role="tab" aria-controls="v-pills-internal-color" aria-selected="true" onclick="get_internalcolors()">Internal Color</a></li>
 			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-glass-tab" data-bs-toggle="pill" href="#v-pills-glass" role="tab" aria-controls="v-pills-glass" aria-selected="true"><img src="assets2/media/svg/glass.svg" class="pe-3">Glass</a></li>
 			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-tab" data-bs-toggle="pill" href="#v-pills-frame" role="tab" aria-controls="v-pills-frame" aria-selected="true"><img src="assets2/media/svg/frame.svg" class="pe-3">Frame</a></li>
-			      		<li class="list-unstyled nav-item parent-child"><a class="nav-link rounded-0 text-white" onclick="showframetoggle()"  data-bs-toggle="pill"  role="tab"  aria-selected="true" style="cursor: pointer"><img src="assets2/media/svg/frame-color.svg" class="pe-3"> Frame Color </a></li>
+			      		<li class="list-unstyled nav-item parent-child"><a class="nav-link rounded-0 text-white" onclick="showframetoggle()"  data-bs-toggle="pill"  role="tab"  aria-selected="true"><img src="assets2/media/svg/frame-color.svg" class="pe-3"> Frame Color </a></li>
 			       		<li class="list-unstyled nav-item text-center framecolorsubchild"><a class="nav-link rounded-0 text-white float-right" id="v-pills-frame-external-color-tab" data-bs-toggle="pill" href="#v-pills-frame-external-color" role="tab" aria-controls="v-pills-frame-external-color" aria-selected="true" onclick="framedata()"> External Color</a></li>
 			      		<li class="list-unstyled nav-item framecolorsubchild"><a class="text-center nav-link rounded-0 text-white" id="v-pills-frame-internal-color-tab" data-bs-toggle="pill" href="#v-pills-frame-internal-color" role="tab" aria-controls="v-pills-frame-color" aria-selected="true" onclick="internalframecolors()"> Internal Color</a></li>
-			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-glass-tab" data-bs-toggle="pill" href="#v-pills-frame-glass" role="tab" aria-controls="v-pills-frame-glass" aria-selected="true" onclick="frameglasses()" style="cursor:pointer;"><img src="assets2/media/svg/frame-glass.svg" class="pe-3" >Frame Glass</a></li>
-			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white"  data-bs-toggle="pill"  onclick="showfurnituretoggle()" aria-controls="v-pills-furniture" aria-selected="true" style="cursor: pointer"><img src="assets2/media/svg/furniture.svg" class="pe-3">Furniture</a></li>
+			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-glass-tab" data-bs-toggle="pill" href="#v-pills-frame-glass" role="tab" aria-controls="v-pills-frame-glass" aria-selected="true" onclick="frameglasses()"><img src="assets2/media/svg/frame-glass.svg" class="pe-3" >Frame Glass</a></li>
+			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white"  data-bs-toggle="pill"  onclick="showfurnituretoggle()" aria-controls="v-pills-furniture" aria-selected="true"><img src="assets2/media/svg/furniture.svg" class="pe-3">Furniture</a></li>
 						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-handels-tab" data-bs-toggle="pill" href="#v-pills-handels" role="tab" aria-controls="v-pills-external-color" aria-selected="true">Handel</a></li>
 						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-knocker-tab" data-bs-toggle="pill" href="#v-pills-knocker" role="tab" aria-controls="v-pills-internal-color" aria-selected="true">Knocker</a></li>
 						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-letterbox-tab" data-bs-toggle="pill" href="#v-pills-letter-box" role="tab" aria-controls="v-pills-external-color" aria-selected="true"> Letter Box</a></li>
@@ -238,11 +238,8 @@
 			    </div>
 			  </div>
 			  <div class="col-md-3 text-center border-start pt-4">
-				<input type="hidden" id="doorcolor" value="#fff">
-				<input type="hidden" id="abc" >
-				  <div id="doorimag">
-
-					<object type="image/svg+xml" id="main_image" data="{{asset('admin-assets/addon/'.$addon->svgimage)}}" class="door-image" style="width: 138px;text-align:center; " ></object>
+				  <div id="doorimage" >
+					<object type="image/svg+xml" id="main_image" data="{{asset('admin-assets/addon/'.$addon->svgimage)}}" class="door-image" style="width: 138px;text-align:center;"></object>
 				  </div>
 				  	<h4 class="custom-price pt-4"><span class="theme_color">Price:</span> &#163;<i id="p_price">0</i></h4>
 				  	<button type="button" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-4" onclick="addtocart()">Add To Cart</button>
@@ -407,31 +404,21 @@
 		});
 		function getsvg()
 		{
-			
+			alert();
 			var ads= document.getElementById('main_image');
+			colorfulldoor = ads.contentDocument;
+			console.log(colorfulldoor);
 			
-			
-		}
-		function abcc()
-		{
-			
-			var m = document.getElementById('main_image');
-			console.log(m);
-			var mod = m.contentDocument;
-			var color = $('#doorcolor').val();
-			var modelglasses = mod.getElementById("main_color");
-
-			var  modelinnertag= modelglasses.querySelector('polyline');
-			modelinnertag.style.fill = color;
 		}
 		function setimage(imagename)
 		{
+			
 			$('#main_image').attr('data', imagename);
 			var frame = document.getElementById("main_image");
-			//console.log(imagename);
+			console.log(imagename);
 			var svgframeDoc = frame.contentDocument;
 		    var svgframeItem = svgframeDoc.getElementById("door");
-			//console.log(svgframeDoc);
+			console.log(svgframeDoc);
 			//svgframeItem.innerHTML = svgframeItem.innerHTML + colorfulldoor;
 			 
 			
@@ -746,7 +733,7 @@
 		}
 		$('#p_price').html(net_total);
 		// console.log(amountarray);
-		 //console.log(idarray);
+		// console.log(idarray);
 	}
 	function addtocart()
 	{

@@ -42,11 +42,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\InstallQuote;
 use App\Mail\InstallerQuote;
-use App\Models\ModelFrame;
-use App\Models\FrameGlass;
-use App\Models\AddonFurniture;
-use App\Models\AddonColor;
-use App\Models\FrameDetails;
 use Mail;
 use App\Models\WeightSlot;
 use App\Notifications\SendPassword;
@@ -77,7 +72,7 @@ class IndexController extends Controller
     {
         $search = $request->input('search');
         $sort_type = $request->input('sort_type');
-        $products =Products::where('product_name','like', '%'.$search.'%')->where('publish','=','public')->where('type','!=','customize')->orderBy('regular_price',$sort_type)->paginate(1)->withQueryString();
+        $products =Products::where('product_name','like', '%'.$search.'%')->where('publish','=','public')->where('type','!=','customize')->orderBy('regular_price',$sort_type)->paginate(1);
         return view('public/searchproducts',['products'=>$products,'search'=>$search]); 
     }
 
@@ -336,22 +331,6 @@ class IndexController extends Controller
                         Cart::where('id',$cart->id)->delete();
                     }
                    
-                }
-                
-                $productdata = Products::find($cart_prd_id);
-                if($productdata->type=="customize")
-                {
-                    foreach($cart->cartdetails as $cartdetails)
-                    {
-                        if($cartdetails->addon_type=="model")
-                        {
-                            $addons = AddOn::find($cartdetails->type_id);
-                            if($cart->quantity> $addons->quantity)
-                            {
-                                
-                            }
-                        }
-                    }
                 }
 
                 
@@ -776,123 +755,6 @@ class IndexController extends Controller
             $prdorderdetails->quantity=$cartdetails->quantity;
             $prdorderdetails->created_by=$user_id;
             $prdorderdetails->save();
-            if($cartdetails->addon_type=='model')
-            {
-                $addon = AddOn::find($cartdetails->type_id);
-                $addon_qty = $addon->quantity;
-                $addonqty = $addon_qty- $cart->quantity;
-                $updateqty = array(
-                    'quantity'=>$addonqty
-                );
-                AddOn::where('id',$cartdetails->type_id)->update($updateqty);
-                
-            }
-            if($cartdetails->addon_type=='exteranal_color')
-            {
-                $addon = AddonColor::find($cartdetails->type_id);
-                $addon_qty = $addon->quantity;
-                $addonqty = $addon_qty- $cart->quantity;
-                $updateqty = array(
-                    'quantity'=>$addonqty
-                );
-                AddonColor::where('id',$cartdetails->type_id)->update($updateqty);
-                
-            }
-            if($cartdetails->addon_type=='interanal_color')
-            {
-                $addon = AddonColor::find($cartdetails->type_id);
-                $addon_qty = $addon->quantity;
-                $addonqty = $addon_qty- $cart->quantity;
-                $updateqty = array(
-                    'quantity'=>$addonqty
-                );
-                AddonColor::where('id',$cartdetails->type_id)->update($updateqty);
-                
-            }
-            if($cartdetails->addon_type=='frameexcolor')
-            {
-                $addon = FrameDetails::find($cartdetails->type_id);
-                $addon_qty = $addon->quantity;
-                $addonqty = $addon_qty- $cart->quantity;
-                $updateqty = array(
-                    'quantity'=>$addonqty
-                );
-                FrameDetails::where('id',$cartdetails->type_id)->update($updateqty);
-                
-            }
-            if($cartdetails->addon_type=='frameinternalcolor')
-            {
-                $addon = FrameDetails::find($cartdetails->type_id);
-                $addon_qty = $addon->quantity;
-                $addonqty = $addon_qty- $cart->quantity;
-                $updateqty = array(
-                    'quantity'=>$addonqty
-                );
-                FrameDetails::where('id',$cartdetails->type_id)->update($updateqty);
-                
-            }
-            if($cartdetails->addon_type=='frame')
-            {
-                $addon = ModelFrame::find($cartdetails->type_id);
-                $addon_qty = $addon->quantity;
-                $addonqty = $addon_qty- $cart->quantity;
-                $updateqty = array(
-                    'quantity'=>$addonqty
-                );
-                ModelFrame::where('id',$cartdetails->type_id)->update($updateqty);
-            }
-            if($cartdetails->addon_type=='glass')
-            {
-                $addon = ModelFrame::find($cartdetails->type_id);
-                $addon_qty = $addon->quantity;
-                $addonqty = $addon_qty- $cart->quantity;
-                $updateqty = array(
-                    'quantity'=>$addonqty
-                );
-                ModelFrame::where('id',$cartdetails->type_id)->update($updateqty);
-            }
-            if($cartdetails->addon_type=='frame_glass')
-            {
-                $addon = FrameGlass::find($cartdetails->type_id);
-                $addon_qty = $addon->quantity;
-                $addonqty = $addon_qty - $cart->quantity;
-                $updateqty = array(
-                    'quantity'=>$addonqty
-                );
-                FrameGlass::where('id',$cartdetails->type_id)->update($updateqty);
-            }
-            if($cartdetails->addon_type=='handle')
-            {
-                $addon = AddonFurniture::find($cartdetails->type_id);
-                $addon_qty = $addon->quantity;
-                $addonqty = $addon_qty- $cart->quantity;
-                $updateqty = array(
-                    'quantity'=>$addonqty
-                );
-                AddonFurniture::where('id',$cartdetails->type_id)->update($updateqty);
-            }
-            if($cartdetails->addon_type=='knocker')
-            {
-                $addon = AddonFurniture::find($cartdetails->type_id);
-                $addon_qty = $addon->quantity;
-                $addonqty = $addon_qty- $cart->quantity;
-                $updateqty = array(
-                    'quantity'=>$addonqty
-                );
-                AddonFurniture::where('id',$cartdetails->type_id)->update($updateqty);
-            }
-            if($cartdetails->addon_type=='letterbox')
-            {
-                $addon = AddonFurniture::find($cartdetails->type_id);
-                $addon_qty = $addon->quantity;
-                $addonqty = $addon_qty- $cart->quantity;
-                $updateqty = array(
-                    'quantity'=>$addonqty
-                );
-                AddonFurniture::where('id',$cartdetails->type_id)->update($updateqty);
-            }
-
-            
         
          
          

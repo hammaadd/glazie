@@ -68,7 +68,7 @@
 		    var svgItem = svgDoc.getElementById("main_color");
             var  innertag= svgItem.querySelector('polyline');
 			svgItem = innertag.style.fill = color;
-			//console.log(svgItem);
+			console.log(svgItem);
 			
 		}
   // 		window.onload=function() {
