@@ -32,6 +32,7 @@
                             
                             @endforeach
                         </div>
+                        
                         <div class="customNavigation">
                             <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 " onclick="gotomodel()">Prev</a>
                             <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end" onclick="get_internal()">Next</a>
@@ -59,12 +60,17 @@
   	<script type="text/javascript">
       function setcolorimage(colors)
         {
+           // alert(colors);
            
             var a = document.getElementById("main_image");
             var mainsvgDoc = a.contentDocument;
             var svgItems = mainsvgDoc.getElementById("main_color");
+
             var  innertag= svgItems.querySelector('polyline');
 			svgItem = innertag.style.fill = colors;
+            
+            $('#doorcolor').empty();
+            $('#doorcolor').val(colors);
             getsvg();
         }
   		
