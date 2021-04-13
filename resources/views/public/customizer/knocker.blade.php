@@ -1,3 +1,4 @@
+  
 @if(count($knockers)>0)
 
 <section class="section product-section">
@@ -51,7 +52,6 @@
             $('li button.selected').removeClass('selected');
             $(this).addClass('selected');
         });
-
         function setDoorKnocker(image){
             var a = document.getElementById("main_image");
             var mainsvgDoc = a.contentDocument;

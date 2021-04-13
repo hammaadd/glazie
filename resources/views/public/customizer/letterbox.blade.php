@@ -51,7 +51,6 @@
             $('li button.selected').removeClass('selected');
             $(this).addClass('selected');
         });
-
         function setLetterBox(image){
             var a = document.getElementById("main_image");
             var mainsvgDoc = a.contentDocument;
