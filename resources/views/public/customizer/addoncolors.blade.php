@@ -23,8 +23,8 @@
                                 
                                 <button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="setprice({{$color->id}},{{$color->price}},1);setcolorimage('{{$color->color_code}}')">
 
-                                    <div class="door"  style="cursor: pointer;">
-                                    	<object type="image/svg+xml" id="img_svg<?php echo $key ?>" data="{{asset('admin-assets/addon/'.$addon->svgimage)}}" class="door-image" onload="setColor('{{$color->color_code}}',{{$key}})" style="cursor: pointer;"></object>
+                                    <div class="door" >
+                                    	<object type="image/svg+xml" id="img_svg<?php echo $key ?>" data="{{asset('admin-assets/addon/glass/'.$doors_glass->image)}}" class="door-image" onload="setColor('{{$color->color_code}}',{{$key}})" ></object>
                                     	
                                     </div>
                                 </button>
@@ -57,13 +57,17 @@
         });
   </script>
   	<script type="text/javascript">
-      function setcolorimage(colors)
-        { 
+      function setcolorimage(colors){
+           // alert(colors);
+           
             var a = document.getElementById("main_image");
             var mainsvgDoc = a.contentDocument;
             var svgItems = mainsvgDoc.getElementById("main_color");
+
             var  innertag= svgItems.querySelector('polyline');
 			svgItem = innertag.style.fill = colors;
+            
+            $('#doorcolor').empty();
             $('#doorcolor').val(colors);
             //getsvg();
         }
@@ -77,8 +81,6 @@
 		    var svgItem = svgDoc.getElementById("main_color");
             var  innertag= svgItem.querySelector('polyline');
 			svgItem = innertag.style.fill = color;
-            svgItem = innertag.style.cursor = 'pointer';
-            
 			
 			
 		}

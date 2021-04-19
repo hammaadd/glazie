@@ -18,8 +18,10 @@
 						<div id="owl-glass" class="owl-builder owl-carousel owl-theme" >
                             @foreach ($glasses as $key=> $glass)
 						    <li class="item list-unstyled text-center" >
-						    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="setprice({{$glass->id}},{{$glass->frame_price}},3);getimagedata({{$key}})">
-						    		<div class="door" id="abc{{$key}}">
+
+						    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" 
+						    	onclick='setprice({{$glass->id}},{{$glass->frame_price}},3);setimag("{{$glass->image}}","{{$glass->id}}")'>
+						    		<div class="door" id="doorimage{{$key}}">
 						    			{{-- <img class="door-image" src="{{asset('admin-assets/addon/glass/'.$glass->image)}}" align=""> --}}
 										<object type="image/svg+xml" id="modelglass<?php echo $key ?>" data="{{asset('admin-assets/addon/glass/'.$glass->image)}}" class="door-image" onload="setdoorColor({{$key}})" ></object>
 						    		</div>
@@ -52,10 +54,24 @@
 		    var svgItem = svgDoc.getElementById("main_color");
             var  innertag= svgItem.querySelector('polyline');
 			var color = $('#doorcolor').val();
+
 			svgItem = innertag.style.fill = color;
 		}
-		
-      
+        function setimag(key,id){
+        	var color = $('#doorcolor').val();
+        	var a = document.getElementById("main_image");
+        	var image_name = '<?php echo asset("admin-assets/addon/glass/"); ?>'+'/'+key;
+            var st = a.setAttribute("data", image_name);
+            var mainsvgDoc = a.contentDocument;
+            
+            var svgItems = mainsvgDoc.getElementById("main_color");
+            var new_val = svgItems.id = 'main_color_temp';
+            var innertag= svgItems.querySelector('polyline');
+
+   			$('#door_glass').val(id);
+   			$('#door_pic').val(key);
+        }
+   
  
     </script>
 	  @else
