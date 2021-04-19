@@ -23,10 +23,11 @@
                             
                             <li class="item list-unstyled text-center selectable_ext" >
                                 
-                                <button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="setprice({{$color->id}},{{$color->price}},2)">
+                                <button type="button" class="button-door border-0 bg-transparent my-5 w-100" 
+                                onclick="setprice({{$color->id}},{{$color->price}},2);setcolorimage('{{$color->color_code}}')">
 
                                     <div class="door">
-                                    	<object type="image/svg+xml" id="img{{$key}}" data="{{asset('admin-assets/addon/'.$addon->svgimage)}}" class="door-image" onload="setColor('{{$color->color_code}}',{{$key}})"></object>
+                                    	<object type="image/svg+xml" id="img{{$key}}" data="{{asset('admin-assets/addon/glass/'.$doors_glass->image)}}" class="door-image" onload="setColor('{{$color->color_code}}',{{$key}})"></object>
                                     </div>
                                 </button>
                             </li>
@@ -71,6 +72,15 @@
 			//console.log(svgItem);
 			
 		}
+          function setcolorimage(colors)
+        { 
+            var a = document.getElementById("main_image");
+            var mainsvgDoc = a.contentDocument;
+            var svgItems = mainsvgDoc.getElementById("main_color");
+            var  innertag= svgItems.querySelector('polyline');
+            svgItem = innertag.style.fill = colors;
+        
+        }
   // 		window.onload=function() {
   // 			setColor(color);
 		// };

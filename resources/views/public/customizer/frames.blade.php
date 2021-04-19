@@ -25,14 +25,15 @@
 									<div class="row">
 										<div class="col-12">
 											<div id="owl-frame" class="owl-builder owl-carousel owl-theme">
-                                                @foreach ($frames as $frame)
+                                                @foreach ($frames as $key => $frame)
                                                     
                                                 
 											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="getframedata({{$frame->id}});setprice({{$frame->id}},{{$frame->frame_price}},4);abc('{{url('admin-assets/addon/frame/'.$frame->image)}}')">
+											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="getframedata({{$frame->id}});setprice({{$frame->id}},{{$frame->frame_price}},4);abc('{{url('admin-assets/addon/frame/'.$frame->image)}}');setframeimage('{{url('admin-assets/addon/frame/'.$frame->image)}}')">
 											    		<div class="door">
                                                            
-											    			<img class="door-image" src="{{asset('admin-assets/addon/frame/'.$frame->image)}}" align="">
+											    			<object type="image/svg+xml" 
+											    			onload="doorGlassIm('{{url('admin-assets/addon/frame/'.$frame->image)}}'),{{$key}}" id="frame_svg<?php echo $key ?>" class="door-image" data="{{asset('admin-assets/addon/frame/'.$frame->image)}}" align=""></object>
 											    		</div>
 											    	</button>
 											    </li>
@@ -58,11 +59,27 @@
 	<script src="{{asset('assets2/vendors/videopopup/js/videopopup.js')}}"></script>
 	<script src="{{asset('assets2/js/script.js')}}"></script>
 	<script>
+		
+		// function doorGlassIm(image,id){
+		// 	var a = document.getElementById("frame_svg"+id);
+  //           //var mainsvgDoc = a.contentDocument;
+  //           //console.log(a);
+		// }
 		function abc(imagedata)
 		{
-			
 			setimage(imagedata);
+			// var image = $('#door_pic').val();
+			// image_name = '<?php echo asset("admin-assets/addon/glass/"); ?>'+'/'+image;
+			// a = document.getElementById("doorimage");
+			// doc = a.children[0];
+			// doc = doc.getElementById("door");
+			// //console.log(doc);
+			// // //final = doc.innerHTML='';
+			// // if (doc.hasChildNodes()) {
+   // //              var st = doc.removeChild(doc.childNodes[0]);
+   // //          }
 		}
+		
 	</script>
     @else
 	<h3 class="text-center">Selected Model has no frame</h3>

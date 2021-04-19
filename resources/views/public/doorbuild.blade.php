@@ -6,20 +6,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Customize Your Item</title>
 	<meta name="description" content="Bespoke Double glazing supplier and Installer over 25 years experience.Transform your home with premium quality windows and doors contact us.">
-	<link rel="icon" href="assets2/media/logo.png">
-
+	<link rel="icon" href="{{asset('assets2/media/logo.png')}}">
+	<link rel="stylesheet" href="{{asset('assets2/vendors/animate/animate.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets2/vendors/bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets2/vendors/owlcarousel/css/owlcarousel.min.css')}}">
+	 <link rel="stylesheet" href="{{asset('assets2/vendors/fontawesome/css/all.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets2/vendors/boxicons/css/boxicons.min.css')}}">
+	{{-- <link rel="preconnect" href="https://fonts.gstatic.com">--}}
+	<link rel="stylesheet" href="{{asset('assets2/css2.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 	<!-- Style Libraries -->
-	<link rel="stylesheet" href="assets2/vendors/animate/animate.min.css">
-	<link rel="stylesheet" href="assets2/vendors/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="assets2/vendors/owlcarousel/css/owlcarousel.min.css">
-	<!-- <link rel="stylesheet" href="assets2/vendors/fontawesome/css/all.min.css"> -->
-	<link rel="stylesheet" href="assets2/vendors/boxicons/css/boxicons.min.css">
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
-	<link rel="stylesheet" href="assets2/css/style.css">
+
 	<style type="text/css">
 		
-.colorsubchild,.framecolorsubchild,.sizesubchild{
+.colorsubchild,.framecolorsubchild,.sizesubchild,.furnituresubchild{
 	display: none;
 }
 .defaultsize{
@@ -92,7 +92,7 @@
 					<div class="row align-items-center">
 						<div class="col-xl-3 col-md-2 col-sm-6">
 							<div class="logo">
-								<a href="index.html">
+								<a href="{{url('/')}}">
 									<img src="assets2/media/glazie-logo.png" alt="Double Glaze Windows and Doors">
 								</a>
 							</div>
@@ -100,7 +100,7 @@
 						<div class="col-xl-9 col-md-10 col-sm-6">
 							<ul class="navbar-nav text-end">
 								<li class="nav-item active">
-									<a class="nav-link" href="index.html">Back To Home</a>
+									<a class="nav-link" href="{{url('/')}}">Back To Home</a>
 								</li>
 							</ul>
 						</div>
@@ -119,19 +119,28 @@
 			      				<img src="assets2/media/svg/modal.svg" class="pe-3">Model
 			      			</a>
 			      		</li>
-			       		<li class="list-unstyled nav-item "><a class="nav-link rounded-0 text-white" data-bs-toggle="pill" onclick="showdoortoggle()"  role="tab" aria-controls="v-pills-external-color" aria-selected="true"><img src="assets2/media/svg/color.svg" class="pe-3">Door Color</a></li>
-			       		<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-external-color-tab" data-bs-toggle="pill" href="#v-pills-external-color" role="tab" aria-controls="v-pills-external-color" aria-selected="true"> External Color</a></li>
-			        	<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-internal-color-tab" data-bs-toggle="pill" href="#v-pills-internal-color" role="tab" aria-controls="v-pills-internal-color" aria-selected="true">Internal Color</a></li>
+
 			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-glass-tab" data-bs-toggle="pill" href="#v-pills-glass" role="tab" aria-controls="v-pills-glass" aria-selected="true"><img src="assets2/media/svg/glass.svg" class="pe-3">Glass</a></li>
+
+			       		<li class="list-unstyled nav-item parent-child"><a class="nav-link rounded-0 text-white"  onclick="showdoortoggle()"   data-bs-toggle="pill"  role="tab"  aria-selected="true"><img src="assets2/media/svg/color.svg" class="pe-3">Door Color</a></li>
+			       		<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-external-color-tab" data-bs-toggle="pill" href="#v-pills-external-color" role="tab" aria-controls="v-pills-external-color" aria-selected="true" onclick="getexternalcolors()"> External Color</a></li>
+			        	<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-internal-color-tab" data-bs-toggle="pill" href="#v-pills-internal-color" role="tab" aria-controls="v-pills-internal-color" aria-selected="true" onclick="get_internalcolors()">Internal Color</a></li>
+
+			      		<!-- <li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-glass-tab" data-bs-toggle="pill" href="#v-pills-glass" role="tab" aria-controls="v-pills-glass" aria-selected="true"><img src="assets2/media/svg/glass.svg" class="pe-3">Glass</a></li> -->
+
 			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-tab" data-bs-toggle="pill" href="#v-pills-frame" role="tab" aria-controls="v-pills-frame" aria-selected="true"><img src="assets2/media/svg/frame.svg" class="pe-3">Frame</a></li>
 			      		<li class="list-unstyled nav-item parent-child"><a class="nav-link rounded-0 text-white" onclick="showframetoggle()"  data-bs-toggle="pill"  role="tab"  aria-selected="true"><img src="assets2/media/svg/frame-color.svg" class="pe-3"> Frame Color </a></li>
-			       		<li class="list-unstyled nav-item text-center framecolorsubchild"><a class="nav-link rounded-0 text-white float-right" id="v-pills-frame-external-color-tab" data-bs-toggle="pill" href="#v-pills-frame-external-color" role="tab" aria-controls="v-pills-frame-external-color" aria-selected="true"> External Color</a></li>
-			      		<li class="list-unstyled nav-item framecolorsubchild"><a class="text-center nav-link rounded-0 text-white" id="v-pills-frame-internal-color-tab" data-bs-toggle="pill" href="#v-pills-frame-internal-color" role="tab" aria-controls="v-pills-frame-color" aria-selected="true"> Internal Color</a></li>
-			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-glass-tab" data-bs-toggle="pill" href="#v-pills-frame-glass" role="tab" aria-controls="v-pills-frame-glass" aria-selected="true"><img src="assets2/media/svg/frame-glass.svg" class="pe-3">Frame Glass</a></li>
-			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-furniture-tab" data-bs-toggle="pill" href="#v-pills-furniture" role="tab" aria-controls="v-pills-furniture" aria-selected="true"><img src="assets2/media/svg/furniture.svg" class="pe-3">Furniture</a></li>
+			       		<li class="list-unstyled nav-item text-center framecolorsubchild"><a class="nav-link rounded-0 text-white float-right" id="v-pills-frame-external-color-tab" data-bs-toggle="pill" href="#v-pills-frame-external-color" role="tab" aria-controls="v-pills-frame-external-color" aria-selected="true" onclick="framedata()"> External Color</a></li>
+			      		<li class="list-unstyled nav-item framecolorsubchild"><a class="text-center nav-link rounded-0 text-white" id="v-pills-frame-internal-color-tab" data-bs-toggle="pill" href="#v-pills-frame-internal-color" role="tab" aria-controls="v-pills-frame-color" aria-selected="true" onclick="internalframecolors()"> Internal Color</a></li>
+			      		<!-- <li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-glass-tab" data-bs-toggle="pill" href="#v-pills-frame-glass" role="tab" aria-controls="v-pills-frame-glass" aria-selected="true" onclick="frameglasses()"><img src="assets2/media/svg/frame-glass.svg" class="pe-3" >Frame Glass</a></li> -->
+			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white"  data-bs-toggle="pill"  onclick="showfurnituretoggle()" aria-controls="v-pills-furniture" aria-selected="true"><img src="assets2/media/svg/furniture.svg" class="pe-3">Furniture</a></li>
+						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-handels-tab" data-bs-toggle="pill" href="#v-pills-handels" role="tab" aria-controls="v-pills-external-color" aria-selected="true">Handel</a></li>
+						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-knocker-tab" data-bs-toggle="pill" href="#v-pills-knocker" role="tab" aria-controls="v-pills-internal-color" aria-selected="true">Knocker</a></li>
+						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-letterbox-tab" data-bs-toggle="pill" href="#v-pills-letter-box" role="tab" aria-controls="v-pills-external-color" aria-selected="true"> Letter Box</a></li>
+						  
 			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-hing-tab" data-bs-toggle="pill" href="#v-pills-hing" role="tab" aria-controls="v-pills-hing" aria-selected="true"><img src="assets2/media/svg/frame-glass.svg" class="pe-3">Hinge</a></li>
 			      		<li class="list-unstyled nav-item d-none"><a class="nav-link rounded-0 text-white" id="v-pills-price-tab" data-bs-toggle="pill" href="#v-pills-price" role="tab" aria-controls="v-pills-price" aria-selected="true"><img src="assets2/media/svg/price.svg" class="pe-3">Price</a></li>
-			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white text-center pt-4" id="v-pills-refresh-tab" data-bs-toggle="pill" href="#v-pills-refresh" role="tab" aria-controls="v-pills-refresh" aria-selected="true"><img src="assets2/media/svg/refresh.svg" width="30px" height="30px"></a></li>
+			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white text-center pt-4" href="{{url('door-build')}}"><img src="assets2/media/svg/refresh.svg" width="30px" height="30px"></a></li>
 			    	</ul>
 			  	</div>
 			  	<div class="col-md-7 px-4">
@@ -156,11 +165,9 @@
 													<div class="col-12">
 														<div id="owl-model" class="owl-builder owl-carousel owl-theme">
 														    @foreach ($addons as $addon)
-															    <li class="item list-unstyled text-center" onclick="getModalId({{$addon->id}}, {{$addon->price}}, 'model')">
-															    	<!-- <input type="hidden" id="" value="model" name="type">
-															    	<input type="hidden" id="modal_id" value="{{$addon->id}}" name="modal_id">
-														    		<input type="hidden" id="modal_price" value="{{$addon->price}}" name="modal_price"> -->
-															    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="getexternalcolors({{$addon->id}})">
+															    <li class="item list-unstyled text-center" >
+															    	
+															    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="get_glasses({{$addon->id}});setprice({{$addon->id}},{{$addon->price}},0);setimage('{{asset('admin-assets/addon/'.$addon->svgimage)}}')">
 															    		<div class="door">
 															    			<img class="door-image" src="{{asset('admin-assets/addon/'.$addon->svgimage)}}" align="">
 															    		</div>
@@ -169,7 +176,7 @@
 														    @endforeach
 														</div>
 														<div class="customNavigation">
-														    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnDefaultSize mb-3">Next</a>
+														    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end  mb-3" onclick="get_colors()">Next</a>
 														</div>
 													</div>
 												</div>
@@ -180,981 +187,71 @@
 			      			</div>
 
 			      			<div class="tab-pane fade" id="v-pills-external-color" role="tabpanel" aria-labelledby="v-pills-external-color-tab">
-						      	<section class="section product-section">
-						      		<div class="title-box">
-										<div class="container">
-											<!--Sec Title-->
-											<div class="sec-title text-center">
-												<div class="title-inner">
-													<h2>Choose Your <span class="theme_color">External Color</span></h2>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="lower-section pt-0">
-										<div class="lower-inner-section">
-											<div class="container">
-												<div class="row">
-													<div class="col-12">
-														<div id="owl-external-color" class="owl-builder owl-carousel owl-theme">
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-ffffff.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-323232.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-2D654C.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-AE1216.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-bc4078.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-07756E.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-B41E20.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-3677C0.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-2D654C.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-DF8245.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-CDCD57.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														</div>
-														<div class="customNavigation">
-															<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnSize">Prev</a>
-														    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btninternalColor">Next</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-			      				</section>
+						      	<div class="row">
+									  <div class="col-md-6 offset-md-3">
+										<img src="{{asset('loader/giphy.gif')}}" alt="">
+									  </div>
+								  </div>
 			      			</div>
 			      			<div class="tab-pane fade" id="v-pills-internal-color" role="tabpanel" aria-labelledby="v-pills-internal-color-tab">
-						      	<section class="section product-section">
-						      		<div class="title-box">
-										<div class="container">
-											<!--Sec Title-->
-											<div class="sec-title text-center">
-												<div class="title-inner">
-													<h2>Choose Your <span class="theme_color">Internal Color</span></h2>
-												</div>
-											</div>
-										</div>
+								<h3 id="internalcolor">Please Selecte the Model </h3>
+								<div class="row">
+									<div class="col-md-6 offset-md-3">
+										<img src="{{asset('loader/giphy.gif')}}" alt="" id="img" style="display:none;" width="100%">
 									</div>
-
-									<div class="lower-section pt-0">
-										<div class="lower-inner-section">
-											<div class="container">
-												<div class="row">
-													<div class="col-12">
-														<div id="owl-internal-color" class="owl-builder owl-carousel owl-theme">
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-ffffff.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-323232.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-2D654C.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-AE1216.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-bc4078.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-07756E.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-B41E20.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-3677C0.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-2D654C.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-DF8245.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-CDCD57.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														</div>
-														<div class="customNavigation">
-															<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnColor">Prev</a>
-														    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnGlass">Next</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-						      	</section>
+								</div>	
 			      			</div>
 			      			<div class="tab-pane fade" id="v-pills-glass" role="tabpanel" aria-labelledby="v-pills-glass-tab">
-						      	<section class="section product-section">
-						      		<div class="title-box">
-										<div class="container">
-											<!--Sec Title-->
-											<div class="sec-title text-center">
-												<div class="title-inner">
-													<h2>What type of <span class="theme_color">glass</span> would you like?</h2>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="lower-section pt-0">
-										<div class="lower-inner-section">
-											<div class="container">
-												<div class="row">
-													<div class="col-12">
-														<div id="owl-glass" class="owl-builder owl-carousel owl-theme">
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-RG18__m-ACDA2.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-BO500__m-ACDA2.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-BO508__m-ACDA2.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-BO510__m-ACDA2.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-RG18__m-ACDA2.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-BO550__m-ACDA2.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-BO556__m-ACDA2.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-BO560__m-ACDA2.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-FT14__m-ACDA2.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-FT21__m-ACDA2.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-FT38__m-ACDA2.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/ACDA2__c-b0b0a9__g-FT50__m-ACDA2.svg" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														</div>
-														<div class="customNavigation">
-															<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btninternalColor">Prev</a>
-														    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnFrame">Next</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>						
-						      	</section>
+								<h3 class="text-center">Please Select the Model</h3>
 			      			</div>
 						    <div class="tab-pane fade" id="v-pills-frame" role="tabpanel" aria-labelledby="v-pills-frame-tab">
-						      	<section class="section product-section">
-						      		<div class="title-box">
-										<div class="container">
-											<!--Sec Title-->
-											<div class="sec-title text-center">
-												<div class="title-inner">
-													<h2>Select A <span class="theme_color">Frame Design</span></h2>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="lower-section pt-0">
-										<div class="lower-inner-section">
-											<div class="container">
-												<div class="row">
-													<div class="col-12">
-														<div id="owl-frame" class="owl-builder owl-carousel owl-theme">
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frames/1.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frames/2.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frames/3.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frames/4.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frames/5.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frames/1.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frames/2.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frames/3.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frames/4.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frames/5.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frames/1.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frames/2.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														</div>
-														<div class="customNavigation">
-															<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnGlass">Prev</a>
-														    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnFrameexternalColor">Next</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-						      	</section>
+								<h3 class="text-center">Please Select the Model</h3>
 						    </div>
 						    <div class="tab-pane fade" id="v-pills-frame-external-color" role="tabpanel" aria-labelledby="v-pills-frame-external-color-tab">
-						      	<section class="section product-section">
-						      		<div class="title-box">
-										<div class="container">
-											<!--Sec Title-->
-											<div class="sec-title text-center">
-												<div class="title-inner">
-													<h2>Select A <span class="theme_color">Frame External Color</span></h2>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="lower-section pt-0">
-										<div class="lower-inner-section">
-											<div class="container">
-												<div class="row">
-													<div class="col-12">
-														<div id="owl-frame-color" class="owl-builder owl-carousel owl-theme">
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/1.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/2.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/3.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/4.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/5.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/6.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/2.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/3.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/4.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/5.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/1.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/6.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														</div>
-														<div class="customNavigation">
-															<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnFrame">Prev</a>
-														    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btninternalframecolor">Next</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-						      	</section>
+								<h3 class="text-center">Please Select the Model and Frame</h3>
 						    </div>
 						    <div class="tab-pane fade" id="v-pills-frame-internal-color" role="tabpanel" aria-labelledby="v-pills-frame-internal-color-tab">
-						      	<section class="section product-section">
-						      		<div class="title-box">
-										<div class="container">
-											<!--Sec Title-->
-											<div class="sec-title text-center">
-												<div class="title-inner">
-													<h2>Select A <span class="theme_color">Frame Internal Color</span></h2>
-												</div>
-											</div>
-										</div>
+								<h3 class="text-center" id="frameinternalcolorheading">Please Select the Model and Frame</h3>
+								<div class="row">
+									<div class="col-md-6 offset-md-3">
+										<img src="{{asset('loader/giphy.gif')}}" alt="" id="imgframeinter" style="display:none;" width="100%">
 									</div>
-
-									<div class="lower-section pt-0">
-										<div class="lower-inner-section">
-											<div class="container">
-												<div class="row">
-													<div class="col-12">
-														<div id="owl-frame-internal-color" class="owl-builder owl-carousel owl-theme">
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/1.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/2.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/3.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/4.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/5.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/6.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/2.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/3.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/4.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/5.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/1.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-colors/6.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														</div>
-														<div class="customNavigation">
-															<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnFrameexternalColor">Prev</a>
-														    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnFrameGlass">Next</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-						      	</section>
+								</div>	
 						    </div>
 						    <div class="tab-pane fade" id="v-pills-frame-glass" role="tabpanel" aria-labelledby="v-pills-frame-glass-tab">
-						      	<section class="section product-section">
-						      		<div class="title-box">
-										<div class="container">
-											<!--Sec Title-->
-											<div class="sec-title text-center">
-												<div class="title-inner">
-													<h2>What type of <span class="theme_color">frame glass</span> would you like?</h2>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="lower-section pt-0">
-										<div class="lower-inner-section">
-											<div class="container">
-												<div class="row">
-													<div class="col-12">
-														<div id="owl-frame-glass" class="owl-builder owl-carousel owl-theme">
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-glass/7.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-glass/7.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-glass/7.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-glass/7.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-glass/7.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-glass/7.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-glass/7.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-glass/7.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-glass/7.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-glass/7.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-glass/7.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/frame-glass/7.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														</div>
-														<div class="customNavigation">
-															<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btninternalframecolor">Prev</a>
-														    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnFurniture">Next</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-						      	</section>
+								<h3 class="text-center">Please Select the Model and Frame</h3>
 						    </div>
-						    <div class="tab-pane fade" id="v-pills-hing" role="tabpanel" aria-labelledby="v-pills-hing">
-						      	<section class="section product-section">
-						      		<div class="title-box">
-										<div class="container">
-											<!--Sec Title-->
-											<div class="sec-title text-center">
-												<div class="title-inner">
-													<h2>What type of <span class="theme_color">Hinge</span> would you like?</h2>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="lower-section pt-0">
-										<div class="lower-inner-section">
-											<div class="container">
-												<div class="row">
-													<div class="col-12">
-														<div id="owl-hing-glass" class="owl-builder owl-carousel owl-theme">
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/hinge/2.PNG" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/hinge/1.PNG" align="">
-														    		</div>
-														    	</button>
-														    </li>
-													
-														</div>
-														<div class="customNavigation">
-															<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnFurniture">Prev</a>
-														    <!-- <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnFurniture">Next</a> -->
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-						      	</section>
+						    
+						    <div class="tab-pane fade" id="v-pills-handels" role="tabpanel" aria-labelledby="v-pills-handels-tab">
+						      	
+								  <h3 class="text-center">Please Select the model</h3>
 						    </div>
-						    <div class="tab-pane fade" id="v-pills-furniture" role="tabpanel" aria-labelledby="v-pills-furniture-tab">
-						      	<section class="section product-section">
-						      		<div class="title-box">
-										<div class="container">
-											<!--Sec Title-->
-											<div class="sec-title text-center">
-												<div class="title-inner">
-													<h2>Select Your Door <span class="theme_color">Furniture</span></h2>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="lower-section pt-0">
-										<div class="lower-inner-section">
-											<div class="container">
-												<div class="row">
-													<div class="col-12">
-														<div id="owl-furniture" class="owl-builder owl-carousel owl-theme">
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/furniture/1.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/furniture/2.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/furniture/3.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/furniture/1.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/furniture/2.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/furniture/3.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/furniture/1.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/furniture/2.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/furniture/3.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/furniture/1.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/furniture/2.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														    <li class="item list-unstyled text-center">
-														    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100">
-														    		<div class="door">
-														    			<img class="door-image" src="assets2/media/doors/furniture/3.png" align="">
-														    		</div>
-														    	</button>
-														    </li>
-														</div>
-														<div class="customNavigation">
-															<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnFrameGlass">Prev</a></a>
-															<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btnHinge float-end">Next</a></a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-						      	</section>
+							<div class="tab-pane fade" id="v-pills-knocker" role="tabpanel" aria-labelledby="v-pills-knocker-tab">
+								<h3 class="text-center">Please Select the model</h3>
+						  	</div>
+							  <div class="tab-pane fade" id="v-pills-letter-box" role="tabpanel" aria-labelledby="v-pills-knocker-tab">
+								<h3 class="text-center">Please Select the model</h3>
+						  	</div>
+							  <div class="tab-pane fade" id="v-pills-hing" role="tabpanel" aria-labelledby="v-pills-hing-tab">
+								<h3 class="text-center">Please Select the model</h3>
 						    </div>
 						    @CSRF
-						    <input type="submit" value="Submit" name="final">
+						    {{-- <input type="submit" value="Submit" name="final"> --}}
 						</form>
 			      <div class="tab-pane fade" id="v-pills-price" role="tabpanel" aria-labelledby="v-pills-price-tab">
 			      </div>
 			    </div>
 			  </div>
+			  
 			  <div class="col-md-3 text-center border-start pt-4">
-				  	<img src="https://www.apeer.co.uk/cmsfiles/doorbuilder/doors.g/APA2__c-ffffff.svg" width="138px">
+			  	<input type="hidden" id="door_pic" value="">
+			  	<input type="hidden" id="door_glass" value="">
+				  <input type="hidden" id="doorcolor" value="#fff">
+				  <div id="doorimage" >
+					<object type="image/svg+xml" id="main_image" data="{{asset('admin-assets/addon/'.$addon->svgimage)}}" class="door-image" style="width: 138px;text-align:center;"></object>
+				  </div>
 				  	<h4 class="custom-price pt-4"><span class="theme_color">Price:</span> &#163;<i id="p_price">0</i></h4>
-				  	<a href="cart.html" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-4">Add To Cart</a>
+				  	<button type="button" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-4" onclick="addtocart()">Add To Cart</button>
 			  </div>
 			</div>
 		</div>
@@ -1186,13 +283,39 @@
 
 	</div>
 	<!-- JS Libraries -->
-	<script src="assets2/js/jquery.min.js"></script>
-	<script src="assets2/vendors/bootstrap/js/bootstrap.min.js"></script>
-	<script src="assets2/vendors/owlcarousel/js/owlcarousel.min.js"></script>
-	<script src="assets2/vendors/videopopup/js/videopopup.js"></script>
-	<script src="assets2/js/script.js"></script>
+	<script src="{{asset('assets2/js/jquery.min.js')}}"></script>
+	<script src="{{asset('assets2/vendors/bootstrap/js/bootstrap.min.js')}}"></script>
+	<script src="{{asset('assets2/vendors/owlcarousel/js/owlcarousel.min.js')}}"></script>
+	<script src="{{asset('assets2/vendors/videopopup/js/videopopup.js')}}"></script>
+	<script src="{{asset('assets2/js/script.js')}}"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 	<script type="text/javascript">
+	    toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
+	let idarray = Array(0,0,0,0,0,0,0,0,0,0,0,0);
+	let typearray = Array(0,0,0,0,0,0,0,0,0,0,0,0);
+	let id = 0;
+	let frame_id = 0;
+	let colorfulldoor = '';
+	let amountarray  = Array(0,0,0,0,0,0,0,0,0,0,0,0);
 		function showdoortoggle(){
+			
+
 			$('.colorsubchild').toggle(150);
 		}
 		function showframetoggle(){
@@ -1201,136 +324,134 @@
 		function showsizetoggle(){
 			$('.sizesubchild').toggle(150)
 		}
+		function showfurnituretoggle(){
+			$('.furnituresubchild').toggle(150);
+		}
 		$(document).ready(function() {
 			$("#owl-model").owlCarousel({
 				items : 6
 			});
 		});
-		$(document).ready(function() {
-			$("#owl-default-size").owlCarousel({
-				items : 6
-			});
-		});
-		$(document).ready(function() {
-			$("#owl-external-color,#owl-internal-color").owlCarousel({
-				items : 6
-			});
-		});
-		$(document).ready(function() {
-			$("#owl-glass").owlCarousel({
-				items : 6
-			});
-		});
-		$(document).ready(function() {
-			$("#owl-frame").owlCarousel({
-				items : 6
-			});
-		});
-		$(document).ready(function() {
-			$("#owl-frame-color,#owl-frame-internal-color").owlCarousel({
-				items : 6
-			});
-		});
-		$(document).ready(function() {
-			$("#owl-frame-glass").owlCarousel({
-				items : 6
-			});
-		});
-		$(document).ready(function() {
-			$("#owl-furniture").owlCarousel({
-				items : 6
-			});
-		});
-		$(document).ready(function() {
-			$("#owl-hing-glass").owlCarousel({
-				items : 6
-			});
-		});
-		
-		$('.btnSize').click(function(e){
-	        e.preventDefault();
-	        $('.sizesubchild').show();
-	        $('#v-pills-tab a[href="#v-pills-model"]').tab('show');
-	    });
-	    $('.btnDefaultSize').click(function(e){
-	        e.preventDefault();
-	        $('.sizesubchild').show();
-	        $('#v-pills-tab a[href="#v-pills-external-color"]').tab('show');
-	    });
-		$('.btnModel').click(function(e){
-	        e.preventDefault();
-	        $('.sizesubchild').hide();
-	        $('#v-pills-tab a[href="#v-pills-model"]').tab('show');
-	    });
-	    $('.btnColor').click(function(e){
-	        e.preventDefault();
-	        $('.colorsubchild').show();
-	        $('.sizesubchild').hide();
-	        $('#v-pills-tab a[href="#v-pills-external-color"]').tab('show');
-	    });
-	    $('.btninternalColor').click(function(e){
-	        e.preventDefault();
-	        $('.colorsubchild').show();
-	        $('#v-pills-tab a[href="#v-pills-internal-color"]').tab('show');
-	    });
-	    $('.btnGlass').click(function(e){
-	        e.preventDefault();
-	        $('.colorsubchild').hide();
-	        $('#v-pills-tab a[href="#v-pills-glass"]').tab('show');
-	    });
-	    $('.btnFrame').click(function(e){
-	        e.preventDefault();
-	        $('.framecolorsubchild').hide();
-	        $('#v-pills-tab a[href="#v-pills-frame"]').tab('show');
-	    });
-	    $('.btnHinge').click(function(e){
-	        e.preventDefault();
-	        $('#v-pills-tab a[href="#v-pills-hing"]').tab('show');
-	    });
-	    // $('.colortab').click(function(e){
-	    //     e.preventDefault();
-	    //      $('#v-pills-tab a[href="#v-pills-external-color"]').tab('show');
-	    //      $('colortab').removeClass('active');
-	    //      $('.btnColor').addClass('active');
-	    // });
-	    $('.btnFrameGlass').click(function(e){
-	        e.preventDefault();
-	        $('.framecolorsubchild').hide();
-	        $('#v-pills-tab a[href="#v-pills-frame-glass"]').tab('show');
-	    });
-	    $('.btnFrameexternalColor').click(function(e){
-	        e.preventDefault();
-	        $('.framecolorsubchild').show();
-	        $('#v-pills-tab a[href="#v-pills-frame-external-color"]').tab('show');
-	    });
-	    $('.btninternalframecolor').click(function(e){
-	        e.preventDefault();
-	        $('.framecolorsubchild').show()
-	        $('#v-pills-tab a[href="#v-pills-frame-internal-color"]').tab('show');
-	    });
-	    
-	    $('.btnFurniture').click(function(e){
-	        e.preventDefault();
-	        $('#v-pills-tab a[href="#v-pills-furniture"]').tab('show');
-	    });
+		function gotomodel()
+		{
+			
+			$('.sizesubchild').hide();
+			$('#v-pills-tab a[href="#v-pills-model"]').tab('show');
+		}
+		function get_colors(){
+			
+			$('.colorsubchild').show();
+			getexternalcolors();
+			$('#v-pills-tab a[href="#v-pills-external-color"]').tab('show');
+		}
+		function get_internal()
+		{
+			
+			$('.colorsubchild').show();
+    		$('#v-pills-tab a[href="#v-pills-internal-color"]').tab('show');
+			get_internalcolors();
+		}
+		function openglass()
+		{
+			
+			$('.colorsubchild').hide();
+    		$('#v-pills-tab a[href="#v-pills-glass"]').tab('show');
+		}
+		function openframe()
+		{
+			
+			$('.framecolorsubchild').hide();
+    		$('#v-pills-tab a[href="#v-pills-frame"]').tab('show');
+			framedata();
+		}
+		function frame_ex_color()
+		{
+			
+			$('.framecolorsubchild').show();
+    		$('#v-pills-tab a[href="#v-pills-frame-external-color"]').tab('show');
+		}
+		function framglass()
+		{
+			
+			$('.framecolorsubchild').hide();
+    		$('#v-pills-tab a[href="#v-pills-frame-glass"]').tab('show');
+			frameglasses();
+		}
+		function framinternal()
+		{
+			
+			$('.framecolorsubchild').show()
+    		$('#v-pills-tab a[href="#v-pills-frame-internal-color"]').tab('show');
+		}
+		function get_handels()
+		{
+			
+			$('.furnituresubchild').show()
+    		$('#v-pills-tab a[href="#v-pills-handels"]').tab('show');
+		}
+		function getknocker()
+		{
+			
+			$('.furnituresubchild').show()
+    		$('#v-pills-tab a[href="#v-pills-knocker"]').tab('show');
+		}
+		function getletterbox()
+		{
+			
+			$('.furnituresubchild').show()
+    		$('#v-pills-tab a[href="#v-pills-letter-box"]').tab('show');
+		}
+		function hingedata()
+		{
+			
+			$('.furnituresubchild').hide()
+    		$('#v-pills-tab a[href="#v-pills-hing"]').tab('show');
+		}
 	    $('.owl-builder li button').on('click', function(){
 		    $('li button.selected').removeClass('selected');
 		    $(this).addClass('selected');
 		});
-		function getexternalcolors(id)
+		// function getsvg()
+		// {
+		// 	alert();
+		// 	var ads= document.getElementById('main_image');
+		// 	colorfulldoor = ads.contentDocument;
+		// 	//console.log(colorfulldoor);
+			
+		// }
 
-			{
+		function setimage(imagename)
+		{
+			
+			$('#main_image').attr('data', imagename);
+			var frame = document.getElementById("main_image");
+			//console.log(imagename);
+			var svgframeDoc = frame.contentDocument;
+		    var svgframeItem = svgframeDoc.getElementById("door");
+			//console.log(svgframeDoc);
+			//svgframeItem.innerHTML = svgframeItem.innerHTML + colorfulldoor;
+			 
+			
+		
+			
+		}
+
+		
+		function getexternalcolors()
 				
-       
+			{
+			var door_glass = $('#door_glass').val();
+			
             url = "{{url('get_colors')}}";
-            console.log(url);
+            //console.log(url);
             $.ajax({
            type:'POST',
            url:url,
 
             data:{
             	"_token": "{{ csrf_token() }}",
-                "id":id,  
+                "id":id,
+                "door_glass":door_glass  
               
            },
            	success:function(result){
@@ -1340,20 +461,25 @@
 				});
            	}
             });
-			get_internalcolors(id)
+			get_glasses(id);
     }
-	function get_internalcolors(id)
+	function get_internalcolors()
 
 		{
+			var door_glass = $('#door_glass').val();
+		$('#img').show();
+		$('#internalcolor').hide();
 		url = "{{url('get_internal_color')}}";
-		console.log(url);
+		//console.log(url);
+		//alert(id);
 		$.ajax({
 		type:'POST',
 		url:url,
 
 		data:{
 			"_token": "{{ csrf_token() }}",
-			"id":id,  
+			id:id,
+			"door_glass":door_glass  
 		
 		},
 		success:function(result){
@@ -1363,12 +489,14 @@
 		});
 		}
 		});
-		get_glasses(id)
+		
 		}
-	function  get_glasses(id)
+	function  get_glasses(i)
 	{
+		
+		id = i;
 		url = "{{url('get_glasses')}}";
-		console.log(url);
+		//console.log(url);
 		$.ajax({
 		type:'POST',
 		url:url,
@@ -1389,8 +517,10 @@
 	}
 	function get_frame(id)
 	{
+		//$('#v-pills-model').removeClass("");
+		
 		url = "{{url('get_frames')}}";
-		console.log(url);
+		//console.log(url);
 		$.ajax({
 		type:'POST',
 		url:url,
@@ -1407,12 +537,14 @@
 			});
 		}
 		});
-		get_hinge(id)
+		get_handles(id);
 	}
-	function get_hinge(id)
+	function get_handles(id)
 	{
-		url = "{{url('get_hinge')}}";
-		console.log(url);
+	
+		
+		url = "{{url('get_handles')}}";
+		//console.log(url);
 		$.ajax({
 		type:'POST',
 		url:url,
@@ -1423,22 +555,299 @@
 		
 		},
 		success:function(result){
-		$('#v-pills-frame').html(result);
-		$("#owl-frame").owlCarousel({
-				items : 2
+		$('#v-pills-handels').html(result);
+		$("#owl-handles").owlCarousel({
+				items : 6
+			});
+		}
+		});
+		get_knocker(id);
+	}
+	function get_knocker(id)
+	{
+		
+		url = "{{url('get_knocker')}}";
+		//console.log(url);
+		$.ajax({
+		type:'POST',
+		url:url,
+
+		data:{
+			"_token": "{{ csrf_token() }}",
+			"id":id,  
+		
+		},
+		success:function(result){
+		$('#v-pills-knocker').html(result);
+		$("#owl-knocker").owlCarousel({
+				items : 6
+			});
+		}
+		});
+		get_letter_box(id);
+		
+	}
+	
+	function get_letter_box(id){
+		
+		url = "{{url('get_letterbox')}}";
+		//console.log(url);
+		$.ajax({
+		type:'POST',
+		url:url,
+
+		data:{
+			"_token": "{{ csrf_token() }}",
+			"id":id,  
+		
+		},
+		success:function(result){
+		$('#v-pills-letter-box').html(result);
+		$("#owl-letterbox").owlCarousel({
+				items : 6
+			});
+		}
+		});
+		
+		get_hinge(id);
+	}
+	function get_hinge(id)
+	{
+		
+		url = "{{url('get_hinge')}}";
+		//console.log(url);
+		$.ajax({
+		type:'POST',
+		url:url,
+
+		data:{
+			"_token": "{{ csrf_token() }}",
+			"id":id,  
+		
+		},
+		success:function(result){
+		$('#v-pills-hing').html(result);
+		$("#owl-hing").owlCarousel({
+				items : 6
 			});
 		}
 		});
 	}
-	function getModalId(id,price,modal){
-		total = 0;
-		product_info['modal_id'] = id;
-		product_info['modal_price'] = price;
-		total = product_info.modal_price;
-		product_info['total'] = total
-		$('#p_price').html(total);
-		console.log(product_info);
+	function getframedata(frame)
+	{
+		frame_id = frame;
+		
 	}
+	function framedata()
+	{
+	
+		url = "{{url('frameexternalcolors')}}";
+		//console.log(url);
+		$.ajax({
+		type:'POST',
+		url:url,
+
+		data:{
+			"_token": "{{ csrf_token()}}",
+			frame_id:frame_id,  
+		
+		},
+		success:function(result){
+			////console.log(result);
+			$('#v-pills-frame-external-color').html(result);
+			$("#owl-frame-color").owlCarousel({
+				items : 6
+			});
+			
+		}
+		});
+		
+	}
+	
+	function internalframecolors()
+	{
+		$('#frameinternalcolorheading').hide();
+		$('#imgframeinter').show();
+		url = "{{url('frameinternalcolors')}}";
+		//console.log(url);
+		console.log(frame_id);
+		$.ajax({
+		type:'POST',
+		url:url,
+
+		data:{
+			"_token": "{{ csrf_token()}}",
+			frame_id:frame_id,  
+		
+		},
+		success:function(result){
+			////console.log(result);
+			$('#v-pills-frame-internal-color').html(result);
+			$("#owl-frame-intcolor").owlCarousel({
+				items : 6
+			});
+			
+		}
+		});
+		
+	}
+	function frameglasses()
+	{
+		
+		url = "{{url('frameglass')}}";
+		//console.log(url);
+		$.ajax({
+		type:'POST',
+		url:url,
+
+		data:{
+			"_token": "{{ csrf_token()}}",
+			frame_id:frame_id,  
+		
+		},
+		success:function(result){
+			////console.log(result);
+			$('#v-pills-frame-glass').html(result);
+			$("#owl-frame-glass").owlCarousel({
+				items : 6
+			});
+			
+		}
+		});
+		
+	} 
+	function setprice(id,price,index)
+	{	let net_total = 0
+		if(index==0)
+		{
+			for (let i = 0; i < amountarray.length; i++) {
+				amountarray[i] = 0;
+				idarray[i] = 0;
+			}
+		
+		}
+		if(index==4)
+		{
+			idarray[5] = 0;
+			idarray[6] = 0;
+			idarray[7] = 0;
+			amountarray[5] = 0;
+			amountarray[6] = 0;
+			amountarray[7] = 0;
+		}
+			idarray[index] = id;
+			amountarray[index] = price;
+		
+		for (let i = 0; i < amountarray.length; i++) {
+			net_total +=amountarray[i];
+			
+		}
+		$('#p_price').html(net_total);
+		// console.log(amountarray);
+		// console.log(idarray);
+	}
+	function addtocart()
+	{
+		typearray[0] = 'model';
+		typearray[1] = 'exteranal_color';
+		typearray[2] = 'interanal_color';
+		typearray[3] = 'glass';
+		typearray[4] = 'frame';        
+		typearray[5] = 'frameexcolor';
+		typearray[6] = 'frameinternalcolor';
+		typearray[7] = 'frame_glass';
+		typearray[8] = 'handle';
+		typearray[9] = 'knocker';
+		typearray[10] = 'letterbox';
+		typearray[11] = 'hinge';
+		amountarray[0] = 0;
+		url = "{{url('customizeaddtocart')}}";
+		
+		$.ajax({
+		type:'POST',
+		url:url,
+
+		data:{
+			"_token": "{{ csrf_token()}}",
+			typearray:typearray,
+			idarray:idarray,
+			amountarray:amountarray
+		
+		},
+		success:function(result){
+			alert('Product is add to cart successfully');
+			window.location="{{url('/products')}}";
+		}
+		});
+	}
+	function remove()
+	{
+		$('#v-pills-model').removeClass("active");
+			$('#v-pills-external-color').removeClass("active");
+			$('#v-pills-internal-color').removeClass("active");
+			$('#v-pills-glass').removeClass("active");
+			$('#v-pills-frame').removeClass("active");
+			$('#v-pills-frame-external-color').removeClass("active");
+			$('#v-pills-frame-internal-color').removeClass("active");
+			$('#v-pills-frame-glass').removeClass("active");
+			$('#v-pills-handels').removeClass("active");
+			$('#v-pills-knocker').removeClass("active");
+			$('#v-pills-letter-box').removeClass("active");
+			$('#v-pills-hing').removeClass("active");
+
+			$('#v-pills-model').removeClass("show");
+			$('#v-pills-external-color').removeClass("show");
+			$('#v-pills-internal-color').removeClass("show");
+			$('#v-pills-glass').removeClass("show");
+			$('#v-pills-frame').removeClass("show");
+			$('#v-pills-frame-external-color').removeClass("show");
+			$('#v-pills-frame-internal-color').removeClass("show");
+			$('#v-pills-frame-glass').removeClass("show");
+			$('#v-pills-handels').removeClass("show");
+			$('#v-pills-knocker').removeClass("show");
+			$('#v-pills-letter-box').removeClass("show");
+			$('#v-pills-hing').removeClass("show");
+	}
+	function setcolorimage(colors)
+	{
+		//alert(colors);
+		var a = document.getElementById("main_image");
+		var mainsvgDoc = a.contentDocument;
+		var svgItems = mainsvgDoc.getElementById("base_x5F_colour");
+		svgItem = svgItems.childNodes[1].style.fill = colors;
+	}
+	function setframeimage(imagename)
+		{
+			alert('second');
+			var frame = document.getElementById("main_image");
+			
+			var image1 = frame.contentDocument;
+			console.log(image1)
+			// var svgItems = image1.getElementById("door");
+			// if(svgItems == null){
+			// 	$('#main_image').attr('data', imagename);
+			// 	var frame = document.getElementById("main_image");
+			// 	var image1 = frame.contentDocument;
+			// 	var svgItems = image1.getElementById("door");
+			// 	console.log(svgItems);
+			// }else{
+			// 	console.log(svgItems)
+			// }
+			// if (svgItems.hasChildNodes()) {
+   //              var st = svgItems.removeChild(svgItems.childNodes[0]);
+   //          }
+   //          svgItems.innerHTML='<image xmlns="http://www.w3.org/2000/svg" x="100" y="300" width="500" height="600" href="http://localhost/glazie/admin-assets/addon/glass/607532bb70736Door_3g.svg"/>';
+
+			//var door  =  document.createElement('image');
+			// door.setAttribute('xmlns','http://www.w3.org/2000/svg');
+			// door.setAttribute('href','http://localhost/glazieltd/admin-assets/addon/glass/6076821fe8927Door_3.svg');
+			// door.setAttribute('x',119);
+			// door.setAttribute('y',135);
+			// door.setAttribute('width',500);
+			// door.setAttribute('height',600);
+			// svgItems.appendChild(door);
+		}
 	</script>
+
 </body>
 </html>
