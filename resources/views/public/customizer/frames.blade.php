@@ -25,7 +25,7 @@
 									<div class="row">
 										<div class="col-12">
 											<div id="owl-frame" class="owl-builder owl-carousel owl-theme">
-                                                @foreach ($frames as $key => $frame)
+                           @foreach ($frames as $key => $frame)
                                                     
                                                 
 											    <li class="item list-unstyled text-center">

@@ -6,6 +6,7 @@ use App\Models\Brands;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Categories;
+use App\Models\Attribute;
 
 class BrandsController extends Controller
 {
@@ -117,6 +118,15 @@ class BrandsController extends Controller
             );
             
             Categories::where('id',$id)
+            ->update($update_catgories);
+            echo json_encode(1);
+        }
+        if ($type=="attribute") {
+            $update_catgories =  array(
+                'image' =>null,
+            );
+            
+            Attribute::where('id',$id)
             ->update($update_catgories);
             echo json_encode(1);
         }

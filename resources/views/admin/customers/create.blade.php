@@ -127,7 +127,7 @@
 <script src="{{ asset('admin-assets/js/jquery.inputmask.js')}}"></script>
 <script src="{{asset('admin-assets/js/inputmask.js')}}"></script>
 <script>
-     $('#contact_no').inputmask('+99(999)-9999999', { 'placeholder': '_____________' });
+     $('#contact_no').inputmask('+9999 999999', { 'placeholder': '+44____ ______' });
     $(document).ready(function() {
     $('#company_info').click(function(){
         if($(this).prop("checked") == true){

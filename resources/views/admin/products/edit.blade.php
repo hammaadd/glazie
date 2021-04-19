@@ -66,11 +66,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="">Regular Price</label>
-                                <input type="number" name="regular_price" class="form-control" value="{{$products->regular_price}}">
+                                <input type="number" name="regular_price" class="form-control" value="{{$products->regular_price}}" id="regular_price" oninput="checkprice()">
                             </div>
                             <div class="col-md-6">
                                 <label for="">Sale Price</label>
-                                <input type="number" name="sale_price" class="form-control" value="{{$products->sale_price}}">
+                                <input type="number" name="sale_price" class="form-control" value="{{$products->sale_price}}" id="sale_price" oninput="checkprice()">
+                                <span id="message" class="text-danger mt-2 text-center"></span>
                             </div>
                                 
                        
@@ -106,6 +107,22 @@
                                 @endforeach
                             </select>
                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="">Product Type</label>
+                                <select name="type" class="form-control" >
+                                    <option value="simple" @if ($products->type=='simple')
+                                        selected
+                                    @endif>Simple Product</option>
+                                    <option value="customize" @if ($products->type=='customize')
+                                        selected
+                                    @endif>Customizable Product</option>
+                                    <option value="variable" @if ($products->type=='variable')
+                                        selected
+                                    @endif>Variable Product</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -254,6 +271,24 @@ $(document).ready(function() {
          		  	
            		
             });
+        }
+    }
+    function checkprice() {
+        var regular_price = parseInt($('#regular_price').val());
+        var sale_price = parseInt($('#sale_price').val());
+        if(regular_price!=null && sale_price!=null)
+        {
+            if(regular_price<=sale_price)
+            {
+               
+                $('#message').html("<i class='fa fa-times-circle' aria-hidden='true'> </i> <b> Sale Price can not greater than the regular price </b>");
+                $('#btncheck').prop('disabled',true);
+              
+            }else{
+            $('#btncheck').prop('disabled',false);
+                 $('#message').html('');
+              }
+              
         }
     }
     function remove(id){

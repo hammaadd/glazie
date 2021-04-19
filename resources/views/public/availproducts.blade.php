@@ -1,18 +1,39 @@
 @extends('public/layouts/layouts')
 @section('title','Welcome')
 @section('content')
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-<section class="section">
+
+
+<script src="{{asset('assets/toaster/jquery-1.9.1.min.js')}}"></script>
+<link href="{{asset('assets/toaster/toastr.css')}}" rel="stylesheet"/>
+<script src="{{asset('assets/toaster/toastr.js')}}"></script>
+<section class="section" id="section">
     <div class="container">
         <!--Sec Title-->
         <div class="sec-title text-center pb-4">
             <div class="title-inner">
                 <h2><span class="theme_color">Proudct </span> in Seconds!</h2>
+                
             </div>
         </div>
-        <div class="row mb-5">
+          
+        <div class="row mb-5 " id="">
+            
+            <div class="col-md-6 offset-md-3">
+                <form action="{{url('searchproduct')}}" method="GET">
+                <div class="input-group mb-3">
+                  
+                    <input type="text" class="form-control" aria-describedby="inputGroup-sizing-sm" placeholder="Write Something....." name="search" autocomplete="off">
+                    <div class="input-group-append" >
+                      <span class="input-group-text"><button class="btn btn-default btn-xs" ><i class="fa fa-search"></i></button></span>
+                    </div>
+                
+                  </div>
+                </form>
+            </div>
+          
+        </div>
+        <div id="section">
+        <div class="row mb-5" id="">
             @foreach ($products as $product)
             <?php $product_gallery = $product->gallery;
             $i=0;
@@ -31,7 +52,9 @@
             
                 <div class="col-lg-3 col-md-4 col-6">
                     <div class="product">
+                        @if($product->sale_price)
                         <span class="pr_flash">Sale</span>
+                        @endif
                         <div class="product_img">
                             <a href="{{url('productdetails/'.$product->id)}}">
                                 <img src="{{asset('productimages/'.$image)}}"
@@ -40,32 +63,49 @@
                             </a>
                             <div class="product_action_box">
                                 <ul class="list_none pr_action_btn">
-                                    <li class="add-to-cart"><a style="cursor: pointer" onclick="addtocart({{$product->id}})"><i class="bx bx-cart"></i> Add To Cart</a></li>
-                                    <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li>
-                                    <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>
-                                    <li><a href="#"><i class="bx bx-heart"></i></a></li>
+                                    {{-- @if ($product->type=='simple')
+                                    {{-- <li class="add-to-cart"><a style="cursor: pointer" onclick="addtocart({{$product->id}})"><i class="bx bx-cart"></i> Add To Cart</a></li> --}}
+                                    {{-- @endif <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li> --}}
+                                    {{-- <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>--}}
+                                  
+                                    @if(!empty(Auth::id()))
+                                    <li><a  title="Add to wish list" onclick="addtowishlist({{$product->id}},'{{$image}}')"><i class="bx bx-heart" ></i></a></li> 
+                                    @endif
                                 </ul>
                             </div>
                         </div>
                         <div class="product_info">
                             <h6 class="product_title text-center"><a href="{{url('productdetails/'.$product->id)}}">{{$product->product_name}}</a></h6>
                             <div class="product_price text-center">
-                                <span class="price "><span class="currencySymbol">£</span>{{$product->sale_price}}</span>
-                                <del><span class="currencySymbol">£</span>{{$product->regular_price}}</del>
+                               @if($product->sale_price)
+                               <span class="price "><span class="currencySymbol">£</span>{{$product->sale_price}}</span>
+                               <del><span class="currencySymbol">£</span>{{$product->regular_price}}</del>
+                               @else
+                               <span class="price "><span class="currencySymbol">£</span>{{$product->regular_price}}</span>
+                               
+                               @endif
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
+            
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {{ $products->links('vendor/pagination/bootstrap-4') }}
+            </div>
         </div>
     </div>
-</section>
+    </div>
     @if (session('info'))
     <script type="text/javascript">toastr.success("{{session('info')}}");</script>
     @endif   
+</section>
+    
     
 
-</div>
+
 @endsection
 @section('script')
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -87,6 +127,44 @@
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
+}
+function sort(sort_type)
+{
+    var search = $('#search').val();
+    {
+    url = "{{url('sortproduct')}}";
+        $.ajax({
+       type:'POST',
+       url:url,
+       data:{
+           search:search,
+           sort_type:sort_type
+       },
+       success:function(result){ 
+        $('#srachresult').html(result);
+        }	
+        });
+
+}  
+}
+function searchresult()
+{
+    var search = $('#search').val();
+    {
+    url = "{{url('searchproduct')}}";
+        $.ajax({
+       type:'GET',
+       url:url,
+       data:{
+           search:search
+       },
+       success:function(result){ 
+        $('#section').html(result);
+        }	
+        });
+
+}
+    
 }
 function addtocart(id)
 {
@@ -113,6 +191,46 @@ function addtocart(id)
         
         }	
         });
+
+}
+function addtowishlist(id,image)
+{
+   
+    url = "{{url('addtowishlist')}}";
+        $.ajax({
+       type:'POST',
+       url:url,
+       data:{
+           id:id,
+           image:image,
+           "_token": "{{ csrf_token()}}",
+
+       },
+       success:function(result){ 
+        
+      var result = JSON.parse(result);
+
+      if(result[0]=='Product is already in wishlist')
+      {
+      	 toastr.error(result[0]);
+      }
+       else
+       {
+       	toastr.success(result[0]);
+       }
+       if(result[1]>0)
+       {
+        $('#wishitem').html(result[1]);
+        $('#wishitem').show();
+        
+       }
+       else{
+        $('#wishitem').hide();
+       }
+        
+        }	
+        });
+
 
 }
 </script>

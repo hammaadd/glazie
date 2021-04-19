@@ -1,5 +1,5 @@
 @extends('admin-layout.layouts')
-@section('title','Coupen List')
+@section('title','Create Coupon')
 @section('content')
 <link href="{{asset('admin-assets/vendors/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet">
 
@@ -8,7 +8,7 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h2 class="header-title ">Coupen</h2>
+            <h2 class="header-title ">Coupon</h2>
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
@@ -17,17 +17,7 @@
                 </nav>
             </div>
         </div>
-        @if(session('info'))
-				<div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <div class="alert alert-success" style="background-color: green;color:white;"><i class="fa fa-check"></i> {{session('info')}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: white"><span aria-hidden="true">&times;</span></button>
-                        </div>
-
-                    </div>
-                </div>
-				@endif
+       
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -36,12 +26,12 @@
                             @csrf
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="">Coupun Name </label>
-                                    <input type="text" class="form-control" name="coupen_name" placeholder="Enter Coupen Name" id="coupen_name">
+                                    <label for="">Coupon Name </label>
+                                    <input type="text" class="form-control" name="coupen_name" placeholder="Enter Coupon Name" id="coupen_name">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="">Coupun Code </label>
-                                    <input type="text" class="form-control" name="coupen_code" placeholder="Enter Coupen Name" id="coupencode">
+                                    <label for="">Coupon Code </label>
+                                    <input type="text" class="form-control" name="coupen_code" placeholder="Enter Coupon Name" id="coupencode">
                                 </div>
                             </div>
                             <div class="row">
@@ -54,7 +44,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="">Discount </label>
-                                    <input type="number" class="form-control" name="discount_amount" placeholder="Enter Discount Amount" id="discount_amount">
+                                    <input type="number" class="form-control" name="discount_amount" placeholder="Enter Discount" id="discount_amount">
                                 </div>
                             </div>
                              <div class="row">

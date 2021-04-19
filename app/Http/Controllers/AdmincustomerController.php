@@ -25,7 +25,7 @@ class AdmincustomerController extends Controller
         $validatedData = $request->validate([
             'first_name' => 'required|regex:/^[\pL\s\-]+$/u',
             'last_name' => 'required|regex:/^[\pL\s\-]+$/u',
-            'email' => 'required',
+            'email' => 'required|unique:users',
             'password' => 'required',
             'contact_no' => 'required',
             'login_status' =>'required',

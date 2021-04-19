@@ -43,8 +43,13 @@
                         <div class="row">
                             
                             <label for="">Slider Image </label>
-                            <input type="file" class="form-control" name="image" placeholder="Brand Image" value="{{old('image')}}">
+                            <input type="file" class="form-control" name="image" placeholder="Brand Image" value="{{old('image')}}" id="file">
                             
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="text-danger mt-2" id="message"></span>
+                            </div>
                         </div>
                         <div class="row">
                             
@@ -86,6 +91,37 @@
             required:true
         }
         }
+});
+$(document).ready(function(){
+
+var _URL = window.URL || window.webkitURL;
+
+$('#file').change(function () {
+    var file  =  $(this)[0].files[0];
+ 
+    img = new Image();
+    var imgwidth = 0;
+    var imgheight = 0;
+
+
+    img.src = _URL.createObjectURL(file);
+    img.onload = function() {
+        imgwidth = this.width;
+        imgheight = this.height;
+        
+        console.log(imgwidth);
+        console.log(imgheight);
+        if(imgwidth <= 1200 && imgwidth >= 800 && imgheight>=350 && imgheight<=500){
+            $('#message').html("");
+
+        }else{
+            $('#file').val('');
+            $('#message').html('<i class="fa fa-times-circle"></i> Image height 350 to 500 and width 800 to 1200');
+        }
+    };
+   
+
+});
 });
 
     </script>

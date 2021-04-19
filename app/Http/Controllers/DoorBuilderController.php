@@ -7,6 +7,7 @@ use App\Models\AddonColor;
 use App\Models\ModelFrame;
 use App\Models\AddonHinge;
 use App\Models\FrameDetails;
+use Session;
 use App\Models\FrameGlass;
 use App\Models\AddonFurniture;
 use App\Models\Cart;
@@ -16,7 +17,7 @@ class DoorBuilderController extends Controller
 {
     public function index()
     {
-        $addons = AddOn::all();
+        $addons = AddOn::where('quantity','>',0)->get();
         return view('public/doorbuild',['addons'=>$addons]);
     }
     public function get_colors(Request $request)

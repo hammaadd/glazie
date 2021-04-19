@@ -244,6 +244,7 @@
 			  </div>
 			  
 			  <div class="col-md-3 text-center border-start pt-4">
+
 			  	<input type="hidden" id="door_pic" value="">
 			  	<input type="hidden" id="door_glass" value="">
 				  <input type="hidden" id="doorcolor" value="#fff">
@@ -310,6 +311,7 @@
 	let idarray = Array(0,0,0,0,0,0,0,0,0,0,0,0);
 	let typearray = Array(0,0,0,0,0,0,0,0,0,0,0,0);
 	let id = 0;
+
 	let frame_id = 0;
 	let colorfulldoor = '';
 	let amountarray  = Array(0,0,0,0,0,0,0,0,0,0,0,0);
@@ -342,84 +344,149 @@
 			
 			$('.colorsubchild').show();
 			getexternalcolors();
-			$('#v-pills-tab a[href="#v-pills-external-color"]').tab('show');
+			$('#v-pills-model').removeClass('active show');
+			$('#v-pills-external-color').addClass('active show');
+			$('#v-pills-model-tab').removeClass('active');
+			$('#v-pills-external-color-tab').addClass('active');
+			
+			$('#v-pills-internal-color').removeClass('active show');
+			$('#v-pills-internal-color-tab').removeClass('active');
+
 		}
 		function get_internal()
 		{
 			
 			$('.colorsubchild').show();
-    		$('#v-pills-tab a[href="#v-pills-internal-color"]').tab('show');
+    		$('#v-pills-external-color-tab').removeClass('active');
+			$('#v-pills-external-color').removeClass('active show');
+			$('#v-pills-internal-color').addClass('active show');
+			$('#v-pills-internal-color-tab').addClass('active');
+			$('#v-pills-glass').removeClass('active show');
+			$('#v-pills-glass-tab').removeClass('active');
 			get_internalcolors();
 		}
 		function openglass()
 		{
 			
 			$('.colorsubchild').hide();
-    		$('#v-pills-tab a[href="#v-pills-glass"]').tab('show');
+
+    		$('#v-pills-internal-color').removeClass('active show');
+			$('#v-pills-internal-color-tab').removeClass('active');
+
+			$('#v-pills-glass').addClass('active show');
+			$('#v-pills-glass-tab').addClass('active');
+			
+    		
 		}
 		function openframe()
 		{
 			
 			$('.framecolorsubchild').hide();
-    		$('#v-pills-tab a[href="#v-pills-frame"]').tab('show');
+    		$('#v-pills-glass').removeClass('active show');
+			$('#v-pills-glass-tab').removeClass('active');
+
+			$('#v-pills-frame').addClass('active show');
+			$('#v-pills-frame-tab').addClass('active');
+
+			$('#v-pills-frame-external-color').removeClass('active show');
+			$('#v-pills-frame-external-color-tab').removeClass('active');
+
 			framedata();
 		}
 		function frame_ex_color()
 		{
 			
 			$('.framecolorsubchild').show();
-    		$('#v-pills-tab a[href="#v-pills-frame-external-color"]').tab('show');
+
+			$('#v-pills-frame').removeClass('active show');
+			$('#v-pills-frame-tab').removeClass('active');
+    		$('#v-pills-frame-external-color').addClass('active show');
+			$('#v-pills-frame-external-color-tab').addClass('active');
+		}
+		
+		function framinternal()
+		{
+			
+			$('.framecolorsubchild').show()
+			$('#v-pills-frame-external-color').removeClass('active show');
+			$('#v-pills-frame-external-color-tab').removeClass('active');
+    		$('#v-pills-frame-internal-color').addClass('active show');
+			$('v-pills-frame-internal-color-tab').addClass('active');
+			$('#v-pills-frame-glass').removeClass('active show');
+			$('#v-pills-frame-glass-tab').removeClass('active');
 		}
 		function framglass()
 		{
 			
 			$('.framecolorsubchild').hide();
-    		$('#v-pills-tab a[href="#v-pills-frame-glass"]').tab('show');
+			$('#v-pills-frame-internal-color').removeClass('active show');
+			$('v-pills-frame-internal-color-tab').removeClass('active');
+    		$('#v-pills-frame-glass').addClass('active show');
+			$('#v-pills-frame-glass-tab').addClass('active');
 			frameglasses();
 		}
-		function framinternal()
-		{
-			
-			$('.framecolorsubchild').show()
-    		$('#v-pills-tab a[href="#v-pills-frame-internal-color"]').tab('show');
-		}
+
 		function get_handels()
 		{
 			
 			$('.furnituresubchild').show()
-    		$('#v-pills-tab a[href="#v-pills-handels"]').tab('show');
+
+    		$('#v-pills-frame-glass').removeClass('active show');
+			$('#v-pills-frame-glass-tab').removeClass('active');
+			
+			$('#v-pills-handels').addClass('active show');
+			$('#v-pills-handels-tab').addClass('active');
+
+			$('#v-pills-knocker').removeClass('active show');
+			$('#v-pills-knocker-tab').removeClass('active');
+			
 		}
 		function getknocker()
 		{
+			$('#v-pills-handels').removeClass('active show');
+			$('#v-pills-handels-tab').removeClass('active');
+			$('#v-pills-knocker').addClass('active show');
+			$('#v-pills-knocker-tab').addClass('active');
+			
+			$('#v-pills-letter-box').removeClass('active show');
+			$('#v-pills-letterbox-tab').removeClass('active');
 			
 			$('.furnituresubchild').show()
-    		$('#v-pills-tab a[href="#v-pills-knocker"]').tab('show');
+    		
 		}
 		function getletterbox()
 		{
+			$('#v-pills-knocker').removeClass('active show');
+			$('#v-pills-knocker-tab').removeClass('active');
 			
-			$('.furnituresubchild').show()
-    		$('#v-pills-tab a[href="#v-pills-letter-box"]').tab('show');
+			$('#v-pills-letter-box').addClass('active show');
+			$('#v-pills-letterbox-tab').addClass('active');
+			$('.furnituresubchild').show();
+			$('#v-pills-hing').removeClass('active show');
+			$('v-pills-hing-tab').removeClass('active');
 		}
 		function hingedata()
 		{
-			
-			$('.furnituresubchild').hide()
-    		$('#v-pills-tab a[href="#v-pills-hing"]').tab('show');
+			$('#v-pills-letter-box').removeClass('active show');
+			$('#v-pills-letterbox-tab').removeClass('active');
+			$('.furnituresubchild').hide();
+			$('#v-pills-hing').addClass('active show');
+			$('#v-pills-hing-tab').addClass('active');
 		}
 	    $('.owl-builder li button').on('click', function(){
 		    $('li button.selected').removeClass('selected');
 		    $(this).addClass('selected');
 		});
-		// function getsvg()
-		// {
-		// 	alert();
-		// 	var ads= document.getElementById('main_image');
-		// 	colorfulldoor = ads.contentDocument;
-		// 	//console.log(colorfulldoor);
+		function getimagedata(key){
+        	image =  document.getElementById('abc'+key);
+			var Child = image.childNodes;
+			image = Child[1];
+			image.removeAttribute('id');
+			image.setAttribute('id','imagedoor');
+			image.removeAttribute('onload');
 			
-		// }
-
+        }
+    
 		function setimage(imagename)
 		{
 			
@@ -431,15 +498,13 @@
 			//console.log(svgframeDoc);
 			//svgframeItem.innerHTML = svgframeItem.innerHTML + colorfulldoor;
 			 
-			
-		
-			
 		}
 
 		
 		function getexternalcolors()
 				
 			{
+
 			var door_glass = $('#door_glass').val();
 			
             url = "{{url('get_colors')}}";
@@ -450,6 +515,7 @@
 
             data:{
             	"_token": "{{ csrf_token() }}",
+
                 "id":id,
                 "door_glass":door_glass  
               
@@ -477,10 +543,9 @@
 		url:url,
 
 		data:{
-			"_token": "{{ csrf_token() }}",
+			"_token": "{{ csrf_token() }}"
 			id:id,
-			"door_glass":door_glass  
-		
+			"door_glass":door_glass 
 		},
 		success:function(result){
 		$('#v-pills-internal-color').html(result);
@@ -706,6 +771,7 @@
 		
 		},
 		success:function(result){
+
 			////console.log(result);
 			$('#v-pills-frame-glass').html(result);
 			$("#owl-frame-glass").owlCarousel({
@@ -816,6 +882,7 @@
 		var svgItems = mainsvgDoc.getElementById("base_x5F_colour");
 		svgItem = svgItems.childNodes[1].style.fill = colors;
 	}
+
 	function setframeimage(imagename)
 		{
 			alert('second');

@@ -1,4 +1,6 @@
-@if (count($carts))
+
+    <h3 class="cart-page-title">Shopping Cart</h3>
+    @if (count($carts))
     
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -9,7 +11,9 @@
                             <tr>
                                 <th>Image</th>
                                 <th>Product Name</th>
+                                {{-- <th>Unit Price</th> --}}
                                 <th>Unit Price</th>
+                                {{-- <th title="Variation / Custom Price">Price</th> --}}
                                 <th>Qty</th>
                                 <th>Subtotal</th>
                                 <th>Action</th>
@@ -35,30 +39,125 @@
                             $image = $prdimg->image;
                         }
                         $quantity+= $cart->quantity;
-                        $price += $cart->price*$cart->quantity;
+                       
                         $net_regular_price += $cart->regular_price*$cart->quantity;
                     @endphp
                             <tr>
                                 <td class="product-thumbnail cart-list">
+                                    <input type="hidden" value="{{$products->quantity}}" id="prdqty{{$cart->id}}">
                                     <input type="hidden" id="regular_price{{$cart->id}}" value="{{$products->regular_price}}">
-                            <input type="hidden" id="itemquantity{{$cart->id}}" value="{{$cart->price}}">
+                                    <input type="hidden" id="itemquantity{{$cart->id}}" value="{{$cart->price}}">
                                     <a href="#"><img src="{{asset('productimages/'.$image)}}" alt=""></a>
                                 </td>
-                                <td class="product-name text-center"><a href="#">{{$products->product_name}}</a></td>
-                                <td class="product-price-cart"><span class="amount">&#163;{{$cart->price}}</span></td>
+                                <td class="product-name text-center">
+                                    <a href="#" class="mb-2">{{$products->product_name}}</a>
+                                </td>
+                                {{-- <td class="product-price-cart"><span class="amount">&#163;{{$cart->price}}</span></td> --}}
+                            <td>{{$cart->price}}</td>
+                                 
+                                 
+                                @php
+                                  $variation_price=0;  
+                                @endphp
                                 <td class="product-quantity">
+                                    @foreach ($cart->cartdetails as $cartdetails)
+                                    @php
+                                        $variation_price = $variation_price +$cartdetails->price;
+                                    @endphp
+                                 @endforeach
                                     <div class="cart-plus-minus">
                                         <div class="dec qtybutton" onclick="removeqty({{$cart->id}})">-</div>
-                                        <input class="cart-plus-minus-box" type="text" name="qtybutton" value="{{$cart->quantity}}"  oninput="update_qty({{$cart->id}})" id="no_of_qty{{$cart->id}}">
+                                        <input class="cart-plus-minus-box" type="text" name="qtybutton" value="{{$cart->quantity}}"  oninput="update_qty({{$cart->id}})" id="no_of_qty{{$cart->id}}" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)">
                                         <div class="inc qtybutton" onclick="addqty({{$cart->id}})">+</div>
                                     </div>
                                 </td>
-                                <td class="product-subtotal" id="item_total_price{{$cart->id}}" >&#163; {{$cart->price*$cart->quantity}}</td>
+                                <td class="product-subtotal" id="item_total_price{{$cart->id}}" >&#163; {{$cart->price*$cart->quantity + $variation_price*$cart->quantity}}</td>
                                 <td class="product-remove">
+                                    @php
+                                         $price = $price + $cart->price*$cart->quantity + $variation_price*$cart->quantity
+                                    @endphp
                                     {{-- <a href="#"><i class="fa fa-pencil"></i></a> --}}
                                     <a style="cursor: pointer;" onclick="remove({{$cart->id}})"><i class="fa fa-times"></i></a>
                                </td>
+                               @php
+                               $variation_price=0;
+                           @endphp
                             </tr>
+                            @if($cart->product->type=='variable'|| $cart->product->type=='customize')
+                            <tr>
+                               
+                                <td colspan="6">  @if($cart->product->type=='variable')
+                                    @php
+                                        $cart_details = $cart->cartdetails;
+                                        foreach ($cart_details as $key => $cart_detail) {
+                                            # code...
+                                        }
+                                        $variation_data = $cart_detail->variation;
+                                        $variation_price = $variation_data->price;
+                                        $variation_details = $variation_data->variationdetails
+                                    @endphp
+                                    <input type="hidden" id="variation_price{{$cart->id}}" value="{{$variation_price}}">
+                                   
+                                    @foreach ($variation_details as $details)
+                                    @php
+                                    $a = array('primary','secondary','success','danger','warning text-dark','info text-dark','light text-dark','dark');
+                                    $randindex = array_rand($a);
+
+                                @endphp
+                                        <span class="badge  bg-light text-dark">{{$details->prd_term->term->name}}</span>
+                                    @endforeach
+                                   
+                               @endif
+                               @if ($cart->product->type=='customize')
+                                  
+                                   @foreach ($cart->cartdetails as $cartdetails)
+                                      @php
+                                          $variation_price = $variation_price +$cartdetails->price;
+                                      @endphp
+                                   @endforeach
+                                   @foreach ($cart->cartdetails as $cartdetails)
+                                    @if($cartdetails->addon_type=='model')
+                                    <span class="badge  text-dark" title="Model Name ">{{$cartdetails->model->model_name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='exteranal_color')
+                                     <span  class="badge bg-light text-dark" title="External Color">{{$cartdetails->color->name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='interanal_color')
+                                    <span  class="badge bg-light text-dark" title="Internal Color">{{$cartdetails->color->name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='glass')
+                                      <span  class="badge bg-light text-dark" title="Glass name ">{{$cartdetails->frame->name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='frame')
+                                    <span  class="badge bg-light text-dark" title="Frame name ">{{$cartdetails->frame->name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='frameexcolor')
+                                     <span class="badge bg-light text-dark" title="Frame External Color">{{$cartdetails->framecolor->value}}</span>
+                                    
+                                    @endif
+                                    @if($cartdetails->addon_type=='frameinternalcolor')
+                                     <span class="badge bg-light text-dark" title="Frame internal Color">{{$cartdetails->framecolor->value}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='frame_glass')
+                                     <span class="badge bg-light text-dark" title="Frame glass">{{$cartdetails->frameglass->glass_name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='handle')
+                                     <span class="badge bg-light text-dark" title="Handle">{{$cartdetails->furniture->name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='knocker')
+                                     <span class="badge bg-light text-dark" title="Knocker">{{$cartdetails->furniture->name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='letterbox')
+                                     <span class="badge bg-light text-dark" title="Letter Box">{{$cartdetails->furniture->name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='hinge')
+                                      <span class="badge bg-light text-dark" title="Hinge">{{$cartdetails->hinge->hingeside}}</span>
+                                    @endif
+                                    
+                                   @endforeach
+                               @endif</td>
+                            </tr>
+                            @endif
                            @endforeach
                            
                         </tbody>
@@ -90,7 +189,7 @@
                                 <input type="text" required="" name="name" id="coupen" class="form-control">
                                 
                                 <span class="text-success text-center mb-2" style="display: none" id="discountmessage"></span>
-                                <span class="text-danger text-center mb-2" style="display: none" id="coupenmessage"></span> <br>
+                                <span class="text-danger text-center mb-2" style="display: none" id="coupenmessage"></span> 
                                 <button class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 float-end" onclick="checkcoupen()" type="button">Apply Coupon</button>
                             
                         </div>
@@ -143,6 +242,8 @@
                                 <input type="hidden" id="pricevalue" value="{{$time->price}}">
                                 @endif
                                 @endforeach
+                                <input type="hidden" id="discountt" value="0">
+                                <input type="hidden" id="prdquantity" value="{{$quantity}}">
                             </ul>
                         </div>
                         <h4 class="grand-totall-title" >Grand Total  <span id="grand_total">&#163;{{$price}}</span></h4>
@@ -154,5 +255,5 @@
         </div>
     </div>
     @else 
-    <h3 class="mb-3">Your Cart is empty <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 " href="{{url('availproducts')}}"><i class="fa fa-backward"></i> Go Back </a></h3>
+    <h3 class="mb-3">Your Cart is empty <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 " href="{{url('products')}}"><i class="fa fa-backward"></i> Go Back </a></h3>
     @endif

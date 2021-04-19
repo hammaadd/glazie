@@ -2,7 +2,7 @@
 @section('title','Add New Product')
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<link href="{{asset('assets/toaster/select2.min.css')}}" rel="stylesheet" />
 
 
 
@@ -66,12 +66,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="">Regular Price</label>
-                                <input type="number" name="regular_price" class="form-control" min="1">
+                                <input type="number" name="regular_price" class="form-control" min="1" id="regular_price" placeholder="Regular Price" oninput="checkprice()">
                             </div>
                             <div class="col-md-6">
                                  <label for="">Sale Price</label>
-                            <input type="number" name="sale_price" class="form-control" min="1"> 
-                            </div>
+                            <input type="number" name="sale_price" class="form-control" min="1" placeholder="Sale Price" id="sale_price" oninput="checkprice()">  
+                            <span id="message" class="text-danger mt-2 text-center"></span>
+                        </div>
                               <input type="hidden" id="attributelength" value="{{count($attributes)}}"> 
                         </div>
                        
@@ -116,9 +117,10 @@
                             </div>
                             <div class="col-md-6">
                                 <label for=""> Product Type</label>
-                                <select name="type" id="" class="form-control">
+                                <select name="type" id="product_type" class="form-control">
                                     <option value="simple">Simple Product</option>
                                     <option value="customize">Customizable Product</option>
+                                    <option value="variable">Variable Product</option>
                                 </select>
                             </div>
                         </div>
@@ -154,25 +156,27 @@
                                 </select>
                             </div>
                         </div> --}}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <input type="hidden" id="no_of_attribute" name="no_of_attribute">
-                                <input type="hidden" id="no_of_attributes" name="no_of_attribute">
-                                <button class="btn mt-1 btn-xs btn-success float-right mt-2" type="button" id="add"> <i class="fa fa-plus-circle"></i> Add Attribtue</button>
+                        <div id="variableproductdiv" style="display:none;">
+                            <div class="row" >
+                                <div class="col-md-12">
+                                    <input type="hidden" id="no_of_attribute" name="no_of_attribute">
+                                    <input type="hidden" id="no_of_attributes" name="no_of_attribute">
+                                    <button class="btn mt-1 btn-xs btn-success float-right mt-2" type="button" id="add"> <i class="fa fa-plus-circle"></i> Add Attribtue</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table" id="tableattr" style="display: none">
-                                    <thead>
-                                        <th>Attribute</th>
-                                        <th>Attribute Options</th>
-                                        <th>Action</th>
-                                    </thead>
-                                    <tbody >
-                                    
-                                    </tbody>
-                                </table>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table" id="tableattr" style="display: none">
+                                        <thead>
+                                            <th>Attribute</th>
+                                            <th>Attribute Options</th>
+                                            <th>Action</th>
+                                        </thead>
+                                        <tbody >
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -223,7 +227,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label for="" ></label>
-                                <button type="submit"  class="btn btn-success mt-3 "><i class="fa fa-plus" ></i> Add Product</button>
+                                <button type="submit"  class="btn btn-success mt-3 " id="btncheck"><i class="fa fa-plus" ></i> Add Product</button>
                                 <a href="{{url('admin/products')}}" class="btn btn-danger mt-3 ml-3"> <i class="fa fa-times"> Cancel</i> </a>
                             </div>
                             
@@ -242,10 +246,10 @@
 
     <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
    
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="{{asset('assets/toaster/select2.min.js')}}"></script>
 <!-- page js -->
 
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="{{asset('assets/toaster/summernote.min.js')}}"></script>
     <script>
       
         $(document).ready(function() {
@@ -263,7 +267,25 @@
         });
         
     });
-
+    function checkprice()
+    {
+        var regular_price = parseInt($('#regular_price').val());
+        var sale_price = parseInt($('#sale_price').val());
+        if(regular_price!=null && sale_price!=null)
+        {
+            if(regular_price<=sale_price)
+            {
+               
+                $('#message').html("<i class='fa fa-times-circle' aria-hidden='true'> </i> <b> Sale Price can not greater than the regular price </b>");
+                $('#btncheck').prop('disabled',true);
+              
+            }else{
+            $('#btncheck').prop('disabled',false);
+                 $('#message').html('');
+              }
+              
+        }
+    }
     
     $(document).ready(function() {
     $('#terms,#category,#tags').select2(
@@ -277,6 +299,18 @@
 $(document).ready(function() {
     $('#category,#terms1').select2();
 });
+$(document).ready(function(){
+    $('#product_type').change(function(){
+        var product_type = $('#product_type').val();
+        if(product_type=='variable')
+        {
+            $('#variableproductdiv').show();
+        }
+        else{
+            $('#variableproductdiv').hide(); 
+        }
+    })
+})
 
  
     

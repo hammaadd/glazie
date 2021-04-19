@@ -10,12 +10,12 @@
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
-            <h2 class="header-title">Add New Attribute</h2>
+            <h2 class="header-title">Edit Terms</h2>
             <div class="header-sub-title float-right">
                 <nav class="breadcrumb breadcrumb-dash">
                     <a href="{{url('admin/dashboard')}}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Home</a>
                     <a href="{{url('admin/products')}}" class="breadcrumb-item"></i>Products</a>
-                    <a class="breadcrumb-item" href="#">Add new Attribute</a>
+                    <a class="breadcrumb-item" href="#">Edit Terms</a>
                     
                 </nav>
             </div>
@@ -26,7 +26,7 @@
                 <div class="card ">
                     <form action="{{ url('/admin/updateterms')}}"  method="post" enctype="multipart/form-data" id="add_product">
                     <div class="card-header" style="background-color: #E3E3E3">
-                        <h4 class="card-title">Add New Product</h4>
+                        <h4 class="card-title">Edit Terms</h4>
                         
                     </div>
                     <div class="card-body">
@@ -80,7 +80,7 @@
                             <div class="col-md-12">
                                 <label for="" ></label>
                                 <button type="submit"  class="btn btn-success mt-3 " id="btncheck"><i class="fa fa-edit" ></i>Update Product Terms</button>
-                                <a href="{{url('admin/products/view/'.$product_id)}}" class="btn btn-danger mt-3 ml-3"> <i class="fa fa-times"> Cancel</i> </a>
+                                <a href="{{url('admin/products/view/'.$product_id."#product-attribute")}}" class="btn btn-danger mt-3 ml-3"> <i class="fa fa-times"> Cancel</i> </a>
                             </div>
                             
                         </div>

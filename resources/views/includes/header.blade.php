@@ -14,7 +14,11 @@
     <!-- Core css -->
     <link href="{{ asset('admin-assets/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('admin-assets/css/app.min.css') }}" rel="stylesheet">
-
+    <script src="{{asset('assets/toaster/jquery-1.9.1.min.js')}}"></script>
+    <link href="{{asset('assets/toaster/toastr.css')}}" rel="stylesheet"/>
+    <script src="{{asset('assets/toaster/toastr.js')}}"></script>
+    <link href="{{asset('assets/toaster/summernote.min.css')}}" rel="stylesheet">
+    
 </head>
 
 <body>

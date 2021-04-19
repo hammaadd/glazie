@@ -18,6 +18,7 @@
 						<div id="owl-glass" class="owl-builder owl-carousel owl-theme" >
                             @foreach ($glasses as $key=> $glass)
 						    <li class="item list-unstyled text-center" >
+
 						    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" 
 						    	onclick='setprice({{$glass->id}},{{$glass->frame_price}},3);setimag("{{$glass->image}}","{{$glass->id}}")'>
 						    		<div class="door" id="doorimage{{$key}}">
@@ -70,7 +71,7 @@
    			$('#door_glass').val(id);
    			$('#door_pic').val(key);
         }
-    
+   
  
     </script>
 	  @else

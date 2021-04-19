@@ -58,7 +58,6 @@ class ProductsController extends Controller
            'product_name'=>'required',
            'brand_name'=>'required',
            'regular_price'=>'required',
-           'sale_price'=>'required',
            'weight'=>'required',
            'quantity'=>'required',
            'verity_id'=>'required',
@@ -108,48 +107,44 @@ class ProductsController extends Controller
             $prodgallery->created_by = $user->id;
             $prodgallery->save();
         }
-        for($attr=1;$attr<=$no_of_attribute;$attr++)
-        {
-          $attri_id =  $request->input('attribute'.$attr);
-          $product_attribute = new ProductAttribute;
-          $product_attribute->product_id = $product_id;
-          $product_attribute->attribute_id = $attri_id;
-          $product_attribute->created_by = $user->id;
-          $product_attribute->save();
-          $attribute_id = $product_attribute->id;
-          $terms = $request->input('terms'.$attr);
-          
-          if (isset($terms)) {
-              foreach ($terms as $key => $term) {
-              
-                  if(!(int)$term){
-                  $add_term = new Term;
-                  $add_term->name = $term;
-                  $add_term->attribute_id =$attri_id;
-                  $add_term->created_by = $user->id;
-                  $add_term->save();
-
-                  $prd_terms = new ProductTerm;
-                  $prd_terms->product_id = $product_id;
-                  $prd_terms->attribute_id = $attri_id;
-                  $prd_terms->term_id = $add_term->id;
-                  
-                  $prd_terms->save();
-                  }
-                 else{
-                    $prd_terms = new ProductTerm;
-                    $prd_terms->product_id = $product_id;
-                    $prd_terms->attribute_id = $attri_id;
-                    $prd_terms->term_id = $term;
-                    
-                    $prd_terms->save();
-
-                 }
-                  
-              }
-          }
+        $type = $request->input('type');
+        if($type=='variable'){
+            for($attr=1;$attr<=$no_of_attribute;$attr++)
+            {
+                $attri_id =  $request->input('attribute'.$attr);
+                $product_attribute = new ProductAttribute;
+                $product_attribute->product_id = $product_id;
+                $product_attribute->attribute_id = $attri_id;
+                $product_attribute->created_by = $user->id;
+                $product_attribute->save();
+                $attribute_id = $product_attribute->id;
+                $terms = $request->input('terms'.$attr);
+                if (isset($terms)) {
+                    foreach ($terms as $key => $term) {
+                        if(!(int)$term){
+                            $add_term = new Term;
+                            $add_term->name = $term;
+                            $add_term->attribute_id =$attri_id;
+                            $add_term->created_by = $user->id;
+                            $add_term->save();
+                            $prd_terms = new ProductTerm;
+                            $prd_terms->product_id = $product_id;
+                            $prd_terms->attribute_id = $attri_id;
+                            $prd_terms->term_id = $add_term->id;
+                            $prd_terms->save();
+                        }
+                        else{
+                            $prd_terms = new ProductTerm;
+                            $prd_terms->product_id = $product_id;
+                            $prd_terms->attribute_id = $attri_id;
+                            $prd_terms->term_id = $term;
+                            $prd_terms->save();
+                        }
+                        
+                    }
+                }
+            }
         }
-    
         $prodcut_categories = $request->input('category_id');
         foreach ($prodcut_categories as  $prodcut_category) {
            $add_prdcat = new ProductCategory;
@@ -218,8 +213,7 @@ class ProductsController extends Controller
             'product_name'=>'required',
             'brand_name'=>'required',
             'regular_price'=>'required',
-            'sale_price'=>'required',
-            'weight'=>'required',
+           
             'quantity'=>'required',
           
             'height'=>'required',
@@ -234,7 +228,7 @@ class ProductsController extends Controller
                 'sale_price' => $request->input('sale_price'),
                 'weight' => $request->input('weight'),
                 'quantity' => $request->input('quantity'),
-    
+                'type'=>$request->input('type'),
                 'short_description' =>$request->input('short_description'),
                 'description' =>$request->input('description'),
                 'length' =>$request->input('length'),
@@ -345,8 +339,11 @@ class ProductsController extends Controller
     public function view($id){
         abort_if(!$products = Products::find($id), 403);
         $countattribute  =count(Attribute::all());
-      
-        return view('admin/products/view',['products'=>$products,'number'=>$countattribute]);
+        $count = ProductAttribute::where('product_id',$id)->first();
+
+
+        return view('admin/products/view',['products'=>$products,'number'=>$countattribute, 'count_atts'=>$count]);
+
     }
     public function makeprimary(Request $request){
         $id = $request->input('id');
@@ -457,33 +454,40 @@ class ProductsController extends Controller
     public function filter(Request $request)
     {
         $status = $request->input('status');
-        if($status=='instock'){
-            $products = Products::where('quantity','>','0')->get();
-            
-        }
-        else if($status=='stockout'){
-            $products = Products::where('quantity','=','0')->get();
-           
+        $brand = $request->input('brand');
+        if($brand){
+            if($status=='instock'){
+                $products = Products::where('quantity','>','0')->where('brand_id',$brand)->get();
+                
+            }
+            else if($status=='stockout'){
+                $products = Products::where('quantity','=','0')->where('brand_id',$brand)->get();
+               
+            }
+            else{
+                $products = Products::where('brand_id',$brand)->get();
+            }
         }
         else{
-            $products = Products::all();
+            if($status=='instock'){
+                $products = Products::where('quantity','>','0')->get();
+                
+            }
+            else if($status=='stockout'){
+                $products = Products::where('quantity','=','0')->get();
+               
+            }
+            else{
+                $products = Products::all();
+            }
         }
+        
         return view('admin/products/filterproduct',['products'=>$products]);
     }
-    public function filterbrand(Request $request)
-    {
-        $brand = $request->input('brand');
-       if($brand)
-       {
-        $products = Products::where('brand_id','=',$brand)->get();  
-       }
-       else{
-        $products = Products::all(); 
-       }
-       return view('admin/products/filterproduct',['products'=>$products]);
-    }
+  
     public function addprdvariation($id)
     {
+       
         $dataarray =array();
         $attrbute_array = array();
         $prodcutattribute = ProductAttribute::where('product_id','=',$id)->get();
@@ -526,48 +530,54 @@ class ProductsController extends Controller
            $vairation_details->save();
 
         }
-        return redirect('admin/products/view/'.$id)->with('info','Variantion  Created Successfully');
+        return redirect('admin/products/view/'.$id)->with('info','Variantion Created Successfully');
      }
      public function deletevariation($id)
      {
+         $product_id = Variation::find($id)->product_id;
         Variation::where('id',$id)->delete();
          
-        return redirect('admin/products/view/'.$id)->with('info','Variation Deleted Successfully');
+        return redirect('admin/products/view/'.$product_id)->with('info','Variation Deleted Successfully');
      }
      public function checkvariation(Request $request)
      {
-         $exist = array();
-        $variation = $request->input('variation');  
-        $product_id = $request->input('product_id');
-        $attribute_length  =$request->input('attribute_length');
-        $term_id_array = $request->input('term_id_array');
-        $variations = Variation::where('product_id','=',$product_id)->get();
-        $existed_variation = count($variations);
-        if(count($variations)>0)
-        {
-            foreach($variations as $variation)
-            {
-                $table_prdcats= VariationDetails::where('variation_id','=',$variation->id)
-                    ->whereNotIn('prd_term_id',$term_id_array)
-                    ->get();
-                    if(count($table_prdcats)>0){
-                        
-                    }
-                    else{
-                        array_push($exist, 1);
-                    }
-            }
-            if (count($exist)==$existed_variation) {
-                echo 0;
-            }
-            else{
-                echo 1;
-            }
+            $id=0;
+            $exist = array();
+            $newarray = array();
+            $result = array();
+            $abc = array();
+           $variation = $request->input('variation');  
+           $product_id = $request->input('product_id');
+           $attribute_length  =$request->input('attribute_length');
+           $term_id_array = $request->input('term_id_array');
+           $variations = Variation::where('product_id','=',$product_id)->get();
+           // echo count($variations);
+           if(count($variations)>0)
+           {
+               foreach($variations as $variation)
+               {
+                $newarray = array();
+                  foreach($variation->variationdetails as $variationdetails){
+                    array_push($newarray,$variationdetails->prd_term_id);
+                  }     
+                  $result=array_diff($term_id_array,$newarray); 
+                  if(!$result){
+                    $id=1;
+                  }    
+                  
+                    
+               }
+               if($id==1)
+               {
+                  echo 0;
+               }
+               else{
+                   echo 1;
+               }
+               
+           }
+           else{
+            echo 1;
+           }
         }
-        else{
-            echo 1; 
-        }
-
-     }
-
 }

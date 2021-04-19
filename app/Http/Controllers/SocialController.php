@@ -40,10 +40,10 @@ class SocialController extends Controller
     public function update($id,Request $request){
         $social = SiteSetting::find($id);
         $validatedData = $request->validate([
-            'key'=>'required',
+            
             'value'=>'required'
             ]);
-            if($site->deleteable == '0'){
+            if($social->deleteable == '0'){
                 $update_site = array(
                     'key' => $request->input('key'),
                     'value' => $request->input('value'),
@@ -62,14 +62,16 @@ class SocialController extends Controller
     }
     public function delete($id)
     {
-
+        echo $id;
         $site= SiteSetting::find($id);
-        if($site->deleteable=='1')
+        
+        if($site->deleteable==1)
         {
             return redirect('admin/social')->with('info','Can Not Deleted');
         } 
         else{
             SiteSetting::where('id',$id)->delete();
+            return redirect('admin/social')->with('info','Site Setting Deleted Succesfully');
         }
         
     }

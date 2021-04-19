@@ -69,7 +69,7 @@ class AdminsController extends Controller
         );
         Admin::where('id',$id)
            ->update($data);
-        return redirect('admin/avatar/update')->with('status', 'Image Has been uploaded');
+        return redirect('admin/profile/edit')->with('info', 'Image Has been uploaded');
     
     
     }

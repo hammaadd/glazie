@@ -1,6 +1,7 @@
 @extends('admin-layout.layouts')
 @section('title','Add New Attribute')
 @section('content')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <div class="page-container">
     <div class="main-content">
         <div class="page-header">
@@ -50,6 +51,14 @@
                             <div class=""></div>
                         </div>
                         <div class="row">
+                            <div class="col-md-12">
+                                <label for="">Terms</label>
+                                <select name="terms[]" multiple="multiple" id="terms" class="form-control">
+                                    <option value="" disabled>Create Product Terms</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
                            <div class="col-md-12">
                             <label for="">Description</label>
                            
@@ -76,11 +85,20 @@
 @endsection
 @section('script')
 <script src="{{url('admin-assets/js/pages/form-elements.js')}}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
     <script src="{{url('admin-assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
    <script>
+     $(document).ready(function() {
+    $('#terms').select2(
+        {
+            tags:true,
+            tokenSeparators: [",", " "]
+        });
+    
+});
+
     $("#attribute").validate({
     ignore: ':hidden:not(:checkbox)',
     errorElement: 'label',

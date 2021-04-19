@@ -35,6 +35,7 @@ class CategoriesController extends Controller
             $new_cat->cat_name = $request->input('category_name');
             $new_cat->description = $request->input('description');
             $new_cat->created_by = $user->id;
+            $new_cat->image= "defaultimage.png";
             if ($request->file('image')) {
                 // Image code
             $file = $request->file('image');

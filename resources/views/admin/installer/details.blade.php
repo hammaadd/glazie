@@ -142,7 +142,7 @@ crossorigin="anonymous"></script>
                                                                 <div class="col-md-2"></div>
                                                                 <div class="col-md-2"><b>Change Profile</b></div>
                                                                 <div class="col-md-2">
-                                                                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="abc()"> <i class="anticon anticon-edit"></i> Change Profile</button>
+                                                                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target=".bd-example-modal-lg">Update User Info</button>
 
 
                                                                 </div>
@@ -208,14 +208,14 @@ crossorigin="anonymous"></script>
                                                             
                                                             <div class="row mt-4">
                                                                 <div class="col-md-2"></div>
-                                                                <div class="col-md-2"><b>Change Profile</b></div>
+                                                                <div class="col-md-2"><b>Company Profile</b></div>
                                                                 <div class="col-md-2">
                                                                     
 
                                                                 </div>
                                                                 <div class="col-md-4">
                                                                     
-                                                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#company_info">Large modal</button>
+                                                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#company_info">View Company info</button>
                                                                     
                                                                     <!-- Modal -->
                                                                     
@@ -316,7 +316,7 @@ crossorigin="anonymous"></script>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title h4">Large modal</h5>
+                    <h5 class="modal-title h4">Installer Info</h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <i class="anticon anticon-close"></i>
                     </button>
@@ -513,7 +513,7 @@ crossorigin="anonymous"></script>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    
                 </div>
             </form>
             

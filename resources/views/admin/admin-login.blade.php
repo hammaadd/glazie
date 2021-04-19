@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Enlink - Admin Dashboard Template</title>
+    <title>Glazieltd</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="assets/images/logo/favicon.png">
+    <link rel="shortcut icon" href="{{asset('admin-assets/images/logo/logo.png')}}">
     <link rel="stylesheet" href="">
 
     <!-- page css -->
@@ -19,7 +19,7 @@
 
 <body>
     <div class="app">
-        <div class="container-fluid p-h-0 p-v-20 bg full-height d-flex" style="background-image: url({{asset('admin-assets/images/others/login-3.png')}})">
+        <div class="container-fluid p-h-0 p-v-20 bg full-height d-flex" style="background-image: url({{asset('4168.jpg')}})">
             <div class="d-flex flex-column justify-content-between w-100">
                 <div class="container d-flex h-100">
                     <div class="row align-items-center w-100">
@@ -28,7 +28,7 @@
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between m-b-30 ">
                                         <img class="img-fluid" alt="" src="{{asset('admin-assets/images/logo/gl-house-logo.png')}}">
-                                        <h2 class="m-b-0">Sign In</h2>
+                                        <h2 class="m-b-0">Admin Login</h2>
                                     </div>
                                     <form method="POST" action="{{ route('admin.login') }}">
                                         @csrf
@@ -62,7 +62,10 @@
                                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                                             <div class="col-md-8">
-                                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                                <div class="input-affix m-b-10">
+                                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                                    <i class="suffix-icon fas fa-eye" id="eye2"></i>
+                                                </div>
 
                                                 @error('password')
                                                     <span class="invalid-feedback" role="alert">
@@ -126,7 +129,26 @@
 
     <!-- Core JS -->
     <script src="{{asset('admin-assets/js/app.min.js')}}"></script>
+    <script>
+  
+        var newpwd = document.getElementById('password');
+       
+        var eye2 = document.getElementById('eye2');
 
+        eye2.addEventListener('click',togglePass1);
+
+        function togglePass1(){
+        eye2.classList.toggle('fa-eye');
+        eye2.classList.toggle('fa-eye-slash');
+        (newpwd.type=='password')? newpwd.type='text' :
+        newpwd.type='password';
+       
+        
+        
+        
+
+    }
+    </script>
 </body>
 
 </html>

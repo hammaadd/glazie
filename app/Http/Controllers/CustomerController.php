@@ -311,14 +311,14 @@ class CustomerController extends Controller
     }
     public function comment(Request $request)
     {
-        
+        $slug = $request->input('slug');   
         $newcomment = new BlogComment;
         $newcomment->blog_id = $request->input('blog_id');
         $newcomment->user_id = Auth::id();
         $newcomment->comment = $request->input('comment');
         $newcomment->status = 'unapprove';
         $newcomment->save();
-        return redirect('customer/blog/posts')->with('info','Comment post successfully');
+        return redirect('blog/details/'.$slug)->with('info','Comment post successfully');
     }
     // Submitting the Hire request Feedback 
     public function hirefeedback(Request $request)

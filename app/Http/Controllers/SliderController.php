@@ -94,6 +94,7 @@ class SliderController extends Controller
     public function delete($id,Request $request)
     {
         Slider::where('id',$id)->delete();
+        return redirect('admin/sliders')->with('info','The Slider deleted Successfully');  
 
     }
     

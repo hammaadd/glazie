@@ -1,6 +1,7 @@
 @extends('public/layouts/layouts')
-@section('title','Welcome')
+@section('title','Welcome to Glazie ')
 @section('content')
+
 <script src="{{('http://code.jquery.com/jquery-1.9.1')}}.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
 <script src="{{('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js')}}/toastr.js"></script>
@@ -17,7 +18,7 @@
 
                 <!--Slide item-->
                 @foreach ($sliders as $slider)
-                <div class="item d-flex align-items-center" style="background-image:url(admin-assets/sliders/{{$slider->image}})">
+                <div class="item d-flex align-items-center" style="background-image:url({{asset('admin-assets/sliders/'.$slider->image)}})">
                     <div class="container">
                         <div class="caption">
                             <div class="animated" data-start="fadeInUp">
@@ -74,43 +75,30 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="bg_img bg_img2 p-4 p-md-5 rounded-4 overflow-hidden">
                         <div class="title-box">
                             <!--Sec Title-->
                             <div class="text-center">
                                 <div class="title-inner text-white">
+                                 
                                     <h2>PREMIUM QUALITY COMPOSITE DOORS</h2>
                                     <p>Over hundred product lines are just a few clicks away. All prices are transparent and instant: just select your frame, color and glasses into our online customizer.</p>
 
-                                    <a href="#" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-5">Customize Door</a>
+                                    <a href="{{url('door-build')}}" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-5">Customize Door</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>  
                 </div>
-                <div class="col-md-6">
-                    <div class="bg_img bg_img1 p-4 p-md-5 rounded-4 overflow-hidden">
-                        <div class="title-box">
-                            <!--Sec Title-->
-                            <div class="text-center text-white">
-                                <div class="title-inner">
-                                    <h2>PREMIUM QUALITY UPVC Windows</h2>
-                                    <p>Over hundred product lines are just a few clicks away. All prices are transparent and instant: just select your frame, color and glasses into our online customizer.</p>
-
-                                    <a href="#" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-5">Customize Window</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+             
             </div>
         </div>
     </section>
     <!-- /Customize Section -->
 
     <!-- Design & Quote Now -->
-    <section class="section quote-section theme_bgcolor2 bg_img" style="background-image:url(assets/media/roof-latern-dual.jpg)">
+    <section class="section quote-section theme_bgcolor2 bg_img" style="background-image:url({{asset('assets/media/roof-latern-dual.jpg')}})">
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
@@ -145,7 +133,7 @@
                                 <div class="brand-carousel owl-carousel">
                                     @foreach ($categories as $category)
                                     <div class="single-logo">
-                                        <img src="{{('admin-assets/categories/'.$category->image)}}" alt="">
+                                        <img src="{{asset('admin-assets/categories/'.$category->image)}}" alt="">
                                     </div>
                                     @endforeach
                                     
@@ -198,13 +186,13 @@
                         <div class="text">
                             <p>At Glazie Ltd we offer a complete survey,supply and fitting service for all our aluminium,timber and uPvc products.We draw upon our years of experience and utilise our team of highly skilled installers to provide a top class fitting service with 10 years insurance backed guarantee.</p>
                         </div>
-                        <a href="#" class="btn btn-fill-out rounded-0 px-4 py-2">Find out more</a>
+                        <a href="{{url('installerlist')}}" class="btn btn-fill-out rounded-0 px-4 py-2">Find out more</a>
                     </div>
                 </div>
                 <div class="image-column col-md-6">
                     <div class="images-wrapper mb-5 mb-md-0">
                         <div class="single_image-wrapper">
-                            <img class="rounded-4 img-fluid" src="{{('assets/media/bifold-install.jpg')}}" alt="">
+                            <img class="rounded-4 img-fluid" src="{{asset('assets/media/bifold-install.jpg')}}" alt="">
                         </div>
                     </div>
                 </div>
@@ -265,7 +253,7 @@
                         <div class="inner-box">
                             <div class="image-outer">
                                 <div class="image">
-                                    <img src="{{('assets/media/testimonial/guarantee-Custom-new.jpg')}}" alt="Peter Duru" />
+                                    <img src="{{asset('assets/media/testimonial/guarantee-Custom-new.jpg')}}" alt="Peter Duru" />
                                 </div>
                                 <div class="quote-icon">
                                     <span class="icon icon-flaticon-quote-1"></span>
@@ -282,7 +270,7 @@
                         <div class="inner-box">
                             <div class="image-outer">
                                 <div class="image">
-                                    <img src="{{('assets/media/testimonial/author-5.jpg')}}" alt="Brackley" />
+                                    <img src="{{asset('assets/media/testimonial/author-5.jpg')}}" alt="Brackley" />
                                 </div>
                                 <div class="quote-icon">
                                     <span class="icon icon-flaticon-quote-1"></span>
@@ -299,7 +287,7 @@
                         <div class="inner-box">
                             <div class="image-outer">
                                 <div class="image">
-                                    <img src="{{('assets/media/testimonial/author-6.jpg')}}" alt="Maxyray" />
+                                    <img src="{{asset('assets/media/testimonial/author-6.jpg')}}" alt="Maxyray" />
                                 </div>
                                 <div class="quote-icon">
                                     <span class="icon icon-flaticon-quote-1"></span>
@@ -316,7 +304,7 @@
                         <div class="inner-box">
                             <div class="image-outer">
                                 <div class="image">
-                                    <img src="{{('assets/media/testimonial/author-4.jpg')}}" alt="Susan Elkin" />
+                                    <img src="{{asset('assets/media/testimonial/author-4.jpg')}}" alt="Susan Elkin" />
                                 </div>
                                 <div class="quote-icon">
                                     <span class="icon icon-flaticon-quote-1"></span>
@@ -354,7 +342,7 @@
                             <div class="brand-carousel owl-carousel">
                                 @foreach ($brands as $brand)
                                 <div class="single-logo">
-                                    <img src="{{('admin-assets/brands/'.$brand->image)}}" alt="">
+                                    <img src="{{asset('admin-assets/brands/'.$brand->image)}}" alt="">
                                 </div>
                                 @endforeach
                                 

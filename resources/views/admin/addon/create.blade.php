@@ -1,9 +1,6 @@
 @extends('admin-layout.layouts')
 @section('title','Product Add On')
 @section('content')
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 
 
@@ -62,41 +59,13 @@
                                     
                                     <input type="file" class="form-control rounded-0" name="svgimage">
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="">Weight (Kg)</label>
-                                    <input type="number" class="form-control rounded-0" name="weight"  placeholder="Enter Weight in KG">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="">Length <small>(cm)</small></label>
-                                    <input type="number" class="form-control rounded-0" name="length" placeholder="Enter Length">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="">width <small>(cm)</small></label>
-                                    <input type="number" class="form-control rounded-0" name="width"  placeholder="Enter width" min="1">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="">Height <small>(cm)</small></label>
-                                    <input type="number" class="form-control rounded-0" name="height" placeholder="Enter Height" min="1">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="">Price</label>
-                                    <input type="number" class="form-control rounded-0" name="price" placeholder="Enter Price " min="1">
-                                </div>
-                                
-                            </div>
-                            <div class="row">
+                              
+                           
                                 <div class="col-md-6">
                                     <label for="">Quantity</label>
                                     <input type="number" class="form-control rounded-0" name="quantity" placeholder="Enter No of Quantity" min="1">
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="">Quantity</label>
-                                    <input type="number" class="form-control rounded-0" name="quantity" placeholder="Enter No of Quantity" min="1">
-                                </div>
+                               
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -167,7 +136,7 @@
 @section('script')
 
 <!-- page js -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="{{asset('assets/toaster/toastr.min.js')}}"></script>
 <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
   
 <script>

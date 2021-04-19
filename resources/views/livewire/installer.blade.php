@@ -4,7 +4,7 @@
            <div class="row mt-3">
                <div class="col-md-3"></div>
                <div class="col-md-6">
-                   <input type="search" class="form-control" wire:model.debounce.500ms="name" placeholder="Write Something..">
+                   <input type="search" class="form-control" wire:model.debounce.500ms="name" placeholder="Write Installer Name or Postcode">
                    
                </div>
                <div class="col-md-2">
@@ -26,6 +26,7 @@
                              </div>
                          </div>                
                      @endforeach
+                     
                  @else
                      <div class="col-md-12 mt-3">
                          <div class="alert alert-danger"><b>No Search Result Found</b></div>
@@ -33,6 +34,9 @@
                  @endif 
      
              </div>
+             @if(count($installers)>0)
+             {{$installers->links('vendor/pagination/bootstrap-4')}}
+             @endif
         </div>
 
      

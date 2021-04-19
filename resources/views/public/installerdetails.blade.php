@@ -71,7 +71,7 @@ crossorigin="anonymous"></script>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                               <button class="nav-link active" id="nav-request-tab" data-bs-toggle="tab" data-bs-target="#nav-request" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Request Hiring</button>
                               <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Get A Quote</button>
-                              <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Testamonials</button>
+                              <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Testimonial</button>
                             </div>
                           </nav>
                           <div class="tab-content" id="nav-tabContent">
@@ -221,7 +221,7 @@ crossorigin="anonymous"></script>
                                                 <div class="col-md-2">
                                                    <img src="{{asset('admin-assets/testmonial/'.$work->image)}}" alt="" width="100%">
                                                 </div>
-                                                <div class="col-md-10"><h3 class="card-title"><div class="jstars" data-value="{{$work->rating}}"></div></h3>
+                                                <div class="col-md-10"><h3 class="card-title">{{-- <div class="jstars" data-value="{{$work->rating}}"></div></h3> --}}
                                                     <sup><small>{{$work->created_at}}</small></sup>
                                                     <p class="text-justify">{{$work->description}}</p>
                                                 </div>
