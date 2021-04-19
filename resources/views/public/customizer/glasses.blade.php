@@ -16,19 +16,20 @@
 				<div class="row">
 					<div class="col-12">
 						<div id="owl-glass" class="owl-builder owl-carousel owl-theme" >
-                            @foreach ($glasses as $glass)
+                            @foreach ($glasses as $key=> $glass)
 						    <li class="item list-unstyled text-center" >
-						    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="setprice({{$glass->id}},{{$glass->frame_price}},3)">
-						    		<div class="door">
-						    			<img class="door-image" src="{{asset('admin-assets/addon/glass/'.$glass->image)}}" align="">
+						    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="setprice({{$glass->id}},{{$glass->frame_price}},3);getimagedata({{$key}})">
+						    		<div class="door" id="abc{{$key}}">
+						    			{{-- <img class="door-image" src="{{asset('admin-assets/addon/glass/'.$glass->image)}}" align=""> --}}
+										<object type="image/svg+xml" id="modelglass<?php echo $key ?>" data="{{asset('admin-assets/addon/glass/'.$glass->image)}}" class="door-image" onload="setdoorColor({{$key}})" ></object>
 						    		</div>
 						    	</button>
 						    </li>
                             @endforeach
 						</div>
 						<div class="customNavigation">
-							<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btninternalColor">Prev</a>
-						    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnFrame">Next</a>
+							<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 " onclick="get_internal()">Prev</a>
+						    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end " onclick="openframe()">Next</a>
 						</div>
 					</div>
 				</div>
@@ -44,8 +45,17 @@
             $('li button.selected').removeClass('selected');
             $(this).addClass('selected');
         });
-        
-    
+		function setdoorColor(id)
+		{
+			var a = document.getElementById("modelglass"+id);
+		    var svgDoc = a.contentDocument;
+		    var svgItem = svgDoc.getElementById("main_color");
+            var  innertag= svgItem.querySelector('polyline');
+			var color = $('#doorcolor').val();
+			svgItem = innertag.style.fill = color;
+		}
+		
+      
  
     </script>
 	  @else

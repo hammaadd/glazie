@@ -6,12 +6,24 @@
 	<link rel="stylesheet" href="{{asset('assets2/vendors/owlcarousel/css/owlcarousel.min.css')}}">
 	<!-- <link rel="stylesheet" href="{{asset('assets2/vendors/fontawesome/css/all.min.css')}}-->
 	<link rel="stylesheet" href="{{asset('assets2/vendors/boxicons/css/boxicons.min.css')}}">
-	<link rel="preconnect" href="{{asset('https://fonts.gstatic.com')}}">
-	<link rel="stylesheet" href="{{asset('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap')}}">
+    <script src="{{asset('assets/toaster/jquery-1.9.1.min.js')}}"></script>
+<link href="{{asset('assets/toaster/toastr.css')}}" rel="stylesheet"/>
+<script src="{{asset('assets/toaster/toastr.js')}}"></script>
+	{{-- <link rel="preconnect" href="{{asset('https://fonts.gstatic.com')}}"> --}}
+	<link rel="stylesheet" href="{{asset('assets2/css2.css')}}">
 	<link rel="stylesheet" href="{{asset('assets2/css/style.css')}}">
-	<script src="https://kit.fontawesome.com/94dd3c1954.js" crossorigin="anonymous"></script>
+	<script src="{{asset('assets2/font.js')}}" crossorigin="anonymous"></script>
+    <style>
+        li{
+            list-style-type:none;
+        }
+    </style>
+     @if (session('info'))
+     <script type="text/javascript">toastr.error("{{session('info')}}");</script>
+     @endif  
 <div class="container" id="abc">
     <h3 class="cart-page-title">Shopping Cart</h3>
+    
     @if (count($carts))
     
     <div class="row">
@@ -24,7 +36,7 @@
                                 <th>Image</th>
                                 <th>Product Name</th>
                                 {{-- <th>Unit Price</th> --}}
-                                <th title="Variation /Custom products">Variation/Custom</th>
+                                <th>Unit Price</th>
                                 {{-- <th title="Variation / Custom Price">Price</th> --}}
                                 <th>Qty</th>
                                 <th>Subtotal</th>
@@ -56,36 +68,38 @@
                     @endphp
                             <tr>
                                 <td class="product-thumbnail cart-list">
+                                    <input type="hidden" value="{{$products->quantity}}" id="prdqty{{$cart->id}}">
                                     <input type="hidden" id="regular_price{{$cart->id}}" value="{{$products->regular_price}}">
-                            <input type="hidden" id="itemquantity{{$cart->id}}" value="{{$cart->price}}">
-                                    <a href="#"><img src="{{asset('productimages/'.$image)}}" alt=""></a>
-                                </td>
-                                <td class="product-name text-center"><a href="#">{{$products->product_name}}</a></td>
-                                {{-- <td class="product-price-cart"><span class="amount">&#163;{{$cart->price}}</span></td> --}}
-                                <td>
-                                   @if($cart->product->type=='variable')
-                                        @php
-                                            $cart_details = $cart->cartdetails;
-                                            $variation_data = $cart_details->variation;
-                                            $variation_price = $variation_data->price;
-                                            $variation_details = $variation_data->variationdetails
-                                        @endphp
-                                        <input type="hidden" id="variation_price{{$cart->id}}" value="{{$variation_price}}">
-                                       
-                                        @foreach ($variation_details as $details)
-                                        @php
-                                        $a = array('primary','secondary','success','danger','warning text-dark','info text-dark','light text-dark','dark');
-                                        $randindex = array_rand($a);
+                                    <input type="hidden" id="itemquantity{{$cart->id}}" value="{{$cart->price}}">
+                                    <a href="#">
+                                        @if($cart->product->type=='customize')
+                                            @foreach($cart->cartdetails as $cartdetails)
+                                                @if($cartdetails->addon_type=='model')
+                                                   <img src="{{asset('admin-assets/addon/'.$cartdetails->model->svgimage)}}" alt="" height="100px"> 
+                                                @endif
+                                            @endforeach
+                                        @else
 
-                                    @endphp
-                                            <span class="badge  bg-{{$a[$randindex]}}">{{$details->prd_term->term->name}}</span>
-                                        @endforeach
-                                       
-                                   @endif
-                                </td> 
-                                
+                                        <img src="{{asset('productimages/'.$image)}}" alt="">
+                                        @endif
+                                    </a>
+                                </td>
+                                <td class="product-name text-center">
+                                    <a href="#" class="mb-2">{{$products->product_name}}</a>
+                                </td>
+                                {{-- <td class="product-price-cart"><span class="amount">&#163;{{$cart->price}}</span></td> --}}
+                                <td>{{$cart->price}}</td>
+                                 
+                                 
+                                @php
+                                  $variation_price=0;  
+                                @endphp
                                 <td class="product-quantity">
-                                    
+                                    @foreach ($cart->cartdetails as $cartdetails)
+                                    @php
+                                        $variation_price = $variation_price +$cartdetails->price;
+                                    @endphp
+                                 @endforeach
                                     <div class="cart-plus-minus">
                                         <div class="dec qtybutton" onclick="removeqty({{$cart->id}})">-</div>
                                         <input class="cart-plus-minus-box" type="text" name="qtybutton" value="{{$cart->quantity}}"  oninput="update_qty({{$cart->id}})" id="no_of_qty{{$cart->id}}" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)">
@@ -104,6 +118,77 @@
                                $variation_price=0;
                            @endphp
                             </tr>
+                            @if($cart->product->type=='variable'|| $cart->product->type=='customize')
+                            <tr>
+                               
+                                <td colspan="6">  @if($cart->product->type=='variable')
+                                    @php
+                                        $cart_details = $cart->cartdetails;
+                                        foreach ($cart_details as $key => $cart_detail) {
+                                            # code...
+                                        }
+                                        $variation_data = $cart_detail->variation;
+                                        $variation_price = $variation_data->price;
+                                        $variation_details = $variation_data->variationdetails
+                                    @endphp
+                                    <input type="hidden" id="variation_price{{$cart->id}}" value="{{$variation_price}}">
+                                   
+                                    @foreach ($variation_details as $details)
+            
+                                        <span class="badge  bg-light text-dark">{{$details->prd_term->term->name}}</span>
+                                    @endforeach
+                                   
+                               @endif
+                               @if ($cart->product->type=='customize')
+                                  
+                                   @foreach ($cart->cartdetails as $cartdetails)
+                                      @php
+                                          $variation_price = $variation_price +$cartdetails->price;
+                                      @endphp
+                                   @endforeach
+                                   @foreach ($cart->cartdetails as $cartdetails)
+                                    @if($cartdetails->addon_type=='model')
+                                    <span class="badge  text-dark" title="Model Name ">{{$cartdetails->model->model_name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='exteranal_color')
+                                     <span  class="badge bg-light text-dark" title="External Color">{{$cartdetails->color->name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='interanal_color')
+                                    <span  class="badge bg-light text-dark" title="Internal Color">{{$cartdetails->color->name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='glass')
+                                      <span  class="badge bg-light text-dark" title="Glass name ">{{$cartdetails->frame->name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='frame')
+                                    <span  class="badge bg-light text-dark" title="Frame name ">{{$cartdetails->frame->name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='frameexcolor')
+                                     <span class="badge bg-light text-dark" title="Frame External Color">{{$cartdetails->framecolor->value}}</span>
+                                    
+                                    @endif
+                                    @if($cartdetails->addon_type=='frameinternalcolor')
+                                     <span class="badge bg-light text-dark" title="Frame internal Color">{{$cartdetails->framecolor->value}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='frame_glass')
+                                     <span class="badge bg-light text-dark" title="Frame glass">{{$cartdetails->frameglass->glass_name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='handle')
+                                     <span class="badge bg-light text-dark" title="Handle">{{$cartdetails->furniture->name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='knocker')
+                                     <span class="badge bg-light text-dark" title="Knocker">{{$cartdetails->furniture->name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='letterbox')
+                                     <span class="badge bg-light text-dark" title="Letter Box">{{$cartdetails->furniture->name}}</span>
+                                    @endif
+                                    @if($cartdetails->addon_type=='hinge')
+                                      <span class="badge bg-light text-dark" title="Hinge">{{$cartdetails->hinge->hingeside}}</span>
+                                    @endif
+                                    
+                                   @endforeach
+                               @endif</td>
+                            </tr>
+                            @endif
                            @endforeach
                            
                         </tbody>
@@ -113,7 +198,7 @@
                     <div class="col-lg-12">
                         <div class="cart-shiping-update-wrapper">
                             <div class="cart-shiping-update">
-                                <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0" href="{{url('availproducts')}}">Continue Shopping</a>
+                                <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0" href="{{url('products')}}">Continue Shopping</a>
                             </div>
                             <div class="cart-clear">
                                 {{-- <button class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 mx-3">Update Shopping Cart</button> --}}
@@ -135,12 +220,12 @@
                                 <input type="text" required="" name="name" id="coupen" class="form-control">
                                 
                                 <span class="text-success text-center mb-2" style="display: none" id="discountmessage"></span>
-                                <span class="text-danger text-center mb-2" style="display: none" id="coupenmessage"></span> <br>
+                                <span class="text-danger text-center mb-2" style="display: none" id="coupenmessage"></span> 
                                 <button class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 float-end" onclick="checkcoupen()" type="button">Apply Coupon</button>
                             
                         </div>
                     </div>
-                    <input type="text" id="net_total" value="{{$price}}">
+                    <input type="hidden" id="net_total" value="{{$price}}">
                 </div>
                 {{-- <div class="col-lg-4 col-md-6">
                     <div class="cart-tax">
@@ -195,7 +280,7 @@
                         <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 float-end w-100" href="{{url('checkout')}}">Proceed to Checkout</a>
                     </div>
                 </div>
-                <input type="text" id="paidamount" value="{{$price}}">
+                <input type="hidden" id="paidamount" value="{{$price}}">
             </div>
         </div>
     </div>
@@ -210,7 +295,27 @@
 	<script src="{{asset('assets2/vendors/owlcarousel/js/owlcarousel.min.js')}}"></script>
 	<script src="{{asset('assets2/vendors/videopopup/js/videopopup.js')}}"></script>
 	<script src="{{asset('assets2/js/script.js')}}"></script>
-    <script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+    toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
+ 
         let paidamount;
         function removeqty(id)
         {
@@ -227,11 +332,13 @@
         function addqty(id)
         {
             var qty = $('#no_of_qty'+id).val();
-            
+            prdqty = $('#prdqty'+id).val();
+                if(qty>=prdqty){}
+                else{
                 qty = parseInt(qty)+1;
                 $('#no_of_qty'+id).val(qty);
                 update_qty(id);
-            
+                }
         }
         function remove(id)
          {
@@ -243,6 +350,7 @@
                  $.ajax({
                 type:'POST',
                 data:{
+                    "_token": "{{ csrf_token() }}",
                     id:id
                 },
                 url:url,
@@ -272,37 +380,25 @@
                  $.ajax({
                 type:'POST',
                 data:{
+                    "_token": "{{ csrf_token() }}",
                  no_of_qty:no_of_qty,
                  cart_id:cart_id
                  
                 },
                 url:url,
                 success:function(result){
-                    console.log(result);
-                 var jsonResult = JSON.parse(result.substring(result.indexOf('{'), result.indexOf('}')+1));
-                        var variation_data = 0;
-                        variation_data = $('#variation_price'+cart_id).val();
-                        if(variation_data == null || variation_data=="")
+                    $("#abc").html(result);  
+                    var prdquantity = parseInt($('#prdquantity').val());
+                        if(prdquantity!=0)
                         {
-                            variation_data=0; 
+                            $('#cart_items').show();
+                                $('#cart_items').html(prdquantity);
+
                         }
-                        console.log(variation_data);
-                         var item_result = parseInt($('#itemquantity'+cart_id).val())*parseInt(no_of_qty)+ parseInt(variation_data)*parseInt(no_of_qty);
-                         $('#item_total_price'+cart_id).html("&#163;"+item_result); 
-                         $('#total_qty').html(jsonResult[1]);
-                         $('#total_price').html("&#163;"+jsonResult[0]);
-                         $('#grand_total').html("&#163;"+jsonResult[0]);
-                         $('#paidamount').val(jsonResult[0]);
-                         $('#cart_items').html(jsonResult[1]);
-                         $("#net_total").val(jsonResult[0]);
-                         $('#net_regular_price').html(jsonResult[2]);
-                         var regular_price = parseInt($('#regular_price'+cart_id).val())*parseInt(no_of_qty);
-                         $('#regular_prices'+cart_id).html(regular_price);
-                         discount = regular_price -item_result; 
-                         $('#discounts'+cart_id).html(discount);
-                         var net_discount = parseInt(jsonResult[2])-parseInt(jsonResult[0])
-                         $('#net_discounts').html(net_discount);
-                     }
+                        else{
+                            $('#cart_items').hide();
+                        }
+                    }
                         
                  });
              
@@ -318,6 +414,7 @@
            type:'POST',
            url:url,
            data:{
+            "_token": "{{ csrf_token() }}",
                coupen:coupen
            },
            success:function(result){ 
@@ -361,8 +458,8 @@
                     $('#disrow').show();
                     $('#grand_total').html("&#163;"+paidamount);
                     $('#paidamount').val(paidamount);
-                    console.log(paidamount);
-                    $('#net_total').val(paidamount);
+                    get_total();
+                    
                     
 
                 }
@@ -380,11 +477,10 @@
                     $('#discountt').val(discount);
                     $('#paidrow').show();
                     $('#grand_total').html("&#163;"+paidamount);
-                    $('#net_total').val(paidamount);
+                    get_total();
                 }
             }
-            //$('#dropdownlink').html(result);
-       
+        
             }	
             });
     }
@@ -397,12 +493,15 @@ function checkprice(i,j)
            type:'POST',
            url:url,
            data:{
-               i:i
+               i:i,
+               "_token": "{{ csrf_token() }}",
            },
            success:function(result){ 
              var grand =  parseInt($('#paidamount').val())+ parseInt(j)-$('#discountt').val(); 
              console.log($('#paidamount').val());
-             $('#grand_total').html("&#163;"+grand);
+             $('#pricevalue').val(j);
+            get_total();
+             
            }
     });
 }
@@ -414,7 +513,8 @@ $(document).ready(function(){
            type:'POST',
            url:url,
            data:{
-               i:i
+               i:i,
+               "_token": "{{ csrf_token() }}",
            },
            success:function(result){ 
              var grand =  parseInt($('#paidamount').val()) +  parseInt(j); 
@@ -423,7 +523,13 @@ $(document).ready(function(){
              $('#grand_total').html("&#163;"+grand);
            }
     });
+
 })
+function get_total()
+{
+    net_total = parseInt($('#net_total').val()) - parseInt($('#discountt').val()) + parseInt($('#pricevalue').val());
+    $('#grand_total').html("&#163;"+net_total);
+}
      </script>
   
 @endsection

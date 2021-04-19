@@ -1,9 +1,11 @@
 @extends('public/layouts/layouts')
 @section('title','Welcome to Glazie ')
 @section('content')
-<script src="{{('http://code.jquery.com/jquery-1.9.1')}}.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
-<script src="{{('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js')}}/toastr.js"></script>
+
+
+<script src="{{asset('assets/toaster/jquery-1.9.1.min.js')}}"></script>
+<link href="{{asset('assets/toaster/toastr.css')}}" rel="stylesheet"/>
+<script src="{{asset('assets/toaster/toastr.js')}}"></script>
 <div class="main_content">
     @if (session('info'))
     <script type="text/javascript">toastr.success("{{session('info')}}");</script>
@@ -16,8 +18,8 @@
             <div class="owl-slider owl-carousel owl-theme" data-autoplay="true">
 
                 <!--Slide item-->
-                @foreach ($sliders as $slider)
-                <div class="item d-flex align-items-center" style="background-image:url({{asset('admin-assets/sliders/'.$slider->image)}})">
+                {{-- @foreach ($sliders as $slider)
+                {{-- <div class="item d-flex align-items-center" style="background-image:url({{asset('admin-assets/sliders/'.$slider->image)}})">
                     <div class="container">
                         <div class="caption">
                             <div class="animated" data-start="fadeInUp">
@@ -35,8 +37,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                @endforeach
+                </div> 
+                @endforeach --}}
 
             
 
@@ -52,7 +54,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="bg_img bg_img2 p-4 p-md-5 rounded-4 overflow-hidden">
                         <div class="title-box">
                             <!--Sec Title-->
@@ -67,21 +69,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="bg_img bg_img1 p-4 p-md-5 rounded-4 overflow-hidden">
-                        <div class="title-box">
-                            <!--Sec Title-->
-                            <div class="text-center text-white">
-                                <div class="title-inner">
-                                    <h2>PREMIUM QUALITY UPVC Windows</h2>
-                                    <p>Over hundred product lines are just a few clicks away. All prices are transparent and instant: just select your frame, color and glasses into our online customizer.</p>
-
-                                    <a href="{{url('door-build')}}" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-5">Customize Window</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </section>
@@ -116,10 +104,12 @@
                 }
                     @endphp
                 
-                
+                @if($product->publish=='public' && $product->type!='customize')
                 <div class="col-lg-3 col-md-4 col-6">
                 <div class="product">
-                    <span class="pr_flash">Sale</span>
+                    @if($product->sale_price)
+                       <span class="pr_flash">Sale</span>
+                       @endif
                     <div class="product_img">
                         <a href="{{url('productdetails/'.$product->id)}}">
                             <img src="{{asset('productimages/'.$image)}}"
@@ -128,25 +118,34 @@
                         </a>
                         <div class="product_action_box">
                             <ul class="list_none pr_action_btn">
-                                @if ($product->type=='simple')
+                                {{-- @if ($product->type=='simple')
                                     <li class="add-to-cart"><a style="cursor: pointer" onclick="addtocart({{$product->id}})"><i class="bx bx-cart"></i> Add To Cart</a></li>
                                 @endif
-                                {{-- <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li>
+                                 <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li> 
                                 <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>
                                 <li><a href="#"><i class="bx bx-heart"></i></a></li> --}}
+                               
+                                @if(!empty(Auth::id()))
+                                <li><a  title="Add to wish list" onclick="addtowishlist({{$product->id}},'{{$image}}')"><i class="bx bx-heart" ></i></a></li> 
+                                @endif
                             </ul>
                         </div>
                     </div>
                     <div class="product_info">
                         <h6 class="product_title text-center"><a href="{{url('productdetails/'.$product->id)}}">{{$product->product_name}}</a></h6>
                         <div class="product_price text-center">
+                            @if($product->sale_price)
                             <span class="price "><span class="currencySymbol">£</span>{{$product->sale_price}}</span>
                             <del><span class="currencySymbol">£</span>{{$product->regular_price}}</del>
+                            @else
+                            <span class="price "><span class="currencySymbol">£</span>{{$product->regular_price}}</span>
+                            
+                            @endif
                         </div>
                     </div>
                 </div>
                 </div>
-                
+                @endif
                 @endforeach
                 @endif
                 @endforeach
@@ -215,7 +214,7 @@
                         <div class="text">
                             <p>At Glazie Ltd we offer a complete survey,supply and fitting service for all our aluminium,timber and uPvc products.We draw upon our years of experience and utilise our team of highly skilled installers to provide a top class fitting service with 10 years insurance backed guarantee.</p>
                         </div>
-                        <a href="#" class="btn btn-fill-out rounded-0 px-4 py-2">Find out more</a>
+                        <a href="{{url('installerlist')}}" class="btn btn-fill-out rounded-0 px-4 py-2">Find out more</a>
                     </div>
                 </div>
                 <div class="image-column col-md-6">
@@ -396,7 +395,7 @@
     "debug": false,
     "newestOnTop": false,
     "progressBar": true,
-    "positionClass": "toast-top-center",
+    "positionClass": "toast-top-right",
     "preventDuplicates": true,
     "onclick": null,
     "showDuration": "300",
@@ -433,6 +432,46 @@ function addtocart(id)
         
         }	
         });
+
+}
+
+function addtowishlist(id,image)
+{
+   
+    url = "{{url('addtowishlist')}}";
+        $.ajax({
+       type:'POST',
+       url:url,
+       data:{
+           id:id,
+           image:image,
+           "_token": "{{ csrf_token()}}",
+
+       },
+       success:function(result){ 
+        //console.log(result);
+       var result = JSON.parse(result);
+       if(result[0]=='Product is already in wishlist')
+      {
+      	 toastr.error(result[0]);
+      }
+       else
+       {
+       	toastr.success(result[0]);
+       }
+       if(result[1]>0)
+       {
+        $('#wishitem').html(result[1]);
+        $('#wishitem').show();
+        
+       }
+       else{
+        $('#wishitem').hide();
+       }
+        
+        }	
+        });
+
 
 }
 </script>

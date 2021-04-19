@@ -1,6 +1,5 @@
 @extends('public/layouts/layouts')
-@section('title','Product Cart')
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+@section('title','Contact Us')
 
 @section('content')
 <div class="container">
@@ -13,25 +12,25 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
             @if(count($errors)>0)
-                                @foreach($errors->all() as $error)
-                                <div class="col-md-12">
-                                    <div class="alert alert-danger text-light" style="background-color: #e2584c">
-                                        {{$error}}
-                                    </div>
-                                </div>
-                                @endforeach
-                            @endif
+                @foreach($errors->all() as $error)
+                <div class="col-md-12">
+                    <div class="alert alert-danger text-light" style="background-color: #e2584c">
+                        {{$error}}
+                    </div>
+                </div>
+                @endforeach
+            @endif
             <form action="{{url('contactsubmit')}}" method="post" id="contactus_form">
                 @csrf
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label for="">Name</label>
                     <input type="text" class="form-control rounded-1" name="name" placeholder="Enter Name">
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label for="">Email Address</label>
                     <input type="email" class="form-control rounded-0" name="email" placeholder="Enter Email Address">
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label for="">Message</label>
                     <textarea name="message"  rows="10" placeholder="Enter Your Message" class="form-control rounded-0"></textarea>
                 </div>
@@ -57,7 +56,7 @@
 @section('script')
 
 <script src="{{ url('admin-assets/vendors/jquery-validation/jquery.validate.min.js')}}"></script>
-<script src='https://www.google.com/recaptcha/api.js'></script>
+
 <script>
 
   

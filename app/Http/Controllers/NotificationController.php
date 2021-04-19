@@ -19,6 +19,18 @@ class NotificationController extends Controller
         $notifications = Notification::where('status','=','unread')->get();
         return view("admin/notification/all",['notifications'=>$notifications]);
     }
+    public function allread(Request $request)
+    {
+        $notifications = Notification::where('status','=','unread')->get();
+        foreach($notifications as $notification)
+        {
+            $updatenotification = array(
+                'status' => 'read'
+            );
+              Notification::where('id',$notification->id)->update($updatenotification);
+        }
+        return redirect('admin/notifications')->with('info','All notification mark as read');
+    }
     public function details($id){
         $read = array(
             'status'=>'read'

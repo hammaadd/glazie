@@ -66,6 +66,11 @@ class User extends Authenticatable
         return $this->hasmany(Testmonial::class, 'installer_id');
     }
 
+   
+    public function wishs()
+    {
+        return $this->hasMany(Wishlist::class, 'customer_id');
+    }
     
 
 }

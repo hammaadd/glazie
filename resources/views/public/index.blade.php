@@ -1,6 +1,7 @@
 @extends('public/layouts/layouts')
 @section('title','Welcome to Glazie ')
 @section('content')
+
 <script src="{{('http://code.jquery.com/jquery-1.9.1')}}.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
 <script src="{{('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js')}}/toastr.js"></script>
@@ -74,12 +75,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="bg_img bg_img2 p-4 p-md-5 rounded-4 overflow-hidden">
                         <div class="title-box">
                             <!--Sec Title-->
                             <div class="text-center">
                                 <div class="title-inner text-white">
+                                 
                                     <h2>PREMIUM QUALITY COMPOSITE DOORS</h2>
                                     <p>Over hundred product lines are just a few clicks away. All prices are transparent and instant: just select your frame, color and glasses into our online customizer.</p>
 
@@ -87,23 +89,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>  
                 </div>
-                <div class="col-md-6">
-                    <div class="bg_img bg_img1 p-4 p-md-5 rounded-4 overflow-hidden">
-                        <div class="title-box">
-                            <!--Sec Title-->
-                            <div class="text-center text-white">
-                                <div class="title-inner">
-                                    <h2>PREMIUM QUALITY UPVC Windows</h2>
-                                    <p>Over hundred product lines are just a few clicks away. All prices are transparent and instant: just select your frame, color and glasses into our online customizer.</p>
-
-                                    <a href="#" class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 mt-5">Customize Window</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+             
             </div>
         </div>
     </section>

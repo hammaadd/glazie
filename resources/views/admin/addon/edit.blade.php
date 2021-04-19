@@ -70,26 +70,8 @@
                                     <input type="file" class="form-control rounded-0" name="svgimage">
                                 </div>
                             
-                                <div class="col-md-6">
-                                    <label for="">Weight <small>(Kg)</small></label>
-                                    <input type="number" class="form-control rounded-0" name="weight" value="{{$addon->wieght}}" placeholder="Enter Weight in Kg">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="">Height <small>(cm)</small> </label>
-                                    <input type="number" name="height" class="form-control rounded-0" placeholder="Enter Height" value="{{$addon->height}}">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="">Width <small>(cm)</small></label>
-                                    <input type="number" name="width" class="form-control rounded-0" placeholder="Enter Width" value="{{$addon->width}}">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="">Length <small>(cm)</small></label>
-                                    <input type="number" class="form-control rounded-0" name="length" value="{{$addon->length}}">
-                                </div>
+                               
+                               
                                 <div class="col-md-6">
                                     <label for="">Quantity</label>
                                     <input type="number" class="form-control rounded-0" name="quantity" placeholder="Enter No Of Quantity" value="{{$addon->quantity}}">
