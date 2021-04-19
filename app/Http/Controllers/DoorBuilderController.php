@@ -23,23 +23,26 @@ class DoorBuilderController extends Controller
     public function get_colors(Request $request)
     {
         $id = $request->input('id');
-        $addon = AddOn::find($id);
-        $addoncolors = AddonColor::where('addon_id','=',$id)->where('side','=','external')->where('quantity','>',0)->get();
-        return view('public/customizer/addoncolors',['colors'=>$addoncolors,'addon'=>$addon]);
+        $door_glass = $request->input('door_glass');
+        $doors_glass = ModelFrame::find($door_glass);
+        $addoncolors = AddonColor::where('addon_id','=',$id)->where('side','=','external')->get();
+        return view('public/customizer/addoncolors',['colors'=>$addoncolors,'doors_glass'=>$doors_glass]);
     }
     public function get_internalcolors(Request $request)
     {
     $id = $request->input('id');
     $addon = AddOn::find($id);
-    $addoncolors = AddonColor::where('addon_id','=',$id)->where('side','=','internal')->where('quantity','>',0)->get();
+    $door_glass = $request->input('door_glass');
+    $doors_glass = ModelFrame::find($door_glass);
+    $addoncolors = AddonColor::where('addon_id','=',$id)->where('side','=','internal')->get();
     //print_r($addoncolors);
-    return view('public/customizer/internalcolors',['colors'=>$addoncolors,'addon'=>$addon]);
+    return view('public/customizer/internalcolors',['colors'=>$addoncolors,'doors_glass'=>$doors_glass]);
     }
     public function get_glasses(Request $request)
     {
         $id = $request->input('id');
         $addon = AddOn::find($id);
-        $glasses = ModelFrame::where('addon_id','=',$id)->where('type','=','glass')->where('quantity','>',0)->get();
+        $glasses = ModelFrame::where('addon_id','=',$id)->where('type','=','glass')->get();
         
         return view('public/customizer/glasses',['glasses'=>$glasses]);
     }
@@ -47,7 +50,7 @@ class DoorBuilderController extends Controller
     {
         $id = $request->input('id');
         $addon = AddOn::find($id);
-        $frames = ModelFrame::where('addon_id','=',$id)->where('type','=','frame')->where('quantity','>',0)->get();
+        $frames = ModelFrame::where('addon_id','=',$id)->where('type','=','frame')->get();
         return view('public/customizer/frames',['frames'=>$frames]);
     }
     public function get_hinge(Request $request)
@@ -62,27 +65,27 @@ class DoorBuilderController extends Controller
     {
         $frame_id = $request->input('frame_id');
         $frame = ModelFrame::find($frame_id);
-        $externalcolors = FrameDetails::where('side','=','external')->where('frame_id','=',$frame_id)->where('quantity','>',0)->get();
+        $externalcolors = FrameDetails::where('side','=','external')->where('frame_id','=',$frame_id)->get();
         return view("public/customizer/frameexcolor",['externalcolors'=>$externalcolors,'frame'=>$frame]);
     }
     public function frame_internal_colors(Request $request)
     {
         $frame_id = $request->input('frame_id');
         $frame = ModelFrame::find($frame_id);
-        $internalcolors = FrameDetails::where('side','=','internal')->where('frame_id','=',$frame_id)->where('quantity','>',0)->get();
+        $internalcolors = FrameDetails::where('side','=','internal')->where('frame_id','=',$frame_id)->get();
         return view("public/customizer/frameinternalcolor",['internalcolors'=>$internalcolors,'frame'=>$frame]);
     }
     public function frameglass(Request $request)
     {
         $frame_id = $request->input('frame_id');
-        $frameglass = FrameGlass::where('frame_id','=',$frame_id)->where('quantity','>',0)->get();
+        $frameglass = FrameGlass::where('frame_id','=',$frame_id)->get();
         return view("public/customizer/frameglass",['frameglass'=>$frameglass]);
     }
     public function get_handles(Request $request)
     {
         $id = $request->input('id');
      
-        $handels = AddonFurniture::where('addon_id','=',$id)->where('type','=','handle')->where('quantity','>',0)->get();
+        $handels = AddonFurniture::where('addon_id','=',$id)->where('type','=','handle')->get();
         
 
         return view('public/customizer/handles',['handles'=>$handels]);
@@ -91,7 +94,7 @@ class DoorBuilderController extends Controller
     {
         $id = $request->input('id');
      
-        $knockers = AddonFurniture::where('addon_id','=',$id)->where('type','=','knocker')->where('quantity','>',0)->get();
+        $knockers = AddonFurniture::where('addon_id','=',$id)->where('type','=','knocker')->get();
         
         
         return view('public/customizer/knocker',['knockers'=>$knockers]);
@@ -100,7 +103,7 @@ class DoorBuilderController extends Controller
     {
         $id = $request->input('id');
      
-        $letterboxs = AddonFurniture::where('addon_id','=',$id)->where('type','=','letterbox')->where('quantity','>',0)->get();
+        $letterboxs = AddonFurniture::where('addon_id','=',$id)->where('type','=','letterbox')->get();
         //echo $letterboxs;
         
         return view('public/customizer/letterbox',['letterboxs'=>$letterboxs]);
@@ -129,7 +132,7 @@ class DoorBuilderController extends Controller
         $cart->regular_price =$addon->product->regular_price;
         $cart->quantity = $quantity;
         $cart->save();
-        
+        echo $cart->id;
         for($i=0;$i<count($idarray);$i++)
         {
             if($idarray[$i]!=0)
@@ -143,12 +146,6 @@ class DoorBuilderController extends Controller
             $cartdetails->save();
             }
         }
-        $session_id = session()->getId();
-            $countcartproduct =0;
-              $carts = Cart::where('session_id','=',$session_id)->get();
-              foreach($carts as $cart){
-                  $countcartproduct = $cart->quantity+$countcartproduct; 
-              }
-            Session::put('prdcartqty' ,$countcartproduct);
+        
     }
 }

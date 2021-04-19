@@ -50,12 +50,14 @@ Route::post('get_internal_color','DoorBuilderController@get_internalcolors');
 Route::post('get_glasses','DoorBuilderController@get_glasses');
 Route::post('get_frames','DoorBuilderController@get_frames');
 Route::post('get_hinge','DoorBuilderController@get_hinge');
+
 Route::post('frameexternalcolors','DoorBuilderController@frame_external_color');
 Route::post('frameinternalcolors','DoorBuilderController@frame_internal_colors');
 Route::post('frameglass','DoorBuilderController@frameglass');
 Route::post('get_handles','DoorBuilderController@get_handles');
 Route::post('get_knocker','DoorBuilderController@get_knocker');
 Route::post('get_letterbox','DoorBuilderController@get_letterbox');
+
 
 Route::prefix('admin')->group(function () {
     
@@ -391,11 +393,13 @@ Route::post('removecartproduct','IndexController@removecartproduct');
 Route::post('updatecartproduct','IndexController@updatecartproduct');
 Route::get('checkout','IndexController@checkout');
 Route::get('checkout','IndexController@checkout');
+Route::post('submit-query','DoorBuilderController@forminput');
 Route::post('checkoutsubmit','IndexController@checkoutsubmit');
 Route::get('clearcart','IndexController@clearcart');
 Route::post('checkservice','IndexController@checkservice');
-Route::get('searchproduct','IndexController@searchproduct');
-Route::get('sortproduct','IndexController@sortproduct');
+
+Route::post('searchproduct','IndexController@searchproduct');
+Route::post('sortproduct','IndexController@sortproduct');
 Route::get('installerlist','IndexController@installerlist');
 Route::get('installerdetails/{id}','IndexController@installerdetails');
 Route::get('searchinstaller','IndexController@searchinstaller');

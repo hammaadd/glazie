@@ -119,21 +119,26 @@
 			      				<img src="assets2/media/svg/modal.svg" class="pe-3">Model
 			      			</a>
 			      		</li>
+
+			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-glass-tab" data-bs-toggle="pill" href="#v-pills-glass" role="tab" aria-controls="v-pills-glass" aria-selected="true"><img src="assets2/media/svg/glass.svg" class="pe-3">Glass</a></li>
+
 			       		<li class="list-unstyled nav-item parent-child"><a class="nav-link rounded-0 text-white"  onclick="showdoortoggle()"   data-bs-toggle="pill"  role="tab"  aria-selected="true"><img src="assets2/media/svg/color.svg" class="pe-3">Door Color</a></li>
 			       		<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-external-color-tab" data-bs-toggle="pill" href="#v-pills-external-color" role="tab" aria-controls="v-pills-external-color" aria-selected="true" onclick="getexternalcolors()"> External Color</a></li>
-			        	<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-internal-color-tab" data-bs-toggle="pill" href="#v-pills-internal-color" role="tab" aria-controls="v-pills-internal-color" aria-selected="true" onclick="get_internalcolors();">Internal Color</a></li>
-			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-glass-tab" data-bs-toggle="pill" href="#v-pills-glass" role="tab" aria-controls="v-pills-glass" aria-selected="true"  onclick="removeclass()"><img src="assets2/media/svg/glass.svg" class="pe-3">Glass</a></li>
-			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-tab" data-bs-toggle="pill" href="#v-pills-frame" role="tab" aria-controls="v-pills-frame" aria-selected="true" onclick="removeclass()"><img src="assets2/media/svg/frame.svg" class="pe-3">Frame</a></li>
-			      		<li class="list-unstyled nav-item parent-child"><a class="nav-link rounded-0 text-white" onclick="showframetoggle()"  data-bs-toggle="pill"  role="tab"  aria-selected="true"  onclick="removeclass()"><img src="assets2/media/svg/frame-color.svg" class="pe-3"> Frame Color </a></li>
+			        	<li class="list-unstyled nav-item colorsubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-internal-color-tab" data-bs-toggle="pill" href="#v-pills-internal-color" role="tab" aria-controls="v-pills-internal-color" aria-selected="true" onclick="get_internalcolors()">Internal Color</a></li>
+
+			      		<!-- <li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-glass-tab" data-bs-toggle="pill" href="#v-pills-glass" role="tab" aria-controls="v-pills-glass" aria-selected="true"><img src="assets2/media/svg/glass.svg" class="pe-3">Glass</a></li> -->
+
+			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-tab" data-bs-toggle="pill" href="#v-pills-frame" role="tab" aria-controls="v-pills-frame" aria-selected="true"><img src="assets2/media/svg/frame.svg" class="pe-3">Frame</a></li>
+			      		<li class="list-unstyled nav-item parent-child"><a class="nav-link rounded-0 text-white" onclick="showframetoggle()"  data-bs-toggle="pill"  role="tab"  aria-selected="true"><img src="assets2/media/svg/frame-color.svg" class="pe-3"> Frame Color </a></li>
 			       		<li class="list-unstyled nav-item text-center framecolorsubchild"><a class="nav-link rounded-0 text-white float-right" id="v-pills-frame-external-color-tab" data-bs-toggle="pill" href="#v-pills-frame-external-color" role="tab" aria-controls="v-pills-frame-external-color" aria-selected="true" onclick="framedata()"> External Color</a></li>
 			      		<li class="list-unstyled nav-item framecolorsubchild"><a class="text-center nav-link rounded-0 text-white" id="v-pills-frame-internal-color-tab" data-bs-toggle="pill" href="#v-pills-frame-internal-color" role="tab" aria-controls="v-pills-frame-color" aria-selected="true" onclick="internalframecolors()"> Internal Color</a></li>
-			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-glass-tab" data-bs-toggle="pill" href="#v-pills-frame-glass" role="tab" aria-controls="v-pills-frame-glass" aria-selected="true" onclick="frameglasses()"><img src="assets2/media/svg/frame-glass.svg" class="pe-3" >Frame Glass</a></li>
-			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white"  data-bs-toggle="pill"  onclick="showfurnituretoggle()" aria-controls="v-pills-furniture" aria-selected="true"><img src="assets2/media/svg/furniture.svg" class="pe-3"  onclick="removeclass()">Furniture</a></li>
-						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-handels-tab" data-bs-toggle="pill" href="#v-pills-handels" role="tab" aria-controls="v-pills-external-color" aria-selected="true" onclick="removeclass()">Handel</a></li>
-						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-knocker-tab" data-bs-toggle="pill" href="#v-pills-knocker" role="tab" aria-controls="v-pills-internal-color" aria-selected="true" onclick="removeclass()">Knocker</a></li>
-						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-letterbox-tab" data-bs-toggle="pill" href="#v-pills-letter-box" role="tab" aria-controls="v-pills-external-color" aria-selected="true" onclick="removeclass()"> Letter Box</a></li>
+			      		<!-- <li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-frame-glass-tab" data-bs-toggle="pill" href="#v-pills-frame-glass" role="tab" aria-controls="v-pills-frame-glass" aria-selected="true" onclick="frameglasses()"><img src="assets2/media/svg/frame-glass.svg" class="pe-3" >Frame Glass</a></li> -->
+			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white"  data-bs-toggle="pill"  onclick="showfurnituretoggle()" aria-controls="v-pills-furniture" aria-selected="true"><img src="assets2/media/svg/furniture.svg" class="pe-3">Furniture</a></li>
+						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-handels-tab" data-bs-toggle="pill" href="#v-pills-handels" role="tab" aria-controls="v-pills-external-color" aria-selected="true">Handel</a></li>
+						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-knocker-tab" data-bs-toggle="pill" href="#v-pills-knocker" role="tab" aria-controls="v-pills-internal-color" aria-selected="true">Knocker</a></li>
+						  <li class="list-unstyled nav-item furnituresubchild"><a class="nav-link rounded-0 text-white text-center" id="v-pills-letterbox-tab" data-bs-toggle="pill" href="#v-pills-letter-box" role="tab" aria-controls="v-pills-external-color" aria-selected="true"> Letter Box</a></li>
 						  
-			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-hing-tab" data-bs-toggle="pill" href="#v-pills-hing" role="tab" aria-controls="v-pills-hing" aria-selected="true"><img src="assets2/media/svg/frame-glass.svg" class="pe-3" onclick="removeclass()">Hinge</a></li>
+			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white" id="v-pills-hing-tab" data-bs-toggle="pill" href="#v-pills-hing" role="tab" aria-controls="v-pills-hing" aria-selected="true"><img src="assets2/media/svg/frame-glass.svg" class="pe-3">Hinge</a></li>
 			      		<li class="list-unstyled nav-item d-none"><a class="nav-link rounded-0 text-white" id="v-pills-price-tab" data-bs-toggle="pill" href="#v-pills-price" role="tab" aria-controls="v-pills-price" aria-selected="true"><img src="assets2/media/svg/price.svg" class="pe-3">Price</a></li>
 			      		<li class="list-unstyled nav-item"><a class="nav-link rounded-0 text-white text-center pt-4" href="{{url('door-build')}}"><img src="assets2/media/svg/refresh.svg" width="30px" height="30px"></a></li>
 			    	</ul>
@@ -237,8 +242,12 @@
 			      </div>
 			    </div>
 			  </div>
+			  
 			  <div class="col-md-3 text-center border-start pt-4">
-				  <input type="text" id="doorcolor">
+
+			  	<input type="hidden" id="door_pic" value="">
+			  	<input type="hidden" id="door_glass" value="">
+				  <input type="hidden" id="doorcolor" value="#fff">
 				  <div id="doorimage" >
 					<object type="image/svg+xml" id="main_image" data="{{asset('admin-assets/addon/'.$addon->svgimage)}}" class="door-image" style="width: 138px;text-align:center;"></object>
 				  </div>
@@ -302,7 +311,7 @@
 	let idarray = Array(0,0,0,0,0,0,0,0,0,0,0,0);
 	let typearray = Array(0,0,0,0,0,0,0,0,0,0,0,0);
 	let id = 0;
-	let image = '';
+
 	let frame_id = 0;
 	let colorfulldoor = '';
 	let amountarray  = Array(0,0,0,0,0,0,0,0,0,0,0,0);
@@ -328,12 +337,8 @@
 		function gotomodel()
 		{
 			
-			$('.colorsubchild').hide();
-			$('#v-pills-model').addClass('active show');
-			$('#v-pills-external-color').removeClass('active show');
-			$('#v-pills-model-tab').addClass('active');
-			$('#v-pills-external-color-tab').removeClass('active');
-
+			$('.sizesubchild').hide();
+			$('#v-pills-tab a[href="#v-pills-model"]').tab('show');
 		}
 		function get_colors(){
 			
@@ -346,6 +351,7 @@
 			
 			$('#v-pills-internal-color').removeClass('active show');
 			$('#v-pills-internal-color-tab').removeClass('active');
+
 		}
 		function get_internal()
 		{
@@ -363,12 +369,14 @@
 		{
 			
 			$('.colorsubchild').hide();
+
     		$('#v-pills-internal-color').removeClass('active show');
 			$('#v-pills-internal-color-tab').removeClass('active');
 
 			$('#v-pills-glass').addClass('active show');
 			$('#v-pills-glass-tab').addClass('active');
 			
+    		
 		}
 		function openframe()
 		{
@@ -382,12 +390,14 @@
 
 			$('#v-pills-frame-external-color').removeClass('active show');
 			$('#v-pills-frame-external-color-tab').removeClass('active');
+
 			framedata();
 		}
 		function frame_ex_color()
 		{
 			
 			$('.framecolorsubchild').show();
+
 			$('#v-pills-frame').removeClass('active show');
 			$('#v-pills-frame-tab').removeClass('active');
     		$('#v-pills-frame-external-color').addClass('active show');
@@ -415,10 +425,12 @@
 			$('#v-pills-frame-glass-tab').addClass('active');
 			frameglasses();
 		}
+
 		function get_handels()
 		{
 			
 			$('.furnituresubchild').show()
+
     		$('#v-pills-frame-glass').removeClass('active show');
 			$('#v-pills-frame-glass-tab').removeClass('active');
 			
@@ -455,7 +467,6 @@
 		}
 		function hingedata()
 		{
-			
 			$('#v-pills-letter-box').removeClass('active show');
 			$('#v-pills-letterbox-tab').removeClass('active');
 			$('.furnituresubchild').hide();
@@ -480,32 +491,23 @@
 		{
 			
 			$('#main_image').attr('data', imagename);
-			
-		}
-		function setframeimage(imagename)
-		{
-			$('#main_image').attr('data', imagename);
 			var frame = document.getElementById("main_image");
-			
-			
-			var image1 = frame.contentDocument;
-			var svgItems = image1.getElementById("door");
-			console.log(svgItems);
-			var door  =  document.createElement('image');
-			door.setAttribute('xmlns','http://www.w3.org/2000/svg');
-			door.setAttribute('href','http://localhost/glazieltd/admin-assets/addon/glass/6076821fe8927Door_3.svg');
-			door.setAttribute('x',119);
-			door.setAttribute('y',135);
-			door.setAttribute('width',500);
-			door.setAttribute('height',600);
-			svgItems.appendChild(door);
+			//console.log(imagename);
+			var svgframeDoc = frame.contentDocument;
+		    var svgframeItem = svgframeDoc.getElementById("door");
+			//console.log(svgframeDoc);
+			//svgframeItem.innerHTML = svgframeItem.innerHTML + colorfulldoor;
+			 
 		}
 
 		
 		function getexternalcolors()
 				
 			{
-			url = "{{url('get_colors')}}";
+
+			var door_glass = $('#door_glass').val();
+			
+            url = "{{url('get_colors')}}";
             //console.log(url);
             $.ajax({
            type:'POST',
@@ -513,7 +515,9 @@
 
             data:{
             	"_token": "{{ csrf_token() }}",
-                "id":id,  
+
+                "id":id,
+                "door_glass":door_glass  
               
            },
            	success:function(result){
@@ -528,7 +532,7 @@
 	function get_internalcolors()
 
 		{
-			
+			var door_glass = $('#door_glass').val();
 		$('#img').show();
 		$('#internalcolor').hide();
 		url = "{{url('get_internal_color')}}";
@@ -539,9 +543,9 @@
 		url:url,
 
 		data:{
-			"_token": "{{ csrf_token() }}",
-			id:id,  
-		
+			"_token": "{{ csrf_token() }}"
+			id:id,
+			"door_glass":door_glass 
 		},
 		success:function(result){
 		$('#v-pills-internal-color').html(result);
@@ -767,7 +771,8 @@
 		
 		},
 		success:function(result){
-			// console.log(result);
+
+			////console.log(result);
 			$('#v-pills-frame-glass').html(result);
 			$("#owl-frame-glass").owlCarousel({
 				items : 6
@@ -841,34 +846,74 @@
 		}
 		});
 	}
-	function removeclass()
+	function remove()
 	{
-		$('#v-pills-model').removeClass("active show");
-			$('#v-pills-external-color').removeClass("active show");
-			$('#v-pills-internal-color').removeClass("active show");
-			$('#v-pills-glass').removeClass("active show");
-			$('#v-pills-frame').removeClass("active show");
-			$('#v-pills-frame-external-color').removeClass("active show");
-			$('#v-pills-frame-internal-color').removeClass("active show");
-			$('#v-pills-frame-glass').removeClass("active show");
-			$('#v-pills-handels').removeClass("active show");
-			$('#v-pills-knocker').removeClass("active show");
-			$('#v-pills-letter-box').removeClass("active show");
-			$('#v-pills-hing').removeClass("active show");
+		$('#v-pills-model').removeClass("active");
+			$('#v-pills-external-color').removeClass("active");
+			$('#v-pills-internal-color').removeClass("active");
+			$('#v-pills-glass').removeClass("active");
+			$('#v-pills-frame').removeClass("active");
+			$('#v-pills-frame-external-color').removeClass("active");
+			$('#v-pills-frame-internal-color').removeClass("active");
+			$('#v-pills-frame-glass').removeClass("active");
+			$('#v-pills-handels').removeClass("active");
+			$('#v-pills-knocker').removeClass("active");
+			$('#v-pills-letter-box').removeClass("active");
+			$('#v-pills-hing').removeClass("active");
 
-			
-
-
-		
+			$('#v-pills-model').removeClass("show");
+			$('#v-pills-external-color').removeClass("show");
+			$('#v-pills-internal-color').removeClass("show");
+			$('#v-pills-glass').removeClass("show");
+			$('#v-pills-frame').removeClass("show");
+			$('#v-pills-frame-external-color').removeClass("show");
+			$('#v-pills-frame-internal-color').removeClass("show");
+			$('#v-pills-frame-glass').removeClass("show");
+			$('#v-pills-handels').removeClass("show");
+			$('#v-pills-knocker').removeClass("show");
+			$('#v-pills-letter-box').removeClass("show");
+			$('#v-pills-hing').removeClass("show");
 	}
 	function setcolorimage(colors)
 	{
-		alert(colors);
+		//alert(colors);
 		var a = document.getElementById("main_image");
 		var mainsvgDoc = a.contentDocument;
 		var svgItems = mainsvgDoc.getElementById("base_x5F_colour");
 		svgItem = svgItems.childNodes[1].style.fill = colors;
 	}
+
+	function setframeimage(imagename)
+		{
+			alert('second');
+			var frame = document.getElementById("main_image");
+			
+			var image1 = frame.contentDocument;
+			console.log(image1)
+			// var svgItems = image1.getElementById("door");
+			// if(svgItems == null){
+			// 	$('#main_image').attr('data', imagename);
+			// 	var frame = document.getElementById("main_image");
+			// 	var image1 = frame.contentDocument;
+			// 	var svgItems = image1.getElementById("door");
+			// 	console.log(svgItems);
+			// }else{
+			// 	console.log(svgItems)
+			// }
+			// if (svgItems.hasChildNodes()) {
+   //              var st = svgItems.removeChild(svgItems.childNodes[0]);
+   //          }
+   //          svgItems.innerHTML='<image xmlns="http://www.w3.org/2000/svg" x="100" y="300" width="500" height="600" href="http://localhost/glazie/admin-assets/addon/glass/607532bb70736Door_3g.svg"/>';
+
+			//var door  =  document.createElement('image');
+			// door.setAttribute('xmlns','http://www.w3.org/2000/svg');
+			// door.setAttribute('href','http://localhost/glazieltd/admin-assets/addon/glass/6076821fe8927Door_3.svg');
+			// door.setAttribute('x',119);
+			// door.setAttribute('y',135);
+			// door.setAttribute('width',500);
+			// door.setAttribute('height',600);
+			// svgItems.appendChild(door);
+		}
 	</script>
 
 </body>
