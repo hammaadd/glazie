@@ -1,5 +1,7 @@
 @section("nav")
+
 <header class="header">
+
   <!-- header top -->
   <div class="header-top">
     <div class="container">
@@ -60,10 +62,24 @@
                 <div class="col-sm-4 offset-sm-4">
                   <div class="column-inner">
                     <div class="dt-sc-contact-info">
-                      <a id="phone_link">
+                      @if(empty(Session::get('admin_phone')))
+                          
+                      @php
+                      $phones = App\Models\SiteSetting::where('key','=','admin_phone')->get();
+
+                  @endphp
+                  @foreach ($phones as $phone)
+                      
+                  @endforeach
+                  @php
+                      Session::put('admin_phone',$phone->value);
+                  @endphp
+                          
+                      @endif
+                      <a href="tel:{{Session::get('admin_phone')}}">
                         <i class='bx bx-phone'></i>
                         <h6>Phone</h6>
-                        <p id="phoneno"></p>
+                        <p>{{Session::get('admin_phone')}} </p>
                       </a>
                     </div>
                   </div>
@@ -71,10 +87,28 @@
                 <div class="col-sm-4">
                   <div class="column-inner">
                     <div class="dt-sc-contact-info">
-                      <a id="mail_link" >
+                      @if(empty(Session::get('admin_email')))
+                          
+                      @php
+                      $emails = App\Models\SiteSetting::where('key','=','admin_email')->get();
+
+                  @endphp
+                  @foreach ($emails as $email)
+                      
+                  @endforeach
+                  @php
+                      Session::put('admin_email',$email->value);
+                  @endphp
+                          
+                      @endif
+                     
+                  
+                      <a href="mailto:{{Session::get('admin_email')}}" >
                         <i class='bx bx-paper-plane'></i>
                         <h6>Email</h6>
-                        <p id="adminmail"></p>
+                       
+
+                        <p >{{Session::get('admin_email')}}</p>
                       </a>
                     </div>
                   </div>
@@ -85,6 +119,11 @@
             <div class="col-lg-3 col-sm-12">
               <ul class="navbar-nav attr-nav align-items-center justify-content-sm-end">
                 @if(!empty(Auth::id()))
+                @php
+                   $user  = Auth::user();
+                  
+                @endphp
+                
                 <li>
                   <a class="nav-link cart_trigger" href="{{url('product/wishlist')}}" data-toggle="dropdown">
                     <i class='bx bx-heart'></i>
@@ -95,7 +134,7 @@
                     }
                     @endphp
                     
-                    <span class="cart_count" id="wishitem" @if($count==0)  style="display:none;" @endif>{{$count}}</span>
+                    <span class="cart_count" id="wishitem" @if(count($user->wishs)==0)  style="display:none;" @else style="display: inline" @endif>{{count($user->wishs)}}</span>
                     
                   </a>
                   
@@ -143,10 +182,17 @@
                   <div class="search_overlay"></div>
                   <div class="search_overlay"></div>
                 </li>  --}}
+    
                 <li class="dropdown cart_dropdown">
                   <a class="nav-link cart_trigger" href="{{url('productcart')}}" data-toggle="dropdown">
                     <i class='bx bx-cart-alt'></i>
-                    <span class="cart_count" id="cart_items"></span>
+                    <span class="cart_count" id="cart_items" @if(Session::get('prdcartqty')==0) style="display:none;" @endif>
+                      @if (Session::get('prdcartqty')>0)
+                      @php
+                          echo Session::get('prdcartqty')
+                      @endphp
+                      @endif
+                    </span>
                   </a>
                   
                 </li>

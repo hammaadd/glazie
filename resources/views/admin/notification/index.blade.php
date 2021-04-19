@@ -31,6 +31,7 @@
                    <div class="card-body">
                        <div class="row">
                            <div class="col-md-12">
+                               <a href="{{url('admin/notification/allread')}}" class="btn btn-success float-right"> <i class="fa fa-check"></i> Mark All As Read</a>
                                <table class="table table-hover" id="subscription">
                                    <thead>
                                        <tr>

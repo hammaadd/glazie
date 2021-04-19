@@ -12,6 +12,10 @@ use App\Models\Countries;
 use App\Models\Address;
 use App\Models\Variation;
 use Validator;
+use App\Models\ModelFrame;
+use App\Models\AddonColor;
+use App\Models\FrameGlass;
+use App\Models\AddonFurniture;
 use App\Models\Coupen;
 use App\Models\Wishlist;
 use App\Models\Term;
@@ -22,6 +26,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Cities;
+use App\Models\FrameDetails;
 use App\Models\States; 
 use App\Models\Notification;
 use App\Models\Categories;
@@ -51,6 +56,7 @@ use App\Models\AddOn;
 
 class IndexController extends Controller
 {
+    public $countcartproduct=0;
     public function index(){
         $brands = Brands::all();
         $categories = Categories::all();
@@ -59,7 +65,7 @@ class IndexController extends Controller
         return view('public/index',['brands'=>$brands,'categories'=>$categories,'sliders'=>$sliders]);
     }
     public function availproducts(){
-        $products = Products::where('publish','=','public')->where('type','!=','customize')->paginate(12);
+        $products = Products::where('publish','=','public')->where('type','!=','customize')->paginate(12)->withQueryString();
         return view('public/availproducts',['products'=>$products]);
     } 
     public function searchproduct(Request $request)
@@ -72,7 +78,7 @@ class IndexController extends Controller
     {
         $search = $request->input('search');
         $sort_type = $request->input('sort_type');
-        $products =Products::where('product_name','like', '%'.$search.'%')->where('publish','=','public')->where('type','!=','customize')->orderBy('regular_price',$sort_type)->paginate(1);
+        $products =Products::where('product_name','like', '%'.$search.'%')->where('publish','=','public')->where('type','!=','customize')->orderBy('regular_price',$sort_type)->paginate(1)->withQueryString();
         return view('public/searchproducts',['products'=>$products,'search'=>$search]); 
     }
 
@@ -193,76 +199,82 @@ class IndexController extends Controller
                 $cartdetails->save();
                 }
             }
+             
+            $session_id = session()->getId();
+            $countcartproduct =0;
+              $carts = Cart::where('session_id','=',$session_id)->get();
+              foreach($carts as $cart){
+                  $countcartproduct = $cart->quantity+$countcartproduct; 
+              }
+            session::put('prdcartqty' ,$countcartproduct);
        
             return redirect('/products')->with('info','The Product is add to cart successfully');
     }
-    public function prdaddtocart(Request $request)
-    {
+    // public function prdaddtocart(Request $request)
+    // {
         
         
-        $product_id = $request->input('id');
-        $products  = Products::find($product_id);
-        $product_name = $products->product_name;
-        $price = $products->sale_price;
-        $quantity = 1;
-        $photo =  "";
-        $regular_price = $products->regular_price;
+    //     $product_id = $request->input('id');
+    //     $products  = Products::find($product_id);
+    //     $product_name = $products->product_name;
+    //     $price = $products->sale_price;
+    //     $quantity = 1;
+    //     $photo =  "";
+    //     $regular_price = $products->regular_price;
         
-        $cart = [
+    //     $cart = [
         
-                "product_id" =>  $product_id,
-                "product_name" =>  $product_name,
-                "price" =>$price,
-                'regular_price' => $regular_price,
-                "quantity" => $quantity,
-                "photo" => $photo
-        ];
+    //             "product_id" =>  $product_id,
+    //             "product_name" =>  $product_name,
+    //             "price" =>$price,
+    //             'regular_price' => $regular_price,
+    //             "quantity" => $quantity,
+    //             "photo" => $photo
+    //     ];
 
-        $request->session()->push('cart', $cart);
-        $cartdata = Cart::where('session_id','=',session()->getId())->where('product_id','=',$product_id)->get();
-        //echo count($cartdata);
+    //     $request->session()->push('cart', $cart);
+    //     $cartdata = Cart::where('session_id','=',session()->getId())->where('product_id','=',$product_id)->get();
+    //     //echo count($cartdata);
         
-        if (count($cartdata)>0) {
+    //     if (count($cartdata)>0) {
        
-            foreach ($cartdata as $key => $cart) {}
-            $update_cart = array(
-                "quantity"=>$quantity +$cart->quantity,
+    //         foreach ($cartdata as $key => $cart) {}
+    //         $update_cart = array(
+    //             "quantity"=>$quantity +$cart->quantity,
               
-            );
-            Cart::where('id',$cart->id)->update($update_cart);
-        }
-        else{
+    //         );
+    //         Cart::where('id',$cart->id)->update($update_cart);
+    //     }
+    //     else{
            
         
-        $carts = $request->session()->get('cart');
-        $cart = new Cart;
-        $cart->session_id = session()->getId();
-        $cart->product_id = $product_id;
-        $cart->price = $price;
-        $cart->regular_price = $regular_price;
-        $cart->quantity = $quantity;
-        $cart->save();
+    //     $carts = $request->session()->get('cart');
+    //     $cart = new Cart;
+    //     $cart->session_id = session()->getId();
+    //     $cart->product_id = $product_id;
+    //     $cart->price = $price;
+    //     $cart->regular_price = $regular_price;
+    //     $cart->quantity = $quantity;
+    //     $cart->save();
         
-        } 
-        $count = 0;
-        $session_id = session()->getId();
-        $carts = Cart::where('session_id','=',$session_id)->get();
-        foreach($carts as $cart){
-            $count = $cart->quantity+$count; 
-        }
-        echo json_encode($count);
-
-
-    }
-    public function countproduct(){
-        $count = 0;
-        $session_id = session()->getId();
-        $carts = Cart::where('session_id','=',$session_id)->get();
-        foreach($carts as $cart){
-            $count = $cart->quantity+$count; 
-        }
-        echo json_encode($count);
-    }
+    //     } 
+    //     $count = 0;
+    //     $session_id = session()->getId();
+    //     $carts = Cart::where('session_id','=',$session_id)->get();
+    //     foreach($carts as $cart){
+    //         $count = $cart->quantity+$count; 
+    //     }
+    //     echo json_encode($count);
+    // }
+    // public function countproduct(){
+    //     $count = 0;
+    //     $session_id = session()->getId();
+    //     $carts = Cart::where('session_id','=',$session_id)->get();
+    //     foreach($carts as $cart){
+    //         $count = $cart->quantity+$count; 
+    //     }
+    //     echo json_encode($count);
+    // }
     public function productcart(){
         $session_id = session()->getId();
         $carts = Cart::where('session_id','=',$session_id)->get();
@@ -271,11 +283,18 @@ class IndexController extends Controller
     }
     public function removecartproduct(Request $request)
     {
+        $countcartproduct =0;
         $id = $request->input('id');
         Cart::where('id',$id)->delete();
         $session_id = session()->getId();
         $carts = Cart::where('session_id','=',$session_id)->get();
         $times = DeliveryTime::all();
+        
+              foreach($carts as $cart){
+                  $countcartproduct = $cart->quantity+$countcartproduct; 
+              }
+              session::put('prdcartqty' ,$countcartproduct);
+            
         return view('public/updatecart',['carts'=>$carts,'times'=>$times]);
     }
     public function checkservice(Request $request)
@@ -292,18 +311,25 @@ class IndexController extends Controller
             'quantity'=>$no_of_qty
         );
          Cart::where('id',$cart_id)->update($update_prd_cart);
-        $carts = Cart::where('session_id','=',$session_id)->get();
+       
         $times = DeliveryTime::all();
+        $carts = Cart::where('session_id','=',$session_id)->get();
+        $countcartproduct=0;
+        foreach($carts as $cart){
+            $countcartproduct = $cart->quantity+$countcartproduct; 
+        }
+      session::put('prdcartqty' ,$countcartproduct);
         return view('public/updatecart',['carts'=>$carts,'times'=>$times]);
         
     }
     public function clearcart(Request $request)
     {
         $request->session()->regenerate();
+        $request->session()->forget('prdcartqty');
         return redirect('/products')->with('info','Your Cart is empty');
     }
     public function checkout(Request $request){
-       
+        
         $sum_price = 0;
         $net_weight_price = array();
        $pricearray = array();
@@ -332,14 +358,196 @@ class IndexController extends Controller
                     }
                    
                 }
+                $cart_prd_id = $cart->product_id;
+                $product = Products::find($cart_prd_id);
+                
+                if(Products::find($cart_prd_id)->type=='customize')
+                {
+                   
+
+                    foreach($cart->cartdetails as $cartdetails)
+                    {
+                        if($cartdetails->addon_type=="exteranal_color")
+                        {
+                            $color = AddonColor::find($cartdetails->type_id);
+                            if($color->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$color->quantity)
+                            {
+                                $update_color = array(
+                                    'quantity'=>$color->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($update_color);
+                            }
+                        }
+                        if($cartdetails->addon_type=="internal_color")
+                        {
+                            $color = AddonColor::find($cartdetails->type_id);
+                            if($color->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$color->quantity)
+                            {
+                                $update_color = array(
+                                    'quantity'=>$color->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($update_color);
+                            }
+                        }
+                        if($cartdetails->addon_type=="frame")
+                        {
+                            $frame = ModelFrame::find($cartdetails->type_id);
+                            if($frame->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$frame->quantity)
+                            {
+                                $update_frame = array(
+                                    'quantity'=>$frame->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($update_frame);
+                            }
+                        }
+                        if($cartdetails->addon_type=="glass")
+                        {
+                            $glass = ModelFrame::find($cartdetails->type_id);
+                           
+                            if($glass->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$glass->quantity)
+                            {
+                                $update_glass = array(
+                                    'quantity'=>$glass->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($update_glass);
+                            }
+                        }
+                        if($cartdetails->addon_type=="frameexcolor")
+                        {
+                            $excolr = FrameDetails::find($cartdetails->type_id);
+                            if($excolr->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$excolr->quantity)
+                            {
+                                $update_excolr = array(
+                                    'quantity'=>$excolr->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($update_excolr);
+                            }
+                        }
+                        if($cartdetails->addon_type=="frameinternalcolor")
+                        {
+                            $frame = FrameDetails::find($cartdetails->type_id);
+                            if($excolr->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$excolr->quantity)
+                            {
+                                $update_excolr = array(
+                                    'quantity'=>$excolr->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($update_excolr);
+                            }
+                        }
+                        if($cartdetails->addon_type=="frame_glass")
+                        {
+                            $frameglass = FrameGlass::find($cartdetails->type_id);
+                            if($frameglass->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$frameglass->quantity)
+                            {
+                                $frameglass = array(
+                                    'quantity'=>$frameglass->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($frameglass);
+                            }
+                        }
+                        if($cartdetails->addon_type=="handle")
+                        {
+                            $handle = AddonFurniture::find($cartdetails->type_id);
+                            if($handle->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$handle->quantity)
+                            {
+                                $handle = array(
+                                    'quantity'=>$handle->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($handle);
+                            }
+                        }
+                        if($cartdetails->addon_type=="knocker")
+                        {
+                            $knocker = AddonFurniture::find($cartdetails->type_id);
+                            if($knocker->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$knocker->quantity)
+                            {
+                                $knocker = array(
+                                    'quantity'=>$knocker->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($knocker);
+                            }
+                        }
+                        if($cartdetails->addon_type=="letterbox")
+                        {
+                            $letterbox = AddonFurniture::find($cartdetails->type_id);
+                            if($letterbox->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$letterbox->quantity)
+                            {
+                                $letterbox = array(
+                                    'quantity'=>$letterbox->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($letterbox);
+                            }
+                        }
+                        
+                    }
+                    if($i==3)
+                    {
+                        Cart::where('id',$cart->id)->delete();
+                    }
+                }
 
                 
             }
+            $session_id = session()->getId();
+            $carts = Cart::where('session_id','=',$session_id)->get();
+            $countcartproduct=0;
+            foreach($carts as $cart){
+                $countcartproduct = $cart->quantity+$countcartproduct; 
+            }
+            if($countcartproduct>0)
+            session::put('prdcartqty' ,$countcartproduct);
+            else
+            $request->session()->foreget('prdcartqty');
             if($i==2){
                 return redirect('productcart')->with('info','The product is sold just now');
-                }
+            }
+            if($i==3)
+            {
+                
+                return redirect('productcart')->with('info','The custom product you have selected is sold ');
+            }
         }
-    
+      
       if(count($carts)>0){
         $countries = Countries::all();
         $shipprice = 0;
@@ -506,7 +714,7 @@ class IndexController extends Controller
                 $i=1;
                 $cart_prd_id = $cart->product_id;
                 $product_qty = Products::find($cart_prd_id)->quantity;
-                echo $cart->quantity;
+                //echo $cart->quantity;
                 if($cart->quantity>$product_qty)
                 {
                     $i=2;
@@ -520,13 +728,180 @@ class IndexController extends Controller
                     }
                    
                 }
+                if(Products::find($cart_prd_id)->type=='customize')
+                {
+                    foreach($cart->cartdetails as $cartdetails)
+                    {
+                        if($cartdetails->addon_type=="exteranal_color")
+                        {
+                            $color = AddonColor::find($cartdetails->type_id);
+                            if($color->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$color->quantity)
+                            {
+                                $update_color = array(
+                                    'quantity'=>$color->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($update_color);
+                            }
+                        }
+                        if($cartdetails->addon_type=="internal_color")
+                        {
+                            $color = AddonColor::find($cartdetails->type_id);
+                            if($color->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$color->quantity)
+                            {
+                                $update_color = array(
+                                    'quantity'=>$color->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($update_color);
+                            }
+                        }
+                        if($cartdetails->addon_type=="frame")
+                        {
+                            $frame = ModelFrame::find($cartdetails->type_id);
+                            if($frame->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$frame->quantity)
+                            {
+                                $update_frame = array(
+                                    'quantity'=>$frame->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($update_frame);
+                            }
+                        }
+                        if($cartdetails->addon_type=="glass")
+                        {
+                            $glass = ModelFrame::find($cartdetails->type_id);
+                           
+                            if($glass->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$glass->quantity)
+                            {
+                                $update_glass = array(
+                                    'quantity'=>$glass->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($update_glass);
+                            }
+                        }
+                        if($cartdetails->addon_type=="frameexcolor")
+                        {
+                            $excolr = FrameDetails::find($cartdetails->type_id);
+                            if($excolr->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$excolr->quantity)
+                            {
+                                $update_excolr = array(
+                                    'quantity'=>$excolr->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($update_excolr);
+                            }
+                        }
+                        if($cartdetails->addon_type=="frameinternalcolor")
+                        {
+                            $frame = FrameDetails::find($cartdetails->type_id);
+                            if($excolr->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$excolr->quantity)
+                            {
+                                $update_excolr = array(
+                                    'quantity'=>$excolr->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($update_excolr);
+                            }
+                        }
+                        if($cartdetails->addon_type=="frame_glass")
+                        {
+                            $frameglass = FrameGlass::find($cartdetails->type_id);
+                            if($frameglass->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$frameglass->quantity)
+                            {
+                                $frameglass = array(
+                                    'quantity'=>$frameglass->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($frameglass);
+                            }
+                        }
+                        if($cartdetails->addon_type=="handle")
+                        {
+                            $handle = AddonFurniture::find($cartdetails->type_id);
+                            if($handle->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$handle->quantity)
+                            {
+                                $handle = array(
+                                    'quantity'=>$handle->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($handle);
+                            }
+                        }
+                        if($cartdetails->addon_type=="knocker")
+                        {
+                            $knocker = AddonFurniture::find($cartdetails->type_id);
+                            if($knocker->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$knocker->quantity)
+                            {
+                                $knocker = array(
+                                    'quantity'=>$knocker->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($knocker);
+                            }
+                        }
+                        if($cartdetails->addon_type=="letterbox")
+                        {
+                            $letterbox = AddonFurniture::find($cartdetails->type_id);
+                            if($letterbox->quantity==0)
+                            {
+                                $i=3;
+                            }
+                            elseif($cart->quantity>$letterbox->quantity)
+                            {
+                                $letterbox = array(
+                                    'quantity'=>$letterbox->quantity
+                                );
+                                Cart::where('id',$cart->id)->update($letterbox);
+                            }
+                        }
+                        
+                    }
+                    if($i==3)
+                    {
+                        Cart::where('id',$cart->id)->delete();
+                    }
+                }
 
                 
             }
             if($i==2){
             return redirect('productcart')->with('info','The product is sold just now');
             }
+            if($i==3)
+            {
+                return redirect('productcart')->with('info','The custom product you have selected is sold ');
+            }
         }
+        
         $user = Auth::user();
         $first_name = $request->input('first_name');
         $last_name = $request->input('last_name');
@@ -755,11 +1130,126 @@ class IndexController extends Controller
             $prdorderdetails->quantity=$cartdetails->quantity;
             $prdorderdetails->created_by=$user_id;
             $prdorderdetails->save();
+            if($cartdetails->addon_type=='model')
+            {
+                $addon = AddOn::find($cartdetails->type_id);
+                $addon_qty = $addon->quantity;
+                $addonqty = $addon_qty- $cart->quantity;
+                $updateqty = array(
+                    'quantity'=>$addonqty
+                );
+                AddOn::where('id',$cartdetails->type_id)->update($updateqty);
+
+            }
+            if($cartdetails->addon_type=='exteranal_color')
+            {
+                $addon = AddonColor::find($cartdetails->type_id);
+                $addon_qty = $addon->quantity;
+                $addonqty = $addon_qty- $cart->quantity;
+                $updateqty = array(
+                    'quantity'=>$addonqty
+                );
+                AddonColor::where('id',$cartdetails->type_id)->update($updateqty);
+
+            }
+            if($cartdetails->addon_type=='interanal_color')
+            {
+                $addon = AddonColor::find($cartdetails->type_id);
+                $addon_qty = $addon->quantity;
+                $addonqty = $addon_qty- $cart->quantity;
+                $updateqty = array(
+                    'quantity'=>$addonqty
+                );
+                AddonColor::where('id',$cartdetails->type_id)->update($updateqty);
+
+            }
+            if($cartdetails->addon_type=='frameexcolor')
+            {
+                $addon = FrameDetails::find($cartdetails->type_id);
+                $addon_qty = $addon->quantity;
+                $addonqty = $addon_qty- $cart->quantity;
+                $updateqty = array(
+                    'quantity'=>$addonqty
+                );
+                FrameDetails::where('id',$cartdetails->type_id)->update($updateqty);
+
+            }
+            if($cartdetails->addon_type=='frameinternalcolor')
+            {
+                $addon = FrameDetails::find($cartdetails->type_id);
+                $addon_qty = $addon->quantity;
+                $addonqty = $addon_qty- $cart->quantity;
+                $updateqty = array(
+                    'quantity'=>$addonqty
+                );
+                FrameDetails::where('id',$cartdetails->type_id)->update($updateqty);
+
+            }
+            if($cartdetails->addon_type=='frame')
+            {
+                $addon = ModelFrame::find($cartdetails->type_id);
+                $addon_qty = $addon->quantity;
+                $addonqty = $addon_qty- $cart->quantity;
+                $updateqty = array(
+                    'quantity'=>$addonqty
+                );
+                ModelFrame::where('id',$cartdetails->type_id)->update($updateqty);
+            }
+            if($cartdetails->addon_type=='glass')
+            {
+                $addon = ModelFrame::find($cartdetails->type_id);
+                $addon_qty = $addon->quantity;
+                $addonqty = $addon_qty- $cart->quantity;
+                $updateqty = array(
+                    'quantity'=>$addonqty
+                );
+                ModelFrame::where('id',$cartdetails->type_id)->update($updateqty);
+            }
+            if($cartdetails->addon_type=='frame_glass')
+            {
+                $addon = FrameGlass::find($cartdetails->type_id);
+                $addon_qty = $addon->quantity;
+                $addonqty = $addon_qty - $cart->quantity;
+                $updateqty = array(
+                    'quantity'=>$addonqty
+                );
+                FrameGlass::where('id',$cartdetails->type_id)->update($updateqty);
+            }
+            if($cartdetails->addon_type=='handle')
+            {
+                $addon = AddonFurniture::find($cartdetails->type_id);
+                $addon_qty = $addon->quantity;
+                $addonqty = $addon_qty- $cart->quantity;
+                $updateqty = array(
+                    'quantity'=>$addonqty
+                );
+                AddonFurniture::where('id',$cartdetails->type_id)->update($updateqty);
+            }
+            if($cartdetails->addon_type=='knocker')
+            {
+                $addon = AddonFurniture::find($cartdetails->type_id);
+                $addon_qty = $addon->quantity;
+                $addonqty = $addon_qty- $cart->quantity;
+                $updateqty = array(
+                    'quantity'=>$addonqty
+                );
+                AddonFurniture::where('id',$cartdetails->type_id)->update($updateqty);
+            }
+            if($cartdetails->addon_type=='letterbox')
+            {
+                $addon = AddonFurniture::find($cartdetails->type_id);
+                $addon_qty = $addon->quantity;
+                $addonqty = $addon_qty- $cart->quantity;
+                $updateqty = array(
+                    'quantity'=>$addonqty
+                );
+                AddonFurniture::where('id',$cartdetails->type_id)->update($updateqty);
+            }
         
          
          
         
-    }
+        }
        }
        
        $products = Products::find($cart->product_id);
@@ -796,8 +1286,9 @@ class IndexController extends Controller
 
         }
         $mail =  $datas->value;
-       
+    
 
+        $request->session()->forget('prdcartqty');
        // Mail::to($mail)->send(new OrderMail($details));
     
     return redirect('/')->with('info','Order Is created successfull Soon You Recived Email  ');
@@ -1074,12 +1565,7 @@ class IndexController extends Controller
         return redirect('installerlist')->with('info','Your Request is created Soon you recieve mail Soon');
   
     }
-    public function getmail(){
-       
-        $datas = SiteSetting::where('key','=','admin_email')->orWhere('key','admin_phone')->get();
-        
-        return $datas;
-    }
+    
     public function blogpost(){
         $blogs = Blog::where('publish','public')->get();
         return view('public/blogpost',['blogs'=>$blogs]);

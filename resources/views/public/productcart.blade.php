@@ -388,8 +388,17 @@
                 url:url,
                 success:function(result){
                     $("#abc").html(result);  
-                
-                     }
+                    var prdquantity = parseInt($('#prdquantity').val());
+                        if(prdquantity!=0)
+                        {
+                            $('#cart_items').show();
+                                $('#cart_items').html(prdquantity);
+
+                        }
+                        else{
+                            $('#cart_items').hide();
+                        }
+                    }
                         
                  });
              
@@ -484,7 +493,8 @@ function checkprice(i,j)
            type:'POST',
            url:url,
            data:{
-               i:i
+               i:i,
+               "_token": "{{ csrf_token() }}",
            },
            success:function(result){ 
              var grand =  parseInt($('#paidamount').val())+ parseInt(j)-$('#discountt').val(); 
@@ -503,7 +513,8 @@ $(document).ready(function(){
            type:'POST',
            url:url,
            data:{
-               i:i
+               i:i,
+               "_token": "{{ csrf_token() }}",
            },
            success:function(result){ 
              var grand =  parseInt($('#paidamount').val()) +  parseInt(j); 

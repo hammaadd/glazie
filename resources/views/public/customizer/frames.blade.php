@@ -61,7 +61,8 @@
 		function abc(imagedata)
 		{
 			
-			setimage(imagedata);
+			setframeimage(imagedata);
+
 		}
 	</script>
     @else

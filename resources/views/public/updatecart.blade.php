@@ -243,6 +243,7 @@
                                 @endif
                                 @endforeach
                                 <input type="hidden" id="discountt" value="0">
+                                <input type="hidden" id="prdquantity" value="{{$quantity}}">
                             </ul>
                         </div>
                         <h4 class="grand-totall-title" >Grand Total  <span id="grand_total">&#163;{{$price}}</span></h4>

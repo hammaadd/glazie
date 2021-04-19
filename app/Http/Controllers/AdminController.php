@@ -5,6 +5,8 @@ use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Products;
 use App\Models\PrdVariety;
+use App\Models\Notification;
+use Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -97,6 +99,9 @@ class AdminController extends Controller
         $quantity =0;
 
         }
+        $notifications = '';
+        $notifications = Notification::where('status','=','unread')->get();
+        Session::put('notifications',$notifications);
 
         $sales_array = json_encode($sales_array);
         return view('admin/index',['installers'=>$installers,'customers'=>$customers,'orders'=>$orders ,'today_sale'=>$today_sale,'monthly_sale' =>$monthly_sale,'yearly_sale'=>$yearly_sale,'latest_orders' =>$latest_orders,'latest_products'=>$latest_products,'product_type'=>$product_type, 'sales'=>$sales_array]);

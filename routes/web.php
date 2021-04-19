@@ -339,6 +339,7 @@ Route::get('deletefeedback/{feedback_id}','ProductsController@deletefeedback');
     Route::get('notifications','NotificationController@index');
     Route::get('deletenotify/{id}','NotificationController@delete');
     Route::get('readnotify/{id}','NotificationController@read');
+    Route::get('notification/allread', 'NotificationController@allread');
     
 
     // Content Management Routes
