@@ -74,6 +74,11 @@ class Products extends Model
     {
         return $this->hasMany(Variation::class, 'product_id');
     }
+    
+    public function addon()
+    {
+        return $this->hasOne(AddOn::class, 'product_id');
+    }
 
     
   

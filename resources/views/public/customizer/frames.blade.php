@@ -5,6 +5,7 @@
 	<!-- <link rel="stylesheet" href="{{asset('assets2/vendors/fontawesome/css/all.min.css')}}"> -->
 	<link rel="stylesheet" href="{{asset('assets2/vendors/boxicons/css/boxicons.min.css')}}">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<script src="{{asset('assets2/js/svg-inject.js')}}"></script>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap">
 	<link rel="stylesheet" href="{{asset('assets2/css/style.css')}}">
 <section class="section product-section">
@@ -25,14 +26,15 @@
 									<div class="row">
 										<div class="col-12">
 											<div id="owl-frame" class="owl-builder owl-carousel owl-theme">
-                                                @foreach ($frames as $frame)
+                                                @foreach ($frames as $key => $frame)
                                                     
                                                 
 											    <li class="item list-unstyled text-center">
-											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="framedata({{$frame->id}});setprice({{$frame->id}},{{$frame->frame_price}},4)">
+											    	<button type="button" class="button-door border-0 bg-transparent my-5 w-100" onclick="addFrameImageN({{$frame->id}},{{$frame->frame_price}},'{{url('admin-assets/addon/frame/'.$frame->image)}}')">
 											    		<div class="door">
                                                            
-											    			<img class="door-image" src="{{asset('admin-assets/addon/frame/'.$frame->image)}}" align="">
+											    			<object type="image/svg+xml" 
+											    			onload="doorGlassIm('{{url('admin-assets/addon/frame/'.$frame->image)}}'),{{$key}}" id="frame_svg<?php echo $key ?>" class="door-image" data="{{asset('admin-assets/addon/frame/'.$frame->image)}}" align=""></object>
 											    		</div>
 											    	</button>
 											    </li>
@@ -42,8 +44,8 @@
 											    
 											</div>
 											<div class="customNavigation">
-												<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 btninternalColor">Prev</a>
-											    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end btnFrame">Next</a>
+												<a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 " onclick="openglass()">Prev</a>
+											    <a class="btn btn-fill-out theme_bgcolor2 text-white px-4 rounded-0 py-2 float-end " onclick="frame_ex_color();framedata()">Next</a>
 											</div>
 										</div>
 									</div>
@@ -57,6 +59,29 @@
 	<script src="{{asset('assets2/vendors/owlcarousel/js/owlcarousel.min.js')}}"></script>
 	<script src="{{asset('assets2/vendors/videopopup/js/videopopup.js')}}"></script>
 	<script src="{{asset('assets2/js/script.js')}}"></script>
+	<script>
+		
+		// function doorGlassIm(image,id){
+		// 	var a = document.getElementById("frame_svg"+id);
+  //           //var mainsvgDoc = a.contentDocument;
+  //           //console.log(a);
+		// }
+		
+			// var image = $('#door_pic').val();
+			// image_name = '<?php echo asset("admin-assets/addon/glass/"); ?>'+'/'+image;
+			// a = document.getElementById("doorimage");
+			// doc = a.children[0];
+			// doc = doc.getElementById("door");
+			// //console.log(doc);
+			// // //final = doc.innerHTML='';
+			// // if (doc.hasChildNodes()) {
+   // //              var st = doc.removeChild(doc.childNodes[0]);
+   // //          }
+		//}
+
+		
+		
+	</script>
     @else
 	<h3 class="text-center">Selected Model has no frame</h3>
 	@endif

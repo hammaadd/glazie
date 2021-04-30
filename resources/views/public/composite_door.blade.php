@@ -1,6 +1,7 @@
 @extends('public/layouts/layouts')
 @section('title','Welcome to Glazie ')
 @section('content')
+
 <script src="{{('http://code.jquery.com/jquery-1.9.1')}}.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
 <script src="{{('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js')}}/toastr.js"></script>
@@ -16,7 +17,7 @@
             <div class="owl-slider owl-carousel owl-theme" data-autoplay="true">
 
                 <!--Slide item-->
-                @foreach ($sliders as $slider)
+                {{-- @foreach ($sliders as $slider)
                 <div class="item d-flex align-items-center" style="background-image:url({{asset('admin-assets/sliders/'.$slider->image)}})">
                     <div class="container">
                         <div class="caption">
@@ -36,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-                @endforeach
+                @endforeach --}}
 
             
 
@@ -52,7 +53,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="bg_img bg_img2 p-4 p-md-5 rounded-4 overflow-hidden">
                         <div class="title-box">
                             <!--Sec Title-->
@@ -67,7 +68,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                {{-- <div class="col-md-6">
                     <div class="bg_img bg_img1 p-4 p-md-5 rounded-4 overflow-hidden">
                         <div class="title-box">
                             <!--Sec Title-->
@@ -81,7 +82,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>
@@ -113,7 +114,9 @@
             
                 <div class="col-lg-3 col-md-4 col-6">
                     <div class="product">
-                        <span class="pr_flash">Sale</span>
+                       @if($product->sale_price)
+                       <span class="pr_flash">Sale</span>
+                       @endif
                         <div class="product_img">
                             <a href="{{url('productdetails/'.$product->id)}}">
                                 <img src="{{asset('productimages/'.$image)}}"
@@ -122,20 +125,28 @@
                             </a>
                             <div class="product_action_box">
                                 <ul class="list_none pr_action_btn">
-                                    @if ($product->type=='simple')
+                                    {{-- @if ($product->type=='simple')
                                     <li class="add-to-cart"><a style="cursor: pointer" onclick="addtocart({{$product->id}})"><i class="bx bx-cart"></i> Add To Cart</a></li>
-                                    @endif
+                                    @endif --}}
                                     {{-- <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li>
-                                    <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>
-                                    <li><a href="#"><i class="bx bx-heart"></i></a></li> --}}
+                                    <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>--}}
+                                     
+                                    @if(!empty(Auth::id()))
+                                    <li><a  title="Add to wish list" onclick="addtowishlist({{$product->id}},'{{$image}}')"><i class="bx bx-heart" ></i></a></li> 
+                                    @endif 
                                 </ul>
                             </div>
                         </div>
                         <div class="product_info">
                             <h6 class="product_title text-center"><a href="{{url('productdetails/'.$product->id)}}">{{$product->product_name}}</a></h6>
                             <div class="product_price text-center">
+                                @if($product->sale_price)
                                 <span class="price "><span class="currencySymbol">£</span>{{$product->sale_price}}</span>
                                 <del><span class="currencySymbol">£</span>{{$product->regular_price}}</del>
+                                @else
+                                <span class="price "><span class="currencySymbol">£</span>{{$product->regular_price}}</span>
+                                
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -171,7 +182,27 @@
                                 <div class="brand-carousel owl-carousel">
                                     @foreach ($categories as $category)
                                     <div class="single-logo">
-                                        <img src="{{asset('admin-assets/categories/'.$category->image)}}" alt="">
+                                        @if(empty($category->image))
+                                            <img src="{{ asset('admin-assets/categories/dummy.png')}}" alt="">
+                                        @else
+                                        <?php
+                                            $tasveer1 = asset('admin-assets/categories/'.$category->image);
+                                            $ch = curl_init($tasveer1);
+                                            curl_setopt($ch, CURLOPT_NOBODY, true);
+                                            curl_exec($ch);
+                                            $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                                            curl_close($ch);
+                                            if($responseCode == 200){
+                                                ?>
+                                                <img src="{{ asset('admin-assets/categories/'.$category->image)}}" alt="">
+                                                <?php
+                                            }else{
+                                                ?>
+                                                <img src="{{ asset('admin-assets/categories/dummy.png')}}" alt="">
+                                                <?php
+                                            }
+                                        ?>
+                                        @endif
                                     </div>
                                     @endforeach
                                     
@@ -206,7 +237,7 @@
                         <div class="text">
                             <p>At Glazie Ltd we offer a complete survey,supply and fitting service for all our aluminium,timber and uPvc products.We draw upon our years of experience and utilise our team of highly skilled installers to provide a top class fitting service with 10 years insurance backed guarantee.</p>
                         </div>
-                        <a href="#" class="btn btn-fill-out rounded-0 px-4 py-2">Find out more</a>
+                        <a href="{{url('installerlist')}}" class="btn btn-fill-out rounded-0 px-4 py-2">Find out more</a>
                     </div>
                 </div>
                 <div class="image-column col-md-6">
@@ -362,7 +393,27 @@
                             <div class="brand-carousel owl-carousel">
                                 @foreach ($brands as $brand)
                                 <div class="single-logo">
-                                    <img src="{{asset('admin-assets/brands/'.$brand->image)}}" alt="">
+                                    @if(empty($brand->image))
+                                        <img src="{{ asset('admin-assets/brands/dummy.png')}}" alt="">
+                                    @else
+                                    <?php
+                                        $tasveer1 = asset('admin-assets/brands/'.$brand->image);
+                                        $ch = curl_init($tasveer1);
+                                        curl_setopt($ch, CURLOPT_NOBODY, true);
+                                        curl_exec($ch);
+                                        $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                                        curl_close($ch);
+                                        if($responseCode == 200){
+                                            ?>
+                                            <img src="{{ asset('admin-assets/brands/'.$brand->image)}}" alt="">
+                                            <?php
+                                        }else{
+                                            ?>
+                                            <img src="{{ asset('admin-assets/brands/dummy.png')}}" alt="">
+                                            <?php
+                                        }
+                                    ?>
+                                    @endif
                                 </div>
                                 @endforeach
                                 
@@ -424,6 +475,46 @@ function addtocart(id)
         
         }	
         });
+
+}
+
+function addtowishlist(id,image)
+{
+   
+    url = "{{url('addtowishlist')}}";
+        $.ajax({
+       type:'POST',
+       url:url,
+       data:{
+           id:id,
+           image:image,
+           "_token": "{{ csrf_token()}}",
+
+       },
+       success:function(result){ 
+        //console.log(result);
+       var result = JSON.parse(result);
+       if(result[0]=='Product is already in wishlist')
+      {
+      	 toastr.error(result[0]);
+      }
+       else
+       {
+       	toastr.success(result[0]);
+       }
+       if(result[0]>0)
+       {
+        $('#wishitem').html(result[0]);
+        $('#wishitem').show();
+        
+       }
+       else{
+        $('#wishitem').hide();
+       }
+        
+        }	
+        });
+
 
 }
 </script>

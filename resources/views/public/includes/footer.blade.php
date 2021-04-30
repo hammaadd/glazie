@@ -43,7 +43,7 @@
                         <ul class="list-unstyled footer-menu">
                             <li><a href="#">Fitting Service</a></li>
                             <li><a href="#">Our Guarantee</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="{{url('privacy-policy')}}">Privacy Policy</a></li>
                             <li><a href="{{url('contact-us')}}">Contact us</a></li>
                             <li><a href="#">About us</a></li>
                         </ul>

@@ -114,7 +114,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        @if (count($addon->colors)>0)
+                                                        @if ($addon->colors)
                                                             
                                                         
                                                         <table class="table">
@@ -175,7 +175,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        @if (count($addon->frames)>0)
+                                                        @if ($addon->frames)
                                                             
                                                         
                                                         <table class="table">
@@ -225,6 +225,62 @@
                                     <div class="card">
                                         <div class="card-header">
                                             <h5 class="card-title">
+                                                <a class="collapsed" data-toggle="collapse" href="#collapsesize">
+                                                    <span>Sizes</span>
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="collapsesize" class="collapse" data-parent="#accordion-default">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <a href="{{url('admin/addon/addsize/'.$addon->id)}}" class="btn btn-success btn-xs float-right"> <i class="fa fa-plus-circle"></i> Add Size  </a>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        @if ($addon->sizes)
+                                                            
+                                                        
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Sr #</th>
+                                                                    <th>Door Width </th>
+                                                                    <th>Door Height</th>
+                                                                    <th>Quantity</th>
+                                                                    <th>Price </th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                                @php
+                                                                    
+                                                                @endphp
+                                                                @foreach ($addon->sizes as $size)
+                                                                    @if ($size->add_by=='admin')
+                                                                    <tr>
+                                                                        <td>{{$loop->iteration}}</td>
+                                                                        <td>{{$size->door_width}}</td>
+                                                                        <td>{{$size->door_height}}</td>
+                                                                        <td>{{$size->quantity}}</td>
+                                                                        <td>{{$size->price}}</td>
+                                                                        <td>
+                                                                            <a href="{{url('admin/addon/editsize/'.$size->id)}}" class="btn btn-info btn-xs"> <i class="anticon anticon-edit"></i> Edit</a>
+                                                                            <a href="{{url('admin/addon/deletesize/'.$size->id)}}" class="btn btn-danger btn-xs"> <i class="anticon anticon-delete"></i> Delete</a>                                                      
+                                                                        </td>
+                                                                    </tr>
+                                                                   @endif
+                                                                @endforeach
+                                                            </thead>
+                                                        </table>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">
                                                 <a class="collapsed" data-toggle="collapse" href="#collapseThreeDefaults">
                                                     <span>Glass</span>
                                                 </a>
@@ -239,7 +295,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        @if (count($addon->frames)>0)
+                                                        @if ($addon->frames)
                                                             
                                                         
                                                         <table class="table">
@@ -310,7 +366,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        @if (count($addon->furniture)>0)
+                                                        @if ($addon->furniture)
                                                             
                                                         
                                                         <table class="table table-re">
@@ -370,7 +426,7 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        @if (count($addon->hinges)<2)
+                                                        @if ($addon->hinges)
                                                         <a href="{{url('admin/addhinge/'.$addon->id)}}" class="btn btn-success btn-xs float-right"> <i class="fa fa-plus-circle"></i> Add Hinge </a>
                                                         @endif
                                                     </div>

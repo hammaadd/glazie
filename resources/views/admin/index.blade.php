@@ -188,7 +188,7 @@
                                         @foreach ($latest_orders as $ordersdetails)
                                             <tr>
                                                 <td><a href="{{url('admin/orderdetails/'.$ordersdetails->id)}}">{{$ordersdetails->id}}</a></td>
-                                                <td><a href="{{url('admin/customers/details/'.$ordersdetails->customer->id)}}">{{$ordersdetails->customer->name}}</a></td>
+                                                <td><a href="{{url('admin/customers/details/'.$ordersdetails->customer_id)}}">{{$ordersdetails->customer_name}}</a></td>
                                                 <td>{{$ordersdetails->created_at}}</td>
                                                 <td>{{$ordersdetails->status}}</td>
                                             </tr>

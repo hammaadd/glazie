@@ -58,7 +58,6 @@ class ProductsController extends Controller
            'product_name'=>'required',
            'brand_name'=>'required',
            'regular_price'=>'required',
-           'sale_price'=>'required',
            'weight'=>'required',
            'quantity'=>'required',
            'verity_id'=>'required',
@@ -214,8 +213,7 @@ class ProductsController extends Controller
             'product_name'=>'required',
             'brand_name'=>'required',
             'regular_price'=>'required',
-            'sale_price'=>'required',
-            'weight'=>'required',
+           
             'quantity'=>'required',
           
             'height'=>'required',

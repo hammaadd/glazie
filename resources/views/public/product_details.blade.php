@@ -1,58 +1,54 @@
 @extends('public/layouts/layouts')
 @section('title',$product->product_name)
 @section('content')
+
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 <script src="{{asset('admin-assets/js/rating.js')}}"></script>
+<script src="{{asset('admin-assets/js/jquery.validate.js')"></script>
 <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
 
-<script src="{{asset('admin-assets/js/jstars.js')}}"></script>
+
 
 <div class="container mt-3">
     <div class="row">
         <div class="col-md-6">
-            
-            
             <?php $product_gallery = $product->gallery;
-                 $i=0;
-        foreach ($product->gallery as $key => $value) {
-           if ($value->is_primary=="1") {
-               $image = $value->image;
-               $i=1;
-           }
-
-       }
-       if ($i==0) {
-           $image = $value->image;
-       }
+                $i=0;
+                foreach ($product->gallery as $key => $value) {
+                    if ($value->is_primary=="1") {
+                        $image = $value->image;
+                        $i=1;
+                    }
+                }
+                if ($i==0) {
+                    $image = $value->image;
+                }
             ?>
-            <img src="{{asset('productimages/'.$image)}}"
-            <?php $profile_image=""; ?> width="100%">
+            <span >
+                <img id="changeable_image" src="{{asset('productimages/'.$image)}}" <?php $profile_image=""; ?> width="100%">
+            </span>
             <div class="row mt-3">
-           @foreach ($product_gallery as $images)
-           @if ($images->is_primary!=1)
-           <div class="col-md-2 d-flex">
-            <img src="{{asset('productimages/'.$images->image)}}" alt="" width="100%">
-         </div>
-           @endif
-           @endforeach
-           @php
-               $net_feedback = $g = 0;
-           @endphp
-            @foreach ($product->feedback as $feedback)
-            @php
-          
-                $net_feedback +=$feedback->rating;
-                $g++;
-            
-            //echo $net_feedback;
-        @endphp
-            @endforeach
-              
-           
-        </div>
+                @foreach ($product_gallery as $images)
+                    @if ($images->is_primary!=1)
+                        <div class="col-md-2 d-flex">
+                            <img onclick="getImageDoor('{{asset('productimages/'.$images->image)}}');" src="{{asset('productimages/'.$images->image)}}" alt="" width="100%">
+                        </div>
+                    @endif
+                @endforeach
+                @php
+                    $net_feedback = $g = 0;
+                @endphp
+                @foreach ($product->feedback as $feedback)
+                    @php
+                        $net_feedback +=$feedback->rating;
+                        $g++;
+                        //echo $net_feedback;
+                    @endphp
+                @endforeach
+            </div>
         </div>
         <div class="col-md-6">
             <h2>{{$product->product_name}}</h2>
@@ -60,13 +56,27 @@
             <div class="row">
                 <div class="col-md-2">
                     <p><b>Quantity:</b></p>
-                    <p><strike><b>{{$product->regular_price}}</b></strike></p>
+                   @if ($product->sale_price)
+                   <p><strike><b>{{$product->regular_price}}</b></strike></p>
+                    @else
+                    @if ($product->type != "variable")
+                    <p><b>{{$product->regular_price}}</b></p>
+                    <input type="hidden" id="sale_price" value="{{$product->sale_price}}">
+                    @endif
+                   @endif
                 </div>
                 <div class="col-md-4">
                     <p>{{$product->quantity}}</p>
-                    <p>{{$product->sale_price}}</p>
+                    @if ($product->type != "variable")
+                        @if ($product->sale_price)
+                        <p>{{$product->sale_price}}</p>
+                        @endif
+                    @endif
                 </div>
             </div>
+            @php
+                $j=0;
+            @endphp
             <div class="row mt-3 mb-4">
                 <div class="col-md-12">
                     @if ($g>0)
@@ -76,22 +86,28 @@
                     <div class="jstars" data-value="0.1"></div>
                     @endif
                 </div>
+                @if($product->sale_price)
+                @php
+                    $price = $product->sale_price;
+                @endphp
+                @else
+                @php
+                    $price = $product->regular_price;
+                @endphp
+                @endif
             </div>
-            <form action="{{url('addtocart/'.$product->id)}}" method="post">
+           @if($product->quantity>0)
+            <form id="variation_form" action="{{url('addtocart/'.$product->id)}}" method="post">
                 @csrf
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <input type="hidden" name="product_id" value="{{$product->id}}">
-                <input type="hidden" name="product_name" value="{{$product->product_name}}">
-                <input type="hidden" name="price" value="{{$product->sale_price}}"> 
-                <input type="hidden" name="regular_price" value="{{$product->regular_price}}">       
-                <input type="hidden" name="photo" value="{{$image}}">
-                
-              </div>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <input type="hidden" name="product_id" value="{{$product->id}}">
+                    <input type="hidden" name="product_name" value="{{$product->product_name}}">
+                    <input type="hidden" name="price" value="{{$price}}"> 
+                    <input type="hidden" name="regular_price" value="{{$product->regular_price}}">       
+                    <input type="hidden" name="photo" value="{{$image}}">    
+                </div>
+            @php
               
-                  
-              
-              @php
-              $j=0;
           @endphp
           @if ($product->type=="variable")
               @if (count($attrbute_array)>0)
@@ -142,11 +158,14 @@
                     </div>
                 </div>
             </form>
+            @else
+            <span class="text-danger font-weight-bold" >Out Of Stock</span>
+            @endif
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-md-6">
-            <h3>Product Reviews</h3>
+           
             @if(count($errors)>0)
             @foreach($errors->all() as $error)
             <li class="text-danger">
@@ -154,7 +173,23 @@
             </li>
             @endforeach
         @endif
+        @php
+            $id = Auth::user();
+           $i=1; 
+        @endphp
+        @if($id)
+            @foreach ($id->orders as $order)
+                @foreach ($order->details as $orderdetails)
+                @if($product->id == $orderdetails->product_id)
+                @php
+                    $i=2;
+                @endphp
+                @endif
+                @endforeach
+            @endforeach
+            @if($i==2)
             <form action="{{url('feedback')}}" method="POST">
+                <h3>Product Reviews</h3>
                 @csrf
                 <div class="row">
                     <div class="col-md-12">
@@ -188,6 +223,8 @@
                     </div>
                 </div> 
             </form>
+            @endif
+            @endif
         </div>
     </div>
     <section class="section product-section">
@@ -225,25 +262,34 @@
             
                                     <div class="item">
                                         <div class="product">
+                                            @if($related_product->sale_price)
                                             <span class="pr_flash">Sale</span>
+                                            @endif
                                             <div class="product_img">
                                                 <a href="shop-product-detail.html">
                                                     <img src="{{asset('productimages/'.$image)}}" alt="Aluminium Front Door 1361 – Stainless Steel Applications in 9005 Matt with Stainless Steel hardware">
                                                 </a>
                                                 <div class="product_action_box">
                                                     <ul class="list_none pr_action_btn">
-                                                        <li class="add-to-cart"><a style="cursor: pointer;" onclick="addtocart({{$related_product->id}})" title="Add to cart the prodcut"><i class="bx bx-cart"></i> Add To Cart</a></li>
+                                                        {{-- <li class="add-to-cart"><a style="cursor: pointer;" onclick="addtocart({{$related_product->id}})" title="Add to cart the prodcut"><i class="bx bx-cart"></i> Add To Cart</a></li> --}}
                                                         {{-- <li><a href="#" class="popup-ajax"><i class="bx bx-shuffle"></i></a></li>
-                                                        <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>
-                                                        <li><a href="#"><i class="bx bx-heart"></i></a></li> --}}
+                                                        <li><a href="#" class="popup-ajax"><i class="bx bx-zoom-in"></i></a></li>--}}
+                                                        @if(!empty(Auth::id()))
+                                                            <li><a  title="Add to wish list" onclick="addtowishlist({{$product->id}},'{{$image}}')"><i class="bx bx-heart" ></i></a></li> 
+                                                        @endif
                                                     </ul>
                                                 </div>
                                             </div>
                                             <div class="product_info">
                                                 <h6 class="product_title text-center"><a href="{{url('productdetails/'.$related_product->id)}}">{{$related_product->product_name}}</a></h6>
                                                 <div class="product_price text-center">
-                                                    <span class="price"><span class="currencySymbol">£</span>{{$related_product->sale_price}}</span>
+                                                    
+                                                  @if($related_product->sale_price)
+                                                    <span class="price "><span class="currencySymbol">£</span>{{$related_product->sale_price}}</span>
                                                     <del><span class="currencySymbol">£</span>{{$related_product->regular_price}}</del>
+                                                    @else
+                                                    <span class="currencySymbol">£ {{$related_product->regular_price}} </span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -277,23 +323,28 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script>
+    $("#variation_form").validate();
+    function getImageDoor(image){
+        var a = document.getElementById("changeable_image");
+        a.setAttribute('src',image);
+    }
     toastr.options = {
-    "closeButton": true,
-    "debug": false,
-    "newestOnTop": false,
-    "progressBar": true,
-    "positionClass": "toast-top-right",
-    "preventDuplicates": true,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "5000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-}
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": true,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
 
      
     function isNumberKey(evt)
@@ -373,7 +424,7 @@ function checkvariation(i)
     {
         let k=-1; 
         var variation = $('#variation'+i).val();
-        var product_id = {{$id}};
+        var product_id = {{$product->id}};
         var attribute_length = {{$j}};
         for (let j = 0; j < idarray.length; j++) {
             if(i==idarray[j])
@@ -419,8 +470,13 @@ function checkvariation(i)
             else{
                 var result = JSON.parse(result);
                 $('#variant_id').val(result[0]);
-                var sale_price = {{$product->sale_price}};
-                var net_sale_price = sale_price + parseInt(result[1]);
+                var sale_price = $('#sale_price').val();
+                if(sale_price==null || sale_price==''){
+                  var sale_price ={{$product->regular_price}};
+                }
+                console.log(parseInt(result[1]));
+                var net_sale_price = parseInt(sale_price) + parseInt(result[1]);
+                console.log(sale_price);
                 $('#variationprice').val(net_sale_price);
                 $('#submitcartbutton').prop('disabled',false);
                 $('#message').html("");

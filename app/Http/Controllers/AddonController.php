@@ -12,11 +12,62 @@ use App\Models\ModelFrame;
 use App\Models\FrameGlass;
 use App\Models\AddonHinge;
 use App\Models\FrameDetails;
+use App\Models\AddonSize;
 use Illuminate\Support\Facades\Redirect;
 
 
 class AddonController extends Controller
 {
+    public function addsize(Request $request,$id)
+    {
+        return view('admin/addon/addonsize',['id'=>$id]);
+    }
+    public function store_size($id,Request $request)
+    {
+        
+        
+        $door_height = $request->input('door_height');
+        $door_width = $request->input('door_width');
+        $quantity = $request->input('quantity');
+        $price = $request->input('price');
+        for($i=0;$i<count($door_height);$i++)
+        {
+            $addon_size = new AddonSize;
+            $addon_size->addon_id = $id;
+            $addon_size->quantity = $quantity[$i];
+            $addon_size->door_height = $door_height[$i];
+            $addon_size->door_width = $door_width[$i];
+            $addon_size->add_by = 'admin';
+            $addon_size->price = $price[$i];
+            $addon_size->save();
+        }
+        return redirect('admin/addon/view/'.$id)->with('info','Door Size are created Successfully');
+    }
+    public function editsize($id)
+    {
+        $size = AddonSize::find($id);
+        return view('admin/addon/editsize',['size'=>$size]);
+    }
+    public function updatesize(Request $request,$id)
+    {
+        $addon_size = AddonSize::find($id);
+        $door_height = $request->input('door_height');
+        $door_width = $request->input('door_width');
+  
+
+        $addon_size->door_height = $request->input('door_height');
+        $addon_size->door_width = $request->input('door_width');
+        
+        $addon_size->price = $request->input('price');
+        $addon_size->update();
+        return redirect('admin/addon/view/'.$addon_size->addon_id)->with('info','Door Size Updated Successfully');
+    }
+    public function deletesize($id)
+    {
+        $addon_size = AddonSize::find($id)->addon_id;
+         AddonSize::where('id',$id)->delete();
+         return redirect('admin/addon/view/'.$addon_size)->with('info','Door Size deleted Successfully');
+    }
     public function __construct(){
         $this->middleware('auth:admin');
     }
@@ -33,12 +84,9 @@ class AddonController extends Controller
     public function store(Request $request){
         
         $validatedData = $request->validate([
-            'product_id' =>'required',
+            'product_id' =>'required|unique:add_ons',
             'svgimage' => 'required|mimes:svg|max:5048',
-            'height'=>'required',
-           'width'=>'required',
-           'length'=>'required',
-           'weight'=>'required',
+            
            'model_name' =>'required|regex:/^[\pL\s\-]+$/u'
         ]);
         
@@ -55,11 +103,19 @@ class AddonController extends Controller
         $addon = new AddOn;
         $addon->product_id = $product_id;
         $addon->model_name = $model_name;
-        $addon->wieght = $request->input('weight');
-        $addon->height = $request->input('height');
-        $addon->length = $request->input('length');
-        $addon->width = $request->input('width');
-        $addon->price = $request->input('price');
+        $product = Products::find($product_id);
+        $addon->wieght = $product->weight;
+        $addon->height = $product->height;
+        $addon->length = $product->length;
+        $addon->width = $product->width;
+        if($product->sale_price!=null)
+        {
+            $addon->price = $product->sale_price;
+        }
+        else{
+            $addon->price = $product->regular_price;
+        }
+        
         $file = $request->file('svgimage');
         $filename = $file->getClientOriginalName();
         $extension = $file->getClientOriginalExtension();
@@ -113,16 +169,23 @@ class AddonController extends Controller
         $validatedData = $request->validate([
             'product_id' =>'required',
             'model_name' =>'regex:/^[\pL\s\-]+$/u',
-            'height'=>'required',
-            'width'=>'required',
-            'length'=>'required',
-            'weight'=>'required',
+            
             'quantity'=>'required'
         ]);
         
         $product_id = $request->input('product_id');
         $model_name = $request->input('model_name');
-
+        $product = Products::find($product_id);
+        
+       
+      
+        if($product->sale_price!=null)
+        {
+            $price = $product->sale_price;
+        }
+        else{
+            $price = $product->regular_price;
+        }
         if ($request->file('svgimage')) {
             $file = $request->file('svgimage');
             $filename = $file->getClientOriginalName();
@@ -135,13 +198,15 @@ class AddonController extends Controller
             );
             AddOn::where('id',$id)->update($updateaddonimage);
         }
+        
         $updateaddon =  array(
             'product_id'=>$product_id,
             'model_name'=>$model_name,
-            'width'=>$request->input('width'),
-            'height'=>$request->input('height'),
-            'wieght'=>$request->input('weight'),
-            'length'=>$request->input('length'),
+            'width' => $product->width,
+            'height' => $product->height,
+            'wieght' => $product->weight,
+            'length' => $product->length,
+            'price' => $price,
             'quantity'=>$request->input('quantity'),
             
         );
